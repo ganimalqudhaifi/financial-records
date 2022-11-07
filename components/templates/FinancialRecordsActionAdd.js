@@ -1,6 +1,9 @@
-import {useState,useContext} from 'react'
-import { Context } from './FinancialRecords'
+import { useState, useContext } from 'react'
 import Swal from 'sweetalert2';
+import { RootContext } from '../../context';
+import { hideModal, showModal, createRecord } from '../../context/action/demoAction';
+import { Button, Input, Label, Select, Text, Wrapper } from '../atoms';
+import { Modal } from '../molecules';
 
 export default function FinancialRecordsActionAdd() {
   const action = "addModal"
@@ -8,9 +11,9 @@ export default function FinancialRecordsActionAdd() {
     tanggal: '',
     keterangan: '',
     jenis: 'Penerimaan',
-    jumlah: '',
+    jumlah: null,
   })
-  const {showModal,hideModal,closeModal,addRecord} = useContext(Context)
+  const { dispatch } = useContext(RootContext)
 
   const handleChange = (event) => {
     const name = event.target.name
@@ -20,13 +23,13 @@ export default function FinancialRecordsActionAdd() {
       value = parseInt(value)
     }
 
-    setInputs(values => ({...values, [name]: value}))
+    setInputs(values => ({ ...values, [name]: value }))
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    addRecord(inputs)
-    hideModal(action)
+    dispatch(createRecord(inputs))
+    dispatch(hideModal(action))
     setInputs(() => {
       return {
         tanggal: '',
@@ -46,72 +49,65 @@ export default function FinancialRecordsActionAdd() {
         toast.addEventListener('mouseleave', Swal.resumeTimer)
       }
     })
-    
+
     Toast.fire({
       icon: 'success',
       title: 'Data berhasil ditambahkan'
     })
   }
 
-  return(
+  return (
     <>
-      <button className=" py-1.5 md:py-2 px-3 md:px-4 bg-slate-800 text-slate-50 rounded-[3px]" onClick={() => showModal(action)}>Tambah</button>
+      <Button style="add" title="Tambah" onClick={() => dispatch(showModal(action))} />
 
-      <div id={action} className="modal" onClick={(e) => closeModal(e,action)}>
-        <div className="modal-content p-3 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-7/12 lg:w-1/2">
-          <span className="close" onClick={() => hideModal(action)}>&times;</span>
-
-          <h3 className="mb-2">Menambah Catatan</h3>
-
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="jumlah">Jumlah</label>
-            <input
-            type="number"
+      <Modal style="modal-content-edit" action={action} >
+        <Text style="modal-title-edit-record" title="Menambah Catatan" />
+        <form onSubmit={handleSubmit}>
+          <Label style="record" title="Jumlah" htmlFor="jumlah" />
+          <Input style="record" type="number"
             id="jumlah"
             name="jumlah"
             value={inputs.jumlah || ""}
             placeholder="jumlah"
             step="10"
-            onChange={handleChange} 
-            required/>
+            onChange={handleChange}
+            required />
 
-            <label htmlFor="keterangan">Keterangan</label>
-            <input 
-            type="text" 
+          <Label style="record" title="Keterangan" htmlFor="keterangan" />
+          <Input style="record" type="text"
             id="keterangan"
             name="keterangan"
             value={inputs.keterangan || ""}
-            placeholder="keterangan" 
-            onChange={handleChange} 
-            required/>
+            placeholder="keterangan"
+            onChange={handleChange}
+            required />
 
-            <label htmlFor="jenis">Jenis</label>
-            <select 
-            id="jenis"
+          <Label style="record" title="Jenis" htmlFor="jenis" />
+          <Select style="record" id="jenis"
             name="jenis"
             value={inputs.jenis || "Penerimaan"}
             onChange={handleChange}>
-              <option>Penerimaan</option>
-              <option>Pengeluaran</option>
-            </select>
+            <option>Penerimaan</option>
+            <option>Pengeluaran</option>
+          </Select>
 
-            <label htmlFor="date">Tanggal</label>
-            <input 
+          <Label style="record" title="Tanggal" htmlFor="date" />
+          <Input style="record"
             type="date"
             id="date"
             name="tanggal"
             value={inputs.tanggal || ""}
-            palceholder="Select date" 
-            onChange={handleChange} 
-            required/>
+            palceholder="Select date"
+            onChange={handleChange}
+            required />
 
-            <div className="buttons mt-2">
-              <button className="text-slate-900 bg-slate-300/80 hover:bg-slate-400/80" type="button" onClick={() => hideModal(action)}>Batal</button>
-              <button className="text-slate-50 bg-slate-800/80 hover:bg-slate-800" type="submit">Kirim</button>
-            </div>
-          </form>
-        </div>
-      </div>
+          <Wrapper style="modal-button-add">
+            <Button title="Batal" style="modal-cancle" type="button" onClick={() => dispatch(hideModal(action))} />
+            <Button title="Kirim" style="modal-edit" type="submit" />
+          </Wrapper>
+          
+        </form>
+      </Modal>
     </>
   )
 }

@@ -1,0 +1,23 @@
+.modal {
+  @apply hidden fixed z-[1] top-0 left-0 w-full h-full overflow-auto bg-black/40
+}
+
+.close {
+  @apply absolute top-px right-3.5 text-3xl md:text-4xl font-bold cursor-pointer
+}
+
+.modal-content-delete {
+  @apply bg-white mx-auto relative p-2.5 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-1/2 md:w-3/5 lg:w-1/2
+}
+
+.modal-content-edit {
+  @apply bg-white mx-auto relative p-3 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-7/12 lg:w-1/2
+}
+
+.modal-content-saldo-awal {
+  @apply  bg-white mx-auto relative p-2.5 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-1/2 md:w-3/5 lg:w-1/2
+}
+
+.modal-content-graph {
+  @apply bg-white mx-auto relative box-border text-center mt-[23%] md:mt-[15%] lg:mt-[1.1%] w-9/12
+}

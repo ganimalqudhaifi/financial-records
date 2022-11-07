@@ -1,0 +1,11 @@
+.record {
+  @apply w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm
+}
+
+.filter-period {
+  @apply h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg
+}
+
+.slicer-pagination {
+  @apply py-1.5 md:py-2 px-1.5 md:px-2 lg:px-3 mx-2 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded
+}

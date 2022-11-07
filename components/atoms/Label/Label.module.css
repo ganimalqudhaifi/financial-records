@@ -1,0 +1,7 @@
+.login {
+  @apply text-slate-800 font-semibold
+}
+
+.record {
+  @apply font-normal pl-0.5 capitalize text-left text-base mb-0.5 block
+}

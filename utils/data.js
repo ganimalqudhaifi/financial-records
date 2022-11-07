@@ -49,6 +49,41 @@ const getData = () => {
       jenis: "Pengeluaran",
       jumlah: 150000,
     },
+    {
+      id: 166118,
+      tanggal: '2022-11-01',
+      keterangan: "top up game",
+      jenis: "Pengeluaran",
+      jumlah: 502500,
+    },
+    {
+      id: 1661698,
+      tanggal: '2022-11-01',
+      keterangan: "makan",
+      jenis: "Pengeluaran",
+      jumlah: 200000,
+    },
+    {
+      id: 16616989,
+      tanggal: '2022-11-02',
+      keterangan: "jajan",
+      jenis: "Pengeluaran",
+      jumlah: 150000,
+    },
+    {
+      id: 1661,
+      tanggal: '2022-12-01',
+      keterangan: "sumbangan",
+      jenis: "Pengeluaran",
+      jumlah: 200000,
+    },
+    {
+      id: 123123123,
+      tanggal: '2022-12-02',
+      keterangan: "satpam",
+      jenis: "Pengeluaran",
+      jumlah: 150000,
+    },
   ];
 }
 

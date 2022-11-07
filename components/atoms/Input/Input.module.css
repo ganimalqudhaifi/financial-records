@@ -1,0 +1,11 @@
+.login {
+  @apply block bg-slate-50 px-3 py-2 shadow-inner shadow-slate-400 rounded-md border-slate-400 border
+}
+
+.record {
+  @apply w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm
+}
+
+.search-field {
+  @apply py-1.5 md:py-2 px-3 pr-10 md:w-80 text-slate-900 border-y border-r border-slate-300 bg-slate-50 rounded-r-lg focus:outline-1 focus:outline-slate-800 focus:border focus:rounded
+}

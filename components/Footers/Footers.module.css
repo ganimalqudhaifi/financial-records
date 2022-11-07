@@ -1,0 +1,3 @@
+.footers {
+  @apply text-center text-xs py-4 mt-10 opacity-70
+}

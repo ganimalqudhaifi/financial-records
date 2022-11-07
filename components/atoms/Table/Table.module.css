@@ -1,0 +1,61 @@
+.information-table {
+  @apply border border-separate border-spacing-1 rounded mx-auto rounded-b-sm
+}
+
+.information-table caption {
+  @apply font-bold text-slate-900
+}
+
+.information-table tr td {
+  @apply py-1 px-4 
+  odd:bg-slate-200 odd:font-bold
+  even:bg-slate-100
+}
+
+.main-table {
+  @apply border-collapse table-auto w-full whitespace-nowrap shadow-lg text-sm md:text-base
+}
+
+.main-table thead tr {
+  @apply text-center 
+  first:bg-slate-800 first:text-slate-100 
+  last:bg-slate-200 last:text-slate-800
+}
+
+.main-table thead tr:first-child th {
+  @apply border-2 px-4 py-2.5
+  first:rounded-tl-md 
+  last:rounded-tr-md
+  [&:nth-child(4)]:hidden [&:nth-child(4)]:lg:table-cell
+}
+
+.main-table thead tr:last-child th {
+  @apply border-2 px-4 py-2.5
+  [&:nth-child(2)]:hidden [&:nth-child(2)]:lg:table-cell
+  [&:nth-child(3)]:text-right [&:nth-child(3)]:px-3
+}
+
+.main-table tbody tr  {
+  @apply text-center odd:bg-slate-100 hover:bg-slate-200
+}
+
+.main-table tbody tr td {
+  @apply px-3 py-1.5
+  [&:nth-child(2)]:text-left [&:nth-child(2)]:whitespace-normal
+  [&:nth-child(3)]:text-right
+  [&:nth-child(4)]:text-left [&:nth-child(4)]:hidden [&:nth-child(4)]:lg:table-cell
+  [&:nth-child(5)]:text-right
+  [&:nth-child(6)]:text-right
+}
+
+.graph-table {
+  @apply mx-auto
+}
+
+.graph-table caption {
+  @apply font-bold mt-0 lg:mt-6 mb-1
+}
+
+.graph-table tbody {
+  @apply cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg
+}

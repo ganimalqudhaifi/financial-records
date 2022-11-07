@@ -1,7 +1,8 @@
 import React from 'react'
+import styles from './Footers.module.css';
 
-export default function Footers() {
+export default function Footers({...rest}) {
   return (
-    <div className="text-center text-xs py-4 mt-10 opacity-70">Copyright &copy;2022 Ganim Alqudhaifi</div>
+    <div className={styles.footers} >Copyright &copy;2022 Ganim Alqudhaifi</div>
   )
 }

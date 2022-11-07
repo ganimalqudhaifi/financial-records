@@ -1,0 +1,23 @@
+.modal-text {
+@apply px-3 my-7 md:my-10 lg:my-14 text-base md:text-lg lg:text-xl whitespace-normal
+}
+
+.modal-title {
+@apply mt-4 text-3xl md:text-4xl lg:text-5xl text-center
+}
+
+.modal-title-saldo-awal {
+@apply mb-3 md:mb-4 lg:mb-8 mt-0 lg:mt-3
+}
+
+.modal-title-edit-record {
+@apply mt-4 text-3xl md:text-4xl lg:text-5xl text-center mb-2.5 my-2
+}
+
+.data-index-information {
+@apply text-sm
+}
+
+.modal-title-graph {
+  @apply text-xl md:text-2xl lg:text-3xl pt-6 pb-2 font-semibold
+}

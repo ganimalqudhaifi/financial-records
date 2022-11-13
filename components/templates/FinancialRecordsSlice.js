@@ -4,9 +4,9 @@ import { handleSlice } from '../../context/action/demoAction';
 import { Select } from '../atoms';
 
 export default function FinancialRecordsSlice() {
-  const { dispatch } = useContext(RootContext)
+  const { dispatch } = useContext(RootContext);
   function onSliceShowChangeEventHandler(e) {
-    dispatch(handleSlice(e.target.value))
+    dispatch(handleSlice(e.target.value));
   }
 
   return (

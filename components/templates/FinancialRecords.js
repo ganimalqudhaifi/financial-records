@@ -37,5 +37,5 @@ export default function FinancialRecords() {
       </Wrapper>
       <Footers />
     </div>
-  )
+  );
 }

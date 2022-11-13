@@ -1,9 +1,9 @@
-import styles from './Text.module.css'
+import styles from './Text.module.css';
 
-export default function Text({style, title}) {
+export default function Text({ style, title }) {
   return (
     <>
-    <p className={styles[style]}>{title}</p>
+      <p className={styles[style]}>{title}</p>
     </>
-  )
+  );
 }

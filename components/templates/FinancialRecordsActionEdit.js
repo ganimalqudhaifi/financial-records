@@ -1,38 +1,46 @@
-import { useState, useContext } from 'react'
+import { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { RootContext } from '../../context';
-import { closeModal, hideModal, showModal, updateRecords } from '../../context/action/demoAction';
-import { Button, Input, Label, Select, Text, Wrapper } from '../atoms';
+import { hideModal, showModal, updateRecords } from '../../context/action/demoAction';
+import {
+  Button, Input, Label, Select, Text, Wrapper,
+} from '../atoms';
 import { Modal } from '../molecules';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
-  const action = "editModal" + no
-  const { id, tanggal, keterangan, jenis, jumlah } = record
+  const action = `editModal${no}`;
+  const {
+    id, tanggal, keterangan, jenis, jumlah,
+  } = record;
   const [inputs, setInputs] = useState({
     id,
     tanggal,
     keterangan,
     jenis,
-    jumlah
-  })
-  const { dispatch } = useContext(RootContext)
+    jumlah,
+  });
+  const { state, dispatch } = useContext(RootContext);
+  const { isDemo } = state;
 
   const handleChange = (event) => {
-    const name = event.target.name
-    let value = event.target.value
+    const { name } = event.target;
+    let { value } = event.target;
 
-    if (name === "jumlah") {
-      value = parseInt(value)
+    if (name === 'jumlah') {
+      value = parseInt(value, 10);
     }
 
-    setInputs(values => ({ ...values, [name]: value }))
-  }
+    setInputs((values) => ({ ...values, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
-    console.log({ inputs })
-    e.preventDefault()
-    dispatch(updateRecords(inputs))
-    dispatch(hideModal(action))
+    e.preventDefault();
+    if (!isDemo) {
+      updateRecords(isDemo, inputs);
+    } else {
+      dispatch(updateRecords(isDemo, inputs));
+    }
+    dispatch(hideModal(action));
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -40,16 +48,16 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       timer: 1500,
       timerProgressBar: false,
       didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer)
-        toast.addEventListener('mouseleave', Swal.resumeTimer)
-      }
-    })
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
 
     Toast.fire({
       icon: 'success',
-      title: 'Data berhasil diubah'
-    })
-  }
+      title: 'Data berhasil diubah',
+    });
+  };
 
   return (
     <>
@@ -58,40 +66,52 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       <Modal style="modal-content-edit" action={action}>
         <Text style="modal-title-edit-record" title="Mengubah Catatan" />
         <form onSubmit={handleSubmit}>
-          <Label style="record" title="Jumlah" htmlFor={"jumlah" + action} />
-          <Input style="record" type="number"
-            id={"jumlah" + action}
-            name={"jumlah"}
+          <Label style="record" title="Jumlah" htmlFor={`jumlah${action}`} />
+          <Input
+            style="record"
+            type="number"
+            id={`jumlah${action}`}
+            name="jumlah"
             value={inputs.jumlah}
             placeholder="jumlah"
             onChange={handleChange}
-            required />
+            required
+          />
 
-          <Label style="record" title="Keterangan" htmlFor={"keterangan" + action} />
-          <Input style="record" type="text"
-            id={"keterangan" + action}
-            name={"keterangan"}
+          <Label style="record" title="Keterangan" htmlFor={`keterangan${action}`} />
+          <Input
+            style="record"
+            type="text"
+            id={`keterangan${action}`}
+            name="keterangan"
             value={inputs.keterangan}
             placeholder="keterangan"
             onChange={handleChange}
-            required />
+            required
+          />
 
-          <Label style="record" title="Jenis" htmlFor={"jenis" + action} />
-          <Select style="record" id={"jenis" + action}
-            name={"jenis"}
+          <Label style="record" title="Jenis" htmlFor={`jenis${action}`} />
+          <Select
+            style="record"
+            id={`jenis${action}`}
+            name="jenis"
             value={inputs.jenis}
-            onChange={handleChange}>
+            onChange={handleChange}
+          >
             <option>Penerimaan</option>
             <option>Pengeluaran</option>
           </Select>
 
-          <Label style="record" title="Tanggal" htmlFor={"date" + action} />
-          <Input style="record" type="date"
-            id={"date" + action}
-            name={"date"}
+          <Label style="record" title="Tanggal" htmlFor={`date${action}`} />
+          <Input
+            style="record"
+            type="date"
+            id={`date${action}`}
+            name="date"
             value={inputs.tanggal}
             onChange={handleChange}
-            required />
+            required
+          />
 
           <Wrapper styles="modal-button-edit">
             <Button title="Batal" style="modal-cancle" type="button" onClick={() => dispatch(hideModal(action))} />
@@ -99,8 +119,6 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           </Wrapper>
         </form>
       </Modal>
-
-
     </>
   );
 }

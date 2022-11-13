@@ -1,1 +1,1 @@
-export * from './globalReducer.js'
+export * from './globalReducer';

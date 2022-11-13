@@ -1,7 +1,7 @@
-export default function Gap({width,height}) {
+export default function Gap({ width, height }) {
   return (
     <>
-    <div style={{width,height}}/>
+      <div style={{ width, height }} />
     </>
-  )
+  );
 }

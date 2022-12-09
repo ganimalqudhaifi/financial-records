@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Head from 'next/head';
-import FinancialRecords from '../../components/templates/FinancialRecords';
+import { FinancialRecords } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';

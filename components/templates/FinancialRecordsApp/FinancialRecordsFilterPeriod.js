@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { RootContext } from '../../context';
-import { handleFilterPeriod } from '../../context/action/demoAction';
-import { templateDateMY } from '../../utils/templateDate';
-import { Select } from '../atoms';
+import { RootContext } from '../../../context';
+import { handleFilterPeriod } from '../../../context/action/demoAction';
+import { templateDateMY } from '../../../utils/templateDate';
+import { Select } from '../../atoms';
 
 export default function FinancialRecordsFilterPeriod() {
   const { dispatch, state } = useContext(RootContext);

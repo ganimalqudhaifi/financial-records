@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { RootContext } from '../../context';
-import { handleSearch } from '../../context/action/demoAction';
-import { Input, Wrapper } from '../atoms';
+import { RootContext } from '../../../context';
+import { handleSearch } from '../../../context/action/demoAction';
+import { Input, Wrapper } from '../../atoms';
 
 function FinancialRecordsSearch() {
   const { dispatch } = useContext(RootContext);

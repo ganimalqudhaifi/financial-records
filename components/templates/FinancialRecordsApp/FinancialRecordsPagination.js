@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { RootContext } from '../../context';
-import { changePaginationIndex } from '../../context/action/demoAction';
-import { Button, Text, Wrapper } from '../atoms';
+import { RootContext } from '../../../context';
+import { changePaginationIndex } from '../../../context/action/demoAction';
+import { Button, Text, Wrapper } from '../../atoms';
 
 export default function FinancialRecordsPaginantion() {
   const { state, dispatch } = useContext(RootContext);

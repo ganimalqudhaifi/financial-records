@@ -9,10 +9,10 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { RootContext } from '../../context';
-import { showModal } from '../../context/action/demoAction';
-import { Text, Table, Wrapper } from '../atoms';
-import { Modal } from '../molecules';
+import { RootContext } from '../../../context';
+import { showModal } from '../../../context/action/demoAction';
+import { Text, Table, Wrapper } from '../../atoms';
+import { Modal } from '../../molecules';
 
 ChartJS.register(
   CategoryScale,

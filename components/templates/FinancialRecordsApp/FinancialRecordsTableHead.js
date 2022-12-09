@@ -1,10 +1,10 @@
 import { useContext, useState } from 'react';
-import { RootContext } from '../../context';
-import { hideModal, showModal } from '../../context/action/demoAction';
+import { RootContext } from '../../../context';
+import { hideModal, showModal } from '../../../context/action/demoAction';
 import {
   Button, Input, Text, Wrapper,
-} from '../atoms';
-import { Modal } from '../molecules';
+} from '../../atoms';
+import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
   const action = 'changeSaldoAwalModal';

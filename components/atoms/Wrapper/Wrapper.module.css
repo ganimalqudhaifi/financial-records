@@ -33,23 +33,3 @@
 .graph-bar-modal {
   @apply p-4
 }
-
-.stertch-filter-search {
-  @apply flex items-stretch
-}
-
-.app-table-bar {
-  @apply flex justify-between flex-wrap px-0.5 mb-1 md:mb-0.5
-}
-
-.app-table {
-  @apply lg:w-full lg:mr-6
-}
-
-.app-informaion-chart {
-  @apply flex justify-evenly mt-4 lg:mt-0 lg:block
-}
-
-.app-main {
-  @apply lg:flex flex-1 lg:justify-between
-}

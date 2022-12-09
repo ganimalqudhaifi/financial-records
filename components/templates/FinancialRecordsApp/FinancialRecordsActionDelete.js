@@ -1,8 +1,8 @@
 import { useContext } from 'react';
-import { RootContext } from '../../context';
-import { showModal, hideModal, deleteRecord } from '../../context/action/demoAction';
-import { Button, Text } from '../atoms';
-import { Modal } from '../molecules';
+import { RootContext } from '../../../context';
+import { showModal, hideModal, deleteRecord } from '../../../context/action/demoAction';
+import { Button, Text } from '../../atoms';
+import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionDelete({ id }) {
   const action = `deleteModal${id}`;

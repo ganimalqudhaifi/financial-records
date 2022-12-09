@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import FinancialRecords from '../../components/templates/FinancialRecords';
-
+import { FinancialRecords } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
 import { database, ref, onValue } from '../../config/firebase';
@@ -14,9 +13,10 @@ export default function App() {
 
   useEffect(() => {
     dispatch(isDemo(false));
-    const uid = localStorage.getItem('uid');
+    let uid = localStorage.getItem('uid');
     if (uid === null) {
-      router.push('/login');
+      uid = sessionStorage.getItem('uid');
+      (uid !== null) ? setIsLogin(true) : router.push('/login');
     } else {
       setIsLogin(true);
     }

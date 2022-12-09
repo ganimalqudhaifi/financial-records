@@ -1,11 +1,14 @@
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Script from 'next/script';
 import React, { useContext, useState } from 'react';
 import {
-  Button, Gap, Input, Label,
+  Button, Input, Label,
 } from '../../components';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
 import { changeUser } from '../../context/action/demoAction';
+import styles from './Login.module.css';
 
 export default function Login() {
   const { dispatch } = useContext(RootContext);
@@ -14,6 +17,8 @@ export default function Login() {
     email: '',
     password: '',
   });
+  const [remember, setRemember] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setInputs((values) => ({
@@ -22,71 +27,91 @@ export default function Login() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setIsLoading(true);
     const { email, password } = inputs;
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    await signInWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const dataUser = {
-          email: res.user.email,
           uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
-          refreshToken: res.user.refreshToken,
         };
-        console.log('sign in success', res.user);
         dispatch(changeUser(dataUser));
-        localStorage.setItem('uid', JSON.stringify(dataUser.uid));
+        if (remember === true) {
+          localStorage.setItem('uid', JSON.stringify(dataUser.uid));
+        } else {
+          sessionStorage.setItem('uid', JSON.stringify(dataUser.uid));
+        }
         setInputs({
           email: '',
           password: '',
         });
         router.push('/app');
+        setIsLoading(false);
       })
-      .catch((error) => {
-        console.log('sign up failed', error);
-        console.log('failed reason', error.message);
+      .catch(() => {
       });
+    setIsLoading(false);
+  };
+
+  const handleRemember = () => {
+    setRemember(!remember);
   };
 
   return (
     <>
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="flex w-[380px] bg-slate-300 py-5 rounded-md shadow-xl justify-center items-center">
-          <form className="w-full mx-6 flex flex-col" onSubmit={handleSubmit}>
-            <h1 className="text-5xl font-semibold text-center pb-6 pt-2">Login</h1>
-            <Label
-              style="login"
-              title="Email"
-            />
-            <Input
-              style="login"
-              type="text"
-              name="email"
-              placeholder="Masukkan email..."
-              onChange={handleChange}
-              required
-            />
-            <Gap height={10} />
-            <Label
-              style="login"
-              title="Password"
-            />
-            <Input
-              style="login"
-              type="password"
-              name="password"
-              placeholder="Masukkan password..."
-              onChange={handleChange}
-              required
-            />
-            <Gap height={30} />
-            <Button
-              style="login"
-              title="Masuk"
-              type="Submit"
-            />
+      <div className={styles.body}>
+        <div className={styles.container}>
+          <form onSubmit={handleSubmit}>
+            <h3>Log In</h3>
+            <div className="firebaseui-auth-container" />
+            <div className={styles.inputBox}>
+              <Label htmlFor="email" style="login-register" title="Email" />
+              <div className={styles.box}>
+                <div className={styles.icon}><ion-icon name="person" /></div>
+                <Input
+                  id="email"
+                  style="login-register"
+                  type="text"
+                  name="email"
+                  placeholder="Masukkan email..."
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className={styles.inputBox}>
+              <Label htmlFor="password" style="login-register" title="Password" />
+              <div className={styles.box}>
+                <div className={styles.icon}><ion-icon name="lock-closed" /></div>
+                <Input
+                  id="password"
+                  style="login-register"
+                  type="password"
+                  name="password"
+                  placeholder="Masukkan password..."
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className={styles.remember}>
+              <Input type="checkbox" id="remember" styles="login-register-checkbox" onChange={handleRemember} />
+              <Label htmlFor="remember" style="login-register-checkbox" title="Remember me" />
+            </div>
+            <Button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Masuk'} type="Submit" disabled={isLoading} />
+            <Link className={styles['link-register']} href="/register">
+              {'Belum punya akun? '}
+              <span>Daftar</span>
+            </Link>
           </form>
         </div>
+        <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
+        <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
       </div>
     </>
   );

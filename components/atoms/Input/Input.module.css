@@ -1,5 +1,5 @@
-.login {
-  @apply block bg-slate-50 px-3 py-2 shadow-inner shadow-slate-400 rounded-md border-slate-400 border
+.login-register {
+  @apply relative w-full px-5 py-[10px] rounded-full shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(0,0,0,.35),inset_-3px_-3px_5px_rgba(0,0,0,.5)] outline-0 text-sm leading-[24px]
 }
 
 .record {

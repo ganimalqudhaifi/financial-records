@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import { RootContext } from '../../context';
-import Table from '../atoms/Table';
+import { RootContext } from '../../../context';
+import Table from '../../atoms/Table';
 
 export default function FinancialRecordsInformation() {
   const { state } = useContext(RootContext);

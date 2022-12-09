@@ -1,11 +1,11 @@
 import { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
-import { RootContext } from '../../context';
-import { hideModal, showModal, updateRecords } from '../../context/action/demoAction';
+import { RootContext } from '../../../context';
+import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
 import {
   Button, Input, Label, Select, Text, Wrapper,
-} from '../atoms';
-import { Modal } from '../molecules';
+} from '../../atoms';
+import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
   const action = `editModal${no}`;

@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useContext, useState } from 'react';
+import Swal from 'sweetalert2';
 import {
   Button, Input, Label,
 } from '../../components';
@@ -49,12 +50,26 @@ export default function Register() {
         });
         router.push('/app');
       })
-      .catch(() => {
+      .catch((err) => {
+        const errMsg = err.code === 'auth/email-already-in-use' ? 'Email telah digunakan' : err.code === 'auth/invalid-email' ? 'Email tidak sah' : 'terjadi kesalahan';
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: 'error',
+          title: errMsg,
+        });
       });
-    setInputs({
-      email: '',
-      password: '',
-    });
     setIsLoading(false);
   };
 

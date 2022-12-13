@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useContext, useState } from 'react';
+import Swal from 'sweetalert2';
 import {
   Button, Input, Label,
 } from '../../components';
@@ -55,7 +56,25 @@ export default function Login() {
         router.push('/app');
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((err) => {
+        const errMsg = err.code === 'auth/auth/user-not-found' ? 'Email tidak ditemukan' : err.code === 'auth/invalid-email' ? 'Email tidak sah' : 'terjadi kesalahan';
+
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: false,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+          },
+        });
+
+        Toast.fire({
+          icon: 'error',
+          title: errMsg,
+        });
       });
     setIsLoading(false);
   };

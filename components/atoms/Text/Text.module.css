@@ -7,7 +7,7 @@
 }
 
 .modal-title-saldo-awal {
-@apply mb-3 md:mb-4 lg:mb-8 mt-0 lg:mt-3
+@apply mb-3 text-3xl md:text-4xl lg:text-5xl md:mb-4 lg:mb-8 mt-0 lg:mt-3
 }
 
 .modal-title-edit-record {

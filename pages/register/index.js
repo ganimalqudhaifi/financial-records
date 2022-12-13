@@ -17,6 +17,7 @@ export default function Register() {
     email: '',
     password: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     setInputs((values) => ({
@@ -25,10 +26,11 @@ export default function Register() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
+    setIsLoading(true);
     const { email, password } = inputs;
     e.preventDefault();
-    createUserWithEmailAndPassword(auth, email, password)
+    await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const dataUser = {
           email: res.user.email,
@@ -50,6 +52,7 @@ export default function Register() {
       email: '',
       password: '',
     });
+    setIsLoading(false);
   };
 
   return (
@@ -88,7 +91,7 @@ export default function Register() {
                 />
               </div>
             </div>
-            <Button className={styles['btn-register']} title="Daftar" type="Submit" />
+            <Button className={`${styles['btn-register']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Daftar'} type="Submit" disabled={isLoading} />
             <div className={styles['link-login']}>
               {'Sudah punya akun? '}
               <Link href="/login">Login</Link>

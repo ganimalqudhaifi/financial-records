@@ -21,6 +21,15 @@ module.exports = {
           color: '#29fd53',
         },
       },
+      animation: {
+        pop: 'pop .5s',
+      },
+      keyframes: {
+        pop: {
+          '0%': { scale: '0', opacity: '.2' },
+          '100%': { scale: '1', opacity: '1' },
+        },
+      },
     },
   },
   plugins: [],

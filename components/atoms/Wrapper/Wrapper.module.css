@@ -1,13 +1,13 @@
 .modal-button-add {
-  @apply buttons mt-2
+  @apply mt-2
 }
 
 .modal-button-edit {
-  @apply buttons mt-2
+  @apply mt-2
 }
 
 .modal-button-saldo-awal {
-  @apply buttons mt-1.5 md:mt-3 lg:mt-4
+  @apply mt-1.5 md:mt-3 lg:mt-4
 }
 
 .pagination-field {

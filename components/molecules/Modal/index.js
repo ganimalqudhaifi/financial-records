@@ -8,7 +8,7 @@ export default function Modal({ action, children, style }) {
   return (
     <>
       <div id={action} className={styles.modal} onClick={(e) => dispatch(closeModal(e, action))}>
-        <div className={styles[style]}>
+        <div className={`${styles[style]} animate-pop`}>
           <span className={styles.close} onClick={() => dispatch(hideModal(action))}>&times;</span>
           {children}
         </div>

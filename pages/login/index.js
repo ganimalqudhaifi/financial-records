@@ -41,6 +41,8 @@ export default function Login() {
           emailVerified: res.user.emailVerified,
         };
         dispatch(changeUser(dataUser));
+        localStorage.removeItem('uid');
+        sessionStorage.removeItem('uid');
         if (remember === true) {
           localStorage.setItem('uid', JSON.stringify(dataUser.uid));
         } else {

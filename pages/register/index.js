@@ -33,12 +33,15 @@ export default function Register() {
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
         const dataUser = {
-          email: res.user.email,
           uid: res.user.uid,
+          displayName: res.user.displayName,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
-          refreshToken: res.user.refreshToken,
         };
         dispatch(changeUser(dataUser));
+        localStorage.removeItem('uid');
+        sessionStorage.removeItem('uid');
         sessionStorage.setItem('uid', JSON.stringify(dataUser.uid));
         setInputs({
           email: '',

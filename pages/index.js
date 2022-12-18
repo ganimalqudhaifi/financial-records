@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import styles from './Home.module.css';
 
 export default function Home() {
-  const [navbartoggle, setNavbarToggle] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
@@ -32,25 +31,32 @@ export default function Home() {
               <span className="text-xs leading-7 mt-[-10px]">Records</span>
             </div>
           </Link>
-          <nav>
-            <ul className={`hidden lg:flex ${navbartoggle ? 'flex' : 'hidden'}`}>
-              <li><Link href="/" className="px-6 font-medium transition hover:text-main-color">Home</Link></li>
-              <li><Link href="/#" className="px-6 font-medium transition hover:text-main-color">About</Link></li>
-              <li><Link href="/#" className="px-6 font-medium transition hover:text-main-color">Contact</Link></li>
+          <nav className={styles.navigation}>
+            <ul>
+              <li><Link href="#">Home</Link></li>
+              <li><Link href="#">About</Link></li>
+              <li><Link href="#">Contact</Link></li>
+              <li><Link href="/register">Register</Link></li>
             </ul>
           </nav>
           {
             (isLogin === false)
               ? (
-                <div className="lg: w-2/12 flex space-x-3 sm:space-x-7">
+                <div className="lg:w-40 flex space-x-3 sm:space-x-7">
                   <Link href="/login" className="flex gap-2">
                     <svg className="w-6 fill-main-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z" /></svg>
-                    <span className="duration-300 hover:font-semibold">Login</span>
+                    <span className="duration-300 hover:font-semibold active:font-normal">Login</span>
                   </Link>
-                  <Link href="/register" className="duration-300 hover:font-semibold">Register</Link>
-                  <svg className="w-6 h-6 lg:hidden cursor-pointer" onClick={() => setNavbarToggle(!navbartoggle)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12" />
-                  </svg>
+                  <Link href="/register" className="duration-300 hover:font-semibold active:font-normal hidden lg:block">Register</Link>
+                  <div
+                    className={styles.toggle}
+                    onClick={() => {
+                      document.querySelector(`.${styles.navigation}`).classList.toggle(styles.active);
+                      document.querySelector(`.${styles.toggle}`).classList.toggle(styles.active);
+                    }}
+                  >
+                    <span />
+                  </div>
                 </div>
               )
               : (
@@ -67,14 +73,14 @@ export default function Home() {
         </header>
 
         <main className="mt-10 flex-1">
-          <article className="grid grid-cols-2">
+          <article className="grid sm:grid-cols-2">
             <section className="pl-12 my-auto">
               <h1 className="text-5xl text-main-color font-bold">Financial Records.</h1>
               <p className="text-md mt-1">Track your financial flow with financial records</p>
-              <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold hover:scale-105 duration-200" href="/demo">Try Demo</Link>
+              <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold hover:scale-105 duration-200 active:scale-100" href="/demo">Try Demo</Link>
             </section>
-            <section className="grid place-items-center">
-              <svg className="p-3 align-center rounded-md w-[400px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 641.51274 626.39159" xmlnsXlink="http://www.w3.org/1999/xlink">
+            <section className="hidden sm:grid place-items-center">
+              <svg className="p-3 align-center rounded-md w-[300px] md:w-[350px] lg:w-[400px]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 641.51274 626.39159" xmlnsXlink="http://www.w3.org/1999/xlink">
                 <g>
                   <path d="M198.10146,459.50579H117.74436c-2.02587,0-3.67427-1.64844-3.67427-3.67429s1.64841-3.67352,3.67427-3.67352h80.35711c2.02586,0,3.67351,1.64764,3.67351,3.67352s-1.64764,3.67429-3.67351,3.67429h-.00002Z" fill="#29fd53" />
                   <path d="M54.5875,479.17299c0,.66003,.53003,1.19,1.19006,1.19h204.29c.65997,0,1.19-.52997,1.19-1.19,0-.65997-.53003-1.19-1.19-1.19H55.77756c-.66003,0-1.19006,.53003-1.19006,1.19Z" fill="#fff" />

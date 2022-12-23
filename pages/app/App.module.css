@@ -1,5 +1,5 @@
 .body {
-  @apply w-fit lg:w-full h-auto /*px-1 md:px-3 lg:px-20*/ flex flex-col pl-28 pr-10
+  @apply w-fit lg:w-full h-full /*px-1 md:px-3 lg:px-20*/ flex flex-col pl-28 pr-10
 }
 
 .app-main {

@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import Head from 'next/head';
+import Script from 'next/script';
 import { FinancialRecords, Footers } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
@@ -32,6 +33,8 @@ export default function Demo({ records }) {
         </div>
         <Footers />
       </div>
+      <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
+      <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
     </>
   );
 }

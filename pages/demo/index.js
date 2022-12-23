@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from 'react';
 import Head from 'next/head';
-import { FinancialRecords } from '../../components';
+import { FinancialRecords, Footers } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
+import styles from './Demo.module.css';
 
 export default function Demo({ records }) {
   const { dispatch } = useContext(RootContext);
@@ -18,7 +19,19 @@ export default function Demo({ records }) {
       <Head>
         <title>Financial Records - Demo</title>
       </Head>
-      <FinancialRecords />
+      <div className={styles.body}>
+        <div className={styles.header}>
+          <h1 className="text-3xl font-semibold my-6">Table</h1>
+          <div className="flex items-center space-x-1">
+            <span className="text-xl font-semibold">username</span>
+            <span className={styles.icon}><ion-icon name="person-circle-outline" /></span>
+          </div>
+        </div>
+        <div className={styles['app-main']}>
+          <FinancialRecords />
+        </div>
+        <Footers />
+      </div>
     </>
   );
 }

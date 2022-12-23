@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { RootContext } from '../../../context';
-import { hideModal, showModal } from '../../../context/action/demoAction';
+import { changeSaldoAwal, hideModal, showModal } from '../../../context/action/demoAction';
 import {
   Button, Input, Text, Wrapper,
 } from '../../atoms';
@@ -8,13 +8,13 @@ import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
   const action = 'changeSaldoAwalModal';
-  const { state, onSaldoAwal, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useContext(RootContext);
   const { saldoAwal } = state;
   const [inputs, setInputs] = useState(saldoAwal);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSaldoAwal(inputs);
+    dispatch(changeSaldoAwal(inputs));
     dispatch(hideModal(action));
   };
 

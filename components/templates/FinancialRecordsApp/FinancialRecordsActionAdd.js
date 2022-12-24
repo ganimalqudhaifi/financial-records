@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
 import {
-  Button, Input, Label, Select, Text, Wrapper,
+  Button, Input, Label, Select, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -116,10 +116,10 @@ export default function FinancialRecordsActionAdd() {
             required
           />
 
-          <Wrapper style="modal-button-add">
+          <div className="mt-2">
             <Button title="Batal" style="modal-cancle" type="button" onClick={() => dispatch(hideModal(action))} />
             <Button title="Kirim" style="modal-edit" type="submit" />
-          </Wrapper>
+          </div>
 
         </form>
       </Modal>

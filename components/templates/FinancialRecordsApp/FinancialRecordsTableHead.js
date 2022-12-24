@@ -2,7 +2,7 @@ import { useContext, useState } from 'react';
 import { RootContext } from '../../../context';
 import { changeSaldoAwal, hideModal, showModal } from '../../../context/action/demoAction';
 import {
-  Button, Input, Text, Wrapper,
+  Button, Input, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -53,10 +53,10 @@ export default function FinancialRecordsTableHead() {
                 onChange={(e) => setInputs(e.target.value)}
               />
 
-              <Wrapper style="modal-button-saldo-awal">
+              <div className="mt-1.5 md:mt-3 lg:mt-4">
                 <Button style="modal-cancle" title="Batal" type="button" onClick={() => dispatch(hideModal(action))} />
                 <Button style="modal-edit" title="Ubah" type="submit" />
-              </Wrapper>
+              </div>
             </form>
           </Modal>
 

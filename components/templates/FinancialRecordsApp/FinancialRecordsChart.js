@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { RootContext } from '../../../context';
 import { showModal } from '../../../context/action/demoAction';
-import { Text, Table, Wrapper } from '../../atoms';
+import { Text, Table } from '../../atoms';
 import { Modal } from '../../molecules';
 
 ChartJS.register(
@@ -69,9 +69,9 @@ export default function FinancialRecordsChart() {
         <tbody onClick={() => dispatch(showModal(action))}>
           <tr>
             <th>
-              <Wrapper style="graph-bar">
+              <div className="w-[16.4rem]">
                 <Bar options={chartOptions} data={chartData} />
-              </Wrapper>
+              </div>
             </th>
           </tr>
         </tbody>
@@ -80,9 +80,9 @@ export default function FinancialRecordsChart() {
       <Modal action={action} style="modal-content-graph">
         <Text style="modal-title-graph" title="Grafik" />
 
-        <Wrapper style="graph-bar-modal">
+        <div className="p-4">
           <Bar options={chartOptions} data={chartData} />
-        </Wrapper>
+        </div>
       </Modal>
 
     </>

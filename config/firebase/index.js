@@ -1,5 +1,11 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+} from 'firebase/auth';
 import {
   getDatabase, ref, set, push, remove, onValue,
 } from 'firebase/database';
@@ -18,5 +24,13 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getDatabase(app, 'https://financial-records-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/');
 export {
-  createUserWithEmailAndPassword, signInWithEmailAndPassword, ref, set, push, remove, onValue,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  updateProfile,
+  ref,
+  set,
+  push,
+  remove,
+  onValue,
 };

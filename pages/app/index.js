@@ -4,12 +4,15 @@ import { useRouter } from 'next/router';
 import styles from './App.module.css';
 import { FinancialRecords, Footers } from '../../components';
 import { RootContext } from '../../context';
-import { setRecords, isDemo } from '../../context/action/demoAction';
-import { database, ref, onValue } from '../../config/firebase';
+import { setRecords, isDemo, changeUser } from '../../context/action/demoAction';
+import {
+  database, ref, onValue, onAuthStateChanged, auth, updateProfile,
+} from '../../config/firebase';
 import NavigationApp from '../../components/organisms/NavigationApp';
 
 export default function App() {
-  const { dispatch } = useContext(RootContext);
+  const { state, dispatch } = useContext(RootContext);
+  const { user } = state;
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
 
@@ -21,6 +24,25 @@ export default function App() {
       (uid !== null) ? setIsLogin(true) : router.push('/login');
     } else {
       setIsLogin(true);
+    }
+    if (!user.displayName) {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const dataUser = {
+            uid: user.uid,
+            displayName: user.displayName,
+            email: user.email,
+            photoURL: user.photoURL,
+            emailVerified: user.emailVerified,
+          };
+          dispatch(changeUser(dataUser));
+        }
+      });
+      if (user.displayName === null) {
+        updateProfile(auth.currentUser, {
+          displayName: 'username',
+        });
+      }
     }
     const recordsRef = ref(database, `records/${JSON.parse(uid)}`);
     onValue(recordsRef, (snapshot) => {
@@ -45,7 +67,24 @@ export default function App() {
           <div className={styles.header}>
             <h1 className="text-3xl font-semibold my-6">Table</h1>
             <div className="flex items-center space-x-1">
-              <span className="text-xl font-semibold">username</span>
+              <input
+                type="text"
+                className="text-xl font-semibold px-1 rounded text-right hover:bg-slate-200 hover:outline hover:outline-2 hover:outline-slate-300 focus:bg-transparent focus:outline-slate-800"
+                onMouseEnter={(e) => {
+                  e.target.style.width = `${e.target.value.length + 1}ch`;
+                }}
+                onChange={(e) => {
+                  dispatch(changeUser({ ...user, displayName: e.target.value }));
+                  updateProfile(auth.currentUser, {
+                    displayName: e.target.value,
+                  });
+                  e.target.style.width = `${e.target.value.length + 1}ch`;
+                }}
+                value={user.displayName}
+                maxLength={20}
+                contentEditable
+                spellCheck={false}
+              />
               <span className={styles.icon}><ion-icon name="person-circle-outline" /></span>
             </div>
           </div>

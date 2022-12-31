@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import React, { useContext } from 'react';
 import styles from './Headers.module.css';
-import { Wrapper } from '../../atoms';
 import { RootContext } from '../../../context';
 
 export default function Headers() {
@@ -10,7 +9,7 @@ export default function Headers() {
 
   return (
     <>
-      <Wrapper style="auto-layout-col">
+      <div>
         {
           isDemo
             ? <h1 className={styles.title}>Demo</h1>
@@ -39,7 +38,7 @@ export default function Headers() {
               }
           </li>
         </ul>
-      </Wrapper>
+      </div>
     </>
   );
 }

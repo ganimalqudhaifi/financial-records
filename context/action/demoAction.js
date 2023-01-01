@@ -46,7 +46,7 @@ export const changeSaldoAwal = (payload) => ({
 
 export const createRecord = (isDemo, payload) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid'));
+    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
     push(ref(database, `records/${uid}`), payload);
   } else {
     return {
@@ -63,7 +63,7 @@ export const setRecords = (records) => ({
 
 export const updateRecords = (isDemo, payload) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid'));
+    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
     set(ref(database, `records/${uid}/${payload.id}`), payload);
   } else {
     return {
@@ -75,7 +75,7 @@ export const updateRecords = (isDemo, payload) => {
 
 export const deleteRecord = (isDemo, id) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid'));
+    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
     remove(ref(database, `records/${uid}/${id}`));
   } else {
     return {

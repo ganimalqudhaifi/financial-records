@@ -31,7 +31,7 @@ export default function FinancialRecordsActionAdd() {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!isDemo) {
-      createRecord(isDemo, inputs);
+      createRecord(isDemo, { ...inputs, value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1) });
     } else {
       dispatch(createRecord(isDemo, inputs));
     }

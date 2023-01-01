@@ -36,7 +36,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isDemo) {
-      updateRecords(isDemo, inputs);
+      updateRecords(isDemo, { ...inputs, value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1) });
     } else {
       dispatch(updateRecords(isDemo, inputs));
     }

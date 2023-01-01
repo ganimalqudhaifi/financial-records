@@ -39,10 +39,16 @@ export const changePaginationIndex = (payload) => ({
   payload,
 });
 
-export const changeSaldoAwal = (payload) => ({
-  type: globalActionType.CHANGE_SALDO_AWAL,
-  payload,
-});
+export const changeSaldoAwal = (isDemo, payload) => {
+  if (!isDemo) {
+    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
+    set(ref(database, `saldoAwal/${uid}`), payload);
+  }
+  return {
+    type: globalActionType.CHANGE_SALDO_AWAL,
+    payload,
+  };
+};
 
 export const createRecord = (isDemo, payload) => {
   if (!isDemo) {

@@ -1,6 +1,9 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { database, onValue, ref } from '../../../config/firebase';
 import { RootContext } from '../../../context';
-import { changeSaldoAwal, hideModal, showModal } from '../../../context/action/demoAction';
+import {
+  changeSaldoAwal, hideModal, showModal,
+} from '../../../context/action/demoAction';
 import {
   Button, Input, Text,
 } from '../../atoms';
@@ -9,12 +12,23 @@ import { Modal } from '../../molecules';
 export default function FinancialRecordsTableHead() {
   const action = 'changeSaldoAwalModal';
   const { state, dispatch } = useContext(RootContext);
-  const { saldoAwal } = state;
+  const { isDemo, saldoAwal } = state;
   const [inputs, setInputs] = useState(saldoAwal);
+
+  useEffect(() => {
+    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
+    const recordsRef = ref(database, `saldoAwal/${uid}`);
+    if (isDemo === false) {
+      onValue(recordsRef, (snapshot) => {
+        const payload = snapshot.val();
+        dispatch(changeSaldoAwal(isDemo, payload));
+      });
+    }
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeSaldoAwal(inputs));
+    dispatch(changeSaldoAwal(isDemo, inputs));
     dispatch(hideModal(action));
   };
 

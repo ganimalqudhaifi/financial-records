@@ -27,24 +27,49 @@ export default function FinancialRecordsChart() {
   const action = 'chartModal';
   const { state, dispatch } = useContext(RootContext);
   const { saldoAwal, records } = state;
-
-  const [chartData, setChartData] = useState({
-    datasets: [],
-  });
-
+  const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
 
+  const listPeriod = new Set();
+  records.map((record) => {
+    const d = new Date(record.tanggal);
+    const year = d.getFullYear();
+    const month = d.getMonth();
+    listPeriod.add(`${year}-${month}`);
+  });
+  const arrListPeriod = Array.from(listPeriod);
+
+  const valueDate = (date) => {
+    const target = new Date(date);
+    return `${target.getFullYear()}-${target.getMonth()}`;
+  };
+
   useEffect(() => {
-    const penerimaan = records.filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
-    const pengeluaran = records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
+    // const penerimaan = records.filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
+    const penerimaan = arrListPeriod.map((filterPeriod) => records
+      .filter((record) => valueDate(record.tanggal) === filterPeriod)
+      .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.value : 0), 0));
+
+    const pengeluaran = arrListPeriod.map((filterPeriod) => records
+      .filter((record) => valueDate(record.tanggal) === filterPeriod)
+      .reduce((a, b) => a + (b.jenis === 'Pengeluaran' ? b.value : 0), 0));
+
     setChartData({
-      labels: ['Saldo Awal', 'Penerimaan', 'Pengeluaran', 'Saldo Akhir'],
+      labels: arrListPeriod,
       datasets: [
         {
-          label: 'Rp',
-          data: [saldoAwal, penerimaan, pengeluaran, (saldoAwal + penerimaan - pengeluaran), Math.max(saldoAwal, penerimaan, pengeluaran, (saldoAwal + penerimaan - pengeluaran)) * 1.2],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: ['rgba(71, 85, 105, .9)', 'rgba(51, 65, 85, .9)', 'rgba(30, 41, 59, .9)', 'rgba(15, 23, 42, .9)'],
+          label: 'Penerimaan Rp',
+          data: penerimaan,
+          borderColor: 'rgb(75, 192, 192)',
+          backgroundColor: 'rgba(75, 192, 192, 0.2)',
+          borderWidth: 1,
+        },
+        {
+          label: 'Pengeluaran Rp',
+          data: pengeluaran,
+          borderColor: 'rgb(255, 99, 132)',
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderWidth: 1,
         },
       ],
     });
@@ -59,6 +84,15 @@ export default function FinancialRecordsChart() {
           text: 'Pencatatan Keuangan',
         },
       },
+      scales: {
+        x: {
+          stacked: true,
+        },
+        y: {
+          stacked: true,
+        },
+      },
+
     });
   }, [saldoAwal, records]);
 

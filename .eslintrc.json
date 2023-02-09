@@ -35,6 +35,7 @@
         "array-callback-return": "off",
         "no-shadow": "off",
         "no-unused-expressions": "off",
-        "no-param-reassign": "off"
+        "no-param-reassign": "off",
+        "consistent-return": "off"
     }
 }

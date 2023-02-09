@@ -8,7 +8,7 @@ import {
 } from '../../components';
 import { auth, createUserWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
-import { changeUser } from '../../context/action/demoAction';
+import { changeSaldoAwal, changeUser } from '../../context/action/demoAction';
 import styles from './Register.module.css';
 
 export default function Register() {
@@ -48,6 +48,7 @@ export default function Register() {
           email: '',
           password: '',
         });
+        dispatch(changeSaldoAwal(false, 0));
         router.push('/app');
       })
       .catch((err) => {

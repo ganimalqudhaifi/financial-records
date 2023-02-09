@@ -62,9 +62,9 @@ export default function FinancialRecordsTableHead() {
                 type="number"
                 id="saldoAwal"
                 name="saldoAwal"
-                value={inputs === 0 ? '' : inputs}
+                value={inputs === 0 ? 0 : inputs}
                 placeholder="Masukkan saldo awal"
-                onChange={(e) => setInputs(e.target.value)}
+                onChange={(e) => setInputs(parseFloat(e.target.value))}
               />
 
               <div className="mt-1.5 md:mt-3 lg:mt-4">

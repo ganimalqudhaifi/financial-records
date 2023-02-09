@@ -55,7 +55,7 @@ export default function App() {
       });
       dispatch(setRecords(data));
     });
-  }, [dispatch, router]);
+  }, [dispatch, router, user]);
 
   if (isLogin) {
     return (

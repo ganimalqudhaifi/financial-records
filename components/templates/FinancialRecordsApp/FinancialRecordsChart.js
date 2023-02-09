@@ -45,7 +45,6 @@ export default function FinancialRecordsChart() {
   };
 
   useEffect(() => {
-    // const penerimaan = records.filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
     const penerimaan = arrListPeriod.map((filterPeriod) => records
       .filter((record) => valueDate(record.tanggal) === filterPeriod)
       .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.value : 0), 0));

@@ -9,19 +9,19 @@ export default function NavigationApp() {
         <div className={styles.navigation}>
           <ul>
             <li>
-              <Link href="#">
+              <Link href="/">
                 <span className={styles.icon}><ion-icon name="wallet" /></span>
                 <span className={styles.title}>Financial Records</span>
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link href="/app/dashboard">
                 <span className={styles.icon}><ion-icon name="pie-chart-outline" /></span>
                 <span className={styles.title}>Dashboard</span>
               </Link>
             </li>
             <li>
-              <Link href="#">
+              <Link href="/app">
                 <span className={styles.icon}><ion-icon name="apps-outline" /></span>
                 <span className={styles.title}>Table</span>
               </Link>

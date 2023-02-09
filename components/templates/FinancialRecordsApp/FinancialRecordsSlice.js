@@ -10,11 +10,9 @@ export default function FinancialRecordsSlice() {
   }
 
   return (
-    <>
-      <Select style="slicer-pagination" onChange={onSliceShowChangeEventHandler}>
-        <option>10</option>
-        <option>20</option>
-      </Select>
-    </>
+    <Select style="slicer-pagination" onChange={onSliceShowChangeEventHandler}>
+      <option>10</option>
+      <option>20</option>
+    </Select>
   );
 }

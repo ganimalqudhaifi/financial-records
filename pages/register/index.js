@@ -51,7 +51,14 @@ export default function Register() {
         router.push('/app');
       })
       .catch((err) => {
-        const errMsg = err.code === 'auth/email-already-in-use' ? 'Email telah digunakan' : err.code === 'auth/invalid-email' ? 'Email tidak sah' : 'terjadi kesalahan';
+        let errMsg;
+        if (err.code === 'auth/email-already-in-use') {
+          errMsg = 'Email telah digunakan';
+        } else if (err.code === 'auth/invalid-email') {
+          errMsg = 'Email tidak sah';
+        } else {
+          errMsg = 'terjadi kesalahan';
+        }
 
         const Toast = Swal.mixin({
           toast: true,
@@ -74,51 +81,49 @@ export default function Register() {
   };
 
   return (
-    <>
-      <div className={styles.body}>
-        <div className={styles.container}>
-          <form onSubmit={handleSubmit}>
-            <h3>Register</h3>
-            <div className={styles.inputBox}>
-              <Label htmlFor="email" style="login-register" title="Email" />
-              <div className={styles.box}>
-                <div className={styles.icon}><ion-icon name="person" /></div>
-                <Input
-                  id="email"
-                  style="login-register"
-                  type="text"
-                  name="email"
-                  placeholder="Masukkan email..."
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+    <div className={styles.body}>
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit}>
+          <h3>Register</h3>
+          <div className={styles.inputBox}>
+            <Label htmlFor="email" style="login-register" title="Email" />
+            <div className={styles.box}>
+              <div className={styles.icon}><ion-icon name="person" /></div>
+              <Input
+                id="email"
+                style="login-register"
+                type="text"
+                name="email"
+                placeholder="Masukkan email..."
+                onChange={handleChange}
+                required
+              />
             </div>
-            <div className={styles.inputBox}>
-              <Label htmlFor="password" style="login-register" title="Password" />
-              <div className={styles.box}>
-                <div className={styles.icon}><ion-icon name="lock-closed" /></div>
-                <Input
-                  id="password"
-                  style="login-register"
-                  type="password"
-                  name="password"
-                  placeholder="Masukkan password..."
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+          </div>
+          <div className={styles.inputBox}>
+            <Label htmlFor="password" style="login-register" title="Password" />
+            <div className={styles.box}>
+              <div className={styles.icon}><ion-icon name="lock-closed" /></div>
+              <Input
+                id="password"
+                style="login-register"
+                type="password"
+                name="password"
+                placeholder="Masukkan password..."
+                onChange={handleChange}
+                required
+              />
             </div>
-            <Button className={`${styles['btn-register']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Daftar'} type="Submit" disabled={isLoading} />
-            <div className={styles['link-login']}>
-              {'Sudah punya akun? '}
-              <Link href="/login">Login</Link>
-            </div>
-          </form>
-        </div>
-        <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
-        <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
+          </div>
+          <Button className={`${styles['btn-register']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Daftar'} type="Submit" disabled={isLoading} />
+          <div className={styles['link-login']}>
+            {'Sudah punya akun? '}
+            <Link href="/login">Login</Link>
+          </div>
+        </form>
       </div>
-    </>
+      <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
+      <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
+    </div>
   );
 }

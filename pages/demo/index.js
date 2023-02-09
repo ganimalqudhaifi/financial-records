@@ -1,14 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
 import { FinancialRecords, Footers } from '../../components';
-import { RootContext } from '../../context';
+import { useGlobalContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
 import styles from './Demo.module.css';
 
 export default function Demo({ records }) {
-  const { dispatch } = useContext(RootContext);
+  const { dispatch } = useGlobalContext();
 
   useEffect(() => {
     dispatch(isDemo(true));

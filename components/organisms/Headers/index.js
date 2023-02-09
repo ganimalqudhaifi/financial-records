@@ -8,16 +8,15 @@ export default function Headers() {
   const { isDemo } = state;
 
   return (
-    <>
-      <div>
-        {
+    <div>
+      {
           isDemo
             ? <h1 className={styles.title}>Demo</h1>
             : <h1 className={styles.title}>User</h1>
         }
-        <ul>
-          <li>
-            {
+      <ul>
+        <li>
+          {
               isDemo
                 ? (
                   <Link href="/app">
@@ -36,9 +35,8 @@ export default function Headers() {
                   </Link>
                 )
               }
-          </li>
-        </ul>
-      </div>
-    </>
+        </li>
+      </ul>
+    </div>
   );
 }

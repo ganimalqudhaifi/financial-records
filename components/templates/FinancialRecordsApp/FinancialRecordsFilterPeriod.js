@@ -23,13 +23,12 @@ export default function FinancialRecordsFilterPeriod() {
   };
 
   return (
-    <>
-      <Select style="filter-period" onChange={handleChange}>
-        <option value="">Semua Periode</option>
-        {
-        [...listPeriod].map((period) => <option key={period} value={period}>{templateDateMY(period)}</option>)
-      }
-      </Select>
-    </>
+    <Select style="filter-period" onChange={handleChange}>
+      <option value="">Semua Periode</option>
+      {
+          [...listPeriod]
+            .map((period) => <option key={period} value={period}>{templateDateMY(period)}</option>)
+        }
+    </Select>
   );
 }

@@ -57,7 +57,14 @@ export default function Login() {
         setIsLoading(false);
       })
       .catch((err) => {
-        const errMsg = err.code === 'auth/auth/user-not-found' ? 'Email tidak ditemukan' : err.code === 'auth/invalid-email' ? 'Email tidak sah' : 'terjadi kesalahan';
+        let errMsg;
+        if (err.code === 'auth/auth/user-not-found') {
+          errMsg = 'Email tidak ditemukan';
+        } else if (err.code === 'auth/invalid-email') {
+          errMsg = 'Email tidak sah';
+        } else {
+          errMsg = 'terjadi kesalahan';
+        }
 
         const Toast = Swal.mixin({
           toast: true,
@@ -84,56 +91,54 @@ export default function Login() {
   };
 
   return (
-    <>
-      <div className={styles.body}>
-        <div className={styles.container}>
-          <form onSubmit={handleSubmit}>
-            <h3>Log In</h3>
-            <div className="firebaseui-auth-container" />
-            <div className={styles.inputBox}>
-              <Label htmlFor="email" style="login-register" title="Email" />
-              <div className={styles.box}>
-                <div className={styles.icon}><ion-icon name="person" /></div>
-                <Input
-                  id="email"
-                  style="login-register"
-                  type="text"
-                  name="email"
-                  placeholder="Masukkan email..."
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+    <div className={styles.body}>
+      <div className={styles.container}>
+        <form onSubmit={handleSubmit}>
+          <h3>Log In</h3>
+          <div className="firebaseui-auth-container" />
+          <div className={styles.inputBox}>
+            <Label htmlFor="email" style="login-register" title="Email" />
+            <div className={styles.box}>
+              <div className={styles.icon}><ion-icon name="person" /></div>
+              <Input
+                id="email"
+                style="login-register"
+                type="text"
+                name="email"
+                placeholder="Masukkan email..."
+                onChange={handleChange}
+                required
+              />
             </div>
-            <div className={styles.inputBox}>
-              <Label htmlFor="password" style="login-register" title="Password" />
-              <div className={styles.box}>
-                <div className={styles.icon}><ion-icon name="lock-closed" /></div>
-                <Input
-                  id="password"
-                  style="login-register"
-                  type="password"
-                  name="password"
-                  placeholder="Masukkan password..."
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+          </div>
+          <div className={styles.inputBox}>
+            <Label htmlFor="password" style="login-register" title="Password" />
+            <div className={styles.box}>
+              <div className={styles.icon}><ion-icon name="lock-closed" /></div>
+              <Input
+                id="password"
+                style="login-register"
+                type="password"
+                name="password"
+                placeholder="Masukkan password..."
+                onChange={handleChange}
+                required
+              />
             </div>
-            <div className={styles.remember}>
-              <Input type="checkbox" id="remember" styles="login-register-checkbox" onChange={handleRemember} />
-              <Label htmlFor="remember" style="login-register-checkbox" title="Remember me" />
-            </div>
-            <Button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Masuk'} type="Submit" disabled={isLoading} />
-            <Link className={styles['link-register']} href="/register">
-              {'Belum punya akun? '}
-              <span>Daftar</span>
-            </Link>
-          </form>
-        </div>
-        <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
-        <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
+          </div>
+          <div className={styles.remember}>
+            <Input type="checkbox" id="remember" styles="login-register-checkbox" onChange={handleRemember} />
+            <Label htmlFor="remember" style="login-register-checkbox" title="Remember me" />
+          </div>
+          <Button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Masuk'} type="Submit" disabled={isLoading} />
+          <Link className={styles['link-register']} href="/register">
+            {'Belum punya akun? '}
+            <span>Daftar</span>
+          </Link>
+        </form>
       </div>
-    </>
+      <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
+      <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
+    </div>
   );
 }

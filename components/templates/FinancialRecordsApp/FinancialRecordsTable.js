@@ -16,13 +16,12 @@ export default function FinancialRecordsTable() {
   };
 
   return (
-    <>
-      <Table style="main-table">
-        <thead>
-          <FinancialRecordsTableHead />
-        </thead>
-        <tbody>
-          {
+    <Table style="main-table">
+      <thead>
+        <FinancialRecordsTableHead />
+      </thead>
+      <tbody>
+        {
             records
               .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
               .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
@@ -41,8 +40,7 @@ export default function FinancialRecordsTable() {
                 />
               ))
           }
-        </tbody>
-      </Table>
-    </>
+      </tbody>
+    </Table>
   );
 }

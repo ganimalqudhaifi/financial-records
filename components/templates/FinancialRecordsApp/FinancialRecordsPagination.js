@@ -32,20 +32,18 @@ export default function FinancialRecordsPaginantion() {
   const indexAfter = paginationIndex + 2;
 
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <Text style="data-index-information" title={`Menampilkan ${!arrPagination.length ? 0 : (sliceShow * (paginationIndex - 1)) + 1} sampai ${sliceShow * paginationIndex > entires ? entires : sliceShow * paginationIndex} dari ${entires} data`} />
-        <div className="float-right text-slate-700">
-          <Button style="pagination-next-previous" title="&laquo;" onClick={() => onSendIndex(paginationIndex === 1 ? paginationIndex : paginationIndex - 1)} />
-          {
+    <div className="flex items-center justify-between">
+      <Text style="data-index-information" title={`Menampilkan ${!arrPagination.length ? 0 : (sliceShow * (paginationIndex - 1)) + 1} sampai ${sliceShow * paginationIndex > entires ? entires : sliceShow * paginationIndex} dari ${entires} data`} />
+      <div className="float-right text-slate-700">
+        <Button style="pagination-next-previous" title="&laquo;" onClick={() => onSendIndex(paginationIndex === 1 ? paginationIndex : paginationIndex - 1)} />
+        {
           arrPagination.map((btnpagination) => (((btnpagination > 5 && paginationIndex <= 3) || ((paginationIndex > 3 && paginationIndex <= arrPagination.length - 2) && (btnpagination > indexAfter || btnpagination < indexBefore)) || (btnpagination < arrPagination.length - 4 && indexAfter >= arrPagination.length))
             ? <Button style="pagination-number-hidden" title={btnpagination} id={`pgnt${btnpagination}`} key={btnpagination} onClick={() => onSendIndex(btnpagination)} />
             : <Button style={btnpagination === paginationIndex ? 'pagination-number-active' : 'pagiantion-number'} title={btnpagination} id={`pgnt${btnpagination}`} key={btnpagination} onClick={() => onSendIndex(btnpagination)} />
           ))
         }
-          <Button style="pagination-next-previous" title="&raquo;" onClick={() => onSendIndex(paginationIndex === arrPagination.length ? paginationIndex : paginationIndex + 1)} />
-        </div>
+        <Button style="pagination-next-previous" title="&raquo;" onClick={() => onSendIndex(paginationIndex === arrPagination.length ? paginationIndex : paginationIndex + 1)} />
       </div>
-    </>
+    </div>
   );
 }

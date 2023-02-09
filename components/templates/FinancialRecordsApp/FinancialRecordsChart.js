@@ -99,15 +99,17 @@ export default function FinancialRecordsChart() {
     <>
       <Table style="graph-table">
         <caption>Grafik</caption>
-        <tbody onClick={() => dispatch(showModal(action))}>
-          <tr>
-            <th>
-              <div className="w-[16.4rem]">
-                <Bar options={chartOptions} data={chartData} />
-              </div>
-            </th>
-          </tr>
-        </tbody>
+        <div onClick={() => dispatch(showModal(action))}>
+          <tbody>
+            <tr>
+              <th>
+                <div className="w-[16.4rem]">
+                  <Bar options={chartOptions} data={chartData} />
+                </div>
+              </th>
+            </tr>
+          </tbody>
+        </div>
       </Table>
 
       <Modal action={action} style="modal-content-graph">

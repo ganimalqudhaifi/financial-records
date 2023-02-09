@@ -1,8 +1,12 @@
-import GlobalProvider from '../context';
+import { GlobalContextProvider } from '../context';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />;
+  return (
+    <GlobalContextProvider>
+      <Component {...pageProps} />
+    </GlobalContextProvider>
+  );
 }
 
-export default GlobalProvider(MyApp);
+export default MyApp;

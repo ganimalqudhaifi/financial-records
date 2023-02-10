@@ -42,12 +42,12 @@ export default function Home() {
           {
             (isLogin === false)
               ? (
-                <div className="lg:w-40 flex space-x-3 sm:space-x-7">
-                  <Link href="/login" className="flex gap-2">
+                <div className="flex">
+                  <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800 mr-1 md:mr-2">
                     <svg className="w-6 fill-main-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z" /></svg>
-                    <span className="duration-300 hover:font-semibold active:font-normal">Login</span>
+                    <span className="duration-300">Login</span>
                   </Link>
-                  <Link href="/register" className="duration-300 hover:font-semibold active:font-normal hidden lg:block">Register</Link>
+                  <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden lg:block rounded-lg hover:bg-gray-700">Register</Link>
                   <div
                     className={styles.toggle}
                     onClick={() => {
@@ -73,8 +73,8 @@ export default function Home() {
         </header>
 
         <main className="mt-10 flex-1">
-          <article className="grid sm:grid-cols-2">
-            <section className="pl-12 my-auto">
+          <article className="px-12 grid sm:grid-cols-2">
+            <section className="my-auto">
               <h1 className="text-5xl text-main-color font-bold">Financial Records.</h1>
               <p className="text-md mt-1">Track your financial flow with financial records</p>
               <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold hover:scale-105 duration-200 active:scale-100" href="/demo">Try Demo</Link>

@@ -15,7 +15,7 @@
 }
 
 .navigation ul li a {
-  @apply block px-5 py-[10px] font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]
+  @apply block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]
 }
 
 .navigation.active ul li {

@@ -67,7 +67,7 @@ export default function FinancialRecordsActionAdd() {
       <Modal style="modal-content-edit" action={action}>
         <Text style="modal-title-edit-record" title="Menambah Catatan" />
         <form onSubmit={handleSubmit}>
-          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jumlah">Jumlah</label>
+          <label className="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jumlah">Jumlah</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="number"
@@ -80,7 +80,7 @@ export default function FinancialRecordsActionAdd() {
             required
           />
 
-          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="keterangan">Keterangan</label>
+          <label className="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="keterangan">Keterangan</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="text"
@@ -92,7 +92,7 @@ export default function FinancialRecordsActionAdd() {
             required
           />
 
-          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jenis">Jenis</label>
+          <label className="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jenis">Jenis</label>
           <select
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             id="jenis"
@@ -104,7 +104,7 @@ export default function FinancialRecordsActionAdd() {
             <option>Pengeluaran</option>
           </select>
 
-          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="date">Tanggal</label>
+          <label className="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="date">Tanggal</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="date"

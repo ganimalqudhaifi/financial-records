@@ -4,7 +4,7 @@ import Script from 'next/script';
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import {
-  Button, Input, Label,
+  Input, Label,
 } from '../../components';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
@@ -130,7 +130,7 @@ export default function Login() {
             <Input type="checkbox" id="remember" styles="login-register-checkbox" onChange={handleRemember} />
             <Label htmlFor="remember" style="login-register-checkbox" title="Remember me" />
           </div>
-          <Button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Masuk'} type="Submit" disabled={isLoading} />
+          <button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
           <Link className={styles['link-register']} href="/register">
             {'Belum punya akun? '}
             <span>Daftar</span>

@@ -5,7 +5,7 @@ import {
   changeSaldoAwal, hideModal, showModal,
 } from '../../../context/action/demoAction';
 import {
-  Button, Input, Text,
+  Input, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -52,8 +52,7 @@ export default function FinancialRecordsTableHead() {
           {saldoAwal.toLocaleString('id-ID')}
         </th>
         <td>
-          <Button style="modal-saldo-awal" title="Ubah" onClick={() => dispatch(showModal(action))} />
-
+          <button className="py-1.5 px-3 my-1 bg-slate-900 text-slate-50 rounded" onClick={() => dispatch(showModal(action))}>Ubah</button>
           <Modal style="modal-content-saldo-awal" action={action}>
             <Text style="modal-title-saldo-awal" title="Saldo Awal" />
             <form onSubmit={handleSubmit}>
@@ -68,8 +67,8 @@ export default function FinancialRecordsTableHead() {
               />
 
               <div className="mt-1.5 md:mt-3 lg:mt-4">
-                <Button style="modal-cancle" title="Batal" type="button" onClick={() => dispatch(hideModal(action))} />
-                <Button style="modal-edit" title="Ubah" type="submit" />
+                <button type="button" className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-900 bg-slate-300/80 hover:bg-slate-400/80" onClick={() => dispatch(hideModal(action))}>Batal</button>
+                <button type="submit" className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-50 bg-slate-800/80 hover:bg-slate-800">Ubah</button>
               </div>
             </form>
           </Modal>

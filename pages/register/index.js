@@ -4,7 +4,7 @@ import Script from 'next/script';
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import {
-  Button, Input, Label,
+  Input, Label,
 } from '../../components';
 import { auth, createUserWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
@@ -116,7 +116,7 @@ export default function Register() {
               />
             </div>
           </div>
-          <Button className={`${styles['btn-register']} ${isLoading ? 'grayscale' : ''}`} title={isLoading ? 'Loading...' : 'Daftar'} type="Submit" disabled={isLoading} />
+          <button className={`${styles['btn-register']} ${isLoading ? 'grayscale' : ''}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Daftar'}</button>
           <div className={styles['link-login']}>
             {'Sudah punya akun? '}
             <Link href="/login">Login</Link>

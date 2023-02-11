@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
 import {
-  Button, Input, Label, Select, Text,
+  Input, Label, Select, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -61,8 +61,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
 
   return (
     <>
-      <Button style="edit" title="Ubah" onClick={() => dispatch(showModal(action))} />
-
+      <button className="py-1.5 px-3 mx-1 bg-slate-900 text-slate-50 rounded" onClick={() => dispatch(showModal(action))}>Ubah</button>
       <Modal style="modal-content-edit" action={action}>
         <Text style="modal-title-edit-record" title="Mengubah Catatan" />
         <form onSubmit={handleSubmit}>
@@ -114,8 +113,8 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           />
 
           <div className="mt-2">
-            <Button title="Batal" style="modal-cancle" type="button" onClick={() => dispatch(hideModal(action))} />
-            <Button title="Kirim" style="modal-edit" type="submit" />
+            <button type="button" className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-900 bg-slate-300/80 hover:bg-slate-400/80" onClick={() => dispatch(hideModal(action))}>Batal</button>
+            <button className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-50 bg-slate-800/80 hover:bg-slate-800" type="submit">Kirim</button>
           </div>
         </form>
       </Modal>

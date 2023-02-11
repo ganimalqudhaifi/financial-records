@@ -93,7 +93,8 @@ export default function FinancialRecordsChart() {
       },
 
     });
-  }, [saldoAwal, records, arrListPeriod]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [saldoAwal, records]);
 
   return (
     <>

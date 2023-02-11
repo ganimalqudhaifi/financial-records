@@ -1,7 +1,0 @@
-.login-register {
-  @apply inline-block text-white mb-[10px] uppercase tracking-[1px] text-xs border-l-4 border-white pl-1 leading-[1em]
-}
-
-.record {
-  @apply font-normal pl-0.5 capitalize text-left text-base mb-0.5 block
-}

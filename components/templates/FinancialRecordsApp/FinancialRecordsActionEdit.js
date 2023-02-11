@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
 import {
-  Label, Text,
+  Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -65,7 +65,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       <Modal style="modal-content-edit" action={action}>
         <Text style="modal-title-edit-record" title="Mengubah Catatan" />
         <form onSubmit={handleSubmit}>
-          <Label style="record" title="Jumlah" htmlFor={`jumlah${action}`} />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor={`jumlah${action}`}>Jumlah</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="number"
@@ -77,7 +77,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
             required
           />
 
-          <Label style="record" title="Keterangan" htmlFor={`keterangan${action}`} />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor={`keterangan${action}`}>Keterangan</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="text"
@@ -89,7 +89,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
             required
           />
 
-          <Label style="record" title="Jenis" htmlFor={`jenis${action}`} />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor={`jenis${action}`}>Jenis</label>
           <select
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             id={`jenis${action}`}
@@ -101,7 +101,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
             <option>Pengeluaran</option>
           </select>
 
-          <Label style="record" title="Tanggal" htmlFor={`date${action}`} />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor={`date${action}`}>Tanggal</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="date"

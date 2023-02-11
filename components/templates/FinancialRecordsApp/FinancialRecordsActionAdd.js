@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
 import {
-  Label, Text,
+  Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -67,7 +67,7 @@ export default function FinancialRecordsActionAdd() {
       <Modal style="modal-content-edit" action={action}>
         <Text style="modal-title-edit-record" title="Menambah Catatan" />
         <form onSubmit={handleSubmit}>
-          <Label style="record" title="Jumlah" htmlFor="jumlah" />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jumlah">Jumlah</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="number"
@@ -80,7 +80,7 @@ export default function FinancialRecordsActionAdd() {
             required
           />
 
-          <Label style="record" title="Keterangan" htmlFor="keterangan" />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="keterangan">Keterangan</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="text"
@@ -92,7 +92,7 @@ export default function FinancialRecordsActionAdd() {
             required
           />
 
-          <Label style="record" title="Jenis" htmlFor="jenis" />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jenis">Jenis</label>
           <select
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             id="jenis"
@@ -104,7 +104,7 @@ export default function FinancialRecordsActionAdd() {
             <option>Pengeluaran</option>
           </select>
 
-          <Label style="record" title="Tanggal" htmlFor="date" />
+          <label style="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="date">Tanggal</label>
           <input
             className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="date"

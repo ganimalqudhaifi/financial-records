@@ -3,9 +3,6 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
-import {
-  Label,
-} from '../../components';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
 import { changeUser } from '../../context/action/demoAction';
@@ -97,7 +94,7 @@ export default function Login() {
           <h3>Log In</h3>
           <div className="firebaseui-auth-container" />
           <div className={styles.inputBox}>
-            <Label htmlFor="email" style="login-register" title="Email" />
+            <label htmlFor="email" className="inline-block text-white mb-[10px] uppercase tracking-[1px] text-xs border-l-4 border-white pl-1 leading-[1em]">Email</label>
             <div className={styles.box}>
               <div className={styles.icon}><ion-icon name="person" /></div>
               <input
@@ -112,7 +109,7 @@ export default function Login() {
             </div>
           </div>
           <div className={styles.inputBox}>
-            <Label htmlFor="password" style="login-register" title="Password" />
+            <label htmlFor="password" className="inline-block text-white mb-[10px] uppercase tracking-[1px] text-xs border-l-4 border-white pl-1 leading-[1em]">Password</label>
             <div className={styles.box}>
               <div className={styles.icon}><ion-icon name="lock-closed" /></div>
               <input
@@ -128,7 +125,7 @@ export default function Login() {
           </div>
           <div className={styles.remember}>
             <input type="checkbox" id="remember" onChange={handleRemember} />
-            <Label htmlFor="remember" style="login-register-checkbox" title="Remember me" />
+            <label htmlFor="remember">Remember me</label>
           </div>
           <button className={`${styles['btn-login']} ${isLoading ? 'grayscale' : ''}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
           <Link className={styles['link-register']} href="/register">

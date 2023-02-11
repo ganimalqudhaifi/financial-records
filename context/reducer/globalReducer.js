@@ -96,19 +96,21 @@ export const globalReducer = (state, action) => {
         ...state,
         records: action.payload,
       };
-    case globalActionType.UPDATE_RECORD:
+    case globalActionType.UPDATE_RECORD: {
       const indexRecord = state.records.findIndex((record) => record.id === action.payload.id);
       const updatedRecords = state.records.fill(action.payload, indexRecord, indexRecord + 1);
       return {
         ...state,
         records: updatedRecords,
       };
-    case globalActionType.DELETE_RECORD:
+    }
+    case globalActionType.DELETE_RECORD: {
       const records = state.records.filter((record) => record.id !== action.id);
       return {
         ...state,
         records,
       };
+    }
     default:
       return state;
   }

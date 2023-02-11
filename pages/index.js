@@ -15,7 +15,7 @@ export default function Home() {
     } else {
       setIsLogin(true);
     }
-  });
+  }, []);
 
   return (
     <>

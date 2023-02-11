@@ -24,7 +24,7 @@ export default function FinancialRecordsTableHead() {
         dispatch(changeSaldoAwal(isDemo, payload));
       });
     }
-  }, []);
+  }, [dispatch, isDemo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

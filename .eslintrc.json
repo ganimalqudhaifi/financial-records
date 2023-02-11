@@ -5,8 +5,10 @@
     },
     "extends": [
         "airbnb",
-        "plugin:@next/next/recommended",
-        "plugin:react/recommended"
+        "next",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended"
     ],
     "overrides": [
     ],

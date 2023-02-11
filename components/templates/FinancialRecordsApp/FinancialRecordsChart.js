@@ -93,7 +93,7 @@ export default function FinancialRecordsChart() {
       },
 
     });
-  }, [saldoAwal, records]);
+  }, [saldoAwal, records, arrListPeriod]);
 
   return (
     <>

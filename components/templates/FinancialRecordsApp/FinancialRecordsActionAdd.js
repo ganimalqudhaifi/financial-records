@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
 import {
-  Label, Select, Text,
+  Label, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -93,8 +93,8 @@ export default function FinancialRecordsActionAdd() {
           />
 
           <Label style="record" title="Jenis" htmlFor="jenis" />
-          <Select
-            style="record"
+          <select
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             id="jenis"
             name="jenis"
             value={inputs.jenis || 'Penerimaan'}
@@ -102,7 +102,7 @@ export default function FinancialRecordsActionAdd() {
           >
             <option>Penerimaan</option>
             <option>Pengeluaran</option>
-          </Select>
+          </select>
 
           <Label style="record" title="Tanggal" htmlFor="date" />
           <input

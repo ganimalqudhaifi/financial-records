@@ -4,7 +4,7 @@ import Script from 'next/script';
 import React, { useContext, useState } from 'react';
 import Swal from 'sweetalert2';
 import {
-  Input, Label,
+  Label,
 } from '../../components';
 import { auth, createUserWithEmailAndPassword } from '../../config/firebase';
 import { RootContext } from '../../context';
@@ -90,9 +90,9 @@ export default function Register() {
             <Label htmlFor="email" style="login-register" title="Email" />
             <div className={styles.box}>
               <div className={styles.icon}><ion-icon name="person" /></div>
-              <Input
+              <input
                 id="email"
-                style="login-register"
+                className="relative w-full px-5 py-[10px] rounded-full shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(0,0,0,.35),inset_-3px_-3px_5px_rgba(0,0,0,.5)] outline-0 text-sm leading-[24px]"
                 type="text"
                 name="email"
                 placeholder="Masukkan email..."
@@ -105,9 +105,9 @@ export default function Register() {
             <Label htmlFor="password" style="login-register" title="Password" />
             <div className={styles.box}>
               <div className={styles.icon}><ion-icon name="lock-closed" /></div>
-              <Input
+              <input
                 id="password"
-                style="login-register"
+                className="relative w-full px-5 py-[10px] rounded-full shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(0,0,0,.35),inset_-3px_-3px_5px_rgba(0,0,0,.5)] outline-0 text-sm leading-[24px]"
                 type="password"
                 name="password"
                 placeholder="Masukkan password..."

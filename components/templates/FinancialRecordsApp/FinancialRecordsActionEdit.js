@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
 import {
-  Input, Label, Select, Text,
+  Label, Select, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -66,8 +66,8 @@ export default function FinancialRecordsActionEdit({ no, record }) {
         <Text style="modal-title-edit-record" title="Mengubah Catatan" />
         <form onSubmit={handleSubmit}>
           <Label style="record" title="Jumlah" htmlFor={`jumlah${action}`} />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="number"
             id={`jumlah${action}`}
             name="jumlah"
@@ -78,8 +78,8 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           />
 
           <Label style="record" title="Keterangan" htmlFor={`keterangan${action}`} />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="text"
             id={`keterangan${action}`}
             name="keterangan"
@@ -102,8 +102,8 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           </Select>
 
           <Label style="record" title="Tanggal" htmlFor={`date${action}`} />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="date"
             id={`date${action}`}
             name="date"

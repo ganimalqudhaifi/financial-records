@@ -5,7 +5,7 @@ import {
   changeSaldoAwal, hideModal, showModal,
 } from '../../../context/action/demoAction';
 import {
-  Input, Text,
+  Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -56,8 +56,8 @@ export default function FinancialRecordsTableHead() {
           <Modal style="modal-content-saldo-awal" action={action}>
             <Text style="modal-title-saldo-awal" title="Saldo Awal" />
             <form onSubmit={handleSubmit}>
-              <Input
-                style="record"
+              <input
+                className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
                 type="number"
                 id="saldoAwal"
                 name="saldoAwal"

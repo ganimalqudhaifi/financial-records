@@ -3,7 +3,7 @@ import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
 import {
-  Input, Label, Select, Text,
+  Label, Select, Text,
 } from '../../atoms';
 import { Modal } from '../../molecules';
 
@@ -68,8 +68,8 @@ export default function FinancialRecordsActionAdd() {
         <Text style="modal-title-edit-record" title="Menambah Catatan" />
         <form onSubmit={handleSubmit}>
           <Label style="record" title="Jumlah" htmlFor="jumlah" />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="number"
             id="jumlah"
             name="jumlah"
@@ -81,8 +81,8 @@ export default function FinancialRecordsActionAdd() {
           />
 
           <Label style="record" title="Keterangan" htmlFor="keterangan" />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="text"
             id="keterangan"
             name="keterangan"
@@ -105,13 +105,13 @@ export default function FinancialRecordsActionAdd() {
           </Select>
 
           <Label style="record" title="Tanggal" htmlFor="date" />
-          <Input
-            style="record"
+          <input
+            className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
             type="date"
             id="date"
             name="tanggal"
             value={inputs.tanggal || ''}
-            palceholder="Select date"
+            placeholder="Select date"
             onChange={handleChange}
             required
           />

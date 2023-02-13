@@ -4,9 +4,6 @@ import { RootContext } from '../../../context';
 import {
   changeSaldoAwal, hideModal, showModal,
 } from '../../../context/action/demoAction';
-import {
-  Text,
-} from '../../atoms';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
@@ -54,7 +51,7 @@ export default function FinancialRecordsTableHead() {
         <td>
           <button className="py-1.5 px-3 my-1 bg-slate-900 text-slate-50 rounded" onClick={() => dispatch(showModal(action))}>Ubah</button>
           <Modal style="modal-content-saldo-awal" action={action}>
-            <Text style="modal-title-saldo-awal" title="Saldo Awal" />
+            <p className="mb-3 text-3xl md:text-4xl lg:text-5xl md:mb-4 lg:mb-8 mt-0 lg:mt-3">Saldo Awal</p>
             <form onSubmit={handleSubmit}>
               <input
                 className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"

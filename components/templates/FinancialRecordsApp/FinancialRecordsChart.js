@@ -11,7 +11,7 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { RootContext } from '../../../context';
 import { showModal } from '../../../context/action/demoAction';
-import { Text, Table } from '../../atoms';
+import { Table } from '../../atoms';
 import { Modal } from '../../molecules';
 
 ChartJS.register(
@@ -114,8 +114,7 @@ export default function FinancialRecordsChart() {
       </Table>
 
       <Modal action={action} style="modal-content-graph">
-        <Text style="modal-title-graph" title="Grafik" />
-
+        <p className="text-xl md:text-2xl lg:text-3xl pt-6 pb-2 font-semibold">Grafik</p>
         <div className="p-4">
           <Bar options={chartOptions} data={chartData} />
         </div>

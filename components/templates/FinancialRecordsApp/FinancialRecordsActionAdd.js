@@ -2,9 +2,6 @@ import { useState, useContext } from 'react';
 import Swal from 'sweetalert2';
 import { RootContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
-import {
-  Text,
-} from '../../atoms';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionAdd() {
@@ -65,7 +62,7 @@ export default function FinancialRecordsActionAdd() {
       <button className="py-1.5 md:py-2 px-3 md:px-4 bg-slate-800 text-slate-50 rounded-[3px]" onClick={() => dispatch(showModal(action))}>Tambah</button>
 
       <Modal style="modal-content-edit" action={action}>
-        <Text style="modal-title-edit-record" title="Menambah Catatan" />
+        <p className="mt-4 text-3xl md:text-4xl lg:text-5xl text-center mb-2.5 my-2">Menambah Catatan</p>
         <form onSubmit={handleSubmit}>
           <label className="font-normal pl-0.5 capitalize text-left text-base mb-0.5 block" htmlFor="jumlah">Jumlah</label>
           <input

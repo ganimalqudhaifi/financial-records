@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import { RootContext } from '../../../context';
 import { changePaginationIndex } from '../../../context/action/demoAction';
-import { Text } from '../../atoms';
 
 export default function FinancialRecordsPaginantion() {
   const { state, dispatch } = useContext(RootContext);
@@ -33,7 +32,7 @@ export default function FinancialRecordsPaginantion() {
 
   return (
     <div className="flex items-center justify-between">
-      <Text style="data-index-information" title={`Menampilkan ${!arrPagination.length ? 0 : (sliceShow * (paginationIndex - 1)) + 1} sampai ${sliceShow * paginationIndex > entires ? entires : sliceShow * paginationIndex} dari ${entires} data`} />
+      <p className="text-sm">{`Menampilkan ${!arrPagination.length ? 0 : (sliceShow * (paginationIndex - 1)) + 1} sampai ${sliceShow * paginationIndex > entires ? entires : sliceShow * paginationIndex} dari ${entires} data`}</p>
       <div className="float-right text-slate-700">
         <button className="py-2 px-3 text-2xl hover:text-slate-900 hover:scale-125 active:scale-100 transition duration-150" onClick={() => onSendIndex(paginationIndex === 1 ? paginationIndex : paginationIndex - 1)}>&laquo;</button>
         {

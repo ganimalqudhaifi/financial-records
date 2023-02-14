@@ -1,0 +1,13 @@
+.information-table {
+  @apply border border-separate border-spacing-1 rounded mx-auto rounded-b-sm
+}
+
+.information-table caption {
+  @apply font-bold text-slate-900
+}
+
+.information-table tr td {
+  @apply py-1 px-4 
+  odd:bg-slate-200 odd:font-bold
+  even:bg-slate-100
+}

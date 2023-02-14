@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { RootContext } from '../../../context';
-import Table from '../../atoms/Table';
+import styles from './FinancialRecordsInformation.module.css';
 
 export default function FinancialRecordsInformation() {
   const { state } = useContext(RootContext);
@@ -10,7 +10,7 @@ export default function FinancialRecordsInformation() {
   const pengeluaran = records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
 
   return (
-    <Table style="information-table">
+    <table className={styles['information-table']}>
       <caption>Informasi Keseluruhan</caption>
       <thead>
         <tr>
@@ -50,6 +50,6 @@ export default function FinancialRecordsInformation() {
           </td>
         </tr>
       </tfoot>
-    </Table>
+    </table>
   );
 }

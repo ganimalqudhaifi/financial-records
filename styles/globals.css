@@ -8,24 +8,4 @@
   #__next {
     height: 100%;
   }
-
-  #main-table {
-    @apply border-collapse table-auto w-full whitespace-nowrap shadow-lg text-sm md:text-base
-  }
-
-  #main-table thead tr {
-    @apply text-center first:bg-slate-800 first:text-slate-100 last:bg-slate-200 last:text-slate-800 last:grid-cols-10
-  }
-
-  #main-table thead tr th {
-    @apply border-2 px-4 first:rounded-tl-md last:rounded-tr-md
-  }
-
-  #main-table tbody tr {
-    @apply text-center odd:bg-slate-100 hover:bg-slate-200
-  }
-
-  #main-table tbody tr td {
-    @apply px-3 py-1.5
-  }
 }

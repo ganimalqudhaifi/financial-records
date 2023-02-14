@@ -11,8 +11,8 @@ import {
 import { Bar } from 'react-chartjs-2';
 import { RootContext } from '../../../context';
 import { showModal } from '../../../context/action/demoAction';
-import { Table } from '../../atoms';
 import { Modal } from '../../molecules';
+import styles from './FinancialRecordsChart.module.css';
 
 ChartJS.register(
   CategoryScale,
@@ -98,7 +98,7 @@ export default function FinancialRecordsChart() {
 
   return (
     <>
-      <Table style="graph-table">
+      <table className={styles['graph-table']}>
         <caption>Grafik</caption>
         <div onClick={() => dispatch(showModal(action))}>
           <tbody>
@@ -111,7 +111,7 @@ export default function FinancialRecordsChart() {
             </tr>
           </tbody>
         </div>
-      </Table>
+      </table>
 
       <Modal action={action} style="modal-content-graph">
         <p className="text-xl md:text-2xl lg:text-3xl pt-6 pb-2 font-semibold">Grafik</p>

@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
 import { RootContext } from '../../../context';
-import { Table } from '../../atoms';
+import styles from './FinancialRecordsTable.module.css';
 
 export default function FinancialRecordsTable() {
   const { state } = useContext(RootContext);
@@ -16,7 +16,7 @@ export default function FinancialRecordsTable() {
   };
 
   return (
-    <Table style="main-table">
+    <table className={styles['main-table']}>
       <thead>
         <FinancialRecordsTableHead />
       </thead>
@@ -41,6 +41,6 @@ export default function FinancialRecordsTable() {
               ))
           }
       </tbody>
-    </Table>
+    </table>
   );
 }

@@ -1,17 +1,3 @@
-.information-table {
-  @apply border border-separate border-spacing-1 rounded mx-auto rounded-b-sm
-}
-
-.information-table caption {
-  @apply font-bold text-slate-900
-}
-
-.information-table tr td {
-  @apply py-1 px-4 
-  odd:bg-slate-200 odd:font-bold
-  even:bg-slate-100
-}
-
 .main-table {
   @apply border-collapse table-auto w-full whitespace-nowrap shadow-lg text-sm md:text-base
 }
@@ -46,16 +32,4 @@
   [&:nth-child(4)]:text-left [&:nth-child(4)]:hidden [&:nth-child(4)]:lg:table-cell
   [&:nth-child(5)]:text-right
   [&:nth-child(6)]:text-right
-}
-
-.graph-table {
-  @apply mx-auto
-}
-
-.graph-table caption {
-  @apply font-bold mt-0 lg:mt-6 mb-1
-}
-
-.graph-table tbody {
-  @apply cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg
 }

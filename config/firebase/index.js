@@ -1,14 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile,
-} from 'firebase/auth';
-import {
-  getDatabase, ref, set, push, remove, onValue,
-} from 'firebase/database';
+import { getAuth } from 'firebase/auth';
+import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAvrAGVwIl28CWZ7TIrqn8f966MyWUnvRE',
@@ -23,14 +15,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getDatabase(app, 'https://financial-records-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/');
-export {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  updateProfile,
-  ref,
-  set,
-  push,
-  remove,
-  onValue,
-};
+export * from 'firebase/database';
+export * from 'firebase/auth';

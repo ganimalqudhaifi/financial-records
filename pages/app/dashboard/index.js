@@ -2,7 +2,6 @@ import { updateProfile } from 'firebase/auth';
 import Head from 'next/head';
 import { useContext } from 'react';
 import { Footers } from '../../../components';
-import NavigationApp from '../../../components/organisms/NavigationApp';
 import { auth } from '../../../config/firebase';
 import { RootContext } from '../../../context';
 import { changeUser } from '../../../context/action/demoAction';
@@ -41,9 +40,6 @@ export default function Dashboard() {
             />
             <span className={styles.icon}><ion-icon name="person-circle-outline" /></span>
           </div>
-        </div>
-        <div className={styles['app-main']}>
-          <NavigationApp />
         </div>
         <Footers />
       </div>

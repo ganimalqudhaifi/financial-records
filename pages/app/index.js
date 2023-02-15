@@ -2,13 +2,12 @@ import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import styles from './App.module.css';
-import { FinancialRecords, Footers } from '../../components';
+import { AppSidebar, FinancialRecords, Footers } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo, changeUser } from '../../context/action/demoAction';
 import {
   database, ref, onValue, onAuthStateChanged, auth, updateProfile,
 } from '../../config/firebase';
-import NavigationApp from '../../components/organisms/NavigationApp';
 
 export default function App() {
   const { state, dispatch } = useContext(RootContext);
@@ -89,7 +88,7 @@ export default function App() {
             </div>
           </div>
           <div className={styles['app-main']}>
-            <NavigationApp />
+            <AppSidebar />
             <FinancialRecords />
           </div>
           <Footers />

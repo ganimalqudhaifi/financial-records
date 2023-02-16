@@ -61,15 +61,17 @@ export default function App() {
         <Head>
           <title>Financial Records - App</title>
         </Head>
-        <div className="flex flex-col w-full h-full">
-          <div className="flex flex-1">
+        <div className="flex flex-col w-full h-full bg-gray-200">
+          <div className="lg:flex flex-1">
             <AppSidebar />
-            <div className="w-full p-4 lg:ml-64 bg-gray-200">
+            <div className="w-full p-4 lg:ml-64 overflow-auto">
               <h2 className="font-medium text-3xl mb-4">Table</h2>
               <FinancialRecords />
             </div>
           </div>
-          <Footers />
+          <div className="lg:ml-64">
+            <Footers />
+          </div>
         </div>
       </>
     );

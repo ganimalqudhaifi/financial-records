@@ -4,33 +4,24 @@ import FinancialRecordsFilterPeriod from './FinancialRecordsFilterPeriod';
 import FinancialRecordsSearch from './FinancialRecordsSearch';
 import FinancialRecordsTable from './FinancialRecordsTable';
 import FinancialRecordsPaginantion from './FinancialRecordsPagination';
-import FinancialRecordsInformation from './FinancialRecordsInformation';
-import FinancialRecordsChart from './FinancialRecordsChart';
-import styles from './FinancialRecords.module.css';
 
 export default function FinancialRecords() {
   return (
-    <>
-      <div className="Table" />
-      <div className={styles['app-table']}>
-        <div className={styles['tools-app']}>
-          <div>
+    <div className="w-full bg-white p-4 rounded">
+      <div className="flex justify-between flex-wrap px-0.5 mb-1">
+        <div className="space-x-2">
+          <span>
             <FinancialRecordsActionAdd />
-            <FinancialRecordsSlice />
-          </div>
-          <div className={styles['search-filter-field']}>
-            <FinancialRecordsFilterPeriod />
-            <FinancialRecordsSearch />
-          </div>
+          </span>
+          <FinancialRecordsSlice />
         </div>
-        <FinancialRecordsTable />
-        <FinancialRecordsPaginantion />
+        <div className="flex items-stretch">
+          <FinancialRecordsFilterPeriod />
+          <FinancialRecordsSearch />
+        </div>
       </div>
-      <hr className="my-6" />
-      <div className={styles['information-chart']}>
-        <FinancialRecordsInformation />
-        <FinancialRecordsChart />
-      </div>
-    </>
+      <FinancialRecordsTable />
+      <FinancialRecordsPaginantion />
+    </div>
   );
 }

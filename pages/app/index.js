@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import styles from './App.module.css';
 import { AppSidebar, FinancialRecords, Footers } from '../../components';
 import { RootContext } from '../../context';
 import { setRecords, isDemo, changeUser } from '../../context/action/demoAction';
@@ -62,34 +61,13 @@ export default function App() {
         <Head>
           <title>Financial Records - App</title>
         </Head>
-        <div className={styles.body}>
-          <div className={styles.header}>
-            <h1 className="text-3xl font-semibold my-6">Table</h1>
-            <div className="flex items-center space-x-1">
-              <input
-                type="text"
-                className="text-xl font-semibold px-1 rounded text-right hover:bg-slate-200 hover:outline hover:outline-2 hover:outline-slate-300 focus:bg-transparent focus:outline-slate-800"
-                onMouseEnter={(e) => {
-                  e.target.style.width = `${e.target.value.length + 1}ch`;
-                }}
-                onChange={(e) => {
-                  dispatch(changeUser({ ...user, displayName: e.target.value }));
-                  updateProfile(auth.currentUser, {
-                    displayName: e.target.value,
-                  });
-                  e.target.style.width = `${e.target.value.length + 1}ch`;
-                }}
-                value={user.displayName}
-                maxLength={20}
-                contentEditable
-                spellCheck={false}
-              />
-              <span className={styles.icon}><ion-icon name="person-circle-outline" /></span>
-            </div>
-          </div>
-          <div className={styles['app-main']}>
+        <div className="flex flex-col w-full h-full">
+          <div className="flex flex-1">
             <AppSidebar />
-            <FinancialRecords />
+            <div className="w-full p-4 lg:ml-64 bg-gray-200">
+              <h2 className="font-medium text-3xl mb-4">Table</h2>
+              <FinancialRecords />
+            </div>
           </div>
           <Footers />
         </div>

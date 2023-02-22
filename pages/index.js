@@ -2,10 +2,10 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-import styles from './Home.module.css';
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     let uid = localStorage.getItem('uid');
@@ -22,8 +22,9 @@ export default function Home() {
       <Head>
         <title>Financial Records - Home</title>
       </Head>
-      <div className={styles.body}>
-        <header className={styles.header}>
+
+      <div className="flex flex-col px-4 sm:px-[5%] md:px-[6%] lg:px-[8%] w-full min-h-[100vh] bg-bg-color text-text-color">
+        <header className="sticky flex flex-wrap justify-between py-6 duration-500 items-center">
           <Link href="/" className="flex">
             <svg className="fill-main-color mr-2.5 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zm-2 9h-2v-4h2v4zM5 7a1.001 1.001 0 0 1 0-2h13v2H5z" /></svg>
             <div className="flex flex-col items-start font-semibold text-center">
@@ -31,49 +32,50 @@ export default function Home() {
               <span className="text-xs leading-7 mt-[-10px]">Records</span>
             </div>
           </Link>
-          <nav className={styles.navigation}>
-            <ul>
-              <li><Link href="#">Home</Link></li>
-              <li><Link href="#">About</Link></li>
-              <li><Link href="#">Contact</Link></li>
-              <li><Link href="/register">Register</Link></li>
-            </ul>
-          </nav>
-          {
+
+          <div className="flex items-center lg:order-2">
+            {
             (isLogin === false)
               ? (
-                <div className="flex">
-                  <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800 mr-1 md:mr-2">
+                <>
+                  <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800">
                     <svg className="w-6 fill-main-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z" /></svg>
                     <span className="duration-300">Login</span>
                   </Link>
                   <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden lg:block rounded-lg hover:bg-gray-700">Register</Link>
-                  <div
-                    className={styles.toggle}
-                    onClick={() => {
-                      document.querySelector(`.${styles.navigation}`).classList.toggle(styles.active);
-                      document.querySelector(`.${styles.toggle}`).classList.toggle(styles.active);
-                    }}
-                  >
-                    <span />
-                  </div>
-                </div>
+                </>
+
               )
               : (
-                <div className="">
-                  <Link className="flex justify-center items-center px-5 py-2.5 text-bg-color bg-main-color hover:outline outline-offset-2 outline-1 outline-main-color rounded" href="/app">
-                    <span className="mr-1 font-semibold tracking-wide">Go to app</span>
-                    <div className="flex justify-center items-center text-2xl font-bold">
-                      <ion-icon name="log-in-outline" />
-                    </div>
-                  </Link>
-                </div>
+                <Link className="flex justify-center items-center px-3.5 md:px-5 py-2 md:py-2.5 mr-3 text-bg-color bg-main-color hover:outline outline-offset-2 outline-1 outline-main-color rounded-full" href="/app">
+                  <span className="mr-1 font-semibold tracking-wide">Go to app</span>
+                  <div className="flex justify-center items-center text-2xl font-bold">
+                    <ion-icon name="log-in-outline" />
+                  </div>
+                </Link>
               )
-          }
+            }
+            <button
+              type="button"
+              onClick={() => setIsActive(!isActive)}
+              className="p-2 flex items-center justify-center cursor-pointer lg:hidden"
+            >
+              <span className={`relative w-5 h-6 flex items-center justify-center before:content-[''] before:absolute before:w-full before:h-0.5 before:bg-white before:duration-500 ${!isActive ? 'before:translate-y-[-4px]' : 'before:translate-y-0 before:rotate-[225deg]'} after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-white after:duration-500 ${!isActive ? 'after:translate-y-[4px]' : 'after:translate-y-0 after:rotate-[-225deg]'}`} />
+            </button>
+          </div>
+
+          <nav className="lg:order-1 w-full lg:w-auto h-0 lg:h-auto">
+            <ul className="w-full mt-4 lg:mt-0 rounded-lg overflow-hidden lg:flex ">
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
+            </ul>
+          </nav>
         </header>
 
         <main className="mt-10 flex-1">
-          <article className="px-12 grid sm:grid-cols-2">
+          <article className="px-6 md:px-12 grid sm:grid-cols-2">
             <section className="my-auto">
               <h1 className="text-5xl text-main-color font-bold">Financial Records.</h1>
               <p className="text-md mt-1">Track your financial flow with financial records</p>
@@ -125,6 +127,7 @@ export default function Home() {
             </section>
           </article>
         </main>
+
         <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
         <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
       </div>

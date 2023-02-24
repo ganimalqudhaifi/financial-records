@@ -51,10 +51,10 @@ export default function FinancialRecordsTableHead() {
         <td>
           <button className="py-1.5 px-3 my-1 bg-slate-900 text-slate-50 rounded" onClick={() => dispatch(showModal(action))}>Ubah</button>
           <Modal style="modal-content-saldo-awal" action={action}>
-            <p className="mb-3 text-3xl md:text-4xl lg:text-5xl md:mb-4 lg:mb-8 mt-0 lg:mt-3">Saldo Awal</p>
+            <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Saldo Awal</h3>
             <form onSubmit={handleSubmit}>
               <input
-                className="w-full p-2 border-[1px] border-slate-900/40 rounded mb-4 text-sm"
+                className="block p-2.5 mb-6 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
                 type="number"
                 id="saldoAwal"
                 name="saldoAwal"
@@ -64,8 +64,7 @@ export default function FinancialRecordsTableHead() {
               />
 
               <div className="mt-1.5 md:mt-3 lg:mt-4">
-                <button type="button" className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-900 bg-slate-300/80 hover:bg-slate-400/80" onClick={() => dispatch(hideModal(action))}>Batal</button>
-                <button type="submit" className="py-2 md:py-3 lg:py-4 w-1/2 text-lg md:text-xl lg:text-2xl text-slate-50 bg-slate-800/80 hover:bg-slate-800">Ubah</button>
+                <button type="submit" className="py-2.5 w-full font-medium text-lg text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg">Ubah</button>
               </div>
             </form>
           </Modal>

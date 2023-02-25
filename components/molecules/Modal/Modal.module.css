@@ -3,7 +3,7 @@
 }
 
 .modal-content-edit {
-  @apply p-3 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-7/12 lg:w-1/2
+  @apply p-2.5 md:p-4 lg:p-5 mt-[23%] md:mt-[15%] lg:mt-[4%] w-full max-w-lg
 }
 
 .modal-content-saldo-awal {

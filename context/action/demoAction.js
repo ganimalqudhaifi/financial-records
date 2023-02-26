@@ -1,6 +1,7 @@
 import {
   database, ref, push, set, remove,
 } from '../../config/firebase';
+import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../reducer/globalReducer';
 
 export const showModal = (action) => ({
@@ -41,8 +42,8 @@ export const changePaginationIndex = (payload) => ({
 
 export const changeSaldoAwal = (isDemo, payload) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
-    set(ref(database, `saldoAwal/${uid}`), payload);
+    const uid = JSON.parse(checkUID());
+    set(ref(database, `users/${uid}/saldoAwal`), payload);
   }
   return {
     type: globalActionType.CHANGE_SALDO_AWAL,
@@ -52,8 +53,8 @@ export const changeSaldoAwal = (isDemo, payload) => {
 
 export const createRecord = (isDemo, payload) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
-    push(ref(database, `records/${uid}`), payload);
+    const uid = JSON.parse(checkUID());
+    push(ref(database, `users/${uid}/records`), payload);
   } else {
     return {
       type: globalActionType.CREATE_RECORD,
@@ -69,8 +70,8 @@ export const setRecords = (records) => ({
 
 export const updateRecords = (isDemo, payload) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
-    set(ref(database, `records/${uid}/${payload.id}`), payload);
+    const uid = JSON.parse(checkUID());
+    set(ref(database, `users/${uid}/records/${payload.id}`), payload);
   } else {
     return {
       type: globalActionType.UPDATE_RECORD,
@@ -81,8 +82,8 @@ export const updateRecords = (isDemo, payload) => {
 
 export const deleteRecord = (isDemo, id) => {
   if (!isDemo) {
-    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
-    remove(ref(database, `records/${uid}/${id}`));
+    const uid = JSON.parse(checkUID());
+    remove(ref(database, `users/${uid}/records/${id}`));
   } else {
     return {
       type: globalActionType.DELETE_RECORD,

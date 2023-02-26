@@ -14,7 +14,7 @@ export default function FinancialRecordsTableHead() {
 
   useEffect(() => {
     const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
-    const recordsRef = ref(database, `saldoAwal/${uid}`);
+    const recordsRef = ref(database, `users/${uid}/saldoAwal`);
     if (isDemo === false) {
       onValue(recordsRef, (snapshot) => {
         const payload = snapshot.val();

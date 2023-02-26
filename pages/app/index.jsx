@@ -22,13 +22,13 @@ export default function App() {
     uid !== null ? setIsLogin(true) : router.push('/login');
 
     // load data records
-    const recordsRef = ref(database, `records/${JSON.parse(uid)}`);
+    const recordsRef = ref(database, `users/${JSON.parse(uid)}/records`);
     onValue(recordsRef, (snapshot) => {
       const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
         ...snapshot.val()[key],
         id: key,
       }));
-      dispatch(setRecords(data));
+      data && dispatch(setRecords(data));
     });
   }, [dispatch, router, user]);
 

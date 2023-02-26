@@ -1,11 +1,9 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
-import { FinancialRecords, Footers } from '../../components';
+import { AppSidebar, FinancialRecords, Footers } from '../../components';
 import { useGlobalContext } from '../../context';
 import { setRecords, isDemo } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
-import styles from './Demo.module.css';
 
 export default function Demo({ records }) {
   const { dispatch } = useGlobalContext();
@@ -25,21 +23,18 @@ export default function Demo({ records }) {
         <title>Financial Records - Demo</title>
       </Head>
 
-      <div className={styles.body}>
-        <div className={styles.header}>
-          <h1 className="text-3xl font-semibold my-6">Table</h1>
-          <div className="flex items-center space-x-1">
-            <span className="text-xl font-semibold">username</span>
-            <span className={styles.icon}><ion-icon name="person-circle-outline" /></span>
+      <div className="flex flex-col w-full h-full bg-gray-200">
+        <div className="lg:flex flex-1">
+          <AppSidebar />
+          <div className="w-full p-4 lg:ml-64 overflow-auto">
+            <h2 className="font-medium text-3xl mb-4">Table</h2>
+            <FinancialRecords />
           </div>
         </div>
-        <div className={styles['app-main']}>
-          <FinancialRecords />
+        <div className="lg:ml-64">
+          <Footers />
         </div>
-        <Footers />
       </div>
-      <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
-      <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
     </>
   );
 }

@@ -4,6 +4,7 @@ import { RootContext } from '../../../context';
 import {
   changeSaldoAwal, hideModal, showModal,
 } from '../../../context/action/demoAction';
+import checkUID from '../../../utils/checkUID';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
@@ -13,12 +14,13 @@ export default function FinancialRecordsTableHead() {
   const [inputs, setInputs] = useState(saldoAwal);
 
   useEffect(() => {
-    const uid = JSON.parse(localStorage.getItem('uid') || sessionStorage.getItem('uid'));
+    const uid = JSON.parse(checkUID());
     const recordsRef = ref(database, `users/${uid}/saldoAwal`);
-    if (isDemo === false) {
+    if (!isDemo) {
       onValue(recordsRef, (snapshot) => {
         const payload = snapshot.val();
         dispatch(changeSaldoAwal(isDemo, payload));
+        setInputs(snapshot.val());
       });
     }
   }, [dispatch, isDemo]);
@@ -44,8 +46,7 @@ export default function FinancialRecordsTableHead() {
         <th colSpan="4">Saldo Awal</th>
         <th />
         <th>
-          Rp
-          {' '}
+          {'Rp '}
           {saldoAwal.toLocaleString('id-ID')}
         </th>
         <td>
@@ -58,7 +59,7 @@ export default function FinancialRecordsTableHead() {
                 type="number"
                 id="saldoAwal"
                 name="saldoAwal"
-                value={inputs === 0 ? 0 : inputs}
+                value={inputs}
                 placeholder="Masukkan saldo awal"
                 onChange={(e) => setInputs(parseFloat(e.target.value))}
               />

@@ -7,6 +7,7 @@ import { setRecords, isDemo } from '../../context/action/demoAction';
 import {
   database, ref, onValue,
 } from '../../config/firebase';
+import checkUID from '../../utils/checkUID';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -18,7 +19,7 @@ export default function App() {
   useEffect(() => {
     // login check
     dispatch(isDemo(false));
-    const uid = localStorage.getItem('uid') || sessionStorage.getItem('uid');
+    const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
 
     // load data records

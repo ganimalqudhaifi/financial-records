@@ -2,19 +2,14 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
+import checkUID from '../utils/checkUID';
 
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    let uid = localStorage.getItem('uid');
-    if (uid === null) {
-      uid = sessionStorage.getItem('uid');
-      (uid === null) ? setIsLogin(false) : setIsLogin(true);
-    } else {
-      setIsLogin(true);
-    }
+    checkUID() !== null && setIsLogin(true);
   }, []);
 
   return (

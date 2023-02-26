@@ -39,7 +39,7 @@ export default function App() {
           <title>Financial Records - App</title>
         </Head>
 
-        <div className="flex flex-col w-full h-full bg-gray-200">
+        <div className="flex flex-col w-full h-full bg-gray-300/60">
           <div className="lg:flex flex-1">
             <AppSidebar />
             <div className="w-full p-4 lg:ml-64 overflow-auto">

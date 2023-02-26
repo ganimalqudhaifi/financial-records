@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { RootContext } from '../../context';
 import { AppSidebar, FinancialRecords, Footers } from '../../components';
-import { setRecords, isDemo } from '../../context/action/demoAction';
+import { setRecords } from '../../context/action/demoAction';
 import {
   database, ref, onValue,
 } from '../../config/firebase';
@@ -18,7 +18,6 @@ export default function App() {
 
   useEffect(() => {
     // login check
-    dispatch(isDemo(false));
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
 

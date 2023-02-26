@@ -13,6 +13,10 @@ export default function Demo({ records }) {
   useEffect(() => {
     dispatch(isDemo(true));
     dispatch(setRecords(records));
+
+    return () => {
+      dispatch(isDemo(false));
+    };
   }, [dispatch, records]);
 
   return (
@@ -20,6 +24,7 @@ export default function Demo({ records }) {
       <Head>
         <title>Financial Records - Demo</title>
       </Head>
+
       <div className={styles.body}>
         <div className={styles.header}>
           <h1 className="text-3xl font-semibold my-6">Table</h1>

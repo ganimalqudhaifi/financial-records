@@ -110,7 +110,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="date"
               id={`date${action}`}
-              name="date"
+              name="tanggal"
               value={inputs.tanggal}
               onChange={handleChange}
               required

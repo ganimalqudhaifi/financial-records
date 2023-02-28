@@ -55,7 +55,6 @@ export default function Login() {
           password: '',
         });
         router.push('/app');
-        setIsLoading(false);
       })
       .catch((err) => {
         let errMsg;

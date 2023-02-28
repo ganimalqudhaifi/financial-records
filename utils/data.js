@@ -1,10 +1,14 @@
 const getData = () => [
   {
     id: 1661698914101,
-    tanggal: '2022-08-27',
+    tanggal: '2022-08-25',
     keterangan: 'gaji',
     jenis: 'Penerimaan',
     jumlah: 5000000,
+    value: 5000000,
+    createdAt: '2023-02-28T09:05:03.499Z',
+    updatedAt: '2023-02-28T09:05:03.499Z',
+
   },
   {
     id: 1661698914102,
@@ -12,6 +16,9 @@ const getData = () => [
     keterangan: 'belanja bulanan',
     jenis: 'Pengeluaran',
     jumlah: 1250000,
+    value: -1250000,
+    createdAt: '2023-02-28T09:05:29.965Z',
+    updatedAt: '2023-02-28T09:05:29.965Z',
   },
   {
     id: 1661698914103,
@@ -19,6 +26,9 @@ const getData = () => [
     keterangan: 'perbaikan kendaraan',
     jenis: 'Pengeluaran',
     jumlah: 250000,
+    value: -250000,
+    createdAt: '2023-02-28T09:06:08.771Z',
+    updatedAt: '2023-02-28T09:06:08.771Z',
   },
   {
     id: 1661698914104,
@@ -26,6 +36,9 @@ const getData = () => [
     keterangan: 'beli pulsa telepon',
     jenis: 'Pengeluaran',
     jumlah: 102500,
+    value: -102500,
+    createdAt: '2023-02-28T09:09:58.606Z',
+    updatedAt: '2023-02-28T09:09:58.606Z',
   },
   {
     id: 1661698914105,
@@ -33,6 +46,9 @@ const getData = () => [
     keterangan: 'beli pulsa listrik',
     jenis: 'Pengeluaran',
     jumlah: 502500,
+    value: -502500,
+    createdAt: '2023-02-28T09:10:11.086Z',
+    updatedAt: '2023-02-28T09:10:11.086Z',
   },
   {
     id: 1661698914106,
@@ -40,6 +56,9 @@ const getData = () => [
     keterangan: 'kondangan',
     jenis: 'Pengeluaran',
     jumlah: 200000,
+    value: -200000,
+    createdAt: '2023-02-28T09:10:21.631Z',
+    updatedAt: '2023-02-28T09:10:21.631Z',
   },
   {
     id: 1661698914107,
@@ -47,6 +66,9 @@ const getData = () => [
     keterangan: 'bayar iuran lingkungan',
     jenis: 'Pengeluaran',
     jumlah: 150000,
+    value: -150000,
+    createdAt: '2023-02-28T09:10:31.127Z',
+    updatedAt: '2023-02-28T09:10:31.127Z',
   },
   {
     id: 166118,
@@ -54,6 +76,9 @@ const getData = () => [
     keterangan: 'top up game',
     jenis: 'Pengeluaran',
     jumlah: 502500,
+    value: -502500,
+    createdAt: '2023-02-28T09:10:39.258Z',
+    updatedAt: '2023-02-28T09:10:39.258Z',
   },
   {
     id: 1661698,
@@ -61,6 +86,9 @@ const getData = () => [
     keterangan: 'makan',
     jenis: 'Pengeluaran',
     jumlah: 200000,
+    value: -200000,
+    createdAt: '2023-02-28T09:10:46.647Z',
+    updatedAt: '2023-02-28T09:10:46.647Z',
   },
   {
     id: 16616989,
@@ -68,6 +96,9 @@ const getData = () => [
     keterangan: 'jajan',
     jenis: 'Pengeluaran',
     jumlah: 150000,
+    value: -150000,
+    createdAt: '2023-02-28T09:10:55.231Z',
+    updatedAt: '2023-02-28T09:10:55.231Z',
   },
   {
     id: 1661,
@@ -75,6 +106,9 @@ const getData = () => [
     keterangan: 'sumbangan',
     jenis: 'Pengeluaran',
     jumlah: 200000,
+    value: -200000,
+    createdAt: '2023-02-28T09:11:02.326Z',
+    updatedAt: '2023-02-28T09:11:02.326Z',
   },
   {
     id: 123123123,
@@ -82,6 +116,9 @@ const getData = () => [
     keterangan: 'satpam',
     jenis: 'Pengeluaran',
     jumlah: 150000,
+    value: -150000,
+    createdAt: '2023-02-28T09:11:10.214Z',
+    updatedAt: '2023-02-28T09:11:10.214Z',
   },
 ];
 

@@ -41,11 +41,7 @@ export default function Demo({ records }) {
 
 export function getServerSideProps() {
   const records = getData();
-  records.map((record) => {
-    record.jenis === 'Penerimaan'
-      ? record.value = record.jumlah
-      : record.value = record.jumlah * -1;
-  });
+
   return {
     props: {
       records,

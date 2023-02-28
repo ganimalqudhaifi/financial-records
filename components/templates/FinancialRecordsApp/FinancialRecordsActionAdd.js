@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
 import { Modal } from '../../molecules';
 
@@ -12,8 +12,9 @@ export default function FinancialRecordsActionAdd() {
     jenis: 'Penerimaan',
     jumlah: null,
   });
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const { isDemo } = state;
+
   const handleChange = (event) => {
     const { name } = event.target;
     let { value } = event.target;
@@ -27,10 +28,16 @@ export default function FinancialRecordsActionAdd() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const newInputs = {
+      ...inputs,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
+    };
     if (!isDemo) {
-      createRecord(isDemo, { ...inputs, value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1) });
+      createRecord(isDemo, { ...newInputs, id: new Date().toISOString() });
     } else {
-      dispatch(createRecord(isDemo, inputs));
+      dispatch(createRecord(isDemo, newInputs));
     }
     dispatch(hideModal(action));
     setInputs(() => ({

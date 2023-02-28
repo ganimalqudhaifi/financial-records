@@ -7,14 +7,21 @@ import { Modal } from '../../molecules';
 export default function FinancialRecordsActionEdit({ no, record }) {
   const action = `editModal${no}`;
   const {
-    id, tanggal, keterangan, jenis, jumlah,
+    id,
+    tanggal,
+    keterangan,
+    jenis,
+    jumlah,
+    createdAt,
   } = record;
+
   const [inputs, setInputs] = useState({
     id,
     tanggal,
     keterangan,
     jenis,
     jumlah,
+    createdAt,
   });
   const { state, dispatch } = useContext(RootContext);
   const { isDemo } = state;
@@ -32,10 +39,15 @@ export default function FinancialRecordsActionEdit({ no, record }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const newInputs = {
+      ...inputs,
+      updatedAt: new Date().toISOString(),
+      value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
+    };
     if (!isDemo) {
-      updateRecords(isDemo, { ...inputs, value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1) });
+      updateRecords(isDemo, newInputs);
     } else {
-      dispatch(updateRecords(isDemo, inputs));
+      dispatch(updateRecords(isDemo, newInputs));
     }
     dispatch(hideModal(action));
     const Toast = Swal.mixin({

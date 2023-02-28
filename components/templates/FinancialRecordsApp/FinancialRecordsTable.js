@@ -23,10 +23,11 @@ export default function FinancialRecordsTable() {
       <tbody>
         {
             records
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
               .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
               .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
               .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
-              .sort((a, b) => a.tanggal - b.tanggal)
               .map((record, i) => (
                 <FinancialRecordsTableBody
                   key={record.id}

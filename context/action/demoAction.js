@@ -84,12 +84,11 @@ export const deleteRecord = (isDemo, id) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());
     remove(ref(database, `users/${uid}/records/${id}`));
-  } else {
-    return {
-      type: globalActionType.DELETE_RECORD,
-      id,
-    };
   }
+  return {
+    type: globalActionType.DELETE_RECORD,
+    id,
+  };
 };
 
 export const changeUser = (payload) => ({

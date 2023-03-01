@@ -15,7 +15,7 @@ export default function Login() {
   });
   const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isShow, setIsShow] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -106,7 +106,7 @@ export default function Login() {
               <div className="relative">
                 <input
                   id="password"
-                  type={`${!isShow ? 'password' : 'text'}`}
+                  type={`${!showPassword ? 'password' : 'text'}`}
                   name="password"
                   placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                   onChange={handleChange}
@@ -115,9 +115,9 @@ export default function Login() {
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center">
-                  <span className="flex items-center" onClick={() => setIsShow(!isShow)}>
+                  <span className="flex items-center" onClick={() => setShowPassword(!showPassword)}>
                     {
-                      !isShow
+                      !showPassword
                         ? (
                           <svg xmlns="http://www.w3.org/2000/svg" className="ionicon w-5 h-5 fill-gray-700" viewBox="0 0 512 512">
                             <title>Show</title>

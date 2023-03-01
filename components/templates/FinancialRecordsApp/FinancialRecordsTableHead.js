@@ -50,7 +50,8 @@ export default function FinancialRecordsTableHead() {
           {saldoAwal.toLocaleString('id-ID')}
         </th>
         <td>
-          <button className="py-1.5 px-3 my-1 bg-slate-900 text-slate-50 rounded" onClick={() => dispatch(showModal(action))}>Ubah</button>
+          <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => dispatch(showModal(action))}>Edit</button>
+
           <Modal style="modal-content-saldo-awal" action={action}>
             <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Saldo Awal</h3>
             <form onSubmit={handleSubmit}>

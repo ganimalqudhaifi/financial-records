@@ -10,7 +10,15 @@ export default function FinancialRecordsActionDelete({ id }) {
 
   return (
     <>
-      <button className="py-1 px-2 mx-1 border-slate-900 border-2 rounded" onClick={() => dispatch(showModal(action))}>Hapus</button>
+      <button className="p-1.5 bg-slate-800 rounded" onClick={() => dispatch(showModal(action))}>
+        <svg xmlns="http://www.w3.org/2000/svg" className="ionicon w-6 h-6 text-white" viewBox="0 0 512 512">
+          <title>Trash</title>
+          <path d="M112 112l20 320c.95 18.49 14.4 32 32 32h184c17.67 0 30.87-13.51 32-32l20-320" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" />
+          <path stroke="currentColor" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="32" d="M80 112h352" />
+          <path d="M192 112V72h0a23.93 23.93 0 0124-24h80a23.93 23.93 0 0124 24h0v40M256 176v224M184 176l8 224M328 176l-8 224" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="32" />
+        </svg>
+      </button>
+
       <Modal style="modal-content-delete" action={action}>
         <svg aria-hidden="true" className="mx-auto mb-4 text-gray-400 w-14 h-14 dark:text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
         <h3 className="px-3 mb-5 text-lg lg:text-xl text-gray-500 whitespace-normal">Apakah anda yakin ingin menghapus catatan?</h3>

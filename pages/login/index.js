@@ -44,13 +44,12 @@ export default function Login() {
           emailVerified: res.user.emailVerified,
         };
         dispatch(changeUser(dataUser));
-        localStorage.removeItem('uid');
-        sessionStorage.removeItem('uid');
         if (remember) {
           localStorage.setItem('uid', JSON.stringify(dataUser.uid));
         } else {
           sessionStorage.setItem('uid', JSON.stringify(dataUser.uid));
         }
+        localStorage.setItem('user', JSON.stringify(dataUser));
         setInputs({
           email: '',
           password: '',

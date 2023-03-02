@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
@@ -7,6 +8,7 @@ import checkUID from '../utils/checkUID';
 export default function Home() {
   const [isLogin, setIsLogin] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [isActiveDropdown, setIsActiveDropdown] = useState(false);
 
   useEffect(() => {
     checkUID() !== null && setIsLogin(true);
@@ -42,29 +44,59 @@ export default function Home() {
 
               )
               : (
-                <Link className="flex justify-center items-center px-3.5 md:px-5 py-2 md:py-2.5 mr-3 text-bg-color bg-main-color hover:outline outline-offset-2 outline-1 outline-main-color rounded-full" href="/app">
-                  <span className="mr-1 font-semibold tracking-wide">Go to app</span>
-                  <div className="flex justify-center items-center text-2xl font-bold">
-                    <ion-icon name="log-in-outline" />
-                  </div>
-                </Link>
+                <button type="button" onClick={() => { setIsActive(false); setIsActiveDropdown(!isActiveDropdown); }} className="flex mr-3 md:mr-0 text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-600">
+                  <span className="sr-only">Open user menu</span>
+                  <Image width="200" height="200" className="w-12 h-12 rounded-full" src="/avatar.jpg" alt="user photo" />
+                </button>
               )
             }
             <button
               type="button"
-              onClick={() => setIsActive(!isActive)}
+              onClick={() => { setIsActiveDropdown(false); setIsActive(!isActive); }}
               className="p-2 flex items-center justify-center cursor-pointer lg:hidden"
             >
               <span className={`relative w-5 h-6 flex items-center justify-center before:content-[''] before:absolute before:w-full before:h-0.5 before:bg-white before:duration-500 ${!isActive ? 'before:translate-y-[-4px]' : 'before:translate-y-0 before:rotate-[225deg]'} after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-white after:duration-500 ${!isActive ? 'after:translate-y-[4px]' : 'after:translate-y-0 after:rotate-[-225deg]'}`} />
             </button>
           </div>
 
+          <div className="lg:order-4 w-full h-0 grid justify-items-end">
+            <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
+              <div className="px-4 py-3">
+                <span className="block text-sm text-white">Bonnie Green</span>
+                <span className="block text-sm font-medium truncate text-gray-400">name@flowbite.com</span>
+              </div>
+              <ul className="py-2" aria-labelledby="user-menu-button">
+                <li>
+                  <Link href="/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link>
+                </li>
+                <li>
+                  <Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link>
+                </li>
+                <li>
+                  <Link href="#" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link>
+                </li>
+                <li>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('uid');
+                      sessionStorage.removeItem('uid');
+                      window.location.reload();
+                    }}
+                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+                  >
+                    Sign out
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
           <nav className="lg:order-1 w-full lg:w-auto h-0 lg:h-auto">
             <ul className="w-full mt-4 lg:mt-0 rounded-lg overflow-hidden lg:flex ">
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-300 font-medium bg-gray-600 duration-200 hover:bg-gray-700 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
             </ul>
           </nav>
         </header>

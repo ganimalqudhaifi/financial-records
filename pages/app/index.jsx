@@ -2,7 +2,9 @@ import React, { useState, useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { RootContext } from '../../context';
-import { AppSidebar, FinancialRecords, Footers } from '../../components';
+import {
+  AppLayout, FinancialRecords,
+} from '../../components';
 import { setRecords } from '../../context/action/demoAction';
 import {
   database, ref, onValue,
@@ -39,18 +41,12 @@ export default function App() {
           <title>Financial Records - App</title>
         </Head>
 
-        <div className="flex flex-col w-full h-full bg-gray-300/60">
-          <div className="lg:flex flex-1">
-            <AppSidebar />
-            <div className="w-full p-4 lg:ml-64 overflow-auto">
-              <h2 className="font-medium text-3xl mb-4">Table</h2>
-              <FinancialRecords />
-            </div>
+        <AppLayout>
+          <div className="w-full p-4 lg:ml-64">
+            <h2 className="font-medium text-3xl mb-4">Table</h2>
+            <FinancialRecords />
           </div>
-          <div className="lg:ml-64">
-            <Footers />
-          </div>
-        </div>
+        </AppLayout>
       </>
     );
   }

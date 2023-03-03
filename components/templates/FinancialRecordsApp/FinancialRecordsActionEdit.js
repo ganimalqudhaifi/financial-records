@@ -73,7 +73,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => dispatch(showModal(action))}>Edit</button>
       <Modal style="modal-content-edit" action={action}>
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Mengubah Catatan</h3>
-        <form onSubmit={handleSubmit} className="space-y-6 text-left">
+        <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6 text-left">
           <div>
             <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jumlah${action}`}>Jumlah</label>
             <input

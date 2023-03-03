@@ -70,7 +70,7 @@ export default function FinancialRecordsActionAdd() {
 
       <Modal style="modal-content-edit" action={action}>
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Membuat Catatan Baru</h3>
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6">
           <div>
             <label className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white" htmlFor="jumlah">Jumlah</label>
             <input

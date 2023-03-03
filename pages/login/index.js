@@ -79,7 +79,7 @@ export default function Login() {
   return (
     <div className="font-['Poppins','sans-serif'] flex justify-center items-center min-h-screen bg-bg-color">
       <div className="relative w-[350px] min-h-[500px] flex justify-center items-center bg-bg-color p-[50px] rounded-[30px] shadow-[25px_25px_75px_rgba(0,0,0,.25),10px_10px_70px_rgba(0,0,0,.25),inset_5px_5px_10px_rgba(0,0,0,.5),inset_5px_5px_20px_rgba(255,255,255,.2),inset_-5px_-5px_15px_rgba(0,0,0,.75)]">
-        <form onSubmit={handleSubmit} className="relative w-full">
+        <form onSubmit={handleSubmit} spellCheck="false" className="relative w-full">
           <h3 className="text-white font-semibold text-[2em] w-full text-center mb-[30px] tracking-[2px] uppercase">Log In</h3>
           <div className="firebaseui-auth-container" />
           <div className="relative w-full mb-5">

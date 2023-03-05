@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
-export default function Index() {
+export default function AppSidebar({ user }) {
   const [isActive, setIsActive] = useState(false);
 
   return (
@@ -16,14 +17,25 @@ export default function Index() {
 
       <aside className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && '-translate-x-full'} lg:translate-x-0`}>
         <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
-          <Link href="/" className="flex items-center pl-2.5 mb-5">
-            <svg className="fill-slate-100 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zm-2 9h-2v-4h2v4zM5 7a1.001 1.001 0 0 1 0-2h13v2H5z" /></svg>
-            <div className="flex flex-col ml-3 text-slate-200 items-start font-semibold text-center">
-              <span className="text-md sm:text-lg font-bold">Financial</span>
-              <span className="text-xs leading-6 mt-[-10px]">Records</span>
-            </div>
-          </Link>
-          <ul className="space-y-2">
+          <div className="w-full flex flex-col items-center">
+            <Image width="200" height="200" className="mb-4 w-20 h-20 rounded-full" src="/avatar.jpg" alt="Rounded avatar" />
+            <p className="text-white text-xl font-bold">{user.displayName}</p>
+            <p className="text-gray-400 text-lg font-light">{user.email}</p>
+            <Link
+              href="/"
+              onClick={() => {
+                localStorage.removeItem('uid');
+                sessionStorage.removeItem('uid');
+              }}
+              className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-gray-300 stroke-1 stroke-gray-500">
+                <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z" clipRule="evenodd" />
+              </svg>
+              <span className="ml-3 text-sm">Sign Out</span>
+            </Link>
+          </div>
+          <ul className="mt-5 pt-5 space-y-2 border-t-[1px] border-gray-700">
             <li>
               <Link href="/" className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800">
                 <svg aria-hidden="true" className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">

@@ -13,8 +13,8 @@ import checkUID from '../../utils/checkUID';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const { state, dispatch } = useContext(RootContext);
-  const { user } = state;
+  const { dispatch } = useContext(RootContext);
+  const [user, setUser] = useState({});
 
   const router = useRouter();
 
@@ -22,6 +22,7 @@ export default function App() {
     // login check
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
+    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
 
     // load data records
     const recordsRef = ref(database, `users/${JSON.parse(uid)}/records`);
@@ -32,7 +33,7 @@ export default function App() {
       }));
       data && dispatch(setRecords(data));
     });
-  }, [dispatch, router, user]);
+  }, [dispatch, router, isLogin]);
 
   if (isLogin) {
     return (
@@ -41,7 +42,7 @@ export default function App() {
           <title>Financial Records - App</title>
         </Head>
 
-        <AppLayout>
+        <AppLayout user={user}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Table</h2>
             <FinancialRecords />

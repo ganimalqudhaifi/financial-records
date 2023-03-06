@@ -7,6 +7,10 @@ import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
   const { dispatch } = useGlobalContext();
+  const user = {
+    displayName: 'Demo',
+    email: 'name@company.com',
+  };
 
   useEffect(() => {
     dispatch(isDemo(true));
@@ -25,7 +29,7 @@ export default function Demo({ records }) {
 
       <div className="flex flex-col w-full h-full bg-gray-200">
         <div className="lg:flex flex-1">
-          <AppSidebar />
+          <AppSidebar user={user} />
           <div className="w-full p-4 lg:ml-64 overflow-auto">
             <h2 className="font-medium text-3xl mb-4">Table</h2>
             <FinancialRecords />

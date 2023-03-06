@@ -19,8 +19,8 @@ export default function AppSidebar({ user }) {
         <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
           <div className="w-full flex flex-col items-center">
             <Image width="200" height="200" className="mb-4 w-20 h-20 rounded-full" src="/avatar.jpg" alt="Rounded avatar" />
-            <p className="text-white text-xl font-bold">{user.displayName}</p>
-            <p className="text-gray-400 text-lg font-light">{user.email}</p>
+            <p className="text-white text-xl font-semibold capitalize">{user.displayName}</p>
+            <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link
               href="/"
               onClick={() => {
@@ -29,13 +29,13 @@ export default function AppSidebar({ user }) {
               }}
               className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 text-gray-300 stroke-1 stroke-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="mr-1.5 w-5 h-5 text-gray-300 stroke-1 stroke-gray-500">
                 <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z" clipRule="evenodd" />
               </svg>
-              <span className="ml-3 text-sm">Sign Out</span>
+              <span className="text-gray-400 text-sm font-medium">Logout</span>
             </Link>
           </div>
-          <ul className="mt-5 pt-5 space-y-2 border-t-[1px] border-gray-700">
+          <ul className="mt-2 pt-5 space-y-2 border-t-[1px] border-gray-700">
             <li>
               <Link href="/" className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800">
                 <svg aria-hidden="true" className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -55,21 +55,6 @@ export default function AppSidebar({ user }) {
               <Link href="/" className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800">
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
                 <span className="ml-3">Profile</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/"
-                onClick={() => {
-                  localStorage.removeItem('uid');
-                  sessionStorage.removeItem('uid');
-                }}
-                className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-slate-400">
-                  <path fillRule="evenodd" d="M7.5 3.75A1.5 1.5 0 006 5.25v13.5a1.5 1.5 0 001.5 1.5h6a1.5 1.5 0 001.5-1.5V15a.75.75 0 011.5 0v3.75a3 3 0 01-3 3h-6a3 3 0 01-3-3V5.25a3 3 0 013-3h6a3 3 0 013 3V9A.75.75 0 0115 9V5.25a1.5 1.5 0 00-1.5-1.5h-6zm10.72 4.72a.75.75 0 011.06 0l3 3a.75.75 0 010 1.06l-3 3a.75.75 0 11-1.06-1.06l1.72-1.72H9a.75.75 0 010-1.5h10.94l-1.72-1.72a.75.75 0 010-1.06z" clipRule="evenodd" />
-                </svg>
-                <span className="ml-3">Sign Out</span>
               </Link>
             </li>
           </ul>

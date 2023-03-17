@@ -69,7 +69,7 @@ export default function Home() {
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
-                  <Link href="/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link>
+                  <Link href="/app/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link>
                 </li>
                 <li>
                   <Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link>

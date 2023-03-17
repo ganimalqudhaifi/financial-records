@@ -75,7 +75,7 @@ export default function Home() {
                   <Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link>
                 </li>
                 <li>
-                  <Link href="#" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link>
+                  <Link href="/app/profile" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link>
                 </li>
                 <li>
                   <button

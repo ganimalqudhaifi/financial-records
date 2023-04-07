@@ -157,6 +157,12 @@ export default function Home() {
           </article>
         </main>
 
+        <div>
+          - TODO!: add about section
+          <br />
+          - TODO!: add contact section
+        </div>
+
         <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
         <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
       </div>

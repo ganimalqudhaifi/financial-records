@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { RootContext } from '../../../context';
-import styles from './FinancialRecordsInformation.module.css';
 
 export default function FinancialRecordsInformation() {
   const { state } = useContext(RootContext);
@@ -10,46 +9,31 @@ export default function FinancialRecordsInformation() {
   const pengeluaran = records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
 
   return (
-    <table className={styles['information-table']}>
-      <caption>Informasi Keseluruhan</caption>
-      <thead>
-        <tr>
-          <td>Saldo Awal</td>
-          <td>
-            Rp
-            {' '}
-            {saldoAwal.toLocaleString('id-ID')}
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Penerimaan</td>
-          <td>
-            Rp
-            {' '}
-            {penerimaan.toLocaleString('id-ID')}
-          </td>
-        </tr>
-        <tr>
-          <td>Pengeluaran</td>
-          <td>
-            Rp
-            {' '}
-            {pengeluaran.toLocaleString('id-ID')}
-          </td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <td>Saldo Akhir</td>
-          <td>
-            Rp
-            {' '}
-            {(saldoAwal + penerimaan - pengeluaran).toLocaleString('id-ID')}
-          </td>
-        </tr>
-      </tfoot>
-    </table>
+    <div className="grid grid-cols-4 py-2 gap-6">
+      <div className="p-2 bg-white border-l-8 border-l-cyan-500 rounded">
+        <div className="text-sm">Saldo Awal</div>
+        <div>
+          {`Rp ${saldoAwal.toLocaleString('id-ID')}`}
+        </div>
+      </div>
+      <div className="p-2 bg-white border-l-8 border-l-emerald-500 rounded">
+        <div className="text-sm">Penerimaan</div>
+        <div>
+          {`Rp ${penerimaan.toLocaleString('id-ID')}`}
+        </div>
+      </div>
+      <div className="p-2 bg-white border-l-8 border-l-amber-500 rounded">
+        <div className="text-sm">Pengeluaran</div>
+        <div>
+          {`Rp ${pengeluaran.toLocaleString('id-ID')}`}
+        </div>
+      </div>
+      <div className="p-2 bg-white border-l-8 border-l-rose-500 rounded">
+        <div className="text-sm">Saldo Akhir</div>
+        <div>
+          {`Rp ${(saldoAwal + penerimaan - pengeluaran).toLocaleString('id-ID')}`}
+        </div>
+      </div>
+    </div>
   );
 }

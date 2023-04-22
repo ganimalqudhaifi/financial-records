@@ -96,21 +96,12 @@ export default function FinancialRecordsChart() {
   }, [saldoAwal, records]);
 
   return (
-    <>
-      <table className="mx-auto">
-        <caption className="font-bold mt-0 lg:mt-6 mb-1">Grafik</caption>
-        <div onClick={() => dispatch(showModal(action))}>
-          <tbody className="cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg">
-            <tr>
-              <th>
-                <div className="w-[16.4rem]">
-                  <Bar options={chartOptions} data={chartData} />
-                </div>
-              </th>
-            </tr>
-          </tbody>
+    <div className="flex items-start justify-center mt-5 p-5 w-full h-full bg-white rounded">
+      <div onClick={() => dispatch(showModal(action))} className="p-5 w-full cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg rounded">
+        <div className="p-4">
+          <Bar options={chartOptions} data={chartData} />
         </div>
-      </table>
+      </div>
 
       <Modal action={action} style="modal-content-graph">
         <p className="text-xl md:text-2xl lg:text-3xl pt-6 pb-2 font-semibold">Grafik</p>
@@ -119,6 +110,6 @@ export default function FinancialRecordsChart() {
         </div>
       </Modal>
 
-    </>
+    </div>
   );
 }

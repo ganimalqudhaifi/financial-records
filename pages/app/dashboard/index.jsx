@@ -4,6 +4,7 @@ import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import checkUID from '../../../utils/checkUID';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
+import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -29,9 +30,7 @@ export default function App() {
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
             <FinancialRecordsInformation />
-            <div>
-              - Financial Records Chart
-            </div>
+            <FinancialRecordsChart />
           </div>
         </AppLayout>
       </>

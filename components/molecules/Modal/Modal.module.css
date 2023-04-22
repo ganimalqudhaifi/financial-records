@@ -11,5 +11,5 @@
 }
 
 .modal-content-graph {
-  @apply box-border text-center mt-[23%] md:mt-[15%] lg:mt-[1.1%] w-9/12
+  @apply box-border text-center mt-[23%] md:mt-[15%] lg:mt-0 w-full max-w-5xl
 }

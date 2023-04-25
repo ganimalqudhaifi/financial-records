@@ -96,7 +96,7 @@ export default function FinancialRecordsChart() {
   }, [saldoAwal, records]);
 
   return (
-    <div className="flex items-start justify-center mt-5 p-5 w-full h-full bg-white rounded">
+    <div className="flex items-start justify-center mt-5 p-5 w-full bg-white rounded">
       <div onClick={() => dispatch(showModal(action))} className="p-5 w-full cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg rounded">
         <div className="p-4">
           <Bar options={chartOptions} data={chartData} />

@@ -1,9 +1,38 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { database, onValue, ref } from '../../../config/firebase';
+import { useGlobalContext } from '../../../context';
+import { changeSocialMediaAttachment, changeSocialMediaLinks } from '../../../context/action/demoAction';
+import checkUID from '../../../utils/checkUID';
 
 export default function AppSidebar({ user }) {
+  const { dispatch, state } = useGlobalContext();
+  const { socialMediaLinks } = state;
   const [isActive, setIsActive] = useState(false);
+
+  useEffect(() => {
+    const uid = checkUID();
+    const socialMediaAttachmentRef = ref(database, `users/${JSON.parse(uid)}/socialMediaAttachment`);
+    if (!state.isDemo) {
+      onValue(socialMediaAttachmentRef, (snapshot) => {
+        const payload = snapshot.val();
+        dispatch(changeSocialMediaAttachment(0, payload));
+      }, {
+        onlyOnce: true,
+      });
+    }
+
+    const socialMediaLinksRef = ref(database, `users/${JSON.parse(uid)}/socialMediaLinks`);
+    if (!state.isDemo) {
+      onValue(socialMediaLinksRef, (snapshot) => {
+        const payload = snapshot.val();
+        dispatch(changeSocialMediaLinks(0, payload));
+      }, {
+        onlyOnce: true,
+      });
+    }
+  }, []);
 
   return (
     <>
@@ -34,6 +63,17 @@ export default function AppSidebar({ user }) {
               </svg>
               <span className="text-gray-400 text-sm font-medium">Logout</span>
             </Link>
+            <div className="flex gap-x-4 ">
+              <Link href={`${socialMediaLinks.facebook}`} target="_blank" className={`${state.socialMediaAttachment.facebook ? 'visible' : 'hidden'}`}>
+                <i className="bx bxl-facebook-square text-3xl text-blue-800 hover:animate-pulse hover:scale-105" />
+              </Link>
+              <Link href={`${socialMediaLinks.instagram}`} target="_blank" className={`${state.socialMediaAttachment.instagram ? 'visible' : 'hidden'}`}>
+                <i className="bx bxl-instagram-alt text-3xl bg-clip-text text-transparent bg-gradient-to-b from-purple-800 to-amber-400 hover:animate-pulse hover:scale-105" />
+              </Link>
+              <Link href={`${socialMediaLinks.twitter}`} target="_blank" className={`${state.socialMediaAttachment.twitter ? 'visible' : 'hidden'}`}>
+                <i className="bx bxl-twitter text-3xl text-blue-500 hover:animate-pulse hover:scale-105" />
+              </Link>
+            </div>
           </div>
           <ul className="mt-2 pt-5 space-y-2 border-t-[1px] border-gray-700">
             <li>

@@ -3,17 +3,17 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import checkUID from '../../../utils/checkUID';
+import { useGlobalContext } from '../../../context';
+import { changeSocialMediaAttachment, changeSocialMediaLinks } from '../../../context/action/demoAction';
 
 export default function App() {
+  const { dispatch, state } = useGlobalContext();
+  const { socialMediaLinks, socialMediaAttachment } = state;
+
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
   const [edits, setEdits] = useState({
     personalInformation: false,
-    socialMedia: {
-      facebook: false,
-      instagram: false,
-      twitter: false,
-    },
   });
 
   const router = useRouter();
@@ -23,7 +23,7 @@ export default function App() {
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
-  }, [router, isLogin]);
+  }, [router, isLogin, dispatch]);
 
   if (isLogin) {
     return (
@@ -86,22 +86,19 @@ export default function App() {
               <form className="mt-5 grid grid-cols-3">
                 <div className="grid grid-cols-1 col-span-3 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
-                    <label className="mb-1 text-sm text-gray-600">Facebook</label>
+                    <label htmlFor="facebook" className="mb-1 text-sm text-gray-600">Facebook</label>
                     <div className="relative w-full">
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-facebook-square text-2xl text-blue-800" />
                       </div>
-                      <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" name="facebook" id="facebook" value={socialMediaLinks.facebook} disabled={socialMediaAttachment.facebook} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
-                          className={`${edits.socialMedia.facebook ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
-                          onClick={() => setEdits({
-                            ...edits,
-                            socialMedia: {
-                              ...edits.socialMedia,
-                              facebook: !edits.socialMedia.facebook,
-                            },
-                          })}
+                          className={`${socialMediaAttachment.facebook ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
+                          onClick={() => {
+                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, facebook: !socialMediaAttachment.facebook }));
+                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, facebook: (socialMediaAttachment.facebook ? '' : socialMediaLinks.facebook) }));
+                          }}
                         />
                       </div>
                     </div>
@@ -112,17 +109,14 @@ export default function App() {
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-instagram-alt text-2xl bg-clip-text text-transparent bg-gradient-to-b from-purple-800 to-amber-400" />
                       </div>
-                      <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" id="simple-search" name="instagram" value={socialMediaLinks.instagram} disabled={socialMediaAttachment.instagram} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
-                          className={`${edits.socialMedia.instagram ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
-                          onClick={() => setEdits({
-                            ...edits,
-                            socialMedia: {
-                              ...edits.socialMedia,
-                              instagram: !edits.socialMedia.instagram,
-                            },
-                          })}
+                          className={`${socialMediaAttachment.instagram ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
+                          onClick={() => {
+                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, instagram: !socialMediaAttachment.instagram }));
+                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, instagram: (socialMediaAttachment.instagram ? '' : socialMediaLinks.instagram) }));
+                          }}
                         />
                       </div>
                     </div>
@@ -133,17 +127,14 @@ export default function App() {
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-twitter text-2xl text-blue-500" />
                       </div>
-                      <input type="text" id="simple-search" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" id="simple-search" name="twitter" value={socialMediaLinks.twitter} disabled={socialMediaAttachment.twitter} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
-                          className={`${edits.socialMedia.twitter ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
-                          onClick={() => setEdits({
-                            ...edits,
-                            socialMedia: {
-                              ...edits.socialMedia,
-                              twitter: !edits.socialMedia.twitter,
-                            },
-                          })}
+                          className={`${socialMediaAttachment.twitter ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
+                          onClick={() => {
+                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, twitter: !socialMediaAttachment.twitter }));
+                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, twitter: (socialMediaAttachment.twitter ? '' : socialMediaLinks.twitter) }));
+                          }}
                         />
                       </div>
                     </div>

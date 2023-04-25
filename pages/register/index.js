@@ -4,7 +4,9 @@ import Script from 'next/script';
 import React, { useState } from 'react';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
-import { changeSaldoAwal, changeUser } from '../../context/action/demoAction';
+import {
+  changeSaldoAwal, changeSocialMediaAttachment, changeUser,
+} from '../../context/action/demoAction';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Register() {
@@ -49,6 +51,11 @@ export default function Register() {
           password: '',
         });
         dispatch(changeSaldoAwal(false, 0));
+        dispatch(changeSocialMediaAttachment(0, {
+          facebook: false,
+          instagram: false,
+          twitter: false,
+        }));
         router.push('/app');
       })
       .catch((err) => {

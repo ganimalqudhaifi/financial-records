@@ -8,6 +8,16 @@ export const initialState = {
   isLogin: false,
   isDemo: false,
   user: {},
+  socialMediaLinks: {
+    facebook: '',
+    instagram: '',
+    twitter: '',
+  },
+  socialMediaAttachment: {
+    facebook: false,
+    instagram: false,
+    twitter: false,
+  },
 };
 
 export const globalActionType = {
@@ -19,6 +29,8 @@ export const globalActionType = {
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   CHANGE_PAGINATION_INDEX: 'CHANGE_PAGINATION_INDEX',
   CHANGE_SALDO_AWAL: 'CHANGE_SALDO_AWAL',
+  CHANGE_SOCIAL_MEDIA_LINKS: 'CHANGE_SOCIAL_MEDIA_LINKS',
+  CHANGE_SOCIAL_MEDIA_ATTACHMENT: 'CHANGE_SOCIAL_MEDIA_ATTACHMENT',
   CREATE_RECORD: 'CREATE_RECORD',
   GET_RECORDS: 'GET_RECORDS',
   UPDATE_RECORD: 'UPDATE_RECORD',
@@ -65,6 +77,16 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         saldoAwal: parseInt(action.payload, 10),
+      };
+    case globalActionType.CHANGE_SOCIAL_MEDIA_LINKS:
+      return {
+        ...state,
+        socialMediaLinks: action.payload,
+      };
+    case globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT:
+      return {
+        ...state,
+        socialMediaAttachment: action.payload,
       };
     case globalActionType.CHANGE_USER:
       return {

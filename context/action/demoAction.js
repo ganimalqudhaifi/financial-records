@@ -51,6 +51,28 @@ export const changeSaldoAwal = (isDemo, payload) => {
   };
 };
 
+export const changeSocialMediaLinks = (isDemo, payload) => {
+  if (!isDemo) {
+    const uid = JSON.parse(checkUID());
+    set(ref(database, `users/${uid}/socialMediaLinks`), payload);
+  }
+  return {
+    type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS,
+    payload,
+  };
+};
+
+export const changeSocialMediaAttachment = (isDemo, payload) => {
+  if (!isDemo) {
+    const uid = JSON.parse(checkUID());
+    set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
+  }
+  return {
+    type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT,
+    payload,
+  };
+};
+
 export const createRecord = (isDemo, payload) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());

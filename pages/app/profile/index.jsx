@@ -37,27 +37,27 @@ export default function App() {
             <h2 className="font-medium text-3xl mb-4">Profile</h2>
             <div className="p-5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Personal Information</h3>
-              <form className="mt-5 grid grid-cols-3 md:grid-cols-6">
+              <form className="mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600">
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
-                    <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">First Name</label>
+                    <label htmlFor="firstName" className="mb-1 text-sm">First Name</label>
                     <input id="firstName" type="text" placeholder="firstName" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">Last Name</label>
+                    <label htmlFor="firstName" className="mb-1 text-sm">Last Name</label>
                     <input id="firstName" type="text" placeholder="lastName" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">Email Address</label>
-                    <input id="firstName" type="text" placeholder="emailAddress" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled />
+                    <label htmlFor="firstName" className="mb-1 text-sm">Email Address</label>
+                    <input id="firstName" type="text" placeholder="emailAddress" value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">Phone</label>
+                    <label htmlFor="firstName" className="mb-1 text-sm">Phone</label>
                     <input id="firstName" type="text" placeholder="-" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">Bio</label>
-                    <input id="firstName" type="text" placeholder="Bio" className={`${edits.personalInformation && 'p-1 border-2 border-slate-600 rounded'}`} disabled={!edits.personalInformation} />
+                    <label htmlFor="firstName" className="mb-1 text-sm">Bio</label>
+                    <input id="firstName" type="text" placeholder="-" className={`${edits.personalInformation && 'p-1 border-2 border-slate-600 rounded'}`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">

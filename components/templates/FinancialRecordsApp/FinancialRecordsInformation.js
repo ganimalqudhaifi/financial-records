@@ -9,7 +9,7 @@ export default function FinancialRecordsInformation() {
   const pengeluaran = records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);
 
   return (
-    <div className="grid grid-cols-4 py-2 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-4 py-2 gap-6">
       <div className="p-2 bg-white border-l-8 border-l-cyan-500 rounded">
         <div className="text-sm">Saldo Awal</div>
         <div>

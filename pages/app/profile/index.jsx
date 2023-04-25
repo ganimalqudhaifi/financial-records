@@ -37,8 +37,8 @@ export default function App() {
             <h2 className="font-medium text-3xl mb-4">Profile</h2>
             <div className="p-5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Personal Information</h3>
-              <form className="mt-5 grid grid-cols-3">
-                <div className="grid grid-cols-2 col-span-2 gap-x-5 gap-y-3">
+              <form className="mt-5 grid grid-cols-3 md:grid-cols-6">
+                <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="firstName" className="mb-1 text-sm text-gray-600">First Name</label>
                     <input id="firstName" type="text" placeholder="firstName" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
@@ -60,7 +60,7 @@ export default function App() {
                     <input id="firstName" type="text" placeholder="Bio" className={`${edits.personalInformation && 'p-1 border-2 border-slate-600 rounded'}`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
-                <div className="px-5 py-1 grid justify-end items-start">
+                <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
                   <button
                     type="button"
                     onClick={() => {
@@ -69,7 +69,7 @@ export default function App() {
                         personalInformation: !edits.personalInformation,
                       });
                     }}
-                    className="grid grid-flow-col px-2 py-1 border justify-center items-center border-slate-300 hover:border-slate-500 active:border-slate-400 text-slate-600 hover:text-slate-700 active:text-slate-600 rounded-full"
+                    className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center border-slate-300 hover:border-slate-500 active:border-slate-400 text-slate-600 hover:text-slate-700 active:text-slate-600 rounded-full"
                   >
                     <p className="text-md">
                       {edits.personalInformation ? 'Save' : 'Edit'}
@@ -84,7 +84,7 @@ export default function App() {
             <div className="p-5 mt-2.5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Social Media</h3>
               <form className="mt-5 grid grid-cols-3">
-                <div className="grid grid-cols-1 col-span-2 gap-x-5 gap-y-3">
+                <div className="grid grid-cols-1 col-span-3 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label className="mb-1 text-sm text-gray-600">Facebook</label>
                     <div className="relative w-full">

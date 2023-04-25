@@ -213,13 +213,15 @@ export default function Home() {
           </article>
         </main>
 
-        <footer className="flex px-4 dark:bg-gray-800 dark:text-gray-100">
-          <div className="py-6 text-sm text-center text-gray-300 whitespace-nowrap">©2023 All rights reserved.</div>
-          <div className="container flex flex-col justify-end gap-1 py-4 mx-auto space-y-8 lg:flex-row lg:space-y-0">
-            <div className="flex items-center text-gray-300 mr-1">Powered by</div>
-            <Link href=""><div className="w-10 h-10 bg-gray-300 flex items-center justify-center rounded-full"><Image alt="nextjs logo" width={36} height={36} src="/icons/nextjslogo.png" /></div></Link>
-            <Link href=""><div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full"><Image alt="tailwind logo" width={36} height={36} src="/icons/tailwindlogo.png" /></div></Link>
-            <Link href=""><div className="w-10 h-10 bg-transparent flex items-center justify-center rounded-full"><Image alt="firebase logo" width={36} height={36} src="/icons/firebaselogo.png" /></div></Link>
+        <footer className="flex flex-col md:flex-row px-4 dark:bg-gray-800 dark:text-gray-100">
+          <div className="order-2 md:order-0 py-6 text-sm text-center text-gray-300 whitespace-nowrap">©2023 All rights reserved.</div>
+          <div className="md:order-2 container flex flex-col md:flex-row justify-end gap-1 py-4 mx-auto space-y-1 lg:flex-row lg:space-y-0">
+            <div className="flex items-center justify-center text-gray-300 mr-1">Powered by</div>
+            <div className="flex items-center justify-center gap-0.5">
+              <Link href=""><div className="w-8 h-8 bg-gray-300 flex items-center justify-center rounded-full"><Image alt="nextjs logo" width={28} height={28} src="/icons/nextjslogo.png" /></div></Link>
+              <Link href=""><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="tailwind logo" width={28} height={28} src="/icons/tailwindlogo.png" /></div></Link>
+              <Link href=""><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="firebase logo" width={28} height={28} src="/icons/firebaselogo.png" /></div></Link>
+            </div>
           </div>
         </footer>
 

@@ -79,7 +79,7 @@ export default function FinancialRecordsChart() {
         },
         title: {
           display: true,
-          text: 'Pencatatan Keuangan',
+          text: 'Financial Records',
         },
       },
       scales: {
@@ -104,7 +104,6 @@ export default function FinancialRecordsChart() {
       </div>
 
       <Modal action={action} style="modal-content-graph">
-        <p className="text-xl md:text-2xl lg:text-3xl pt-6 pb-2 font-semibold">Grafik</p>
         <div className="p-4">
           <Bar options={chartOptions} data={chartData} />
         </div>

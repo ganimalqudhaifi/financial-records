@@ -5,10 +5,10 @@ import { AppLayout } from '../../../components';
 import checkUID from '../../../utils/checkUID';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
+import { auth } from '../../../config/firebase';
 
 export default function App() {
   const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({});
 
   const router = useRouter();
 
@@ -16,7 +16,6 @@ export default function App() {
     // login check
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
   }, [router, isLogin]);
 
   if (isLogin) {
@@ -26,7 +25,7 @@ export default function App() {
           <title>Financial Records - App Dashboard</title>
         </Head>
 
-        <AppLayout user={user}>
+        <AppLayout user={auth.currentUser}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
             <FinancialRecordsInformation />

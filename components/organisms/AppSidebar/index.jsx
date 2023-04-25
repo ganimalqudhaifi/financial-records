@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { database, onValue, ref } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
-import { changeSocialMediaAttachment, changeSocialMediaLinks } from '../../../context/action/demoAction';
+import { changePersonalInformation, changeSocialMediaAttachment, changeSocialMediaLinks } from '../../../context/action/demoAction';
 import checkUID from '../../../utils/checkUID';
 
 export default function AppSidebar({ user }) {
@@ -28,6 +28,16 @@ export default function AppSidebar({ user }) {
       onValue(socialMediaLinksRef, (snapshot) => {
         const payload = snapshot.val();
         dispatch(changeSocialMediaLinks(0, payload));
+      }, {
+        onlyOnce: true,
+      });
+    }
+
+    const personalInformationRef = ref(database, `users/${JSON.parse(uid)}/personalInformation`);
+    if (!state.isDemo) {
+      onValue(personalInformationRef, (snapshot) => {
+        const payload = snapshot.val();
+        dispatch(changePersonalInformation(0, payload));
       }, {
         onlyOnce: true,
       });

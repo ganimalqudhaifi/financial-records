@@ -118,6 +118,17 @@ export const changeUser = (payload) => ({
   payload,
 });
 
+export const changePersonalInformation = (isDemo, payload) => {
+  if (!isDemo) {
+    const uid = JSON.parse(checkUID());
+    set(ref(database, `users/${uid}/personalInformation`), payload);
+  }
+  return {
+    type: globalActionType.CHANGE_PERSONAL_INFORMATION,
+    payload,
+  };
+};
+
 export const isDemo = (payload) => ({
   type: globalActionType.ISDEMO,
   payload,

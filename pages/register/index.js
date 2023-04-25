@@ -5,7 +5,8 @@ import React, { useState } from 'react';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
 import {
-  changeSaldoAwal, changeSocialMediaAttachment, changeUser,
+  changePersonalInformation,
+  changeSaldoAwal, changeSocialMediaAttachment, changeSocialMediaLinks, changeUser,
 } from '../../context/action/demoAction';
 import alertToast from '../../utils/sweetAlert';
 
@@ -55,6 +56,17 @@ export default function Register() {
           facebook: false,
           instagram: false,
           twitter: false,
+        }));
+        dispatch(changeSocialMediaLinks(0, {
+          facebook: '',
+          instagram: '',
+          twitter: '',
+        }));
+        dispatch(changePersonalInformation(0, {
+          firstName: 'New',
+          lastName: 'User',
+          phone: '',
+          bio: '',
         }));
         router.push('/app');
       })

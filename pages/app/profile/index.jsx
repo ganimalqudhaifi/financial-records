@@ -4,11 +4,14 @@ import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import checkUID from '../../../utils/checkUID';
 import { useGlobalContext } from '../../../context';
-import { changeSocialMediaAttachment, changeSocialMediaLinks } from '../../../context/action/demoAction';
+import {
+  changePersonalInformation, changeSocialMediaAttachment, changeSocialMediaLinks, changeUser,
+} from '../../../context/action/demoAction';
+import { auth, updateProfile } from '../../../config/firebase';
 
 export default function App() {
   const { dispatch, state } = useGlobalContext();
-  const { socialMediaLinks, socialMediaAttachment } = state;
+  const { socialMediaLinks, socialMediaAttachment, personalInformation } = state;
 
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
@@ -25,6 +28,22 @@ export default function App() {
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
   }, [router, isLogin, dispatch]);
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateProfile(auth.currentUser, { ...user, displayName: `${personalInformation.firstName} ${personalInformation.lastName}` }).then(() => {
+      dispatch(changeUser({
+        uid: auth.currentUser.uid,
+        displayName: auth.currentUser.displayName,
+        email: auth.currentUser.email,
+        photoURL: auth.currentUser.photoURL,
+        emailVerified: auth.currentUser.emailVerified,
+      }));
+    }).catch(() => {
+      alert('error update profile');
+    });
+    dispatch(changePersonalInformation(0, personalInformation));
+  };
+
   if (isLogin) {
     return (
       <>
@@ -32,38 +51,38 @@ export default function App() {
           <title>Financial Records - App Profile</title>
         </Head>
 
-        <AppLayout user={user}>
+        <AppLayout user={auth.currentUser}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Profile</h2>
             <div className="p-5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Personal Information</h3>
-              <form className="mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600">
+              <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600">
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="firstName" className="mb-1 text-sm">First Name</label>
-                    <input id="firstName" type="text" placeholder="firstName" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
+                    <input id="firstName" name="firstName" type="text" placeholder="firstName" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.firstName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm">Last Name</label>
-                    <input id="firstName" type="text" placeholder="lastName" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
+                    <label htmlFor="lastName" className="mb-1 text-sm">Last Name</label>
+                    <input id="lastName" name="lastName" type="text" placeholder="lastName" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.lastName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm">Email Address</label>
-                    <input id="firstName" type="text" placeholder="emailAddress" value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled />
+                    <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm">Phone</label>
-                    <input id="firstName" type="text" placeholder="-" className={`${edits.personalInformation && ' border-2 border-slate-600 rounded'} p-1`} disabled={!edits.personalInformation} />
+                    <label htmlFor="phone" className="mb-1 text-sm">Phone</label>
+                    <input id="phone" name="phone" type="tel" placeholder="-" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.phone} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="firstName" className="mb-1 text-sm">Bio</label>
-                    <input id="firstName" type="text" placeholder="-" className={`${edits.personalInformation && 'p-1 border-2 border-slate-600 rounded'}`} disabled={!edits.personalInformation} />
+                    <label htmlFor="bio" className="mb-1 text-sm">Bio</label>
+                    <input id="bio" name="bio" type="text" placeholder="-" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.bio} className={`${edits.personalInformation && 'border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
                   <button
-                    type="button"
-                    onClick={() => {
+                    onClick={(e) => {
+                      handleSubmit(e);
                       setEdits({
                         ...edits,
                         personalInformation: !edits.personalInformation,

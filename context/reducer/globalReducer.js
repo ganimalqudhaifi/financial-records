@@ -8,6 +8,7 @@ export const initialState = {
   isLogin: false,
   isDemo: false,
   user: {},
+  personalInformation: {},
   socialMediaLinks: {
     facebook: '',
     instagram: '',
@@ -29,6 +30,7 @@ export const globalActionType = {
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   CHANGE_PAGINATION_INDEX: 'CHANGE_PAGINATION_INDEX',
   CHANGE_SALDO_AWAL: 'CHANGE_SALDO_AWAL',
+  CHANGE_PERSONAL_INFORMATION: 'CHANGE_PERSONAL_INFORMATION',
   CHANGE_SOCIAL_MEDIA_LINKS: 'CHANGE_SOCIAL_MEDIA_LINKS',
   CHANGE_SOCIAL_MEDIA_ATTACHMENT: 'CHANGE_SOCIAL_MEDIA_ATTACHMENT',
   CREATE_RECORD: 'CREATE_RECORD',
@@ -92,6 +94,11 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         user: action.payload,
+      };
+    case globalActionType.CHANGE_PERSONAL_INFORMATION:
+      return {
+        ...state,
+        personalInformation: action.payload,
       };
     case globalActionType.ISLOGIN:
       return {

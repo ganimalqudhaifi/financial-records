@@ -5,8 +5,12 @@ import { AppLayout } from '../../../components';
 import checkUID from '../../../utils/checkUID';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
+import { useGlobalContext } from '../../../context';
+import { database, onValue, ref } from '../../../config/firebase';
+import { setRecords } from '../../../context/action/demoAction';
 
 export default function App() {
+  const { dispatch } = useGlobalContext();
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
 
@@ -17,7 +21,17 @@ export default function App() {
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
-  }, [router, isLogin]);
+
+    // load data records
+    const recordsRef = ref(database, `users/${JSON.parse(uid)}/records`);
+    onValue(recordsRef, (snapshot) => {
+      const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
+        ...snapshot.val()[key],
+        id: key,
+      }));
+      data && dispatch(setRecords(data));
+    });
+  }, [router, isLogin, dispatch]);
 
   if (isLogin) {
     return (

@@ -8,11 +8,16 @@ import checkUID from '../../../utils/checkUID';
 
 export default function AppSidebar({ user }) {
   const { dispatch, state } = useGlobalContext();
-  const { isDemo, socialMediaLinks, personalInformation } = state;
+  const {
+    isDemo, socialMediaLinks, socialMediaAttachment, personalInformation,
+  } = state;
+
   const [isActive, setIsActive] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const uid = checkUID();
+    uid !== null && setIsLogin(true);
 
     const socialMediaAttachmentRef = ref(database, `users/${JSON.parse(uid)}/socialMediaAttachment`);
     if (!isDemo) {
@@ -59,7 +64,7 @@ export default function AppSidebar({ user }) {
         <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
           <div className="w-full flex flex-col items-center">
             <Image width="200" height="200" className="mb-4 w-20 h-20 rounded-full" src="/avatar.jpg" alt="Rounded avatar" />
-            <p className="text-white text-xl font-semibold capitalize">{`${personalInformation.firstName} ${personalInformation.lastName}`}</p>
+            <p className="text-white text-xl font-semibold capitalize">{`${(isLogin && !isDemo) ? personalInformation.firstName : user.displayName} ${(isLogin && !isDemo) ? personalInformation.lastName : 'User'}`}</p>
             <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link
               href="/"
@@ -75,13 +80,13 @@ export default function AppSidebar({ user }) {
               <span className="text-gray-400 text-sm font-medium">Logout</span>
             </Link>
             <div className="flex gap-x-4 ">
-              <Link href={`${socialMediaLinks.facebook}`} target="_blank" className={`${state.socialMediaAttachment.facebook ? 'visible' : 'hidden'}`}>
+              <Link href={`${isLogin && socialMediaLinks.facebook}`} target="_blank" className={`${isLogin && socialMediaAttachment.facebook ? 'visible' : 'hidden'}`}>
                 <i className="bx bxl-facebook-square text-3xl text-blue-800 hover:animate-pulse hover:scale-105" />
               </Link>
-              <Link href={`${socialMediaLinks.instagram}`} target="_blank" className={`${state.socialMediaAttachment.instagram ? 'visible' : 'hidden'}`}>
+              <Link href={`${isLogin && socialMediaLinks.instagram}`} target="_blank" className={`${isLogin && socialMediaAttachment.instagram ? 'visible' : 'hidden'}`}>
                 <i className="bx bxl-instagram-alt text-3xl bg-clip-text text-transparent bg-gradient-to-b from-purple-800 to-amber-400 hover:animate-pulse hover:scale-105" />
               </Link>
-              <Link href={`${socialMediaLinks.twitter}`} target="_blank" className={`${state.socialMediaAttachment.twitter ? 'visible' : 'hidden'}`}>
+              <Link href={`${isLogin && socialMediaLinks.twitter}`} target="_blank" className={`${isLogin && socialMediaAttachment.twitter ? 'visible' : 'hidden'}`}>
                 <i className="bx bxl-twitter text-3xl text-blue-500 hover:animate-pulse hover:scale-105" />
               </Link>
             </div>

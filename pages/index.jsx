@@ -81,7 +81,7 @@ export default function Home() {
           <div className="lg:order-4 w-full h-0 grid justify-items-end">
             <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
               <div className="px-4 py-3">
-                <span className="block text-sm text-white">{`${personalInformation.firstName} ${personalInformation.lastName}`}</span>
+                <span className="block text-sm text-white">{`${isLogin && personalInformation.firstName} ${isLogin && personalInformation.lastName}`}</span>
                 <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">

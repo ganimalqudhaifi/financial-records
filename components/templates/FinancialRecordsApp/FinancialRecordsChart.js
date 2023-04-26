@@ -30,6 +30,7 @@ export default function FinancialRecordsChart() {
   const [chartOptions, setChartOptions] = useState({});
 
   const listPeriod = new Set();
+  records.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
   records.map((record) => {
     const d = new Date(record.tanggal);
     const year = d.getFullYear();

@@ -8,7 +8,10 @@ export const initialState = {
   isLogin: false,
   isDemo: false,
   user: {},
-  personalInformation: {},
+  personalInformation: {
+    firstName: 'New',
+    lastName: 'User',
+  },
   socialMediaLinks: {
     facebook: '',
     instagram: '',

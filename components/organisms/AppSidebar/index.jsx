@@ -8,13 +8,14 @@ import checkUID from '../../../utils/checkUID';
 
 export default function AppSidebar({ user }) {
   const { dispatch, state } = useGlobalContext();
-  const { socialMediaLinks } = state;
+  const { isDemo, socialMediaLinks, personalInformation } = state;
   const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const uid = checkUID();
+
     const socialMediaAttachmentRef = ref(database, `users/${JSON.parse(uid)}/socialMediaAttachment`);
-    if (!state.isDemo) {
+    if (!isDemo) {
       onValue(socialMediaAttachmentRef, (snapshot) => {
         const payload = snapshot.val();
         dispatch(changeSocialMediaAttachment(0, payload));
@@ -24,7 +25,7 @@ export default function AppSidebar({ user }) {
     }
 
     const socialMediaLinksRef = ref(database, `users/${JSON.parse(uid)}/socialMediaLinks`);
-    if (!state.isDemo) {
+    if (!isDemo) {
       onValue(socialMediaLinksRef, (snapshot) => {
         const payload = snapshot.val();
         dispatch(changeSocialMediaLinks(0, payload));
@@ -34,7 +35,7 @@ export default function AppSidebar({ user }) {
     }
 
     const personalInformationRef = ref(database, `users/${JSON.parse(uid)}/personalInformation`);
-    if (!state.isDemo) {
+    if (!isDemo) {
       onValue(personalInformationRef, (snapshot) => {
         const payload = snapshot.val();
         dispatch(changePersonalInformation(0, payload));
@@ -42,7 +43,7 @@ export default function AppSidebar({ user }) {
         onlyOnce: true,
       });
     }
-  }, []);
+  }, [dispatch, isDemo]);
 
   return (
     <>
@@ -58,7 +59,7 @@ export default function AppSidebar({ user }) {
         <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
           <div className="w-full flex flex-col items-center">
             <Image width="200" height="200" className="mb-4 w-20 h-20 rounded-full" src="/avatar.jpg" alt="Rounded avatar" />
-            <p className="text-white text-xl font-semibold capitalize">{user.displayName}</p>
+            <p className="text-white text-xl font-semibold capitalize">{`${personalInformation.firstName} ${personalInformation.lastName}`}</p>
             <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link
               href="/"

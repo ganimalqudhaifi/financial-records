@@ -15,6 +15,7 @@ export default function App() {
 
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
+
   const [edits, setEdits] = useState({
     personalInformation: false,
   });
@@ -28,19 +29,20 @@ export default function App() {
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
   }, [router, isLogin, dispatch]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    updateProfile(auth.currentUser, { ...user, displayName: `${personalInformation.firstName} ${personalInformation.lastName}` }).then(() => {
-      dispatch(changeUser({
-        uid: auth.currentUser.uid,
-        displayName: auth.currentUser.displayName,
-        email: auth.currentUser.email,
-        photoURL: auth.currentUser.photoURL,
-        emailVerified: auth.currentUser.emailVerified,
-      }));
-    }).catch(() => {
-      alert('error update profile');
-    });
+    await updateProfile(auth.currentUser, { displayName: `${personalInformation.firstName} ${personalInformation.lastName}` })
+      .then(() => {
+        dispatch(changeUser({
+          uid: auth.currentUser.uid,
+          displayName: auth.currentUser.displayName,
+          email: auth.currentUser.email,
+          photoURL: auth.currentUser.photoURL,
+          emailVerified: auth.currentUser.emailVerified,
+        }));
+      }).catch(() => {
+        // TODO: error auth.currentUser getIdToken
+      });
     dispatch(changePersonalInformation(0, personalInformation));
   };
 
@@ -51,7 +53,7 @@ export default function App() {
           <title>Financial Records - App Profile</title>
         </Head>
 
-        <AppLayout user={auth.currentUser}>
+        <AppLayout user={user}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Profile</h2>
             <div className="p-5 w-full bg-white rounded">
@@ -82,11 +84,10 @@ export default function App() {
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
                   <button
                     onClick={(e) => {
-                      handleSubmit(e);
-                      setEdits({
-                        ...edits,
-                        personalInformation: !edits.personalInformation,
-                      });
+                      edits.personalInformation && handleSubmit(e);
+                      setEdits((value) => ({
+                        personalInformation: !value.personalInformation,
+                      }));
                     }}
                     className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center border-slate-300 hover:border-slate-500 active:border-slate-400 text-slate-600 hover:text-slate-700 active:text-slate-600 rounded-full"
                   >

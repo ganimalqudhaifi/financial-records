@@ -108,7 +108,7 @@ export default function AppSidebar({ user }) {
               </Link>
             </li>
             <li>
-              <Link href="/app/profile" className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800">
+              <Link href={`${!isDemo ? '/app/profile' : '/login'}`} className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800" disabled>
                 <svg aria-hidden="true" className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" /></svg>
                 <span className="ml-3">Profile</span>
               </Link>

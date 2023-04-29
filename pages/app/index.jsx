@@ -5,14 +5,15 @@ import { useGlobalContext } from '../../context';
 import {
   AppLayout, FinancialRecords,
 } from '../../components';
-import { setRecords } from '../../context/action/demoAction';
+import { changeSaldoAwal, setRecords } from '../../context/action/demoAction';
 import {
   database, ref, onValue,
 } from '../../config/firebase';
 import checkUID from '../../utils/checkUID';
 
 export default function App() {
-  const { dispatch } = useGlobalContext();
+  const { dispatch, state } = useGlobalContext();
+  const { isDemo } = state;
 
   const [isLogin, setIsLogin] = useState(false);
   const [user, setUser] = useState({});
@@ -21,12 +22,12 @@ export default function App() {
 
   useEffect(() => {
     // login check via browser storage
-    const uid = checkUID();
+    const uid = JSON.parse(checkUID());
     uid !== null ? setIsLogin(true) : router.push('/login');
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
 
     // load data records
-    const recordsRef = ref(database, `users/${JSON.parse(uid)}/records`);
+    const recordsRef = ref(database, `users/${uid}/records`);
     onValue(recordsRef, (snapshot) => {
       const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
         ...snapshot.val()[key],
@@ -34,7 +35,16 @@ export default function App() {
       }));
       data && dispatch(setRecords(data));
     });
-  }, [dispatch, router, isLogin]);
+
+    // load saldoAwal
+    const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
+    if (!isDemo) {
+      onValue(saldoAwalRef, (snapshot) => {
+        const payload = snapshot.val();
+        dispatch(changeSaldoAwal(isDemo, payload));
+      });
+    }
+  }, [dispatch, router, isLogin, isDemo]);
 
   if (isLogin) {
     return (

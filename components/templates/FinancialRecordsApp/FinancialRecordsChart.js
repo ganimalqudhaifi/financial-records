@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { showModal } from '../../../context/action/demoAction';
 import { Modal } from '../../molecules';
 
@@ -23,9 +23,10 @@ ChartJS.register(
 );
 
 export default function FinancialRecordsChart() {
-  const action = 'chartModal';
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const { saldoAwal, records } = state;
+
+  const action = 'chartModal';
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
 

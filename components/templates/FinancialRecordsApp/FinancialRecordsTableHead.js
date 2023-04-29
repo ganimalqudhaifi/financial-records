@@ -1,29 +1,16 @@
-import { useContext, useEffect, useState } from 'react';
-import { database, onValue, ref } from '../../../config/firebase';
-import { RootContext } from '../../../context';
+import { useState } from 'react';
+import { useGlobalContext } from '../../../context';
 import {
   changeSaldoAwal, hideModal, showModal,
 } from '../../../context/action/demoAction';
-import checkUID from '../../../utils/checkUID';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
-  const action = 'changeSaldoAwalModal';
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const { isDemo, saldoAwal } = state;
-  const [inputs, setInputs] = useState(saldoAwal);
 
-  useEffect(() => {
-    const uid = JSON.parse(checkUID());
-    const recordsRef = ref(database, `users/${uid}/saldoAwal`);
-    if (!isDemo) {
-      onValue(recordsRef, (snapshot) => {
-        const payload = snapshot.val();
-        dispatch(changeSaldoAwal(isDemo, payload));
-        setInputs(snapshot.val());
-      });
-    }
-  }, [dispatch, isDemo]);
+  const action = 'changeSaldoAwalModal';
+  const [inputs, setInputs] = useState(saldoAwal);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import { AppSidebar, FinancialRecords, Footers } from '../../components';
+import {
+  AppLayout, FinancialRecords,
+} from '../../components';
 import { useGlobalContext } from '../../context';
-import { setRecords, isDemo } from '../../context/action/demoAction';
+import { setRecords, isDemo, changeSaldoAwal } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
@@ -15,6 +17,7 @@ export default function Demo({ records }) {
   useEffect(() => {
     dispatch(isDemo(true));
     dispatch(setRecords(records));
+    dispatch(changeSaldoAwal(isDemo, 0));
 
     return () => {
       dispatch(isDemo(false));
@@ -27,18 +30,12 @@ export default function Demo({ records }) {
         <title>Financial Records - Demo</title>
       </Head>
 
-      <div className="flex flex-col w-full h-full bg-gray-200">
-        <div className="lg:flex flex-1">
-          <AppSidebar user={user} />
-          <div className="w-full p-4 lg:ml-64 overflow-auto">
-            <h2 className="font-medium text-3xl mb-4">Table</h2>
-            <FinancialRecords />
-          </div>
+      <AppLayout user={user}>
+        <div className="w-full p-4 lg:ml-64">
+          <h2 className="font-medium text-3xl mb-4">Table</h2>
+          <FinancialRecords />
         </div>
-        <div className="lg:ml-64">
-          <Footers />
-        </div>
-      </div>
+      </AppLayout>
     </>
   );
 }

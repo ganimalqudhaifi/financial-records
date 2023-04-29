@@ -4,7 +4,7 @@ import Script from 'next/script';
 import React, { useState } from 'react';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
-import { changeUser } from '../../context/action/demoAction';
+import { changePersonalInformation, changeUser } from '../../context/action/demoAction';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Login() {
@@ -54,6 +54,12 @@ export default function Login() {
           email: '',
           password: '',
         });
+        dispatch(changePersonalInformation(1, {
+          firstName: 'New',
+          lastName: 'User',
+          phone: '',
+          bio: '',
+        }));
         router.push('/app');
       })
       .catch((err) => {

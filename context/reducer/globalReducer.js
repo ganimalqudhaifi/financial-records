@@ -11,6 +11,8 @@ export const initialState = {
   personalInformation: {
     firstName: 'New',
     lastName: 'User',
+    phone: '',
+    bio: '',
   },
   socialMediaLinks: {
     facebook: '',

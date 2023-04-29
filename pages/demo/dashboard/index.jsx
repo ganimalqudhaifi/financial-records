@@ -4,7 +4,7 @@ import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../../context';
-import { isDemo, setRecords } from '../../../context/action/demoAction';
+import { isDemo } from '../../../context/action/demoAction';
 import { getData } from '../../../utils/data';
 
 export default function App({ records }) {
@@ -16,7 +16,6 @@ export default function App({ records }) {
 
   useEffect(() => {
     dispatch(isDemo(true));
-    dispatch(setRecords(records));
 
     return () => {
       dispatch(isDemo(false));

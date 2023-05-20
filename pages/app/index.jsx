@@ -29,11 +29,18 @@ export default function App() {
     // load data records
     const recordsRef = ref(database, `users/${uid}/records`);
     onValue(recordsRef, (snapshot) => {
-      const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
-        ...snapshot.val()[key],
-        id: key,
-      }));
-      data && dispatch(setRecords(data));
+      if (snapshot.exists()) {
+        const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
+          ...snapshot.val()[key],
+          id: key,
+        }));
+        data && dispatch(setRecords(data));
+      } else {
+        localStorage.removeItem('uid');
+        sessionStorage.removeItem('uid');
+        setIsLogin(false);
+        router.push('/login');
+      }
     });
 
     // load saldoAwal

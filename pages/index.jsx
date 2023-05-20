@@ -25,8 +25,14 @@ export default function Home() {
     const personalInformationRef = ref(database, `users/${JSON.parse(uid)}/personalInformation`);
     if (!isDemo) {
       onValue(personalInformationRef, (snapshot) => {
-        const payload = snapshot.val();
-        dispatch(changePersonalInformation(0, payload));
+        if (snapshot.exists()) {
+          const payload = snapshot.val();
+          dispatch(changePersonalInformation(0, payload));
+        } else {
+          localStorage.removeItem('uid');
+          sessionStorage.removeItem('uid');
+          setIsLogin(false);
+        }
       }, {
         onlyOnce: true,
       });

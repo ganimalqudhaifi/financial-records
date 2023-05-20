@@ -8,6 +8,7 @@ import {
   changePersonalInformation, changeSocialMediaAttachment, changeSocialMediaLinks, changeUser,
 } from '../../../context/action/demoAction';
 import { auth, updateProfile } from '../../../config/firebase';
+import alertToast from '../../../utils/sweetAlert';
 
 export default function App() {
   const { dispatch, state } = useGlobalContext();
@@ -116,8 +117,14 @@ export default function App() {
                         <i
                           className={`${socialMediaAttachment.facebook ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
                           onClick={() => {
-                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, facebook: !socialMediaAttachment.facebook }));
-                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, facebook: (socialMediaAttachment.facebook ? '' : socialMediaLinks.facebook) }));
+                            if (!socialMediaAttachment.facebook && !socialMediaLinks.facebook) {
+                              alertToast('Incorrect URL');
+                            } else if (socialMediaLinks.facebook.includes('facebook.com')) {
+                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, facebook: !socialMediaAttachment.facebook }));
+                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, facebook: (socialMediaAttachment.facebook ? '' : socialMediaLinks.facebook) }));
+                            } else {
+                              alertToast('Please Input \'facebook.com\' URL');
+                            }
                           }}
                         />
                       </div>
@@ -134,8 +141,14 @@ export default function App() {
                         <i
                           className={`${socialMediaAttachment.instagram ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
                           onClick={() => {
-                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, instagram: !socialMediaAttachment.instagram }));
-                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, instagram: (socialMediaAttachment.instagram ? '' : socialMediaLinks.instagram) }));
+                            if (!socialMediaAttachment.instagram && !socialMediaLinks.instagram) {
+                              alertToast('Incorrect URL');
+                            } else if (socialMediaLinks.instagram.includes('instagram.com')) {
+                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, instagram: !socialMediaAttachment.instagram }));
+                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, instagram: (socialMediaAttachment.instagram ? '' : socialMediaLinks.instagram) }));
+                            } else {
+                              alertToast('Please Input \'instagram.com\' URL');
+                            }
                           }}
                         />
                       </div>
@@ -152,8 +165,14 @@ export default function App() {
                         <i
                           className={`${socialMediaAttachment.twitter ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
                           onClick={() => {
-                            dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, twitter: !socialMediaAttachment.twitter }));
-                            dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, twitter: (socialMediaAttachment.twitter ? '' : socialMediaLinks.twitter) }));
+                            if (!socialMediaAttachment.twitter && !socialMediaLinks.twitter) {
+                              alertToast('Incorrect URL');
+                            } else if (socialMediaLinks.twitter.includes('twitter.com')) {
+                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, twitter: !socialMediaAttachment.twitter }));
+                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, twitter: (socialMediaAttachment.twitter ? '' : socialMediaLinks.twitter) }));
+                            } else {
+                              alertToast('Please Input \'twitter.com\' URL');
+                            }
                           }}
                         />
                       </div>

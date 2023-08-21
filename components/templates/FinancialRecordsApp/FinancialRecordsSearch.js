@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { handleSearch } from '../../../context/action/demoAction';
 
 function FinancialRecordsSearch() {
-  const { dispatch } = useContext(RootContext);
+  const { dispatch } = useGlobalContext();
 
   const onSearchChangeEventHandler = (e) => {
     dispatch(handleSearch(e.target.value));

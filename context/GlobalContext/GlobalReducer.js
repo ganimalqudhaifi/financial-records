@@ -1,4 +1,4 @@
-export const initialState = {
+export const globalInitialState = {
   records: [],
   saldoAwal: 0,
   searchKeyword: '',

@@ -1,11 +1,10 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { showModal, hideModal, deleteRecord } from '../../../context/action/demoAction';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionDelete({ id }) {
   const action = `deleteModal${id}`;
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const { isDemo } = state;
 
   return (

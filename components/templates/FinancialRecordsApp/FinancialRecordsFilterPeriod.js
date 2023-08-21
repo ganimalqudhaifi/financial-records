@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { handleFilterPeriod } from '../../../context/action/demoAction';
 import { templateDateMY } from '../../../utils/templateDate';
 
 export default function FinancialRecordsFilterPeriod() {
-  const { dispatch, state } = useContext(RootContext);
+  const { dispatch, state } = useGlobalContext();
   const { records } = state;
 
   const listPeriod = new Set();

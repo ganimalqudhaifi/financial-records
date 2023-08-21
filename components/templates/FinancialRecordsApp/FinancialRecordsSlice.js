@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { handleSlice } from '../../../context/action/demoAction';
 
 export default function FinancialRecordsSlice() {
-  const { dispatch } = useContext(RootContext);
+  const { dispatch } = useGlobalContext();
   function onSliceShowChangeEventHandler(e) {
     dispatch(handleSlice(e.target.value));
   }

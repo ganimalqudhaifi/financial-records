@@ -1,11 +1,10 @@
-import { useContext } from 'react';
 import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import styles from './FinancialRecordsTable.module.css';
 
 export default function FinancialRecordsTable() {
-  const { state } = useContext(RootContext);
+  const { state } = useGlobalContext();
   const {
     records, searchKeyword, filterPeriod, saldoAwal, sliceShow, paginationIndex,
   } = state;

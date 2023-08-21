@@ -1,6 +1,6 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
 import { Modal } from '../../molecules';
 
@@ -23,7 +23,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     jumlah,
     createdAt,
   });
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const { isDemo } = state;
 
   const handleChange = (event) => {

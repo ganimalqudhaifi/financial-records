@@ -1,9 +1,8 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { changePaginationIndex } from '../../../context/action/demoAction';
 
 export default function FinancialRecordsPaginantion() {
-  const { state, dispatch } = useContext(RootContext);
+  const { state, dispatch } = useGlobalContext();
   const {
     records, searchKeyword, sliceShow, paginationIndex, filterPeriod,
   } = state;

@@ -2,7 +2,7 @@ import {
   database, ref, push, set, remove,
 } from '../../config/firebase';
 import checkUID from '../../utils/checkUID';
-import { globalActionType } from '../reducer/globalReducer';
+import { globalActionType } from '../GlobalContext';
 
 export const showModal = (action) => ({
   type: globalActionType.SHOW_MODAL,

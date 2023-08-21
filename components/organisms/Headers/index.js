@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import React, { useContext } from 'react';
 import styles from './Headers.module.css';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 
 export default function Headers() {
-  const { state } = useContext(RootContext);
+  const { state } = useGlobalContext();
   const { isDemo } = state;
 
   return (

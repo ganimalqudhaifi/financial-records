@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { RootContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 
 export default function FinancialRecordsInformation() {
-  const { state } = useContext(RootContext);
+  const { state } = useGlobalContext();
   const { records, saldoAwal } = state;
 
   const penerimaan = records.filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0);

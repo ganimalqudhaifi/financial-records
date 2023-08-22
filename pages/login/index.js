@@ -3,8 +3,8 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useState } from 'react';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
-import { useGlobalContext } from '../../context';
-import { changePersonalInformation, changeUser } from '../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../context';
+import { changePersonalInformation } from '../../context/action/demoAction';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Login() {
@@ -30,6 +30,10 @@ export default function Login() {
     setRemember(!remember);
   };
 
+  const changeUser = (payload) => {
+    dispatch({ type: globalActionType.CHANGE_USER, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -43,7 +47,7 @@ export default function Login() {
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };
-        dispatch(changeUser(dataUser));
+        changeUser(dataUser);
         if (remember) {
           localStorage.setItem('uid', JSON.stringify(dataUser.uid));
         } else {

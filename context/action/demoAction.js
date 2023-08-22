@@ -72,11 +72,6 @@ export const deleteRecord = (isDemo, id) => {
   };
 };
 
-export const changeUser = (payload) => ({
-  type: globalActionType.CHANGE_USER,
-  payload,
-});
-
 export const changePersonalInformation = (isDemo, payload) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());

@@ -3,10 +3,10 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useState } from 'react';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
-import { useGlobalContext } from '../../context';
+import { globalActionType, useGlobalContext } from '../../context';
 import {
   changePersonalInformation,
-  changeSaldoAwal, changeSocialMediaAttachment, changeSocialMediaLinks, changeUser,
+  changeSaldoAwal, changeSocialMediaAttachment, changeSocialMediaLinks,
 } from '../../context/action/demoAction';
 import alertToast from '../../utils/sweetAlert';
 
@@ -28,6 +28,10 @@ export default function Register() {
     }));
   };
 
+  const changeUser = (payload) => {
+    dispatch({ type: globalActionType.CHANGE_USER, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -44,7 +48,7 @@ export default function Register() {
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };
-        dispatch(changeUser(dataUser));
+        changeUser(dataUser);
         localStorage.setItem('uid', JSON.stringify(dataUser.uid));
         localStorage.setItem('user', JSON.stringify(dataUser));
         setInputs({

@@ -49,11 +49,6 @@ export const createRecord = (isDemo, payload) => {
   }
 };
 
-export const setRecords = (records) => ({
-  type: globalActionType.GET_RECORDS,
-  payload: records,
-});
-
 export const updateRecords = (isDemo, payload) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());

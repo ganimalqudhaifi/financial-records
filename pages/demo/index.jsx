@@ -3,8 +3,8 @@ import Head from 'next/head';
 import {
   AppLayout, FinancialRecords,
 } from '../../components';
-import { useGlobalContext } from '../../context';
-import { setRecords, isDemo, changeSaldoAwal } from '../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../context';
+import { isDemo, changeSaldoAwal } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
@@ -16,7 +16,7 @@ export default function Demo({ records }) {
 
   useEffect(() => {
     dispatch(isDemo(true));
-    dispatch(setRecords(records));
+    dispatch({ type: globalActionType.GET_RECORDS, payload: records });
     dispatch(changeSaldoAwal(isDemo, 0));
 
     return () => {

@@ -2,12 +2,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useState } from 'react';
-import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
+import {
+  auth, createUserWithEmailAndPassword, database, ref, set, updateProfile,
+} from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import {
   changePersonalInformation,
-  changeSaldoAwal, changeSocialMediaAttachment, changeSocialMediaLinks,
+  changeSocialMediaAttachment, changeSocialMediaLinks,
 } from '../../context/action/demoAction';
+import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Register() {
@@ -30,6 +33,14 @@ export default function Register() {
 
   const changeUser = (payload) => {
     dispatch({ type: globalActionType.CHANGE_USER, payload });
+  };
+
+  const changeSaldoAwal = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/saldoAwal`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
   };
 
   const handleSubmit = async (e) => {
@@ -55,7 +66,7 @@ export default function Register() {
           email: '',
           password: '',
         });
-        dispatch(changeSaldoAwal(false, 0));
+        changeSaldoAwal(false, 0);
         dispatch(changeSocialMediaAttachment(0, {
           facebook: false,
           instagram: false,

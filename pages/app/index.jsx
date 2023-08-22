@@ -5,9 +5,8 @@ import { globalActionType, useGlobalContext } from '../../context';
 import {
   AppLayout, FinancialRecords,
 } from '../../components';
-import { changeSaldoAwal } from '../../context/action/demoAction';
 import {
-  database, ref, onValue,
+  database, ref, onValue, set,
 } from '../../config/firebase';
 import checkUID from '../../utils/checkUID';
 
@@ -21,6 +20,14 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
+    const changeSaldoAwal = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/saldoAwal`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
+    };
+
     const changeRecordsState = (payload) => {
       dispatch({ type: globalActionType.GET_RECORDS, payload });
     };
@@ -52,7 +59,7 @@ export default function App() {
     if (!isDemo) {
       onValue(saldoAwalRef, (snapshot) => {
         const payload = snapshot.val();
-        dispatch(changeSaldoAwal(isDemo, payload));
+        changeSaldoAwal(isDemo, payload);
       });
     }
   }, [dispatch, router, isLogin, isDemo]);

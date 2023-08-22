@@ -4,8 +4,11 @@ import {
   AppLayout, FinancialRecords,
 } from '../../components';
 import { globalActionType, useGlobalContext } from '../../context';
-import { changeSaldoAwal } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
+import {
+  database, ref, set,
+} from '../../config/firebase';
+import checkUID from '../../utils/checkUID';
 
 export default function Demo({ records }) {
   const { state, dispatch } = useGlobalContext();
@@ -24,9 +27,17 @@ export default function Demo({ records }) {
       dispatch({ type: globalActionType.GET_RECORDS, payload });
     };
 
+    const changeSaldoAwal = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/saldoAwal`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
+    };
+
     changeIsDemoState(true);
     changeRecordsState(records);
-    dispatch(changeSaldoAwal(isDemo, 0));
+    changeSaldoAwal(isDemo, 0);
 
     return () => {
       changeIsDemoState(false);

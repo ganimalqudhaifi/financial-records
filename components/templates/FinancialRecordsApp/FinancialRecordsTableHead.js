@@ -1,8 +1,11 @@
 import { useState } from 'react';
-import { useGlobalContext } from '../../../context';
-import { changeSaldoAwal } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
 import { modal } from '../../../utils';
+import checkUID from '../../../utils/checkUID';
 import { Modal } from '../../molecules';
+import {
+  database, ref, set,
+} from '../../../config/firebase';
 
 export default function FinancialRecordsTableHead() {
   const { state, dispatch } = useGlobalContext();
@@ -11,9 +14,17 @@ export default function FinancialRecordsTableHead() {
   const uniqueId = 'changeSaldoAwalModal';
   const [inputs, setInputs] = useState(saldoAwal);
 
+  const changeSaldoAwal = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/saldoAwal`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(changeSaldoAwal(isDemo, inputs));
+    changeSaldoAwal(isDemo, inputs);
     modal.hide(uniqueId);
   };
 

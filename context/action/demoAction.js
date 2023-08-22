@@ -4,11 +4,6 @@ import {
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
 
-export const changePaginationIndex = (payload) => ({
-  type: globalActionType.CHANGE_PAGINATION_INDEX,
-  payload,
-});
-
 export const changeSaldoAwal = (isDemo, payload) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());

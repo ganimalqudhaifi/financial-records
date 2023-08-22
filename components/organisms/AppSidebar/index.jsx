@@ -5,9 +5,6 @@ import {
   database, onValue, ref, set,
 } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
-import {
-  changePersonalInformation,
-} from '../../../context/action/demoAction';
 import checkUID from '../../../utils/checkUID';
 
 export default function AppSidebar({ user }) {
@@ -41,6 +38,14 @@ export default function AppSidebar({ user }) {
         set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
       }
       dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+    };
+
+    const changePersonalInformation = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/personalInformation`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
     };
 
     const socialMediaAttachmentRef = ref(
@@ -86,7 +91,7 @@ export default function AppSidebar({ user }) {
         personalInformationRef,
         (snapshot) => {
           const payload = snapshot.val();
-          dispatch(changePersonalInformation(isDemo, payload));
+          changePersonalInformation(isDemo, payload);
         },
         {
           onlyOnce: true,

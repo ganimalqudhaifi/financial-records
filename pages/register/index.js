@@ -6,9 +6,6 @@ import {
   auth, createUserWithEmailAndPassword, database, ref, set, updateProfile,
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import {
-  changePersonalInformation,
-} from '../../context/action/demoAction';
 import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
 
@@ -58,6 +55,14 @@ export default function Register() {
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
   };
 
+  const changePersonalInformation = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/personalInformation`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -92,12 +97,12 @@ export default function Register() {
           instagram: '',
           twitter: '',
         });
-        dispatch(changePersonalInformation(0, {
+        changePersonalInformation(0, {
           firstName: 'New',
           lastName: 'User',
           phone: '',
           bio: '',
-        }));
+        });
         router.push('/app');
       })
       .catch((err) => {

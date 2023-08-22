@@ -38,14 +38,3 @@ export const deleteRecord = (isDemo, id) => {
     id,
   };
 };
-
-export const changePersonalInformation = (isDemo, payload) => {
-  if (!isDemo) {
-    const uid = JSON.parse(checkUID());
-    set(ref(database, `users/${uid}/personalInformation`), payload);
-  }
-  return {
-    type: globalActionType.CHANGE_PERSONAL_INFORMATION,
-    payload,
-  };
-};

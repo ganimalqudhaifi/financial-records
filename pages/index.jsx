@@ -3,9 +3,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useEffect, useState } from 'react';
-import { database, onValue, ref } from '../config/firebase';
-import { useGlobalContext } from '../context';
-import { changePersonalInformation } from '../context/action/demoAction';
+import {
+  database, onValue, ref, set,
+} from '../config/firebase';
+import { globalActionType, useGlobalContext } from '../context';
 import checkUID from '../utils/checkUID';
 
 export default function Home() {
@@ -22,12 +23,20 @@ export default function Home() {
     checkUID() !== null && setIsLogin(true);
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
 
+    const changePersonalInformation = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/personalInformation`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+    };
+
     const personalInformationRef = ref(database, `users/${JSON.parse(uid)}/personalInformation`);
     if (!isDemo) {
       onValue(personalInformationRef, (snapshot) => {
         if (snapshot.exists()) {
           const payload = snapshot.val();
-          dispatch(changePersonalInformation(0, payload));
+          changePersonalInformation(0, payload);
         } else {
           localStorage.removeItem('uid');
           sessionStorage.removeItem('uid');

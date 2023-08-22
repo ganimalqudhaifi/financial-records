@@ -2,9 +2,11 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import React, { useState } from 'react';
-import { auth, signInWithEmailAndPassword } from '../../config/firebase';
+import {
+  auth, database, ref, set, signInWithEmailAndPassword,
+} from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import { changePersonalInformation } from '../../context/action/demoAction';
+import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Login() {
@@ -34,6 +36,14 @@ export default function Login() {
     dispatch({ type: globalActionType.CHANGE_USER, payload });
   };
 
+  const changePersonalInformation = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/personalInformation`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -58,12 +68,12 @@ export default function Login() {
           email: '',
           password: '',
         });
-        dispatch(changePersonalInformation(1, {
+        changePersonalInformation(1, {
           firstName: 'New',
           lastName: 'User',
           phone: '',
           bio: '',
-        }));
+        });
         router.push('/app');
       })
       .catch((err) => {

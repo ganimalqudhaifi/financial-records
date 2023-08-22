@@ -4,11 +4,6 @@ import {
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
 
-export const handleSearch = (payload) => ({
-  type: globalActionType.HANDLE_SEARCH,
-  payload,
-});
-
 export const handleSlice = (payload) => ({
   type: globalActionType.HANDLE_SLICE,
   payload,

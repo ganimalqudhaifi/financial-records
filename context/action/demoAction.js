@@ -4,17 +4,6 @@ import {
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
 
-export const changeSocialMediaLinks = (isDemo, payload) => {
-  if (!isDemo) {
-    const uid = JSON.parse(checkUID());
-    set(ref(database, `users/${uid}/socialMediaLinks`), payload);
-  }
-  return {
-    type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS,
-    payload,
-  };
-};
-
 export const changeSocialMediaAttachment = (isDemo, payload) => {
   if (!isDemo) {
     const uid = JSON.parse(checkUID());

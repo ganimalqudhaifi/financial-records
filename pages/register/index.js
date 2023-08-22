@@ -8,7 +8,7 @@ import {
 import { globalActionType, useGlobalContext } from '../../context';
 import {
   changePersonalInformation,
-  changeSocialMediaAttachment, changeSocialMediaLinks,
+  changeSocialMediaAttachment,
 } from '../../context/action/demoAction';
 import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
@@ -43,6 +43,14 @@ export default function Register() {
     dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
   };
 
+  const changeSocialMediaLinks = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/socialMediaLinks`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -72,11 +80,11 @@ export default function Register() {
           instagram: false,
           twitter: false,
         }));
-        dispatch(changeSocialMediaLinks(0, {
+        changeSocialMediaLinks(0, {
           facebook: '',
           instagram: '',
           twitter: '',
-        }));
+        });
         dispatch(changePersonalInformation(0, {
           firstName: 'New',
           lastName: 'User',

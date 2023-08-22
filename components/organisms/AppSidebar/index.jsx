@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { database, onValue, ref } from '../../../config/firebase';
-import { useGlobalContext } from '../../../context';
+import {
+  database, onValue, ref, set,
+} from '../../../config/firebase';
+import { globalActionType, useGlobalContext } from '../../../context';
 import {
   changePersonalInformation,
   changeSocialMediaAttachment,
-  changeSocialMediaLinks,
 } from '../../../context/action/demoAction';
 import checkUID from '../../../utils/checkUID';
 
@@ -26,6 +27,14 @@ export default function AppSidebar({ user }) {
   useEffect(() => {
     const uid = checkUID();
     uid !== null && setIsLogin(true);
+
+    const changeSocialMediaLinks = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/socialMediaLinks`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
+    };
 
     const socialMediaAttachmentRef = ref(
       database,
@@ -53,7 +62,7 @@ export default function AppSidebar({ user }) {
         socialMediaLinksRef,
         (snapshot) => {
           const payload = snapshot.val();
-          dispatch(changeSocialMediaLinks(isDemo, payload));
+          changeSocialMediaLinks(isDemo, payload);
         },
         {
           onlyOnce: true,

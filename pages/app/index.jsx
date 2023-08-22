@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
-import { useGlobalContext } from '../../context';
+import { globalActionType, useGlobalContext } from '../../context';
 import {
   AppLayout, FinancialRecords,
 } from '../../components';
-import { changeSaldoAwal, setRecords } from '../../context/action/demoAction';
+import { changeSaldoAwal } from '../../context/action/demoAction';
 import {
   database, ref, onValue,
 } from '../../config/firebase';
@@ -21,6 +21,10 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
+    const changeRecordsState = (payload) => {
+      dispatch({ type: globalActionType.GET_RECORDS, payload });
+    };
+
     // login check via browser storage
     const uid = JSON.parse(checkUID());
     uid !== null ? setIsLogin(true) : router.push('/login');
@@ -34,7 +38,7 @@ export default function App() {
           ...snapshot.val()[key],
           id: key,
         }));
-        data && dispatch(setRecords(data));
+        data && changeRecordsState(data);
       } else {
         localStorage.removeItem('uid');
         sessionStorage.removeItem('uid');

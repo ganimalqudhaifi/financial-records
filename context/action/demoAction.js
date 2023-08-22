@@ -83,11 +83,6 @@ export const changePersonalInformation = (isDemo, payload) => {
   };
 };
 
-export const isDemo = (payload) => ({
-  type: globalActionType.ISDEMO,
-  payload,
-});
-
 export const isLogin = (payload) => ({
   type: globalActionType.ISLOGIN,
   payload,

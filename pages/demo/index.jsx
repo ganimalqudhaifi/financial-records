@@ -4,25 +4,34 @@ import {
   AppLayout, FinancialRecords,
 } from '../../components';
 import { globalActionType, useGlobalContext } from '../../context';
-import { isDemo, changeSaldoAwal } from '../../context/action/demoAction';
+import { changeSaldoAwal } from '../../context/action/demoAction';
 import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
-  const { dispatch } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
+  const { isDemo } = state;
   const user = {
     displayName: 'Demo',
     email: 'name@company.com',
   };
 
   useEffect(() => {
-    dispatch(isDemo(true));
-    dispatch({ type: globalActionType.GET_RECORDS, payload: records });
+    const changeIsDemoState = (payload) => {
+      dispatch({ type: globalActionType.ISDEMO, payload });
+    };
+
+    const changeRecordsState = (payload) => {
+      dispatch({ type: globalActionType.GET_RECORDS, payload });
+    };
+
+    changeIsDemoState(true);
+    changeRecordsState(records);
     dispatch(changeSaldoAwal(isDemo, 0));
 
     return () => {
-      dispatch(isDemo(false));
+      changeIsDemoState(false);
     };
-  }, [dispatch, records]);
+  }, [dispatch, records, isDemo]);
 
   return (
     <>

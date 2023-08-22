@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
-import checkUID from '../../../utils/checkUID';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { useGlobalContext } from '../../../context';
 import { database, onValue, ref } from '../../../config/firebase';
-import { setRecords } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
+import checkUID from '../../../utils/checkUID';
 
 export default function App() {
   const { dispatch } = useGlobalContext();
@@ -17,19 +16,23 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
+    const changeRecordsState = (payload) => {
+      dispatch({ type: globalActionType.GET_RECORDS, payload });
+    };
+
     // login check
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
 
     // load data records
-    const recordsRef = ref(database, `users/${JSON.parse(uid)}/records`);
+    const recordsRef = ref(database, `users/${uid}/records`);
     onValue(recordsRef, (snapshot) => {
       const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
         ...snapshot.val()[key],
         id: key,
       }));
-      data && dispatch(setRecords(data));
+      data && changeRecordsState(data);
     });
   }, [router, isLogin, dispatch]);
 

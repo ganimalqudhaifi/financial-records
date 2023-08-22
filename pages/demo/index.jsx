@@ -1,13 +1,9 @@
 import React, { useEffect } from 'react';
 import Head from 'next/head';
-import {
-  AppLayout, FinancialRecords,
-} from '../../components';
+import { AppLayout, FinancialRecords } from '../../components';
+import { database, ref, set } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import { getData } from '../../utils/data';
-import {
-  database, ref, set,
-} from '../../config/firebase';
 import checkUID from '../../utils/checkUID';
 
 export default function Demo({ records }) {
@@ -19,6 +15,8 @@ export default function Demo({ records }) {
   };
 
   useEffect(() => {
+    const uid = checkUID();
+
     const changeIsDemoState = (payload) => {
       dispatch({ type: globalActionType.ISDEMO, payload });
     };
@@ -29,7 +27,6 @@ export default function Demo({ records }) {
 
     const changeSaldoAwal = (isDemo, payload) => {
       if (!isDemo) {
-        const uid = JSON.parse(checkUID());
         set(ref(database, `users/${uid}/saldoAwal`), payload);
       }
       dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });

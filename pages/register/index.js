@@ -8,7 +8,6 @@ import {
 import { globalActionType, useGlobalContext } from '../../context';
 import {
   changePersonalInformation,
-  changeSocialMediaAttachment,
 } from '../../context/action/demoAction';
 import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
@@ -51,6 +50,14 @@ export default function Register() {
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
   };
 
+  const changeSocialMediaAttachment = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+  };
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -75,11 +82,11 @@ export default function Register() {
           password: '',
         });
         changeSaldoAwal(false, 0);
-        dispatch(changeSocialMediaAttachment(0, {
+        changeSocialMediaAttachment(0, {
           facebook: false,
           instagram: false,
           twitter: false,
-        }));
+        });
         changeSocialMediaLinks(0, {
           facebook: '',
           instagram: '',

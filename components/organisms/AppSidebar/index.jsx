@@ -7,7 +7,6 @@ import {
 import { globalActionType, useGlobalContext } from '../../../context';
 import {
   changePersonalInformation,
-  changeSocialMediaAttachment,
 } from '../../../context/action/demoAction';
 import checkUID from '../../../utils/checkUID';
 
@@ -36,6 +35,14 @@ export default function AppSidebar({ user }) {
       dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
     };
 
+    const changeSocialMediaAttachment = (isDemo, payload) => {
+      if (!isDemo) {
+        const uid = JSON.parse(checkUID());
+        set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
+      }
+      dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+    };
+
     const socialMediaAttachmentRef = ref(
       database,
       `users/${JSON.parse(uid)}/socialMediaAttachment`,
@@ -45,7 +52,7 @@ export default function AppSidebar({ user }) {
         socialMediaAttachmentRef,
         (snapshot) => {
           const payload = snapshot.val();
-          dispatch(changeSocialMediaAttachment(isDemo, payload));
+          changeSocialMediaAttachment(isDemo, payload);
         },
         {
           onlyOnce: true,

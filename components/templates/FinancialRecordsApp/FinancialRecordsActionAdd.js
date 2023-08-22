@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useGlobalContext } from '../../../context';
-import { createRecord } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
 import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
+import { database, push, ref } from '../../../config/firebase';
+import checkUID from '../../../utils/checkUID';
 
 export default function FinancialRecordsActionAdd() {
   const [inputs, setInputs] = useState({
@@ -27,6 +28,15 @@ export default function FinancialRecordsActionAdd() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const createRecord = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      push(ref(database, `users/${uid}/records`), payload);
+    } else {
+      dispatch({ type: globalActionType.CREATE_RECORD, payload });
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const newInputs = {
@@ -36,9 +46,9 @@ export default function FinancialRecordsActionAdd() {
       value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
     };
     if (!isDemo) {
-      createRecord(isDemo, { ...newInputs, id: new Date().toISOString() });
+      createRecord(isDemo, newInputs);
     } else {
-      dispatch(createRecord(isDemo, newInputs));
+      createRecord(isDemo, { ...newInputs, id: new Date().toISOString() });
     }
     modal.hide(uniqueId);
     setInputs(() => ({

@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import { useGlobalContext } from '../../../context';
-import { updateRecords } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
 import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
+import { database, ref, set } from '../../../config/firebase';
+import checkUID from '../../../utils/checkUID';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
   const uniqueId = `editModal${no}`;
@@ -38,6 +39,15 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
+  const updateRecords = (isDemo, payload) => {
+    if (!isDemo) {
+      const uid = JSON.parse(checkUID());
+      set(ref(database, `users/${uid}/records/${payload.id}`), payload);
+    } else {
+      dispatch({ type: globalActionType.UPDATE_RECORD, payload });
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newInputs = {
@@ -45,11 +55,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       updatedAt: new Date().toISOString(),
       value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
     };
-    if (!isDemo) {
-      updateRecords(isDemo, newInputs);
-    } else {
-      dispatch(updateRecords(isDemo, newInputs));
-    }
+    updateRecords(isDemo, newInputs);
     modal.hide(uniqueId);
     const Toast = Swal.mixin({
       toast: true,

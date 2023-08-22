@@ -1,20 +1,8 @@
 import {
-  database, ref, set, remove,
+  database, ref, remove,
 } from '../../config/firebase';
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
-
-export const updateRecords = (isDemo, payload) => {
-  if (!isDemo) {
-    const uid = JSON.parse(checkUID());
-    set(ref(database, `users/${uid}/records/${payload.id}`), payload);
-  } else {
-    return {
-      type: globalActionType.UPDATE_RECORD,
-      payload,
-    };
-  }
-};
 
 export const deleteRecord = (isDemo, id) => {
   if (!isDemo) {

@@ -1,8 +1,8 @@
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
-import { useEffect, useState } from 'react';
 import {
   database, onValue, ref, set,
 } from '../config/firebase';
@@ -10,36 +10,38 @@ import { globalActionType, useGlobalContext } from '../context';
 import checkUID from '../utils/checkUID';
 
 export default function Home() {
-  const { dispatch, state } = useGlobalContext();
+  const { state, dispatch } = useGlobalContext();
   const { personalInformation, isDemo } = state;
+  const { firstName, lastName } = personalInformation;
 
   const [isLogin, setIsLogin] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
   const [user, setUser] = useState({});
+  const { email } = user;
+  const displayName = isLogin && `${firstName} ${lastName}`;
 
   useEffect(() => {
     const uid = checkUID();
-    checkUID() !== null && setIsLogin(true);
+    uid !== null && setIsLogin(true);
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
 
     const changePersonalInformation = (isDemo, payload) => {
       if (!isDemo) {
-        const uid = JSON.parse(checkUID());
         set(ref(database, `users/${uid}/personalInformation`), payload);
       }
       dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
     };
 
-    const personalInformationRef = ref(database, `users/${JSON.parse(uid)}/personalInformation`);
+    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
     if (!isDemo) {
       onValue(personalInformationRef, (snapshot) => {
         if (snapshot.exists()) {
-          const payload = snapshot.val();
-          changePersonalInformation(0, payload);
+          const valPersonalInformation = snapshot.val();
+          changePersonalInformation(isDemo, valPersonalInformation);
         } else {
-          localStorage.removeItem('uid');
-          sessionStorage.removeItem('uid');
+          localStorage.removeItem('user');
+          sessionStorage.removeItem('user');
           setIsLogin(false);
         }
       }, {
@@ -66,7 +68,7 @@ export default function Home() {
 
           <div className="flex items-center lg:order-2">
             {
-            (isLogin === false)
+            !isLogin
               ? (
                 <>
                   <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800">
@@ -75,7 +77,6 @@ export default function Home() {
                   </Link>
                   <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden lg:block rounded-lg hover:bg-gray-700">Register</Link>
                 </>
-
               )
               : (
                 <button type="button" onClick={() => { setIsActive(false); setIsActiveDropdown(!isActiveDropdown); }} className="flex mr-3 md:mr-0 text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-600">
@@ -96,8 +97,8 @@ export default function Home() {
           <div className="lg:order-4 w-full h-0 grid justify-items-end">
             <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
               <div className="px-4 py-3">
-                <span className="block text-sm text-white">{`${isLogin && personalInformation.firstName} ${isLogin && personalInformation.lastName}`}</span>
-                <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
+                <span className="block text-sm text-white">{displayName}</span>
+                <span className="block text-sm font-medium truncate text-gray-400">{email}</span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
@@ -112,8 +113,8 @@ export default function Home() {
                 <li>
                   <button
                     onClick={() => {
-                      localStorage.removeItem('uid');
-                      sessionStorage.removeItem('uid');
+                      localStorage.removeItem('user');
+                      sessionStorage.removeItem('user');
                       window.location.reload();
                     }}
                     className="w-full text-left px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
@@ -187,11 +188,11 @@ export default function Home() {
                 <form noValidate="" className="flex flex-col py-6 space-y-6 md:py-0 md:px-6 ng-untouched ng-pristine ng-valid">
                   <label className="block">
                     <span className="mb-1">Full name</span>
-                    <input type="text" placeholder="Leroy Jenkins" className="block p-2 w-full rounded-md shadow-sm border border-gray-300 focus:ring focus:ring-opacity-75 focus:gray-100 bg-bg-color" />
+                    <input type="text" placeholder="John Doe" className="block p-2 w-full rounded-md shadow-sm border border-gray-300 focus:ring focus:ring-opacity-75 focus:gray-100 bg-bg-color" />
                   </label>
                   <label className="block">
                     <span className="mb-1">Email address</span>
-                    <input type="email" placeholder="leroy@jenkins.com" className="block p-2 w-full rounded-md shadow-sm border border-gray-300 focus:ring focus:ring-opacity-75 focus:gray-100 bg-bg-color" />
+                    <input type="email" placeholder="john@gmail.com" className="block p-2 w-full rounded-md shadow-sm border border-gray-300 focus:ring focus:ring-opacity-75 focus:gray-100 bg-bg-color" />
                   </label>
                   <label className="block">
                     <span className="mb-1">Message</span>

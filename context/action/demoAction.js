@@ -4,11 +4,6 @@ import {
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
 
-export const handleFilterPeriod = (payload) => ({
-  type: globalActionType.HANDLE_FILTER_PERIOD,
-  payload,
-});
-
 export const changePaginationIndex = (payload) => ({
   type: globalActionType.CHANGE_PAGINATION_INDEX,
   payload,

@@ -1,5 +1,4 @@
-import { useGlobalContext } from '../../../context';
-import { handleFilterPeriod } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
 import { templateDateMY } from '../../../utils/templateDate';
 
 export default function FinancialRecordsFilterPeriod() {
@@ -16,17 +15,17 @@ export default function FinancialRecordsFilterPeriod() {
     listPeriod.add(`${year}-${month}`);
   });
 
-  const handleChange = (e) => {
-    dispatch(handleFilterPeriod(e.target.value));
+  const changeFilterPeriodState = (e) => {
+    dispatch({ type: globalActionType.HANDLE_FILTER_PERIOD, payload: e.target.value });
   };
 
   return (
-    <select className="h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg" onChange={handleChange}>
+    <select className="h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg" onChange={changeFilterPeriodState}>
       <option value="">Semua Periode</option>
       {
-          [...listPeriod]
-            .map((period) => <option key={period} value={period}>{templateDateMY(period)}</option>)
-        }
+        [...listPeriod]
+          .map((period) => <option key={period} value={period}>{templateDateMY(period)}</option>)
+      }
     </select>
   );
 }

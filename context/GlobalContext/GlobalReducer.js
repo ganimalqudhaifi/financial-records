@@ -27,9 +27,6 @@ export const globalInitialState = {
 };
 
 export const globalActionType = {
-  SHOW_MODAL: 'SHOW_MODAL',
-  HIDE_MODAL: 'HIDE_MODAL',
-  CLOSE_MODAL: 'CLOSE_MODAL',
   HANDLE_SEARCH: 'HANDLE_SEARCH',
   HANDLE_SLICE: 'HANDLE_SLICE',
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
@@ -49,17 +46,6 @@ export const globalActionType = {
 
 export const globalReducer = (state, action) => {
   switch (action.type) {
-    case globalActionType.SHOW_MODAL:
-      document.getElementById(action.action).style.display = 'block';
-      return state;
-    case globalActionType.HIDE_MODAL:
-      document.getElementById(action.action).style.display = 'none';
-      return state;
-    case globalActionType.CLOSE_MODAL:
-      if (action.event.target === document.getElementById(action.action)) {
-        document.getElementById(action.action).style.display = 'none';
-      }
-      return state;
     case globalActionType.HANDLE_SEARCH:
       return {
         ...state,

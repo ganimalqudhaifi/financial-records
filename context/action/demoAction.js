@@ -4,22 +4,6 @@ import {
 import checkUID from '../../utils/checkUID';
 import { globalActionType } from '../GlobalContext';
 
-export const showModal = (action) => ({
-  type: globalActionType.SHOW_MODAL,
-  action,
-});
-
-export const hideModal = (action) => ({
-  type: globalActionType.HIDE_MODAL,
-  action,
-});
-
-export const closeModal = (event, action) => ({
-  type: globalActionType.CLOSE_MODAL,
-  event,
-  action,
-});
-
 export const handleSearch = (payload) => ({
   type: globalActionType.HANDLE_SEARCH,
   payload,

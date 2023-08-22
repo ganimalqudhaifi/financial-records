@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useGlobalContext } from '../../../context';
-import { hideModal, showModal, updateRecords } from '../../../context/action/demoAction';
+import { updateRecords } from '../../../context/action/demoAction';
+import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
-  const action = `editModal${no}`;
+  const uniqueId = `editModal${no}`;
   const {
     id,
     tanggal,
@@ -49,7 +50,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     } else {
       dispatch(updateRecords(isDemo, newInputs));
     }
-    dispatch(hideModal(action));
+    modal.hide(uniqueId);
     const Toast = Swal.mixin({
       toast: true,
       position: 'top-end',
@@ -70,16 +71,17 @@ export default function FinancialRecordsActionEdit({ no, record }) {
 
   return (
     <>
-      <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => dispatch(showModal(action))}>Edit</button>
-      <Modal style="modal-content-edit" action={action}>
+      <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => modal.show(uniqueId)}>Edit</button>
+
+      <Modal style="modal-content-edit" id={uniqueId}>
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Mengubah Catatan</h3>
         <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6 text-left">
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jumlah${action}`}>Jumlah</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jumlah${uniqueId}`}>Jumlah</label>
             <input
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="number"
-              id={`jumlah${action}`}
+              id={`jumlah${uniqueId}`}
               name="jumlah"
               value={inputs.jumlah}
               placeholder="jumlah"
@@ -89,11 +91,11 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`keterangan${action}`}>Keterangan</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`keterangan${uniqueId}`}>Keterangan</label>
             <input
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="text"
-              id={`keterangan${action}`}
+              id={`keterangan${uniqueId}`}
               name="keterangan"
               value={inputs.keterangan}
               placeholder="keterangan"
@@ -103,10 +105,10 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jenis${action}`}>Jenis</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jenis${uniqueId}`}>Jenis</label>
             <select
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
-              id={`jenis${action}`}
+              id={`jenis${uniqueId}`}
               name="jenis"
               value={inputs.jenis}
               onChange={handleChange}
@@ -117,11 +119,11 @@ export default function FinancialRecordsActionEdit({ no, record }) {
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`date${action}`}>Tanggal</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`date${uniqueId}`}>Tanggal</label>
             <input
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="date"
-              id={`date${action}`}
+              id={`date${uniqueId}`}
               name="tanggal"
               value={inputs.tanggal}
               onChange={handleChange}

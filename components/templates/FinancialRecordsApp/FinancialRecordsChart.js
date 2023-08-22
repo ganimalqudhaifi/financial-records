@@ -10,8 +10,8 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { useGlobalContext } from '../../../context';
-import { showModal } from '../../../context/action/demoAction';
 import { Modal } from '../../molecules';
+import { modal } from '../../../utils';
 
 ChartJS.register(
   CategoryScale,
@@ -23,12 +23,13 @@ ChartJS.register(
 );
 
 export default function FinancialRecordsChart() {
-  const { state, dispatch } = useGlobalContext();
+  const { state } = useGlobalContext();
   const { saldoAwal, records } = state;
 
-  const action = 'chartModal';
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
+
+  const uniqueId = 'chartModal';
 
   const listPeriod = new Set();
   records.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
@@ -99,13 +100,13 @@ export default function FinancialRecordsChart() {
 
   return (
     <div className="flex items-start justify-center mt-5 p-5 w-full bg-white rounded">
-      <div onClick={() => dispatch(showModal(action))} className="p-5 w-full cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg rounded">
+      <div onClick={() => modal.show(uniqueId)} className="p-5 w-full cursor-pointer border border-slate-200 shadow-slate-700/10 shadow-lg rounded">
         <div className="p-4">
           <Bar options={chartOptions} data={chartData} />
         </div>
       </div>
 
-      <Modal action={action} style="modal-content-graph">
+      <Modal id={uniqueId} style="modal-content-graph">
         <div className="p-4">
           <Bar options={chartOptions} data={chartData} />
         </div>

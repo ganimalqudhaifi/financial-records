@@ -1,21 +1,20 @@
 import { useState } from 'react';
 import { useGlobalContext } from '../../../context';
-import {
-  changeSaldoAwal, hideModal, showModal,
-} from '../../../context/action/demoAction';
+import { changeSaldoAwal } from '../../../context/action/demoAction';
+import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
   const { state, dispatch } = useGlobalContext();
   const { isDemo, saldoAwal } = state;
 
-  const action = 'changeSaldoAwalModal';
+  const uniqueId = 'changeSaldoAwalModal';
   const [inputs, setInputs] = useState(saldoAwal);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(changeSaldoAwal(isDemo, inputs));
-    dispatch(hideModal(action));
+    modal.hide(uniqueId);
   };
 
   return (
@@ -37,9 +36,9 @@ export default function FinancialRecordsTableHead() {
           {saldoAwal.toLocaleString('id-ID')}
         </th>
         <td>
-          <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => dispatch(showModal(action))}>Edit</button>
+          <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => modal.show(uniqueId)}>Edit</button>
 
-          <Modal style="modal-content-saldo-awal" action={action}>
+          <Modal style="modal-content-saldo-awal" id={uniqueId}>
             <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Saldo Awal</h3>
             <form onSubmit={handleSubmit}>
               <input

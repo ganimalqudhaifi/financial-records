@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useGlobalContext } from '../../../context';
-import { hideModal, showModal, createRecord } from '../../../context/action/demoAction';
+import { createRecord } from '../../../context/action/demoAction';
+import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsActionAdd() {
-  const action = 'addModal';
   const [inputs, setInputs] = useState({
     tanggal: '',
     keterangan: '',
@@ -14,6 +14,7 @@ export default function FinancialRecordsActionAdd() {
   });
   const { state, dispatch } = useGlobalContext();
   const { isDemo } = state;
+  const uniqueId = 'addModal';
 
   const handleChange = (event) => {
     const { name } = event.target;
@@ -39,7 +40,7 @@ export default function FinancialRecordsActionAdd() {
     } else {
       dispatch(createRecord(isDemo, newInputs));
     }
-    dispatch(hideModal(action));
+    modal.hide(uniqueId);
     setInputs(() => ({
       tanggal: '',
       keterangan: '',
@@ -66,9 +67,9 @@ export default function FinancialRecordsActionAdd() {
 
   return (
     <>
-      <button className="py-1.5 md:py-2 px-3 md:px-4 bg-slate-800 text-slate-50 rounded-[3px]" onClick={() => dispatch(showModal(action))}>Tambah</button>
+      <button className="py-1.5 md:py-2 px-3 md:px-4 bg-slate-800 text-slate-50 rounded-[3px]" onClick={() => modal.show(uniqueId)}>Tambah</button>
 
-      <Modal style="modal-content-edit" action={action}>
+      <Modal style="modal-content-edit" id={uniqueId}>
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Membuat Catatan Baru</h3>
         <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6">
           <div>

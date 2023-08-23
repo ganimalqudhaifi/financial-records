@@ -26,7 +26,7 @@ export default function App() {
     // login check
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
+    isLogin && setUser(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')));
   }, [router, isLogin]);
 
   const uid = checkUID();

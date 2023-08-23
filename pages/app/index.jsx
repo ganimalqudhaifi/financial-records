@@ -21,7 +21,7 @@ export default function App() {
     // login check via browser storage
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
+    isLogin && setUser(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')));
 
     const changeSaldoAwal = (isDemo, payload) => {
       if (!isDemo) {
@@ -44,10 +44,10 @@ export default function App() {
         }));
         data && changeRecordsState(data);
       } else {
-        localStorage.removeItem('user');
-        sessionStorage.removeItem('user');
-        setIsLogin(false);
-        router.push('/login');
+        // localStorage.removeItem('user');
+        // sessionStorage.removeItem('user');
+        // setIsLogin(false);
+        // router.push('/login');
       }
     });
 

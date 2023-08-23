@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import React, { useState } from 'react';
 import {
   auth, createUserWithEmailAndPassword, database, ref, set, updateProfile,
 } from '../../config/firebase';
@@ -11,6 +11,7 @@ import alertToast from '../../utils/sweetAlert';
 
 export default function Register() {
   const { dispatch } = useGlobalContext();
+
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -33,7 +34,7 @@ export default function Register() {
 
   const changeSaldoAwal = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = checkUID();
       set(ref(database, `users/${uid}/saldoAwal`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
@@ -41,7 +42,7 @@ export default function Register() {
 
   const changeSocialMediaLinks = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = checkUID();
       set(ref(database, `users/${uid}/socialMediaLinks`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
@@ -49,7 +50,7 @@ export default function Register() {
 
   const changeSocialMediaAttachment = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = checkUID();
       set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
@@ -57,7 +58,7 @@ export default function Register() {
 
   const changePersonalInformation = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = checkUID();
       set(ref(database, `users/${uid}/personalInformation`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });

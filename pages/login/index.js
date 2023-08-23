@@ -59,11 +59,10 @@ export default function Login() {
         };
         changeUser(dataUser);
         if (remember) {
-          localStorage.setItem('uid', JSON.stringify(dataUser.uid));
+          localStorage.setItem('user', JSON.stringify(dataUser));
         } else {
-          sessionStorage.setItem('uid', JSON.stringify(dataUser.uid));
+          sessionStorage.setItem('user', JSON.stringify(dataUser));
         }
-        localStorage.setItem('user', JSON.stringify(dataUser));
         setInputs({
           email: '',
           password: '',

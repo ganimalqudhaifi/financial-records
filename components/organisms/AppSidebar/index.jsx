@@ -94,7 +94,7 @@ export default function AppSidebar({ user }) {
   const firstName = isLogin && !isDemo ? personalInformation.firstName : user.displayName;
   const lastName = isLogin && !isDemo ? personalInformation.lastName : 'User';
   const displayName = `${firstName} ${lastName}`;
-  const { email } = user;
+  const email = isLogin && isDemo ? user.email : 'undefined';
 
   return (
     <>
@@ -138,8 +138,8 @@ export default function AppSidebar({ user }) {
             <Link
               href="/"
               onClick={() => {
-                localStorage.removeItem('uid');
-                sessionStorage.removeItem('uid');
+                localStorage.removeItem('user');
+                sessionStorage.removeItem('user');
               }}
               className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
             >

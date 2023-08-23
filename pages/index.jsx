@@ -24,7 +24,7 @@ export default function Home() {
   useEffect(() => {
     const uid = checkUID();
     uid !== null && setIsLogin(true);
-    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
+    isLogin && setUser(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')));
 
     const changePersonalInformation = (isDemo, payload) => {
       if (!isDemo) {

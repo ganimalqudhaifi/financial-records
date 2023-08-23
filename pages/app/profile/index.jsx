@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
-import checkUID from '../../../utils/checkUID';
-import { useGlobalContext } from '../../../context';
 import {
-  changePersonalInformation, changeSocialMediaAttachment, changeSocialMediaLinks, changeUser,
-} from '../../../context/action/demoAction';
-import { auth, updateProfile } from '../../../config/firebase';
+  auth, database, ref, set, updateProfile,
+} from '../../../config/firebase';
+import { globalActionType, useGlobalContext } from '../../../context';
+import checkUID from '../../../utils/checkUID';
 import alertToast from '../../../utils/sweetAlert';
 
 export default function App() {
@@ -28,23 +27,50 @@ export default function App() {
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
     isLogin && setUser(JSON.parse(localStorage.getItem('user')));
-  }, [router, isLogin, dispatch]);
+  }, [router, isLogin]);
+
+  const uid = checkUID();
+
+  const changeUser = (payload) => {
+    dispatch({ type: globalActionType.CHANGE_USER, payload });
+  };
+
+  const changeSocialMediaLinks = (isDemo, payload) => {
+    if (!isDemo) {
+      set(ref(database, `users/${uid}/socialMediaLinks`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
+  };
+
+  const changeSocialMediaAttachment = (isDemo, payload) => {
+    if (!isDemo) {
+      set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+  };
+
+  const changePersonalInformation = (isDemo, payload) => {
+    if (!isDemo) {
+      set(ref(database, `users/${uid}/personalInformation`), payload);
+    }
+    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     await updateProfile(auth.currentUser, { displayName: `${personalInformation.firstName} ${personalInformation.lastName}` })
       .then(() => {
-        dispatch(changeUser({
+        changeUser({
           uid: auth.currentUser.uid,
           displayName: auth.currentUser.displayName,
           email: auth.currentUser.email,
           photoURL: auth.currentUser.photoURL,
           emailVerified: auth.currentUser.emailVerified,
-        }));
+        });
       }).catch(() => {
         // TODO: error auth.currentUser getIdToken
       });
-    dispatch(changePersonalInformation(0, personalInformation));
+    changePersonalInformation(0, personalInformation);
   };
 
   if (isLogin) {
@@ -63,23 +89,23 @@ export default function App() {
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="firstName" className="mb-1 text-sm">First Name</label>
-                    <input id="firstName" name="firstName" type="text" placeholder="firstName" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.firstName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="firstName" name="firstName" type="text" placeholder="firstName" onChange={(e) => changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value })} value={personalInformation.firstName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="lastName" className="mb-1 text-sm">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" placeholder="lastName" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.lastName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="lastName" name="lastName" type="text" placeholder="lastName" onChange={(e) => changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value })} value={personalInformation.lastName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value })} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phone" className="mb-1 text-sm">Phone</label>
-                    <input id="phone" name="phone" type="tel" placeholder="-" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.phone} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="phone" name="phone" type="tel" placeholder="-" onChange={(e) => changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value })} value={personalInformation.phone} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="bio" className="mb-1 text-sm">Bio</label>
-                    <input id="bio" name="bio" type="text" placeholder="-" onChange={(e) => dispatch(changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value }))} value={personalInformation.bio} className={`${edits.personalInformation && 'border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="bio" name="bio" type="text" placeholder="-" onChange={(e) => changePersonalInformation(0, { ...personalInformation, [e.target.name]: e.target.value })} value={personalInformation.bio} className={`${edits.personalInformation && 'border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
@@ -112,7 +138,7 @@ export default function App() {
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-facebook-square text-2xl text-blue-800" />
                       </div>
-                      <input type="text" name="facebook" id="facebook" value={socialMediaLinks.facebook} disabled={socialMediaAttachment.facebook} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" name="facebook" id="facebook" value={socialMediaLinks.facebook} disabled={socialMediaAttachment.facebook} onChange={(e) => changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
                           className={`${socialMediaAttachment.facebook ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
@@ -120,8 +146,8 @@ export default function App() {
                             if (!socialMediaAttachment.facebook && !socialMediaLinks.facebook) {
                               alertToast('Incorrect URL');
                             } else if (socialMediaLinks.facebook.includes('facebook.com')) {
-                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, facebook: !socialMediaAttachment.facebook }));
-                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, facebook: (socialMediaAttachment.facebook ? '' : socialMediaLinks.facebook) }));
+                              changeSocialMediaAttachment(0, { ...socialMediaAttachment, facebook: !socialMediaAttachment.facebook });
+                              changeSocialMediaLinks(0, { ...socialMediaLinks, facebook: (socialMediaAttachment.facebook ? '' : socialMediaLinks.facebook) });
                             } else {
                               alertToast('Please Input \'facebook.com\' URL');
                             }
@@ -136,7 +162,7 @@ export default function App() {
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-instagram-alt text-2xl bg-clip-text text-transparent bg-gradient-to-b from-purple-800 to-amber-400" />
                       </div>
-                      <input type="text" id="simple-search" name="instagram" value={socialMediaLinks.instagram} disabled={socialMediaAttachment.instagram} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" id="simple-search" name="instagram" value={socialMediaLinks.instagram} disabled={socialMediaAttachment.instagram} onChange={(e) => changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
                           className={`${socialMediaAttachment.instagram ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
@@ -144,8 +170,8 @@ export default function App() {
                             if (!socialMediaAttachment.instagram && !socialMediaLinks.instagram) {
                               alertToast('Incorrect URL');
                             } else if (socialMediaLinks.instagram.includes('instagram.com')) {
-                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, instagram: !socialMediaAttachment.instagram }));
-                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, instagram: (socialMediaAttachment.instagram ? '' : socialMediaLinks.instagram) }));
+                              changeSocialMediaAttachment(0, { ...socialMediaAttachment, instagram: !socialMediaAttachment.instagram });
+                              changeSocialMediaLinks(0, { ...socialMediaLinks, instagram: (socialMediaAttachment.instagram ? '' : socialMediaLinks.instagram) });
                             } else {
                               alertToast('Please Input \'instagram.com\' URL');
                             }
@@ -160,7 +186,7 @@ export default function App() {
                       <div className="absolute inset-y-0 left-0 flex items-center pl-3">
                         <i className="bx bxl-twitter text-2xl text-blue-500" />
                       </div>
-                      <input type="text" id="simple-search" name="twitter" value={socialMediaLinks.twitter} disabled={socialMediaAttachment.twitter} onChange={(e) => dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value }))} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
+                      <input type="text" id="simple-search" name="twitter" value={socialMediaLinks.twitter} disabled={socialMediaAttachment.twitter} onChange={(e) => changeSocialMediaLinks(0, { ...socialMediaLinks, [e.target.name]: e.target.value })} className="bg-gray-50 border border-gray-300 text-gray-600 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-11 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter URL" required />
                       <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                         <i
                           className={`${socialMediaAttachment.twitter ? 'bx bx-unlink' : 'bx bx-link'} border border-slate-300 active:border-slate-400 p-0.5 rounded`}
@@ -168,8 +194,8 @@ export default function App() {
                             if (!socialMediaAttachment.twitter && !socialMediaLinks.twitter) {
                               alertToast('Incorrect URL');
                             } else if (socialMediaLinks.twitter.includes('twitter.com')) {
-                              dispatch(changeSocialMediaAttachment(0, { ...socialMediaAttachment, twitter: !socialMediaAttachment.twitter }));
-                              dispatch(changeSocialMediaLinks(0, { ...socialMediaLinks, twitter: (socialMediaAttachment.twitter ? '' : socialMediaLinks.twitter) }));
+                              changeSocialMediaAttachment(0, { ...socialMediaAttachment, twitter: !socialMediaAttachment.twitter });
+                              changeSocialMediaLinks(0, { ...socialMediaLinks, twitter: (socialMediaAttachment.twitter ? '' : socialMediaLinks.twitter) });
                             } else {
                               alertToast('Please Input \'twitter.com\' URL');
                             }

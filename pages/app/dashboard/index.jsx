@@ -7,6 +7,7 @@ import FinancialRecordsChart from '../../../components/templates/FinancialRecord
 import { database, onValue, ref } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
 import checkUID from '../../../utils/checkUID';
+import { storage } from '../../../utils';
 
 export default function App() {
   const { dispatch } = useGlobalContext();
@@ -23,7 +24,7 @@ export default function App() {
     // login check
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(JSON.parse(localStorage.getItem('user')));
+    isLogin && setUser(storage.getItem('user'));
 
     // load data records
     const recordsRef = ref(database, `users/${uid}/records`);

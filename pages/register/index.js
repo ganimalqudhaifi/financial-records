@@ -81,7 +81,6 @@ export default function Register() {
           emailVerified: res.user.emailVerified,
         };
         changeUser(dataUser);
-        localStorage.setItem('uid', JSON.stringify(dataUser.uid));
         localStorage.setItem('user', JSON.stringify(dataUser));
         setInputs({
           email: '',

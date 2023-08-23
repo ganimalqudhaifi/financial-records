@@ -7,6 +7,7 @@ import {
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import checkUID from '../../utils/checkUID';
+import { storage } from '../../utils';
 
 export default function App() {
   const { dispatch, state } = useGlobalContext();
@@ -21,7 +22,7 @@ export default function App() {
     // login check via browser storage
     const uid = checkUID();
     uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(JSON.parse(localStorage.getItem('user') || sessionStorage.getItem('user')));
+    isLogin && setUser(storage.getItem('user'));
 
     const changeSaldoAwal = (isDemo, payload) => {
       if (!isDemo) {

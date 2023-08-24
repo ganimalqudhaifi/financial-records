@@ -3,8 +3,7 @@ import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { useGlobalContext } from '../../../context';
-import { isDemo } from '../../../context/action/demoAction';
+import { globalActionType, useGlobalContext } from '../../../context';
 import { getData } from '../../../utils/data';
 
 export default function App({ records }) {
@@ -15,10 +14,14 @@ export default function App({ records }) {
   };
 
   useEffect(() => {
-    dispatch(isDemo(true));
+    const changeIsDemoState = (payload) => {
+      dispatch({ type: globalActionType.ISDEMO, payload });
+    };
+
+    dispatch(changeIsDemoState(true));
 
     return () => {
-      dispatch(isDemo(false));
+      dispatch(changeIsDemoState(false));
     };
   }, [dispatch, records]);
 

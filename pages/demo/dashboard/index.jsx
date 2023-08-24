@@ -18,10 +18,10 @@ export default function App({ records }) {
       dispatch({ type: globalActionType.ISDEMO, payload });
     };
 
-    dispatch(changeIsDemoState(true));
+    changeIsDemoState(true);
 
     return () => {
-      dispatch(changeIsDemoState(false));
+      changeIsDemoState(false);
     };
   }, [dispatch, records]);
 

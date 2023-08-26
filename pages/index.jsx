@@ -50,7 +50,7 @@ export default function Home() {
         onlyOnce: true,
       });
     }
-  }, [isLogin, dispatch, isDemo, changeIsLoginState, changeUserState]);
+  }, [isLogin, dispatch, isDemo]);
 
   return (
     <>

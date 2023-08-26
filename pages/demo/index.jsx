@@ -33,7 +33,7 @@ export default function Demo({ records }) {
     return () => {
       changeIsDemoState(false);
     };
-  }, [dispatch, records, isDemo, changeIsDemoState, changeRecordsState]);
+  }, [dispatch, records, isDemo]);
 
   return (
     <>

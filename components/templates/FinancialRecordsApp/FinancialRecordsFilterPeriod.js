@@ -1,8 +1,8 @@
-import { globalActionType, useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { templateDateMY } from '../../../utils/templateDate';
 
 export default function FinancialRecordsFilterPeriod() {
-  const { dispatch, state } = useGlobalContext();
+  const { state, changeFilterPeriodState } = useGlobalContext();
   const { records } = state;
 
   const listPeriod = new Set();
@@ -14,10 +14,6 @@ export default function FinancialRecordsFilterPeriod() {
 
     listPeriod.add(`${year}-${month}`);
   });
-
-  const changeFilterPeriodState = (e) => {
-    dispatch({ type: globalActionType.HANDLE_FILTER_PERIOD, payload: e.target.value });
-  };
 
   return (
     <select className="h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg" onChange={changeFilterPeriodState}>

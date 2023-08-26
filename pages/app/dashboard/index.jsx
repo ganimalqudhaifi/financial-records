@@ -1,30 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { database, onValue, ref } from '../../../config/firebase';
-import { globalActionType, useGlobalContext } from '../../../context';
-import checkUID from '../../../utils/checkUID';
+import { useGlobalContext } from '../../../context';
 import { storage } from '../../../utils';
 
 export default function App() {
-  const { dispatch } = useGlobalContext();
-  const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({});
+  const {
+    state, dispatch, changeRecordsState, changeIsLoginState, changeUserState,
+  } = useGlobalContext();
+  const { isLogin, user } = state;
 
   const router = useRouter();
 
   useEffect(() => {
-    const changeRecordsState = (payload) => {
-      dispatch({ type: globalActionType.GET_RECORDS, payload });
-    };
-
     // login check
-    const uid = checkUID();
-    uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(storage.getItem('user'));
+    const uid = storage.getUID();
+    uid !== null ? changeIsLoginState(true) : router.push('/login');
+    isLogin && changeUserState(storage.getItem('user'));
 
     // load data records
     const recordsRef = ref(database, `users/${uid}/records`);

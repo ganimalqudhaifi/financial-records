@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout, FinancialRecords } from '../../components';
@@ -6,33 +6,27 @@ import {
   database, ref, onValue, set,
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import checkUID from '../../utils/checkUID';
 import { storage } from '../../utils';
 
 export default function App() {
-  const { dispatch, state } = useGlobalContext();
-  const { isDemo } = state;
-
-  const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({});
+  const {
+    dispatch, state, changeIsLoginState, changeUserState, changeRecordsState,
+  } = useGlobalContext();
+  const { isDemo, isLogin, user } = state;
 
   const router = useRouter();
 
   useEffect(() => {
     // login check via browser storage
-    const uid = checkUID();
-    uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(storage.getItem('user'));
+    const uid = storage.getUID();
+    uid !== null ? changeIsLoginState(true) : router.push('/login');
+    isLogin && changeUserState(storage.getItem('user'));
 
     const changeSaldoAwal = (isDemo, payload) => {
       if (!isDemo) {
         set(ref(database, `users/${uid}/saldoAwal`), payload);
       }
       dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
-    };
-
-    const changeRecordsState = (payload) => {
-      dispatch({ type: globalActionType.GET_RECORDS, payload });
     };
 
     // load data records

@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { globalActionType, useGlobalContext } from '../../../context';
-import { modal } from '../../../utils';
+import { modal, storage } from '../../../utils';
 import { Modal } from '../../molecules';
 import { database, ref, set } from '../../../config/firebase';
-import checkUID from '../../../utils/checkUID';
+// import checkUID from '../../../utils/checkUID';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
+  const { state, dispatch } = useGlobalContext();
+  const { isDemo } = state;
   const uniqueId = `editModal${no}`;
   const {
     id,
@@ -25,8 +27,6 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     jumlah,
     createdAt,
   });
-  const { state, dispatch } = useGlobalContext();
-  const { isDemo } = state;
 
   const handleChange = (event) => {
     const { name } = event.target;
@@ -41,7 +41,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
 
   const updateRecords = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/records/${payload.id}`), payload);
     } else {
       dispatch({ type: globalActionType.UPDATE_RECORD, payload });

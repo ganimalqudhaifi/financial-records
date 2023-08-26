@@ -6,16 +6,16 @@ import {
   auth, database, ref, set, updateProfile,
 } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
-import checkUID from '../../../utils/checkUID';
 import alertToast from '../../../utils/sweetAlert';
 import { storage } from '../../../utils';
 
 export default function App() {
-  const { dispatch, state } = useGlobalContext();
-  const { socialMediaLinks, socialMediaAttachment, personalInformation } = state;
-
-  const [isLogin, setIsLogin] = useState(false);
-  const [user, setUser] = useState({});
+  const {
+    dispatch, state, changeIsLoginState, changeUserState,
+  } = useGlobalContext();
+  const {
+    socialMediaLinks, socialMediaAttachment, personalInformation, isLogin, user,
+  } = state;
 
   const [edits, setEdits] = useState({
     personalInformation: false,
@@ -25,16 +25,12 @@ export default function App() {
 
   useEffect(() => {
     // login check
-    const uid = checkUID();
-    uid !== null ? setIsLogin(true) : router.push('/login');
-    isLogin && setUser(storage.getItem('user'));
+    const uid = storage.getUID();
+    uid !== null ? changeIsLoginState(true) : router.push('/login');
+    isLogin && changeUserState(storage.getItem('user'));
   }, [router, isLogin]);
 
-  const uid = checkUID();
-
-  const changeUser = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_USER, payload });
-  };
+  const uid = storage.getUID();
 
   const changeSocialMediaLinks = (isDemo, payload) => {
     if (!isDemo) {
@@ -61,7 +57,7 @@ export default function App() {
     e.preventDefault();
     await updateProfile(auth.currentUser, { displayName: `${personalInformation.firstName} ${personalInformation.lastName}` })
       .then(() => {
-        changeUser({
+        changeUserState({
           uid: auth.currentUser.uid,
           displayName: auth.currentUser.displayName,
           email: auth.currentUser.email,

@@ -3,21 +3,17 @@ import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { globalActionType, useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { getData } from '../../../utils/data';
 
 export default function App({ records }) {
-  const { dispatch } = useGlobalContext();
+  const { dispatch, changeIsDemoState } = useGlobalContext();
   const user = {
     displayName: 'Demo',
     email: 'name@company.com',
   };
 
   useEffect(() => {
-    const changeIsDemoState = (payload) => {
-      dispatch({ type: globalActionType.ISDEMO, payload });
-    };
-
     changeIsDemoState(true);
 
     return () => {

@@ -5,24 +5,24 @@ import {
   database, onValue, ref, set,
 } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
-import checkUID from '../../../utils/checkUID';
+import { storage } from '../../../utils';
 
 export default function AppSidebar({ user }) {
-  const { dispatch, state } = useGlobalContext();
+  const { dispatch, state, changeIsLoginState } = useGlobalContext();
   const {
     isDemo,
+    isLogin,
     socialMediaLinks,
     socialMediaAttachment,
     personalInformation,
   } = state;
 
   const [isActive, setIsActive] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   useEffect(() => {
-    const uid = checkUID();
-    uid !== null && setIsLogin(true);
+    const uid = storage.getUID();
+    uid !== null && changeIsLoginState(true);
 
     const changeSocialMediaLinks = (isDemo, payload) => {
       if (!isDemo) {

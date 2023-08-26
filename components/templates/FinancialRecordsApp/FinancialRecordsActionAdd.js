@@ -1,20 +1,19 @@
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { globalActionType, useGlobalContext } from '../../../context';
-import { modal } from '../../../utils';
+import { modal, storage } from '../../../utils';
 import { Modal } from '../../molecules';
 import { database, push, ref } from '../../../config/firebase';
-import checkUID from '../../../utils/checkUID';
 
 export default function FinancialRecordsActionAdd() {
+  const { state, dispatch } = useGlobalContext();
+  const { isDemo } = state;
   const [inputs, setInputs] = useState({
     tanggal: '',
     keterangan: '',
     jenis: 'Penerimaan',
     jumlah: null,
   });
-  const { state, dispatch } = useGlobalContext();
-  const { isDemo } = state;
   const uniqueId = 'addModal';
 
   const handleChange = (event) => {
@@ -30,7 +29,7 @@ export default function FinancialRecordsActionAdd() {
 
   const createRecord = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = storage.getUID();
       push(ref(database, `users/${uid}/records`), payload);
     } else {
       dispatch({ type: globalActionType.CREATE_RECORD, payload });

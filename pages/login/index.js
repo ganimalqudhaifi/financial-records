@@ -6,11 +6,12 @@ import {
   auth, database, ref, set, signInWithEmailAndPassword,
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import checkUID from '../../utils/checkUID';
+import { storage } from '../../utils';
 import alertToast from '../../utils/sweetAlert';
 
 export default function Login() {
-  const { dispatch } = useGlobalContext();
+  const { dispatch, changeUserState } = useGlobalContext();
+
   const [inputs, setInputs] = useState({
     email: '',
     password: '',
@@ -32,13 +33,9 @@ export default function Login() {
     setRemember(!remember);
   };
 
-  const changeUser = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_USER, payload });
-  };
-
   const changePersonalInformation = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/personalInformation`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
@@ -57,7 +54,7 @@ export default function Login() {
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };
-        changeUser(dataUser);
+        changeUserState(dataUser);
         if (remember) {
           localStorage.setItem('user', JSON.stringify(dataUser));
         } else {

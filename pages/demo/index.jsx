@@ -4,10 +4,10 @@ import { AppLayout, FinancialRecords } from '../../components';
 import { database, ref, set } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import { getData } from '../../utils/data';
-import checkUID from '../../utils/checkUID';
+import { storage } from '../../utils';
 
 export default function Demo({ records }) {
-  const { state, dispatch } = useGlobalContext();
+  const { state, dispatch, changeIsDemoState } = useGlobalContext();
   const { isDemo } = state;
   const user = {
     displayName: 'Demo',
@@ -15,11 +15,7 @@ export default function Demo({ records }) {
   };
 
   useEffect(() => {
-    const uid = checkUID();
-
-    const changeIsDemoState = (payload) => {
-      dispatch({ type: globalActionType.ISDEMO, payload });
-    };
+    const uid = storage.getUID();
 
     const changeRecordsState = (payload) => {
       dispatch({ type: globalActionType.GET_RECORDS, payload });
@@ -39,7 +35,7 @@ export default function Demo({ records }) {
     return () => {
       changeIsDemoState(false);
     };
-  }, [dispatch, records, isDemo]);
+  }, [dispatch, records, isDemo, changeIsDemoState]);
 
   return (
     <>

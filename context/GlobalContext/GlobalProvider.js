@@ -5,6 +5,10 @@ import GlobalContext from './GlobalContext';
 export default function GlobalContextProvider(props) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);
 
+  const changeIsDemoState = (payload) => {
+    dispatch({ type: globalActionType.ISDEMO, payload });
+  };
+
   const changeIsLoginState = (payload) => {
     dispatch({ type: globalActionType.ISLOGIN, payload });
   };
@@ -14,7 +18,7 @@ export default function GlobalContextProvider(props) {
   };
 
   const value = useMemo(() => ({
-    state, dispatch, changeIsLoginState, changeUserState,
+    state, dispatch, changeIsLoginState, changeUserState, changeIsDemoState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

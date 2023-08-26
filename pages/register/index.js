@@ -6,11 +6,11 @@ import {
   auth, createUserWithEmailAndPassword, database, ref, set, updateProfile,
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import checkUID from '../../utils/checkUID';
 import alertToast from '../../utils/sweetAlert';
+import { storage } from '../../utils';
 
 export default function Register() {
-  const { dispatch } = useGlobalContext();
+  const { dispatch, changeUserState } = useGlobalContext();
 
   const [inputs, setInputs] = useState({
     email: '',
@@ -28,13 +28,9 @@ export default function Register() {
     }));
   };
 
-  const changeUser = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_USER, payload });
-  };
-
   const changeSaldoAwal = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = checkUID();
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/saldoAwal`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
@@ -42,7 +38,7 @@ export default function Register() {
 
   const changeSocialMediaLinks = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = checkUID();
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/socialMediaLinks`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
@@ -50,7 +46,7 @@ export default function Register() {
 
   const changeSocialMediaAttachment = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = checkUID();
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
@@ -58,7 +54,7 @@ export default function Register() {
 
   const changePersonalInformation = (isDemo, payload) => {
     if (!isDemo) {
-      const uid = checkUID();
+      const uid = storage.getUID();
       set(ref(database, `users/${uid}/personalInformation`), payload);
     }
     dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
@@ -80,7 +76,7 @@ export default function Register() {
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };
-        changeUser(dataUser);
+        changeUserState(dataUser);
         localStorage.setItem('user', JSON.stringify(dataUser));
         setInputs({
           email: '',

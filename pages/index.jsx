@@ -47,7 +47,7 @@ export default function Home() {
         onlyOnce: true,
       });
     }
-  }, [isLogin, dispatch, isDemo]);
+  }, [isLogin, dispatch, isDemo, changeIsLoginState]);
 
   return (
     <>

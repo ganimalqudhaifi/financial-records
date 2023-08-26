@@ -7,7 +7,9 @@ import { getData } from '../../utils/data';
 import { storage } from '../../utils';
 
 export default function Demo({ records }) {
-  const { state, dispatch, changeIsDemoState } = useGlobalContext();
+  const {
+    state, dispatch, changeIsDemoState, changeRecordsState,
+  } = useGlobalContext();
   const { isDemo } = state;
   const user = {
     displayName: 'Demo',
@@ -16,10 +18,6 @@ export default function Demo({ records }) {
 
   useEffect(() => {
     const uid = storage.getUID();
-
-    const changeRecordsState = (payload) => {
-      dispatch({ type: globalActionType.GET_RECORDS, payload });
-    };
 
     const changeSaldoAwal = (isDemo, payload) => {
       if (!isDemo) {
@@ -35,7 +33,7 @@ export default function Demo({ records }) {
     return () => {
       changeIsDemoState(false);
     };
-  }, [dispatch, records, isDemo, changeIsDemoState]);
+  }, [dispatch, records, isDemo, changeIsDemoState, changeRecordsState]);
 
   return (
     <>

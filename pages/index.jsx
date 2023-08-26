@@ -7,15 +7,13 @@ import {
   database, onValue, ref, set,
 } from '../config/firebase';
 import { globalActionType, useGlobalContext } from '../context';
-import checkUID from '../utils/checkUID';
 import { storage } from '../utils';
 
 export default function Home() {
-  const { state, dispatch } = useGlobalContext();
-  const { personalInformation, isDemo } = state;
+  const { state, dispatch, changeIsLoginState } = useGlobalContext();
+  const { personalInformation, isDemo, isLogin } = state;
   const { firstName, lastName } = personalInformation;
 
-  const [isLogin, setIsLogin] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
   const [user, setUser] = useState({});
@@ -23,8 +21,8 @@ export default function Home() {
   const displayName = isLogin && `${firstName} ${lastName}`;
 
   useEffect(() => {
-    const uid = checkUID();
-    uid !== null && setIsLogin(true);
+    const uid = storage.getUID();
+    uid !== null && changeIsLoginState(true);
     isLogin && setUser(storage.getItem('user'));
 
     const changePersonalInformation = (isDemo, payload) => {
@@ -43,7 +41,7 @@ export default function Home() {
         } else {
           localStorage.removeItem('user');
           sessionStorage.removeItem('user');
-          setIsLogin(false);
+          changeIsLoginState(false);
         }
       }, {
         onlyOnce: true,

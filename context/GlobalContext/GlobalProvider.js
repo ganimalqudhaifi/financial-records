@@ -29,6 +29,10 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.HANDLE_FILTER_PERIOD, payload: e.target.value });
   };
 
+  const changeSliceShowState = (e) => {
+    dispatch({ type: globalActionType.HANDLE_SLICE, payload: e.target.value });
+  };
+
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -38,6 +42,7 @@ export default function GlobalContextProvider(props) {
     changeRecordsState,
     changePaginationIndexState,
     changeFilterPeriodState,
+    changeSliceShowState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

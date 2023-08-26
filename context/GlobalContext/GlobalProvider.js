@@ -9,6 +9,12 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.ISLOGIN, payload });
   };
 
-  const value = useMemo(() => ({ state, dispatch, changeIsLoginState }), [state]);
+  const changeUserState = (payload) => {
+    dispatch({ type: globalActionType.CHANGE_USER, payload });
+  };
+
+  const value = useMemo(() => ({
+    state, dispatch, changeIsLoginState, changeUserState,
+  }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

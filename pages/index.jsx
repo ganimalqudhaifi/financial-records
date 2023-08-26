@@ -10,20 +10,23 @@ import { globalActionType, useGlobalContext } from '../context';
 import { storage } from '../utils';
 
 export default function Home() {
-  const { state, dispatch, changeIsLoginState } = useGlobalContext();
-  const { personalInformation, isDemo, isLogin } = state;
+  const {
+    state, dispatch, changeIsLoginState, changeUserState,
+  } = useGlobalContext();
+  const {
+    personalInformation, isDemo, isLogin, user,
+  } = state;
   const { firstName, lastName } = personalInformation;
 
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
-  const [user, setUser] = useState({});
   const { email } = user;
   const displayName = isLogin && `${firstName} ${lastName}`;
 
   useEffect(() => {
     const uid = storage.getUID();
     uid !== null && changeIsLoginState(true);
-    isLogin && setUser(storage.getItem('user'));
+    isLogin && changeUserState(storage.getItem('user'));
 
     const changePersonalInformation = (isDemo, payload) => {
       if (!isDemo) {
@@ -47,7 +50,7 @@ export default function Home() {
         onlyOnce: true,
       });
     }
-  }, [isLogin, dispatch, isDemo, changeIsLoginState]);
+  }, [isLogin, dispatch, isDemo, changeIsLoginState, changeUserState]);
 
   return (
     <>

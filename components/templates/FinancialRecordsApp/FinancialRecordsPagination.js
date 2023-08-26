@@ -7,14 +7,14 @@ export default function FinancialRecordsPaginantion() {
   } = state;
 
   const arrPagination = [];
-  const entires = records.filter((record) => record.keterangan.toLowerCase().includes(searchKeyword)).length;
+  const entires = records.length && records.filter((record) => record.keterangan.toLowerCase().includes(searchKeyword)).length;
 
   const valueDate = (date) => {
     const target = new Date(date);
     return `${target.getFullYear()}-${target.getMonth()}`;
   };
 
-  for (let i = 1; i < Math.ceil(records
+  for (let i = 1; i < Math.ceil(records.length && records
     .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
     .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
     .length / sliceShow) + 1; i += 1) {

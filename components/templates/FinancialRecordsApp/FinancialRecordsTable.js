@@ -19,28 +19,34 @@ export default function FinancialRecordsTable() {
       <thead>
         <FinancialRecordsTableHead />
       </thead>
-      <tbody>
-        {
-            records
-              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-              .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
-              .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
-              .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
-              .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
-              .map((record, i) => (
-                <FinancialRecordsTableBody
-                  key={record.id}
-                  no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
-                  record={record}
-                  saldoAkhir={records
-                    .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
-                    .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
-                    .slice(0, ((paginationIndex * sliceShow) - sliceShow) + i + 1)
-                    .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.jumlah : (b.jumlah * -1)), saldoAwal)}
-                />
-              ))
+      {
+        records.length
+          ? (
+            <tbody>
+              {
+              records
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
+                .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
+                .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
+                .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
+                .map((record, i) => (
+                  <FinancialRecordsTableBody
+                    key={record.id}
+                    no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
+                    record={record}
+                    saldoAkhir={records
+                      .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
+                      .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
+                      .slice(0, ((paginationIndex * sliceShow) - sliceShow) + i + 1)
+                      .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.jumlah : (b.jumlah * -1)), saldoAwal)}
+                  />
+                ))
           }
-      </tbody>
+            </tbody>
+          )
+          : <tbody />
+      }
     </table>
   );
 }

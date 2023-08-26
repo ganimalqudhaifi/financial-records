@@ -39,6 +39,7 @@ export default function App() {
         }));
         data && changeRecordsState(data);
       } else {
+        changeRecordsState({});
         // localStorage.removeItem('user');
         // sessionStorage.removeItem('user');
         // setIsLogin(false);

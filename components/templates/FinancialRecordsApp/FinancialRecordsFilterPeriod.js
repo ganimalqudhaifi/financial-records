@@ -7,7 +7,7 @@ export default function FinancialRecordsFilterPeriod() {
 
   const listPeriod = new Set();
 
-  records.map((record) => {
+  records.length && records.map((record) => {
     const d = new Date(record.tanggal);
     const year = d.getFullYear();
     const month = d.getMonth();

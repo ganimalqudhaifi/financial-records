@@ -33,6 +33,11 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.HANDLE_SLICE, payload: e.target.value });
   };
 
+  const changePersonalInformationState = (payload, callback) => {
+    callback;
+    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+  };
+
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -43,6 +48,7 @@ export default function GlobalContextProvider(props) {
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,
+    changePersonalInformationState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

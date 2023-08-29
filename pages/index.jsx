@@ -4,14 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import {
-  database, onValue, ref, set,
+  database, onValue, ref,
 } from '../config/firebase';
-import { globalActionType, useGlobalContext } from '../context';
+import { useGlobalContext } from '../context';
 import { storage } from '../utils';
 
 export default function Home() {
   const {
-    state, dispatch, changeIsLoginState, changeUserState,
+    state, dispatch, changeIsLoginState, changeUserState, changePersonalInformationState,
   } = useGlobalContext();
   const {
     personalInformation, isDemo, isLogin, user,
@@ -28,19 +28,12 @@ export default function Home() {
     uid !== null && changeIsLoginState(true);
     isLogin && changeUserState(storage.getItem('user'));
 
-    const changePersonalInformation = (isDemo, payload) => {
-      if (!isDemo) {
-        set(ref(database, `users/${uid}/personalInformation`), payload);
-      }
-      dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
-    };
-
-    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
     if (!isDemo) {
+      const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
       onValue(personalInformationRef, (snapshot) => {
         if (snapshot.exists()) {
-          const valPersonalInformation = snapshot.val();
-          changePersonalInformation(isDemo, valPersonalInformation);
+          const data = snapshot.val();
+          changePersonalInformationState(data);
         } else {
           localStorage.removeItem('user');
           sessionStorage.removeItem('user');

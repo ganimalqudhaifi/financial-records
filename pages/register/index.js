@@ -7,10 +7,10 @@ import {
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import alertToast from '../../utils/sweetAlert';
-import { storage } from '../../utils';
+import { storage, updateSaldoAwal } from '../../utils';
 
 export default function Register() {
-  const { dispatch, changeUserState } = useGlobalContext();
+  const { dispatch, changeUserState, changeSaldoAwalState } = useGlobalContext();
 
   const [inputs, setInputs] = useState({
     email: '',
@@ -26,14 +26,6 @@ export default function Register() {
       ...values,
       [e.target.name]: e.target.value,
     }));
-  };
-
-  const changeSaldoAwal = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/saldoAwal`), payload);
-    }
-    dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
   };
 
   const changeSocialMediaLinks = (isDemo, payload) => {
@@ -69,20 +61,19 @@ export default function Register() {
         updateProfile(auth.currentUser, {
           displayName: 'New User',
         });
+        const {
+          uid, email, photoURL, emailVerified,
+        } = res.user;
         const dataUser = {
-          uid: res.user.uid,
+          uid,
           displayName: 'New User',
-          email: res.user.email,
-          photoURL: res.user.photoURL,
-          emailVerified: res.user.emailVerified,
+          email,
+          photoURL,
+          emailVerified,
         };
         changeUserState(dataUser);
         localStorage.setItem('user', JSON.stringify(dataUser));
-        setInputs({
-          email: '',
-          password: '',
-        });
-        changeSaldoAwal(false, 0);
+        changeSaldoAwalState(0, updateSaldoAwal());
         changeSocialMediaAttachment(0, {
           facebook: false,
           instagram: false,
@@ -98,6 +89,10 @@ export default function Register() {
           lastName: 'User',
           phone: '',
           bio: '',
+        });
+        setInputs({
+          email: '',
+          password: '',
         });
         router.push('/app');
       })

@@ -34,8 +34,13 @@ export default function GlobalContextProvider(props) {
   };
 
   const changePersonalInformationState = (payload, callback) => {
-    callback;
+    callback && callback(payload);
     dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
+  };
+
+  const changeSaldoAwalState = (payload, callback) => {
+    callback && callback(payload);
+    dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
   };
 
   const value = useMemo(() => ({
@@ -49,6 +54,7 @@ export default function GlobalContextProvider(props) {
     changeFilterPeriodState,
     changeSliceShowState,
     changePersonalInformationState,
+    changeSaldoAwalState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

@@ -5,4 +5,8 @@ export const storage = {
     const uid = user ? JSON.parse(user).uid : null;
     return uid;
   },
+  removeItem: (key) => {
+    localStorage.removeItem(key);
+    sessionStorage.removeItem(key);
+  },
 };

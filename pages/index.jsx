@@ -11,7 +11,7 @@ import { storage } from '../utils';
 
 export default function Home() {
   const {
-    state, dispatch, changeIsLoginState, changeUserState, changePersonalInformationState,
+    state, changeIsLoginState, changeUserState, changePersonalInformationState,
   } = useGlobalContext();
   const {
     personalInformation, isDemo, isLogin, user,
@@ -35,15 +35,14 @@ export default function Home() {
           const data = snapshot.val();
           changePersonalInformationState(data);
         } else {
-          localStorage.removeItem('user');
-          sessionStorage.removeItem('user');
+          storage.removeItem('user');
           changeIsLoginState(false);
         }
       }, {
         onlyOnce: true,
       });
     }
-  }, [isLogin, dispatch, isDemo]);
+  }, [isLogin, isDemo]);
 
   return (
     <>

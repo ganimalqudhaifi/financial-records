@@ -1,8 +1,7 @@
 import { globalActionType, useGlobalContext } from '../../../context';
-import { modal } from '../../../utils';
+import { modal, storage } from '../../../utils';
 import { Modal } from '../../molecules';
 import { database, ref, remove } from '../../../config/firebase';
-import checkUID, {} from '../../../utils/checkUID';
 
 export default function FinancialRecordsActionDelete({ id }) {
   const { state, dispatch } = useGlobalContext();
@@ -11,7 +10,7 @@ export default function FinancialRecordsActionDelete({ id }) {
 
   const deleteRecord = (isDemo, id) => {
     if (!isDemo) {
-      const uid = JSON.parse(checkUID());
+      const uid = storage.getUID();
       remove(ref(database, `users/${uid}/records/${id}`));
     }
     dispatch({ type: globalActionType.DELETE_RECORD, id });

@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  database, onValue, ref, set,
-} from '../../../config/firebase';
+import { database, onValue, ref, set } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
 import { storage } from '../../../utils';
 

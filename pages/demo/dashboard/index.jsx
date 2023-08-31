@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
@@ -41,9 +41,5 @@ export default function App({ records }) {
 export function getServerSideProps() {
   const records = getData();
 
-  return {
-    props: {
-      records,
-    },
-  };
+  return { props: { records } };
 }

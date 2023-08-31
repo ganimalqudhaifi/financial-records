@@ -1,10 +1,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import React, { useState } from 'react';
-import {
-  auth, database, ref, set, signInWithEmailAndPassword,
-} from '../../config/firebase';
+import { useState } from 'react';
+import { auth, database, ref, set, signInWithEmailAndPassword } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import { storage } from '../../utils';
 import alertToast from '../../utils/sweetAlert';

@@ -14,16 +14,10 @@ module.exports = {
           tertiary: '#3282B8',
           quaternary: '#BBE1FA',
         },
-        bg: {
-          color: '#222327',
-        },
-        main: {
-          color: '#29fd53',
-        },
+        bg: { color: '#222327' },
+        main: { color: '#29fd53' },
       },
-      animation: {
-        pop: 'pop .5s',
-      },
+      animation: { pop: 'pop .5s' },
       keyframes: {
         pop: {
           '0%': { scale: '0', opacity: '.2' },

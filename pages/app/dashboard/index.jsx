@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
@@ -9,9 +9,7 @@ import { useGlobalContext } from '../../../context';
 import { storage } from '../../../utils';
 
 export default function App() {
-  const {
-    state, dispatch, changeRecordsState, changeIsLoginState, changeUserState,
-  } = useGlobalContext();
+  const { state, dispatch, changeRecordsState, changeIsLoginState, changeUserState } = useGlobalContext();
   const { isLogin, user } = state;
 
   const router = useRouter();

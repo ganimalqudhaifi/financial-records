@@ -5,9 +5,7 @@ import styles from './FinancialRecordsTable.module.css';
 
 export default function FinancialRecordsTable() {
   const { state } = useGlobalContext();
-  const {
-    records, searchKeyword, filterPeriod, saldoAwal, sliceShow, paginationIndex,
-  } = state;
+  const { records, searchKeyword, filterPeriod, saldoAwal, sliceShow, paginationIndex } = state;
 
   const valueDate = (date) => {
     const target = new Date(date);

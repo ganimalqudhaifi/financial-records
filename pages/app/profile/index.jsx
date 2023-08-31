@@ -1,25 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout } from '../../../components';
-import {
-  auth, database, ref, set, updateProfile,
-} from '../../../config/firebase';
+import { auth, database, ref, set, updateProfile } from '../../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../../context';
 import alertToast from '../../../utils/sweetAlert';
 import { storage } from '../../../utils';
 
 export default function App() {
-  const {
-    dispatch, state, changeIsLoginState, changeUserState,
-  } = useGlobalContext();
-  const {
-    socialMediaLinks, socialMediaAttachment, personalInformation, isLogin, user,
-  } = state;
+  const { dispatch, state, changeIsLoginState, changeUserState } = useGlobalContext();
+  const { socialMediaLinks, socialMediaAttachment, personalInformation, isLogin, user } = state;
 
-  const [edits, setEdits] = useState({
-    personalInformation: false,
-  });
+  const [edits, setEdits] = useState({ personalInformation: false });
 
   const router = useRouter();
 
@@ -109,9 +101,7 @@ export default function App() {
                   <button
                     onClick={(e) => {
                       edits.personalInformation && handleSubmit(e);
-                      setEdits((value) => ({
-                        personalInformation: !value.personalInformation,
-                      }));
+                      setEdits((value) => ({ personalInformation: !value.personalInformation }));
                     }}
                     className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center border-slate-300 hover:border-slate-500 active:border-slate-400 text-slate-600 hover:text-slate-700 active:text-slate-600 rounded-full"
                   >

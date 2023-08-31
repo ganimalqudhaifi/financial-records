@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout, FinancialRecords } from '../../components';
-import {
-  database, ref, onValue, set,
-} from '../../config/firebase';
+import { database, ref, onValue, set } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import { storage } from '../../utils';
 
 export default function App() {
-  const {
-    dispatch, state, changeIsLoginState, changeUserState, changeRecordsState,
-  } = useGlobalContext();
+  const { dispatch, state, changeIsLoginState, changeUserState, changeRecordsState } = useGlobalContext();
   const { isDemo, isLogin, user } = state;
 
   const router = useRouter();

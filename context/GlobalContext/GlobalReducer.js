@@ -106,9 +106,7 @@ export const globalReducer = (state, action) => {
         ...state,
         records: [
           ...state.records,
-          {
-            ...action.payload,
-          },
+          { ...action.payload },
         ],
       };
     case globalActionType.GET_RECORDS:

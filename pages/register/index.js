@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import {
-  auth, createUserWithEmailAndPassword, database, ref, set, updateProfile,
-} from '../../config/firebase';
+import { auth, createUserWithEmailAndPassword, database, ref, set, updateProfile } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
 import alertToast from '../../utils/sweetAlert';
 import { storage, updateSaldoAwal } from '../../utils';
@@ -58,18 +56,13 @@ export default function Register() {
     const { email, password } = inputs;
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        updateProfile(auth.currentUser, {
-          displayName: 'New User',
-        });
-        const {
-          uid, email, photoURL, emailVerified,
-        } = res.user;
+        updateProfile(auth.currentUser, { displayName: 'New User' });
         const dataUser = {
-          uid,
+          uid: res.user.uid,
           displayName: 'New User',
-          email,
-          photoURL,
-          emailVerified,
+          email: res.user.email,
+          photoURL: res.user.photoURL,
+          emailVerified: res.user.emailVerified,
         };
         changeUserState(dataUser);
         localStorage.setItem('user', JSON.stringify(dataUser));

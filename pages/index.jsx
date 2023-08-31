@@ -3,23 +3,24 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
-import {
-  database, onValue, ref,
-} from '../config/firebase';
+import { database, onValue, ref } from '../config/firebase';
 import { useGlobalContext } from '../context';
 import { storage } from '../utils';
 
 export default function Home() {
   const {
-    state, changeIsLoginState, changeUserState, changePersonalInformationState,
+    state,
+    changeIsLoginState,
+    changeUserState,
+    changePersonalInformationState,
   } = useGlobalContext();
-  const {
-    personalInformation, isDemo, isLogin, user,
-  } = state;
+
+  const { personalInformation, isLogin, user } = state;
   const { firstName, lastName } = personalInformation;
 
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
+
   const { email } = user;
   const displayName = isLogin && `${firstName} ${lastName}`;
 
@@ -28,21 +29,17 @@ export default function Home() {
     uid !== null && changeIsLoginState(true);
     isLogin && changeUserState(storage.getItem('user'));
 
-    if (!isDemo) {
-      const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-      onValue(personalInformationRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = snapshot.val();
-          changePersonalInformationState(data);
-        } else {
-          storage.removeItem('user');
-          changeIsLoginState(false);
-        }
-      }, {
-        onlyOnce: true,
-      });
-    }
-  }, [isLogin, isDemo]);
+    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
+    onValue(personalInformationRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = snapshot.val();
+        changePersonalInformationState(data);
+      } else {
+        storage.removeItem('user');
+        changeIsLoginState(false);
+      }
+    }, { onlyOnce: true });
+  }, [isLogin]);
 
   return (
     <>
@@ -204,9 +201,9 @@ export default function Home() {
           <div className="md:order-2 container flex flex-col md:flex-row justify-end gap-1 py-4 mx-auto space-y-1 lg:flex-row lg:space-y-0">
             <div className="flex items-center justify-center text-gray-300 mr-1">Powered by</div>
             <div className="flex items-center justify-center gap-0.5">
-              <Link href=""><div className="w-8 h-8 bg-gray-300 flex items-center justify-center rounded-full"><Image alt="nextjs logo" width={28} height={28} src="/icons/nextjslogo.png" /></div></Link>
-              <Link href=""><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="tailwind logo" width={28} height={28} src="/icons/tailwindlogo.png" /></div></Link>
-              <Link href=""><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="firebase logo" width={28} height={28} src="/icons/firebaselogo.png" /></div></Link>
+              <Link href="https://nextjs.org" target="_blank"><div className="w-8 h-8 bg-gray-300 flex items-center justify-center rounded-full"><Image alt="nextjs logo" width={28} height={28} src="/icons/nextjslogo.png" /></div></Link>
+              <Link href="https://tailwindcss.com/" target="_blank"><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="tailwind logo" width={28} height={28} src="/icons/tailwindlogo.png" /></div></Link>
+              <Link href="https://firebase.google.com" target="_blank"><div className="w-8 h-8 bg-transparent flex items-center justify-center rounded-full"><Image alt="firebase logo" width={28} height={28} src="/icons/firebaselogo.png" /></div></Link>
             </div>
           </div>
         </footer>

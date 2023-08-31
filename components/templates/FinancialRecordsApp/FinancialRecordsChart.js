@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -31,15 +31,19 @@ export default function FinancialRecordsChart() {
 
   const uniqueId = 'chartModal';
 
-  const listPeriod = new Set();
   records.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
-  records.map((record) => {
+
+  const arrListPeriod = records.reduce((acc, record) => {
     const d = new Date(record.tanggal);
     const year = d.getFullYear();
     const month = d.getMonth();
-    listPeriod.add(`${year}-${month}`);
-  });
-  const arrListPeriod = Array.from(listPeriod);
+    const period = `${year}-${month}`;
+
+    if (!acc.includes(period)) {
+      acc.push(period);
+    }
+    return acc;
+  }, []);
 
   const valueDate = (date) => {
     const target = new Date(date);
@@ -77,21 +81,15 @@ export default function FinancialRecordsChart() {
     setChartOptions({
       responsive: true,
       plugins: {
-        legend: {
-          display: false,
-        },
+        legend: { display: false },
         title: {
           display: true,
           text: 'Financial Records',
         },
       },
       scales: {
-        x: {
-          stacked: true,
-        },
-        y: {
-          stacked: true,
-        },
+        x: { stacked: true },
+        y: { stacked: true },
       },
 
     });

@@ -5,15 +5,17 @@ export default function FinancialRecordsFilterPeriod() {
   const { state, changeFilterPeriodState } = useGlobalContext();
   const { records } = state;
 
-  const listPeriod = new Set();
-
-  records.length && records.map((record) => {
+  const listPeriod = records.length && records.reduce((acc, record) => {
     const d = new Date(record.tanggal);
     const year = d.getFullYear();
     const month = d.getMonth();
+    const period = `${year}-${month}`;
 
-    listPeriod.add(`${year}-${month}`);
-  });
+    if (!acc.includes(period)) {
+      acc.push(period);
+    }
+    return acc;
+  }, []);
 
   return (
     <select className="h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg" onChange={changeFilterPeriodState}>

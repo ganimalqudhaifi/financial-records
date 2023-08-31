@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppLayout, FinancialRecords } from '../../components';
 import { database, ref, set } from '../../config/firebase';
@@ -7,9 +7,7 @@ import { getData } from '../../utils/data';
 import { storage } from '../../utils';
 
 export default function Demo({ records }) {
-  const {
-    state, dispatch, changeIsDemoState, changeRecordsState,
-  } = useGlobalContext();
+  const { state, dispatch, changeIsDemoState, changeRecordsState } = useGlobalContext();
   const { isDemo } = state;
   const user = {
     displayName: 'Demo',
@@ -54,9 +52,5 @@ export default function Demo({ records }) {
 export function getServerSideProps() {
   const records = getData();
 
-  return {
-    props: {
-      records,
-    },
-  };
+  return { props: { records } };
 }

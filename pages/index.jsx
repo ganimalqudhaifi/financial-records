@@ -15,13 +15,13 @@ export default function Home() {
     changePersonalInformationState,
   } = useGlobalContext();
 
-  const { personalInformation, isLogin, user } = state;
-  const { firstName, lastName } = personalInformation;
-
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
 
+  const { personalInformation, isLogin, user } = state;
   const { email } = user;
+  const { firstName, lastName } = personalInformation;
+
   const displayName = isLogin && `${firstName} ${lastName}`;
 
   useEffect(() => {

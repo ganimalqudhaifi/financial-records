@@ -2,18 +2,21 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { auth, createUserWithEmailAndPassword, database, ref, set, updateProfile } from '../../config/firebase';
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  database,
+  ref,
+  set,
+  updateProfile,
+} from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import alertToast from '../../utils/sweetAlert';
-import { storage, updateSaldoAwal } from '../../utils';
+import { alertToast, storage, updateSaldoAwal, updateSocialMediaLinks } from '../../utils';
 
 export default function Register() {
-  const { dispatch, changeUserState, changeSaldoAwalState } = useGlobalContext();
+  const { dispatch, changeUserState, changeSaldoAwalState, changeSocialMediaLinksState } = useGlobalContext();
 
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-  });
+  const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -26,13 +29,13 @@ export default function Register() {
     }));
   };
 
-  const changeSocialMediaLinks = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/socialMediaLinks`), payload);
-    }
-    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
-  };
+  // const changeSocialMediaLinks = (isDemo, payload) => {
+  //   if (!isDemo) {
+  //     const uid = storage.getUID();
+  //     set(ref(database, `users/${uid}/socialMediaLinks`), payload);
+  //   }
+  //   dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
+  // };
 
   const changeSocialMediaAttachment = (isDemo, payload) => {
     if (!isDemo) {
@@ -72,11 +75,11 @@ export default function Register() {
           instagram: false,
           twitter: false,
         });
-        changeSocialMediaLinks(0, {
+        changeSocialMediaLinksState({
           facebook: '',
           instagram: '',
           twitter: '',
-        });
+        }, updateSocialMediaLinks());
         changePersonalInformation(0, {
           firstName: 'New',
           lastName: 'User',

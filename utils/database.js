@@ -12,3 +12,9 @@ export const updateSaldoAwal = () => (payload) => {
   const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
   set(saldoAwalRef, payload);
 };
+
+export const updateSocialMediaLinks = () => (payload) => {
+  const uid = storage.getUID();
+  const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
+  set(socialMediaLinksRef, payload);
+};

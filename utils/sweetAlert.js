@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export default function alertToast(errMsg) {
+export function alertToast(errMsg) {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top',

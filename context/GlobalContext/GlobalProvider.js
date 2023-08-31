@@ -48,6 +48,11 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
   };
 
+  const changeSocialMediaAttachmentState = (payload, callback) => {
+    callback && callback(payload);
+    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+  };
+
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -61,6 +66,7 @@ export default function GlobalContextProvider(props) {
     changePersonalInformationState,
     changeSaldoAwalState,
     changeSocialMediaLinksState,
+    changeSocialMediaAttachmentState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

@@ -18,3 +18,9 @@ export const updateSocialMediaLinks = () => (payload) => {
   const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
   set(socialMediaLinksRef, payload);
 };
+
+export const updateSocialMediaAttachment = () => (payload) => {
+  const uid = storage.getUID();
+  const socialMediaAttachmentRef = ref(database, `users/${uid}/socialMediaAttachment`);
+  set(socialMediaAttachmentRef, payload);
+};

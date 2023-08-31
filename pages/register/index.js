@@ -11,10 +11,16 @@ import {
   updateProfile,
 } from '../../config/firebase';
 import { globalActionType, useGlobalContext } from '../../context';
-import { alertToast, storage, updateSaldoAwal, updateSocialMediaLinks } from '../../utils';
+import { alertToast, storage, updateSaldoAwal, updateSocialMediaAttachment, updateSocialMediaLinks } from '../../utils';
 
 export default function Register() {
-  const { dispatch, changeUserState, changeSaldoAwalState, changeSocialMediaLinksState } = useGlobalContext();
+  const {
+    dispatch,
+    changeUserState,
+    changeSaldoAwalState,
+    changeSocialMediaLinksState,
+    changeSocialMediaAttachmentState,
+  } = useGlobalContext();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -37,13 +43,13 @@ export default function Register() {
   //   dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
   // };
 
-  const changeSocialMediaAttachment = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
-    }
-    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
-  };
+  // const changeSocialMediaAttachment = (isDemo, payload) => {
+  //   if (!isDemo) {
+  //     const uid = storage.getUID();
+  //     set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
+  //   }
+  //   dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
+  // };
 
   const changePersonalInformation = (isDemo, payload) => {
     if (!isDemo) {
@@ -70,11 +76,11 @@ export default function Register() {
         changeUserState(dataUser);
         localStorage.setItem('user', JSON.stringify(dataUser));
         changeSaldoAwalState(0, updateSaldoAwal());
-        changeSocialMediaAttachment(0, {
+        changeSocialMediaAttachmentState(0, {
           facebook: false,
           instagram: false,
           twitter: false,
-        });
+        }, updateSocialMediaAttachment());
         changeSocialMediaLinksState({
           facebook: '',
           instagram: '',

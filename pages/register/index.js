@@ -2,24 +2,23 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
+import { useGlobalContext } from '../../context';
 import {
-  auth,
-  createUserWithEmailAndPassword,
-  database,
-  ref,
-  set,
-  updateProfile,
-} from '../../config/firebase';
-import { globalActionType, useGlobalContext } from '../../context';
-import { alertToast, storage, updateSaldoAwal, updateSocialMediaAttachment, updateSocialMediaLinks } from '../../utils';
+  alertToast,
+  updatePersonalInformation,
+  updateSaldoAwal,
+  updateSocialMediaAttachment,
+  updateSocialMediaLinks,
+} from '../../utils';
 
 export default function Register() {
   const {
-    dispatch,
     changeUserState,
     changeSaldoAwalState,
     changeSocialMediaLinksState,
     changeSocialMediaAttachmentState,
+    changePersonalInformationState,
   } = useGlobalContext();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -33,30 +32,6 @@ export default function Register() {
       ...values,
       [e.target.name]: e.target.value,
     }));
-  };
-
-  // const changeSocialMediaLinks = (isDemo, payload) => {
-  //   if (!isDemo) {
-  //     const uid = storage.getUID();
-  //     set(ref(database, `users/${uid}/socialMediaLinks`), payload);
-  //   }
-  //   dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
-  // };
-
-  // const changeSocialMediaAttachment = (isDemo, payload) => {
-  //   if (!isDemo) {
-  //     const uid = storage.getUID();
-  //     set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
-  //   }
-  //   dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
-  // };
-
-  const changePersonalInformation = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/personalInformation`), payload);
-    }
-    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
   };
 
   const handleSubmit = async (e) => {
@@ -76,7 +51,7 @@ export default function Register() {
         changeUserState(dataUser);
         localStorage.setItem('user', JSON.stringify(dataUser));
         changeSaldoAwalState(0, updateSaldoAwal());
-        changeSocialMediaAttachmentState(0, {
+        changeSocialMediaAttachmentState({
           facebook: false,
           instagram: false,
           twitter: false,
@@ -86,16 +61,13 @@ export default function Register() {
           instagram: '',
           twitter: '',
         }, updateSocialMediaLinks());
-        changePersonalInformation(0, {
+        changePersonalInformationState({
           firstName: 'New',
           lastName: 'User',
           phone: '',
           bio: '',
-        });
-        setInputs({
-          email: '',
-          password: '',
-        });
+        }, updatePersonalInformation());
+        setInputs({ email: '', password: '' });
         router.push('/app');
       })
       .catch((err) => {

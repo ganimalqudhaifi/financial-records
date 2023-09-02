@@ -3,9 +3,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
-import { database, onValue, ref } from '../config/firebase';
 import { useGlobalContext } from '../context';
-import { storage } from '../utils';
+import { getPersonalInformation, storage } from '../utils';
 
 export default function Home() {
   const {
@@ -19,27 +18,26 @@ export default function Home() {
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
 
   const { personalInformation, isLogin, user } = state;
-  const { email } = user;
   const { firstName, lastName } = personalInformation;
-
-  const displayName = isLogin && `${firstName} ${lastName}`;
 
   useEffect(() => {
     const uid = storage.getUID();
     uid !== null && changeIsLoginState(true);
-    isLogin && changeUserState(storage.getItem('user'));
 
-    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-    onValue(personalInformationRef, (snapshot) => {
-      if (snapshot.exists()) {
-        const data = snapshot.val();
+    if (isLogin) {
+      changeUserState(storage.getItem('user'));
+      const data = getPersonalInformation();
+      if (data) {
         changePersonalInformationState(data);
       } else {
         storage.removeItem('user');
         changeIsLoginState(false);
       }
-    }, { onlyOnce: true });
+    }
   }, [isLogin]);
+
+  const displayName = isLogin && `${firstName} ${lastName}`;
+  const { email } = user;
 
   return (
     <>

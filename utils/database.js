@@ -1,19 +1,14 @@
 import { database, get, ref, set } from '../config/firebase';
 import { storage } from './storage';
 
-export const getPersonalInformation = () => {
+export const getPersonalInformation = async () => {
   const uid = storage.getUID();
   const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-  get(personalInformationRef).then((snapshot) => {
+  await get(personalInformationRef).then((snapshot) => {
     if (snapshot.exists()) {
       return snapshot.val();
     }
-    return {
-      firstName: 'New',
-      lastName: 'User',
-      phone: '',
-      bio: '',
-    };
+    return null;
   });
 };
 

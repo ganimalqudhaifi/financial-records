@@ -47,7 +47,12 @@ export default function Login() {
           sessionStorage.setItem('user', JSON.stringify(dataUser));
         }
         setInputs({ email: '', password: '' });
-        changePersonalInformationState(getPersonalInformation());
+        changePersonalInformationState(getPersonalInformation() || {
+          firstName: 'New',
+          lastName: 'User',
+          phone: '',
+          bio: '',
+        });
         router.push('/app');
       })
       .catch((err) => {

@@ -12,6 +12,17 @@ export const getPersonalInformation = async () => {
   });
 };
 
+export const getSocialMediaLinks = async () => {
+  const uid = storage.getUID();
+  const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
+  await get(socialMediaLinksRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      return snapshot.val();
+    }
+    return null;
+  });
+};
+
 export const getSocialMediaAttachment = async () => {
   const uid = storage.getUID();
   const socialMediaAttachmentRef = ref(database, `users/${uid}/socialMediaAttachment`);

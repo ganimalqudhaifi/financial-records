@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { database, onValue, ref } from '../../../config/firebase';
 import { globalInitialState, useGlobalContext } from '../../../context';
-import { getSocialMediaAttachment, storage } from '../../../utils';
+import { getPersonalInformation, getSocialMediaAttachment, getSocialMediaLinks, storage } from '../../../utils';
 
 export default function AppSidebar({ user }) {
   const {
@@ -34,24 +33,12 @@ export default function AppSidebar({ user }) {
         getSocialMediaAttachment() || globalInitialState.socialMediaAttachment,
       );
 
-      const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
-      onValue(
-        socialMediaLinksRef,
-        (snapshot) => {
-          const data = snapshot.val();
-          changeSocialMediaLinksState(data);
-        },
-        { onlyOnce: true },
+      changeSocialMediaLinksState(
+        getSocialMediaLinks() || globalInitialState.socialMediaLinks,
       );
 
-      const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-      onValue(
-        personalInformationRef,
-        (snapshot) => {
-          const payload = snapshot.val();
-          changePersonalInformationState(payload);
-        },
-        { onlyOnce: true },
+      changePersonalInformationState(
+        getPersonalInformation() || globalInitialState.personalInformation,
       );
     }
   }, [dispatch, isDemo]);

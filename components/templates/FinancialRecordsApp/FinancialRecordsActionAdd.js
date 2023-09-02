@@ -1,19 +1,19 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
-import { globalActionType, useGlobalContext } from '../../../context';
-import { modal, storage } from '../../../utils';
 import { Modal } from '../../molecules';
-import { database, push, ref } from '../../../config/firebase';
+import { useGlobalContext } from '../../../context';
+import { modal, pushRecord, successToast } from '../../../utils';
 
 export default function FinancialRecordsActionAdd() {
-  const { state, dispatch } = useGlobalContext();
+  const { state, pushRecordState } = useGlobalContext();
   const { isDemo } = state;
+
   const [inputs, setInputs] = useState({
     tanggal: '',
     keterangan: '',
     jenis: 'Penerimaan',
     jumlah: null,
   });
+
   const uniqueId = 'addModal';
 
   const handleChange = (event) => {
@@ -27,15 +27,6 @@ export default function FinancialRecordsActionAdd() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const createRecord = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      push(ref(database, `users/${uid}/records`), payload);
-    } else {
-      dispatch({ type: globalActionType.CREATE_RECORD, payload });
-    }
-  };
-
   const handleSubmit = (event) => {
     event.preventDefault();
     const newInputs = {
@@ -44,34 +35,21 @@ export default function FinancialRecordsActionAdd() {
       updatedAt: new Date().toISOString(),
       value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
     };
+
     if (!isDemo) {
-      createRecord(isDemo, newInputs);
+      pushRecordState(newInputs, pushRecord());
     } else {
-      createRecord(isDemo, { ...newInputs, id: new Date().toISOString() });
+      pushRecordState({ ...newInputs, id: new Date().toISOString() });
     }
     modal.hide(uniqueId);
-    setInputs(() => ({
+    setInputs({
       tanggal: '',
       keterangan: '',
       jenis: 'Penerimaan',
-      jumlah: '',
-    }));
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: false,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-      },
+      jumlah: null,
     });
 
-    Toast.fire({
-      icon: 'success',
-      title: 'Data berhasil ditambahkan',
-    });
+    successToast('Data berhasil ditambahkan');
   };
 
   return (

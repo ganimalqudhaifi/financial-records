@@ -1,5 +1,11 @@
-import { database, get, onValue, ref, set } from '../config/firebase';
+import { database, get, onValue, push, ref, set } from '../config/firebase';
 import { storage } from './storage';
+
+export const pushRecord = () => (payload) => {
+  const uid = storage.getUID();
+  const recordsRef = ref(database, `users/${uid}/records`);
+  push(recordsRef, payload);
+};
 
 export const getPersonalInformation = async () => {
   const uid = storage.getUID();

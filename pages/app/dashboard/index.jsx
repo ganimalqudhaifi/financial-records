@@ -1,12 +1,11 @@
 import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { database, onValue, ref } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
-import { storage } from '../../../utils';
+import { observeRecords, storage } from '../../../utils';
 
 export default function App() {
   const { state, dispatch, changeRecordsState, changeIsLoginState, changeUserState } = useGlobalContext();
@@ -15,19 +14,19 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    // login check
+    // check uid from browser storage
     const uid = storage.getUID();
     uid !== null ? changeIsLoginState(true) : router.push('/login');
     isLogin && changeUserState(storage.getItem('user'));
 
-    // load data records
-    const recordsRef = ref(database, `users/${uid}/records`);
-    onValue(recordsRef, (snapshot) => {
-      const data = snapshot.exists() && Object.keys(snapshot.val()).map((key) => ({
-        ...snapshot.val()[key],
-        id: key,
-      }));
-      data && changeRecordsState(data);
+    observeRecords((snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.keys(snapshot.val()).map((key) => ({
+          ...snapshot.val()[key],
+          id: key,
+        }));
+        changeRecordsState(data);
+      }
     });
   }, [router, isLogin, dispatch]);
 

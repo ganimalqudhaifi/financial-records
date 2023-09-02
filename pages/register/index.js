@@ -40,11 +40,12 @@ export default function Register() {
     const { email, password } = inputs;
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        updateProfile(auth.currentUser, { displayName: 'New User' });
+        updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}` });
         const dataUser = {
           uid: res.user.uid,
-          displayName: 'New User',
+          displayName: `user${res.user.uid.substring(0, 11)}`,
           email: res.user.email,
+          phoneNumber: res.user.phoneNumber,
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };

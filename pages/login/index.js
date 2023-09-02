@@ -1,19 +1,15 @@
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { useState } from 'react';
-import { auth, database, ref, set, signInWithEmailAndPassword } from '../../config/firebase';
-import { globalActionType, useGlobalContext } from '../../context';
-import { storage } from '../../utils';
-import alertToast from '../../utils/sweetAlert';
+import { auth, signInWithEmailAndPassword } from '../../config/firebase';
+import { useGlobalContext } from '../../context';
+import { alertToast, getPersonalInformation } from '../../utils';
 
 export default function Login() {
-  const { dispatch, changeUserState } = useGlobalContext();
+  const { changeUserState, changePersonalInformationState } = useGlobalContext();
 
-  const [inputs, setInputs] = useState({
-    email: '',
-    password: '',
-  });
+  const [inputs, setInputs] = useState({ email: '', password: '' });
   const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -29,14 +25,6 @@ export default function Login() {
 
   const handleRemember = () => {
     setRemember(!remember);
-  };
-
-  const changePersonalInformation = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/personalInformation`), payload);
-    }
-    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
   };
 
   const handleSubmit = async (e) => {
@@ -58,16 +46,8 @@ export default function Login() {
         } else {
           sessionStorage.setItem('user', JSON.stringify(dataUser));
         }
-        setInputs({
-          email: '',
-          password: '',
-        });
-        changePersonalInformation(1, {
-          firstName: 'New',
-          lastName: 'User',
-          phone: '',
-          bio: '',
-        });
+        setInputs({ email: '', password: '' });
+        changePersonalInformationState(getPersonalInformation());
         router.push('/app');
       })
       .catch((err) => {

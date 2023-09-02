@@ -2,12 +2,12 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 import { AppLayout, FinancialRecords } from '../../components';
-import { database, ref, onValue, set } from '../../config/firebase';
-import { globalActionType, useGlobalContext } from '../../context';
-import { storage } from '../../utils';
+import { database, ref, onValue } from '../../config/firebase';
+import { useGlobalContext } from '../../context';
+import { observeSaldoAwal, storage } from '../../utils';
 
 export default function App() {
-  const { dispatch, state, changeIsLoginState, changeUserState, changeRecordsState } = useGlobalContext();
+  const { dispatch, state, changeIsLoginState, changeUserState, changeRecordsState, changeSaldoAwalState } = useGlobalContext();
   const { isDemo, isLogin, user } = state;
 
   const router = useRouter();
@@ -17,13 +17,6 @@ export default function App() {
     const uid = storage.getUID();
     uid !== null ? changeIsLoginState(true) : router.push('/login');
     isLogin && changeUserState(storage.getItem('user'));
-
-    const changeSaldoAwal = (isDemo, payload) => {
-      if (!isDemo) {
-        set(ref(database, `users/${uid}/saldoAwal`), payload);
-      }
-      dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
-    };
 
     // load data records
     const recordsRef = ref(database, `users/${uid}/records`);
@@ -44,11 +37,9 @@ export default function App() {
     });
 
     // load saldoAwal
-    const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
     if (!isDemo) {
-      onValue(saldoAwalRef, (snapshot) => {
-        const valSaldoAwal = snapshot.val();
-        changeSaldoAwal(isDemo, valSaldoAwal);
+      observeSaldoAwal((snapshot) => {
+        changeSaldoAwalState(snapshot.val());
       });
     }
   }, [dispatch, router, isLogin, isDemo]);

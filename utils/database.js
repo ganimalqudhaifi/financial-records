@@ -1,4 +1,4 @@
-import { database, get, ref, set } from '../config/firebase';
+import { database, get, onValue, ref, set } from '../config/firebase';
 import { storage } from './storage';
 
 export const getPersonalInformation = async () => {
@@ -10,6 +10,12 @@ export const getPersonalInformation = async () => {
     }
     return null;
   });
+};
+
+export const observeSaldoAwal = (callback) => {
+  const uid = storage.getUID();
+  const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
+  onValue(saldoAwalRef, callback);
 };
 
 export const updatePersonalInformation = () => (payload) => {

@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { database, onValue, ref, set } from '../../../config/firebase';
-import { globalActionType, useGlobalContext } from '../../../context';
-import { storage } from '../../../utils';
+import Image from 'next/image';
+import { database, onValue, ref } from '../../../config/firebase';
+import { globalInitialState, useGlobalContext } from '../../../context';
+import { getSocialMediaAttachment, storage } from '../../../utils';
 
 export default function AppSidebar({ user }) {
-  const { dispatch, state, changeIsLoginState } = useGlobalContext();
+  const {
+    dispatch,
+    state,
+    changeIsLoginState,
+    changeSocialMediaLinksState,
+    changeSocialMediaAttachmentState,
+    changePersonalInformationState,
+  } = useGlobalContext();
   const {
     isDemo,
     isLogin,
@@ -22,67 +29,27 @@ export default function AppSidebar({ user }) {
     const uid = storage.getUID();
     uid !== null && changeIsLoginState(true);
 
-    const changeSocialMediaLinks = (isDemo, payload) => {
-      if (!isDemo) {
-        set(ref(database, `users/${uid}/socialMediaLinks`), payload);
-      }
-      dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
-    };
-
-    const changeSocialMediaAttachment = (isDemo, payload) => {
-      if (!isDemo) {
-        set(ref(database, `users/${uid}/socialMediaAttachment`), payload);
-      }
-      dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
-    };
-
-    const changePersonalInformation = (isDemo, payload) => {
-      if (!isDemo) {
-        set(ref(database, `users/${uid}/personalInformation`), payload);
-      }
-      dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
-    };
-
-    const socialMediaAttachmentRef = ref(
-      database,
-      `users/${uid}/socialMediaAttachment`,
-    );
     if (!isDemo) {
-      onValue(
-        socialMediaAttachmentRef,
-        (snapshot) => {
-          const payload = snapshot.val();
-          changeSocialMediaAttachment(isDemo, payload);
-        },
-        { onlyOnce: true },
+      changeSocialMediaAttachmentState(
+        getSocialMediaAttachment() || globalInitialState.socialMediaAttachment,
       );
-    }
 
-    const socialMediaLinksRef = ref(
-      database,
-      `users/${uid}/socialMediaLinks`,
-    );
-    if (!isDemo) {
+      const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
       onValue(
         socialMediaLinksRef,
         (snapshot) => {
-          const payload = snapshot.val();
-          changeSocialMediaLinks(isDemo, payload);
+          const data = snapshot.val();
+          changeSocialMediaLinksState(data);
         },
         { onlyOnce: true },
       );
-    }
 
-    const personalInformationRef = ref(
-      database,
-      `users/${uid}/personalInformation`,
-    );
-    if (!isDemo) {
+      const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
       onValue(
         personalInformationRef,
         (snapshot) => {
           const payload = snapshot.val();
-          changePersonalInformation(isDemo, payload);
+          changePersonalInformationState(payload);
         },
         { onlyOnce: true },
       );

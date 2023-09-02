@@ -12,6 +12,17 @@ export const getPersonalInformation = async () => {
   });
 };
 
+export const getSocialMediaAttachment = async () => {
+  const uid = storage.getUID();
+  const socialMediaAttachmentRef = ref(database, `users/${uid}/socialMediaAttachment`);
+  await get(socialMediaAttachmentRef).then((snapshot) => {
+    if (snapshot.exists()) {
+      return snapshot.val();
+    }
+    return null;
+  });
+};
+
 export const observeSaldoAwal = (callback) => {
   const uid = storage.getUID();
   const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);

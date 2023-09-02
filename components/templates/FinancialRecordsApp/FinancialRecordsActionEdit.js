@@ -1,13 +1,10 @@
 import { useState } from 'react';
-import Swal from 'sweetalert2';
-import { globalActionType, useGlobalContext } from '../../../context';
-import { modal, storage } from '../../../utils';
 import { Modal } from '../../molecules';
-import { database, ref, set } from '../../../config/firebase';
-// import checkUID from '../../../utils/checkUID';
+import { useGlobalContext } from '../../../context';
+import { modal, successToast, updateRecord } from '../../../utils';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
-  const { state, dispatch } = useGlobalContext();
+  const { state, updateRecordState } = useGlobalContext();
   const { isDemo } = state;
   const uniqueId = `editModal${no}`;
   const {
@@ -39,15 +36,6 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const updateRecords = (isDemo, payload) => {
-    if (!isDemo) {
-      const uid = storage.getUID();
-      set(ref(database, `users/${uid}/records/${payload.id}`), payload);
-    } else {
-      dispatch({ type: globalActionType.UPDATE_RECORD, payload });
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const newInputs = {
@@ -55,24 +43,9 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       updatedAt: new Date().toISOString(),
       value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
     };
-    updateRecords(isDemo, newInputs);
+    updateRecordState(newInputs, !isDemo && updateRecord());
     modal.hide(uniqueId);
-    const Toast = Swal.mixin({
-      toast: true,
-      position: 'top-end',
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: false,
-      didOpen: (toast) => {
-        toast.addEventListener('mouseenter', Swal.stopTimer);
-        toast.addEventListener('mouseleave', Swal.resumeTimer);
-      },
-    });
-
-    Toast.fire({
-      icon: 'success',
-      title: 'Data berhasil diubah',
-    });
+    successToast('Data berhasil diubah');
   };
 
   return (

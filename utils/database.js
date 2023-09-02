@@ -9,8 +9,14 @@ export const pushRecord = () => (payload) => {
 
 export const removeRecord = () => (id) => {
   const uid = storage.getUID();
-  const recordsRef = ref(database, `users/${uid}/records/${id}`);
-  remove(recordsRef);
+  const recordRef = ref(database, `users/${uid}/records/${id}`);
+  remove(recordRef);
+};
+
+export const updateRecord = () => (payload) => {
+  const uid = storage.getUID();
+  const recordRef = ref(database, `users/${uid}/records/${payload.id}`);
+  set(recordRef, payload);
 };
 
 export const getPersonalInformation = async () => {

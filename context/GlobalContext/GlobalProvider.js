@@ -63,6 +63,11 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.DELETE_RECORD, id });
   };
 
+  const updateRecordState = () => (payload, callback) => {
+    callback && callback(payload);
+    dispatch({ type: globalActionType.UPDATE_RECORD, payload });
+  };
+
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -79,6 +84,7 @@ export default function GlobalContextProvider(props) {
     changeSocialMediaAttachmentState,
     pushRecordState,
     removeRecordState,
+    updateRecordState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

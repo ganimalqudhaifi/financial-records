@@ -18,6 +18,12 @@ export const observeSaldoAwal = (callback) => {
   onValue(saldoAwalRef, callback);
 };
 
+export const observeRecords = (callback) => {
+  const uid = storage.getUID();
+  const recordsRef = ref(database, `users/${uid}/records`);
+  onValue(recordsRef, callback);
+};
+
 export const updatePersonalInformation = () => (payload) => {
   const uid = storage.getUID();
   const personalInformationRef = ref(database, `users/${uid}/personalInformation`);

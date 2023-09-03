@@ -40,8 +40,6 @@ export default function App() {
           id: key,
         }));
         changeRecordsState(data);
-      } else {
-        changeRecordsState({});
       }
     });
   }, []);

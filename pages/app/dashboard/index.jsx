@@ -21,7 +21,7 @@ export default function App() {
         changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
       } else {
         changeIsLoginState(false);
-        router.push('/login');
+        router.push('/');
       }
     });
 

@@ -2,32 +2,25 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { globalInitialState, useGlobalContext } from '../../../context';
-import { getPersonalInformation, getSocialMediaAttachment, getSocialMediaLinks, storage } from '../../../utils';
+import { getSocialMediaAttachment, getSocialMediaLinks, userSignOut } from '../../../utils';
 
 export default function AppSidebar({ user }) {
   const {
-    dispatch,
     state,
-    changeIsLoginState,
     changeSocialMediaLinksState,
     changeSocialMediaAttachmentState,
-    changePersonalInformationState,
   } = useGlobalContext();
   const {
     isDemo,
     isLogin,
     socialMediaLinks,
     socialMediaAttachment,
-    personalInformation,
   } = state;
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   useEffect(() => {
-    const uid = storage.getUID();
-    uid !== null && changeIsLoginState(true);
-
     if (!isDemo) {
       changeSocialMediaAttachmentState(
         getSocialMediaAttachment() || globalInitialState.socialMediaAttachment,
@@ -36,17 +29,12 @@ export default function AppSidebar({ user }) {
       changeSocialMediaLinksState(
         getSocialMediaLinks() || globalInitialState.socialMediaLinks,
       );
-
-      changePersonalInformationState(
-        getPersonalInformation() || globalInitialState.personalInformation,
-      );
     }
-  }, [dispatch, isDemo]);
+  }, [isDemo]);
 
-  const firstName = isLogin && !isDemo ? personalInformation.firstName : user.displayName;
-  const lastName = isLogin && !isDemo ? personalInformation.lastName : 'User';
-  const displayName = `${firstName} ${lastName}`;
-  const email = isLogin && isDemo ? user.email : 'undefined';
+  const handleSignOut = () => {
+    userSignOut();
+  };
 
   return (
     <>
@@ -85,14 +73,11 @@ export default function AppSidebar({ user }) {
               alt="Rounded avatar"
               className="mb-4 w-20 h-20 rounded-full"
             />
-            <p className="text-white text-xl font-semibold capitalize">{displayName}</p>
-            <p className="text-gray-400 text-md font-light">{email}</p>
+            <p className="text-white text-xl font-semibold capitalize">{user.displayName}</p>
+            <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link
               href="/"
-              onClick={() => {
-                localStorage.removeItem('user');
-                sessionStorage.removeItem('user');
-              }}
+              onClick={handleSignOut}
               className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
             >
               <svg

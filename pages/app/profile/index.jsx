@@ -6,7 +6,7 @@ import { auth, updateProfile } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
 import {
   alertToast,
-  storage,
+  checkUserAuth,
   updatePersonalInformation,
   updateSocialMediaAttachment,
   updateSocialMediaLinks,
@@ -34,11 +34,17 @@ export default function App() {
   const router = useRouter();
 
   useEffect(() => {
-    // check uid from browser storage
-    const uid = storage.getUID();
-    uid !== null ? changeIsLoginState(true) : router.push('/login');
-    isLogin && changeUserState(storage.getItem('user'));
-  }, [router, isLogin]);
+    checkUserAuth((user) => {
+      if (user) {
+        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
+        changeIsLoginState(true);
+        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
+      } else {
+        changeIsLoginState(false);
+        router.push('/login');
+      }
+    });
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,8 +57,8 @@ export default function App() {
           photoURL: auth.currentUser.photoURL,
           emailVerified: auth.currentUser.emailVerified,
         });
-      }).catch(() => {
-        // TODO: error auth.currentUser getIdToken
+      }).catch((error) => {
+        alertToast(error.message);
       });
     changePersonalInformationState(personalInformation);
   };
@@ -72,25 +78,21 @@ export default function App() {
               <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600">
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
-                    <label htmlFor="firstName" className="mb-1 text-sm">First Name</label>
-                    <input id="firstName" name="firstName" type="text" placeholder="firstName" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={personalInformation.firstName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
-                  </div>
-                  <div className="flex flex-col ">
-                    <label htmlFor="lastName" className="mb-1 text-sm">Last Name</label>
-                    <input id="lastName" name="lastName" type="text" placeholder="lastName" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={personalInformation.lastName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <label htmlFor="displayName" className="mb-1 text-sm">displayName</label>
+                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.displayName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
                     <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
                   </div>
                   <div className="flex flex-col ">
-                    <label htmlFor="phone" className="mb-1 text-sm">Phone</label>
-                    <input id="phone" name="phone" type="tel" placeholder="-" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={personalInformation.phone} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>
+                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.phoneNumber} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
-                  <div className="flex flex-col ">
+                  {/* <div className="flex flex-col ">
                     <label htmlFor="bio" className="mb-1 text-sm">Bio</label>
                     <input id="bio" name="bio" type="text" placeholder="-" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={personalInformation.bio} className={`${edits.personalInformation && 'border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
-                  </div>
+                  </div> */}
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
                   <button

@@ -4,40 +4,36 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
-import { getPersonalInformation, storage } from '../utils';
+import { checkUserAuth, userSignOut } from '../utils';
 
 export default function Home() {
   const {
     state,
     changeIsLoginState,
     changeUserState,
-    changePersonalInformationState,
   } = useGlobalContext();
 
   const [isActive, setIsActive] = useState(false);
   const [isActiveDropdown, setIsActiveDropdown] = useState(false);
 
-  const { personalInformation, isLogin, user } = state;
-  const { firstName, lastName } = personalInformation;
+  const { isLogin, user } = state;
 
   useEffect(() => {
-    const uid = storage.getUID();
-    uid !== null && changeIsLoginState(true);
-
-    if (isLogin) {
-      changeUserState(storage.getItem('user'));
-      const data = getPersonalInformation();
-      if (data) {
-        changePersonalInformationState(data);
+    checkUserAuth((user) => {
+      if (user) {
+        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
+        changeIsLoginState(true);
+        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
       } else {
-        storage.removeItem('user');
         changeIsLoginState(false);
       }
-    }
-  }, [isLogin]);
+    });
+  }, []);
 
-  const displayName = isLogin && `${firstName} ${lastName}`;
-  const { email } = user;
+  const handleSignOut = () => {
+    userSignOut();
+    setIsActiveDropdown(!isActiveDropdown);
+  };
 
   return (
     <>
@@ -86,8 +82,8 @@ export default function Home() {
           <div className="lg:order-4 w-full h-0 grid justify-items-end">
             <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
               <div className="px-4 py-3">
-                <span className="block text-sm text-white">{displayName}</span>
-                <span className="block text-sm font-medium truncate text-gray-400">{email}</span>
+                <span className="block text-sm text-white">{user.displayName}</span>
+                <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
                 <li>
@@ -101,11 +97,7 @@ export default function Home() {
                 </li>
                 <li>
                   <button
-                    onClick={() => {
-                      localStorage.removeItem('user');
-                      sessionStorage.removeItem('user');
-                      window.location.reload();
-                    }}
+                    onClick={handleSignOut}
                     className="w-full text-left px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
                   >
                     Sign out

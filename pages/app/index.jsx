@@ -3,26 +3,31 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppLayout, FinancialRecords } from '../../components';
 import { useGlobalContext } from '../../context';
-import { observeRecords, observeSaldoAwal, storage } from '../../utils';
+import { checkUserAuth, observeRecords, observeSaldoAwal } from '../../utils';
 
 export default function App() {
   const {
-    dispatch,
     state,
     changeIsLoginState,
     changeUserState,
     changeRecordsState,
     changeSaldoAwalState,
   } = useGlobalContext();
-  const { isDemo, isLogin, user } = state;
+  const { isLogin, user } = state;
 
   const router = useRouter();
 
   useEffect(() => {
-    // check uid from browser storage
-    const uid = storage.getUID();
-    uid !== null ? changeIsLoginState(true) : router.push('/login');
-    isLogin && changeUserState(storage.getItem('user'));
+    checkUserAuth((user) => {
+      if (user) {
+        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
+        changeIsLoginState(true);
+        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
+      } else {
+        changeIsLoginState(false);
+        router.push('/login');
+      }
+    });
 
     observeSaldoAwal((snapshot) => {
       changeSaldoAwalState(snapshot.val());
@@ -39,7 +44,7 @@ export default function App() {
         changeRecordsState({});
       }
     });
-  }, [dispatch, router, isLogin, isDemo]);
+  }, []);
 
   if (isLogin) {
     return (

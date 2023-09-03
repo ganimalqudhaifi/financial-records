@@ -10,7 +10,6 @@ export default function Login() {
   const { changeUserState, changePersonalInformationState } = useGlobalContext();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
-  const [remember, setRemember] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -21,10 +20,6 @@ export default function Login() {
       ...values,
       [e.target.name]: e.target.value,
     }));
-  };
-
-  const handleRemember = () => {
-    setRemember(!remember);
   };
 
   const handleSubmit = async (e) => {
@@ -41,11 +36,6 @@ export default function Login() {
           emailVerified: res.user.emailVerified,
         };
         changeUserState(dataUser);
-        if (remember) {
-          localStorage.setItem('user', JSON.stringify(dataUser));
-        } else {
-          sessionStorage.setItem('user', JSON.stringify(dataUser));
-        }
         setInputs({ email: '', password: '' });
         changePersonalInformationState(getPersonalInformation() || {
           firstName: 'New',
@@ -135,10 +125,6 @@ export default function Login() {
                 </div>
               </div>
             </div>
-          </div>
-          <div className="flex items-center mb-2 w-full">
-            <input type="checkbox" id="remember" onChange={handleRemember} className="mr-[10px]" />
-            <label htmlFor="remember" className="text-white uppercase tracking-[1px] text-sm">Remember me</label>
           </div>
           <button className={`w-full px-5 py-[10px] mb-6 rounded-full bg-[#1f83f2] shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(255,255,255,.25),inset_-3px_-3px_5px_rgba(0,0,0,.5)] text-white uppercase tracking-[2px] font-semibold mt-[10px] hover:brightness-110 active:brightness-100 ${isLoading && 'grayscale'}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
           <Link className="text-white text-sm text-center w-full inline-block" href="/register">

@@ -50,7 +50,6 @@ export default function Register() {
           emailVerified: res.user.emailVerified,
         };
         changeUserState(dataUser);
-        localStorage.setItem('user', JSON.stringify(dataUser));
         changeSaldoAwalState(0, updateSaldoAwal());
         changeSocialMediaAttachmentState({
           facebook: false,

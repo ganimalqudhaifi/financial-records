@@ -5,19 +5,25 @@ import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../../context';
-import { observeRecords, storage } from '../../../utils';
+import { checkUserAuth, observeRecords } from '../../../utils';
 
 export default function App() {
-  const { state, dispatch, changeRecordsState, changeIsLoginState, changeUserState } = useGlobalContext();
+  const { state, changeRecordsState, changeIsLoginState, changeUserState } = useGlobalContext();
   const { isLogin, user } = state;
 
   const router = useRouter();
 
   useEffect(() => {
-    // check uid from browser storage
-    const uid = storage.getUID();
-    uid !== null ? changeIsLoginState(true) : router.push('/login');
-    isLogin && changeUserState(storage.getItem('user'));
+    checkUserAuth((user) => {
+      if (user) {
+        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
+        changeIsLoginState(true);
+        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
+      } else {
+        changeIsLoginState(false);
+        router.push('/login');
+      }
+    });
 
     observeRecords((snapshot) => {
       if (snapshot.exists()) {
@@ -28,7 +34,7 @@ export default function App() {
         changeRecordsState(data);
       }
     });
-  }, [router, isLogin, dispatch]);
+  }, []);
 
   if (isLogin) {
     return (

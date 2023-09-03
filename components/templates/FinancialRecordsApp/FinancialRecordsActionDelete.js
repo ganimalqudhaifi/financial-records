@@ -3,8 +3,8 @@ import { useGlobalContext } from '../../../context';
 import { modal, removeRecord } from '../../../utils';
 
 export default function FinancialRecordsActionDelete({ id }) {
-  const { state, removeRecordState } = useGlobalContext();
-  const { isDemo } = state;
+  const { state, removeRecordState, changePaginationIndexState } = useGlobalContext();
+  const { isDemo, records, paginationIndex, sliceShow } = state;
   const uniqueId = `deleteModal${id}`;
 
   const deleteRecord = () => {
@@ -12,6 +12,9 @@ export default function FinancialRecordsActionDelete({ id }) {
       removeRecordState(id, removeRecord());
     } else {
       removeRecordState(id);
+    }
+    if (records.length - 1 + 10 <= paginationIndex * sliceShow) {
+      paginationIndex > 1 && changePaginationIndexState(paginationIndex - 1);
     }
   };
 

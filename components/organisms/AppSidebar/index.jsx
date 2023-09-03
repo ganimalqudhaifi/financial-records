@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { globalInitialState, useGlobalContext } from '../../../context';
 import { getSocialMediaAttachment, getSocialMediaLinks, userSignOut } from '../../../utils';
 
@@ -20,6 +21,8 @@ export default function AppSidebar({ user }) {
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
+  const router = useRouter();
+
   useEffect(() => {
     if (!isDemo) {
       changeSocialMediaAttachmentState(
@@ -34,6 +37,7 @@ export default function AppSidebar({ user }) {
 
   const handleSignOut = () => {
     userSignOut();
+    router.push('/');
   };
 
   return (

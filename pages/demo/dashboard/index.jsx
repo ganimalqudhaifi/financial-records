@@ -6,8 +6,8 @@ import FinancialRecordsChart from '../../../components/templates/FinancialRecord
 import { useGlobalContext } from '../../../context';
 import { getData } from '../../../utils/data';
 
-export default function App() {
-  const { state, dispatch, changeIsDemoState, changeRecordsState } = useGlobalContext();
+export default function DemoDashboard() {
+  const { state, changeIsDemoState, changeRecordsState } = useGlobalContext();
   const { records } = state;
   const user = {
     displayName: 'Demo',
@@ -16,13 +16,13 @@ export default function App() {
 
   useEffect(() => {
     changeIsDemoState(true);
-    if (records.length === 0) {
+    if (!records.length) {
       changeRecordsState(getData());
     }
     return () => {
       changeIsDemoState(false);
     };
-  }, [dispatch, records]);
+  }, [records]);
 
   return (
     <>

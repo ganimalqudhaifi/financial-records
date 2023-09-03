@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../context';
 import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
-  const { state, dispatch, changeIsDemoState, changeRecordsState, changeSaldoAwalState } = useGlobalContext();
+  const { state, changeIsDemoState, changeRecordsState, changeSaldoAwalState } = useGlobalContext();
   const { isDemo } = state;
   const user = {
     displayName: 'Demo',
@@ -20,7 +20,7 @@ export default function Demo({ records }) {
     return () => {
       changeIsDemoState(false);
     };
-  }, [dispatch, records, isDemo]);
+  }, [records, isDemo]);
 
   return (
     <>

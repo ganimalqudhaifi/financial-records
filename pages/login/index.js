@@ -4,10 +4,10 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
-import { alertToast, getPersonalInformation } from '../../utils';
+import { alertToast } from '../../utils';
 
 export default function Login() {
-  const { changeUserState, changePersonalInformationState } = useGlobalContext();
+  const { changeUserState } = useGlobalContext();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -37,12 +37,6 @@ export default function Login() {
         };
         changeUserState(dataUser);
         setInputs({ email: '', password: '' });
-        changePersonalInformationState(getPersonalInformation() || {
-          firstName: 'New',
-          lastName: 'User',
-          phone: '',
-          bio: '',
-        });
         router.push('/app');
       })
       .catch((err) => {

@@ -7,7 +7,6 @@ import { useGlobalContext } from '../../../context';
 import {
   alertToast,
   checkUserAuth,
-  updatePersonalInformation,
   updateSocialMediaAttachment,
   updateSocialMediaLinks,
 } from '../../../utils';
@@ -19,12 +18,10 @@ export default function App() {
     changeUserState,
     changeSocialMediaLinksState,
     changeSocialMediaAttachmentState,
-    changePersonalInformationState,
   } = useGlobalContext();
   const {
     socialMediaLinks,
     socialMediaAttachment,
-    personalInformation,
     isLogin,
     user,
   } = state;
@@ -48,7 +45,7 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateProfile(auth.currentUser, { displayName: `${personalInformation.firstName} ${personalInformation.lastName}` })
+    await updateProfile(auth.currentUser, { displayName: user.displayName })
       .then(() => {
         changeUserState({
           uid: auth.currentUser.uid,
@@ -60,7 +57,6 @@ export default function App() {
       }).catch((error) => {
         alertToast(error.message);
       });
-    changePersonalInformationState(personalInformation);
   };
 
   if (isLogin) {
@@ -83,7 +79,7 @@ export default function App() {
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>

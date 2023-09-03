@@ -33,11 +33,6 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.HANDLE_SLICE, payload: e.target.value });
   };
 
-  const changePersonalInformationState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.CHANGE_PERSONAL_INFORMATION, payload });
-  };
-
   const changeSaldoAwalState = (payload, callback) => {
     callback && callback(payload);
     dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
@@ -78,7 +73,6 @@ export default function GlobalContextProvider(props) {
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,
-    changePersonalInformationState,
     changeSaldoAwalState,
     changeSocialMediaLinksState,
     changeSocialMediaAttachmentState,

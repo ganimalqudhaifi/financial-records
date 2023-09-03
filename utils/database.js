@@ -22,18 +22,6 @@ export const updateRecord = () => (payload) => {
   });
 };
 
-export const getPersonalInformation = async () => {
-  checkUserUid(async (uid) => {
-    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-    await get(personalInformationRef).then((snapshot) => {
-      if (snapshot.exists()) {
-        return snapshot.val();
-      }
-      return null;
-    });
-  });
-};
-
 export const getSocialMediaLinks = async () => {
   checkUserUid(async (uid) => {
     const socialMediaLinksRef = ref(database, `users/${uid}/socialMediaLinks`);
@@ -69,13 +57,6 @@ export const observeRecords = (callback) => {
   checkUserUid((uid) => {
     const recordsRef = ref(database, `users/${uid}/records`);
     onValue(recordsRef, callback);
-  });
-};
-
-export const updatePersonalInformation = () => (payload) => {
-  checkUserUid((uid) => {
-    const personalInformationRef = ref(database, `users/${uid}/personalInformation`);
-    set(personalInformationRef, payload);
   });
 };
 

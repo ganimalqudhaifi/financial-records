@@ -43,14 +43,16 @@ export default function Home() {
 
       <div className="flex flex-col px-4 sm:px-[5%] md:px-[6%] lg:px-[8%] w-full min-h-[100vh] bg-bg-color text-text-color scroll-smooth">
         <header className="sticky flex flex-wrap justify-between py-6 duration-500 items-center">
+          {/* logo */}
           <Link href="/" className="flex">
-            <svg className="fill-main-color mr-2.5 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zm-2 9h-2v-4h2v4zM5 7a1.001 1.001 0 0 1 0-2h13v2H5z" /></svg>
-            <div className="flex flex-col items-start font-semibold text-center">
+            <svg className="fill-main-color w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 7V5c0-1.103-.897-2-2-2H5C3.346 3 2 4.346 2 6v12c0 2.201 1.794 3 3 3h15c1.103 0 2-.897 2-2V9c0-1.103-.897-2-2-2zm-2 9h-2v-4h2v4zM5 7a1.001 1.001 0 0 1 0-2h13v2H5z" /></svg>
+            <div className="flex flex-col items-start ml-2.5 font-semibold text-center">
               <span className="text-md sm:text-lg font-bold">Financial</span>
               <span className="text-xs leading-7 mt-[-10px]">Records</span>
             </div>
           </Link>
 
+          {/* user-login-register */}
           <div className="flex items-center lg:order-2">
             {
             !isLogin
@@ -70,6 +72,7 @@ export default function Home() {
                 </button>
               )
             }
+            {/* hamburger-menu */}
             <button
               type="button"
               onClick={() => { setIsActiveDropdown(false); setIsActive(!isActive); }}
@@ -79,6 +82,7 @@ export default function Home() {
             </button>
           </div>
 
+          {/* user-menu-open */}
           <div className="lg:order-4 w-full h-0 grid justify-items-end">
             <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
               <div className="px-4 py-3">
@@ -86,15 +90,9 @@ export default function Home() {
                 <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
               </div>
               <ul className="py-2" aria-labelledby="user-menu-button">
-                <li>
-                  <Link href="/app/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link>
-                </li>
-                <li>
-                  <Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link>
-                </li>
-                <li>
-                  <Link href="/app/profile" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link>
-                </li>
+                <li><Link href="/app/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link></li>
+                <li><Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link></li>
+                <li><Link href="/app/profile" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link></li>
                 <li>
                   <button
                     onClick={handleSignOut}
@@ -107,12 +105,13 @@ export default function Home() {
             </div>
           </div>
 
+          {/* home-navigation */}
           <nav className="lg:order-1 w-full lg:w-auto h-0 lg:h-auto">
             <ul className="w-full mt-4 lg:mt-0 rounded-lg overflow-hidden lg:flex ">
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Contact" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'}duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Contact" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
+              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
             </ul>
           </nav>
         </header>
@@ -131,7 +130,7 @@ export default function Home() {
 
           <article id="About" className="px-6 md:px-12 min-h-screen flex flex-col items-center">
             <section className="my-auto grid grid-cols-2 gap-x-8">
-              <h1 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">About Me</h1>
+              <h2 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">About Me</h2>
               <p className="text-md mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi nostrum amet explicabo labore, quis quam vel ducimus voluptatem quos fugiat. Mollitia saepe pariatur deleniti? Architecto mollitia nulla incidunt quidem.</p>
               <p className="text-md mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi nostrum amet explicabo labore, quis quam vel ducimus voluptatem quos fugiat. Mollitia saepe pariatur deleniti? Architecto mollitia nulla incidunt quidem.</p>
             </section>
@@ -139,7 +138,7 @@ export default function Home() {
 
           <article className="min-h-screen grid items-center">
             <section id="Contact" className="py-6 text-gray-50">
-              <h1 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">Contact</h1>
+              <h2 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">Contact</h2>
               <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
                 <div className="py-6 md:py-0 md:px-6">
                   <h1 className="text-4xl font-bold">Get in touch</h1>

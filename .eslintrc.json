@@ -38,6 +38,7 @@
     // "no-param-reassign": "off",
     // "consistent-return": "off",
     "object-curly-newline": ["error", { "multiline": true }],
-    "linebreak-style": ["error", "windows"]
+    // "linebreak-style": ["error", "windows"],
+    "linebreak-style": "off"
   }
 }

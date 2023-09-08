@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
 import { checkUserAuth, userSignOut } from '../utils';
-import { Logo } from '../components';
+import { HomeUserDropdown, Logo } from '../components';
 
 export default function Home() {
   const {
@@ -14,8 +14,8 @@ export default function Home() {
     changeUserState,
   } = useGlobalContext();
 
-  const [isActive, setIsActive] = useState(false);
-  const [isActiveDropdown, setIsActiveDropdown] = useState(false);
+  const [isNavigationOpen, setisNavigationOpen] = useState(false);
+  const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
 
   const { isLogin, user } = state;
 
@@ -33,7 +33,12 @@ export default function Home() {
 
   const handleSignOut = () => {
     userSignOut();
-    setIsActiveDropdown(!isActiveDropdown);
+    setisUserDropdownOpen(!isUserDropdownOpen);
+  };
+
+  const handleUserDropdown = () => {
+    setisNavigationOpen(false);
+    setisUserDropdownOpen(!isUserDropdownOpen);
   };
 
   return (
@@ -43,69 +48,32 @@ export default function Home() {
       </Head>
 
       <div className="flex flex-col px-4 sm:px-[5%] md:px-[6%] lg:px-[8%] w-full min-h-[100vh] bg-bg-color text-text-color scroll-smooth">
-        <header className="sticky flex flex-wrap justify-between py-6 duration-500 items-center">
+        <header className="sticky flex flex-wrap lg:justify-between py-6 duration-500 items-center">
           <Logo />
+          <HomeUserDropdown
+            isLogin={isLogin}
+            user={user}
+            isUserDropdownOpen={isUserDropdownOpen}
+            handleUserDropdown={handleUserDropdown}
+            handleSignOut={handleSignOut}
+          />
 
-          {/* user-login-register */}
-          <div className="flex items-center lg:order-2">
-            {
-            !isLogin
-              ? (
-                <>
-                  <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800">
-                    <svg className="w-6 fill-main-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z" /></svg>
-                    <span className="duration-300">Login</span>
-                  </Link>
-                  <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden lg:block rounded-lg hover:bg-gray-700">Register</Link>
-                </>
-              )
-              : (
-                <button type="button" onClick={() => { setIsActive(false); setIsActiveDropdown(!isActiveDropdown); }} className="flex mr-3 md:mr-0 text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-600">
-                  <span className="sr-only">Open user menu</span>
-                  <Image width="200" height="200" className="w-12 h-12 rounded-full" src="/avatar.jpg" alt="user photo" />
-                </button>
-              )
-            }
-            {/* hamburger-menu */}
-            <button
-              type="button"
-              onClick={() => { setIsActiveDropdown(false); setIsActive(!isActive); }}
-              className="p-2 flex items-center justify-center cursor-pointer lg:hidden"
-            >
-              <span className={`relative w-5 h-6 flex items-center justify-center before:content-[''] before:absolute before:w-full before:h-0.5 before:bg-white before:duration-500 ${!isActive ? 'before:translate-y-[-4px]' : 'before:translate-y-0 before:rotate-[225deg]'} after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-white after:duration-500 ${!isActive ? 'after:translate-y-[4px]' : 'after:translate-y-0 after:rotate-[-225deg]'}`} />
-            </button>
-          </div>
+          {/* navigation-button */}
+          <button
+            type="button"
+            onClick={() => { setisUserDropdownOpen(false); setisNavigationOpen(!isNavigationOpen); }}
+            className="p-2 flex items-center justify-center cursor-pointer lg:hidden"
+          >
+            <span className={`relative w-5 h-6 flex items-center justify-center before:content-[''] before:absolute before:w-full before:h-0.5 before:bg-white before:duration-500 ${!isNavigationOpen ? 'before:translate-y-[-4px]' : 'before:translate-y-0 before:rotate-[225deg]'} after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-white after:duration-500 ${!isNavigationOpen ? 'after:translate-y-[4px]' : 'after:translate-y-0 after:rotate-[-225deg]'}`} />
+          </button>
 
-          {/* user-menu-open */}
-          <div className="lg:order-4 w-full h-0 grid justify-items-end">
-            <div className={`${!isActiveDropdown ? 'opacity-0 invisible ' : 'opacity-100 visible'} z-50 w-fit my-4 text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
-              <div className="px-4 py-3">
-                <span className="block text-sm text-white">{user.displayName}</span>
-                <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
-              </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                <li><Link href="/app/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link></li>
-                <li><Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link></li>
-                <li><Link href="/app/profile" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link></li>
-                <li>
-                  <button
-                    onClick={handleSignOut}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
-                  >
-                    Sign out
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* home-navigation */}
-          <nav className="lg:order-1 w-full lg:w-auto h-0 lg:h-auto">
-            <ul className="w-full mt-4 lg:mt-0 rounded-lg overflow-hidden lg:flex ">
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Contact" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
-              <li className={`${!isActive ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
+          {/* navigation-menu */}
+          <nav className="absolute top-[90%] lg:static w-full lg:w-auto h-0 lg:h-auto">
+            <ul className="w-full lg:mt-0 rounded-lg overflow-hidden lg:flex ">
+              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
+              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
+              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Contact" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
+              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
             </ul>
           </nav>
         </header>

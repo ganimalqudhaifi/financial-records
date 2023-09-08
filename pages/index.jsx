@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
 import { checkUserAuth, userSignOut } from '../utils';
-import { HomeUserDropdown, Logo } from '../components';
+import { HomeNavigationDropdown, HomeUserDropdown, Logo } from '../components';
 
 export default function Home() {
   const {
@@ -14,7 +14,7 @@ export default function Home() {
     changeUserState,
   } = useGlobalContext();
 
-  const [isNavigationOpen, setisNavigationOpen] = useState(false);
+  const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
 
   const { isLogin, user } = state;
@@ -37,8 +37,13 @@ export default function Home() {
   };
 
   const handleUserDropdown = () => {
-    setisNavigationOpen(false);
+    setisNavigationDropdownOpen(false);
     setisUserDropdownOpen(!isUserDropdownOpen);
+  };
+
+  const handleNavigationDropdown = () => {
+    setisUserDropdownOpen(false);
+    setisNavigationDropdownOpen(!isNavigationDropdownOpen);
   };
 
   return (
@@ -57,25 +62,10 @@ export default function Home() {
             handleUserDropdown={handleUserDropdown}
             handleSignOut={handleSignOut}
           />
-
-          {/* navigation-button */}
-          <button
-            type="button"
-            onClick={() => { setisUserDropdownOpen(false); setisNavigationOpen(!isNavigationOpen); }}
-            className="p-2 flex items-center justify-center cursor-pointer lg:hidden"
-          >
-            <span className={`relative w-5 h-6 flex items-center justify-center before:content-[''] before:absolute before:w-full before:h-0.5 before:bg-white before:duration-500 ${!isNavigationOpen ? 'before:translate-y-[-4px]' : 'before:translate-y-0 before:rotate-[225deg]'} after:content-[''] after:absolute after:w-full after:h-0.5 after:bg-white after:duration-500 ${!isNavigationOpen ? 'after:translate-y-[4px]' : 'after:translate-y-0 after:rotate-[-225deg]'}`} />
-          </button>
-
-          {/* navigation-menu */}
-          <nav className="absolute top-[90%] lg:static w-full lg:w-auto h-0 lg:h-auto">
-            <ul className="w-full lg:mt-0 rounded-lg overflow-hidden lg:flex ">
-              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
-              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
-              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Contact" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Contact</Link></li>
-              <li className={`${!isNavigationOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="/register" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Register</Link></li>
-            </ul>
-          </nav>
+          <HomeNavigationDropdown
+            isNavigationDropdownOpen={isNavigationDropdownOpen}
+            handleNavigationDropdown={handleNavigationDropdown}
+          />
         </header>
 
         <main className="mt-10 flex-1 flex flex-col gap-y-10">

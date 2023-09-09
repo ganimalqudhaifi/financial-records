@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
 import { checkUserAuth, userSignOut } from '../utils';
-import { HomeNavigationDropdown, HomeUserDropdown, Logo } from '../components';
+import { HomeBanner, HomeNavigationDropdown, HomeUserDropdown, Logo } from '../components';
 
 export default function Home() {
   const {
@@ -69,17 +69,7 @@ export default function Home() {
         </header>
 
         <main className="mt-10 flex-1 flex flex-col gap-y-10">
-          <article className="px-6 md:px-12 grid sm:grid-cols-2">
-            <section className="my-auto">
-              <h1 className="text-5xl text-main-color font-bold">Financial Records.</h1>
-              <p className="text-md mt-1">Track your financial flow with financial records</p>
-              <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold hover:scale-105 duration-200 active:scale-100" href="/demo">Try Demo</Link>
-            </section>
-            <section className="hidden sm:grid place-items-center">
-              <Image src="/vector1.svg" alt="vector" width={400} height={0} />
-            </section>
-          </article>
-
+          <HomeBanner />
           <article id="About" className="px-6 md:px-12 min-h-screen flex flex-col items-center">
             <section className="my-auto grid grid-cols-2 gap-x-8">
               <h2 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">About Me</h2>

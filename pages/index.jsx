@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
 import { checkUserAuth, userSignOut } from '../utils';
-import { HomeBanner, HomeNavigationDropdown, HomeUserDropdown, Logo } from '../components';
+import { HomeAboutMe, HomeBanner, HomeNavigationDropdown, HomeUserDropdown, Logo } from '../components';
 
 export default function Home() {
   const {
@@ -70,14 +70,7 @@ export default function Home() {
 
         <main className="mt-10 flex-1 flex flex-col gap-y-10">
           <HomeBanner />
-          <article id="About" className="px-6 md:px-12 min-h-screen flex flex-col items-center">
-            <section className="my-auto grid grid-cols-2 gap-x-8">
-              <h2 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">About Me</h2>
-              <p className="text-md mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi nostrum amet explicabo labore, quis quam vel ducimus voluptatem quos fugiat. Mollitia saepe pariatur deleniti? Architecto mollitia nulla incidunt quidem.</p>
-              <p className="text-md mt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet eligendi nostrum amet explicabo labore, quis quam vel ducimus voluptatem quos fugiat. Mollitia saepe pariatur deleniti? Architecto mollitia nulla incidunt quidem.</p>
-            </section>
-          </article>
-
+          <HomeAboutMe />
           <article className="min-h-screen grid items-center">
             <section id="Contact" className="py-6 text-gray-50">
               <h2 className="pb-12 text-5xl text-main-color font-bold text-center col-span-2">Contact</h2>

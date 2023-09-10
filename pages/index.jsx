@@ -51,7 +51,7 @@ export default function Home() {
       </Head>
 
       <div className="flex flex-col px-4 sm:px-[5%] md:px-[6%] lg:px-[8%] w-full min-h-[100vh] bg-bg-color text-text-color scroll-smooth">
-        <header className="sticky flex flex-wrap lg:justify-between py-6 duration-500 items-center">
+        <header className="sticky flex lg:grid grid-cols-3 justify-items-center py-6 duration-500 items-center">
           <Logo />
           <HomeUserDropdown
             isLogin={isLogin}

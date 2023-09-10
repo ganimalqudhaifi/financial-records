@@ -13,8 +13,8 @@ export default function HomeNavigationDropdown({ isNavigationDropdownOpen, handl
       </button>
 
       {/* navigation-menu */}
-      <nav className="absolute top-[90%] lg:static w-full lg:w-auto h-0 lg:h-auto">
-        <ul className="w-full lg:mt-0 rounded-lg overflow-hidden lg:flex ">
+      <nav className="absolute top-full inset-x-4 sm:inset-x-8 lg:static lg:w-auto h-0 lg:h-auto">
+        <ul className="rounded-lg overflow-hidden lg:flex ">
           <li className={`${!isNavigationDropdownOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Home</Link></li>
           <li className={`${!isNavigationDropdownOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">About</Link></li>
           <li className={`${!isNavigationDropdownOpen ? 'opacity-0 invisible' : 'opacity-100 visible'} duration-500 lg:opacity-100 lg:visible last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]`}><Link href="#Practice" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]">Practice</Link></li>

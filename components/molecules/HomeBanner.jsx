@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HomeBanner() {
   return (
-    <div className="px-6 md:px-12 grid sm:grid-cols-2">
+    <div className="w-full max-w-5xl px-6 md:px-12 my-auto grid sm:grid-cols-2">
       <div className="my-auto">
         <h1 className="text-5xl text-main-color font-bold">Financial Records.</h1>
         <p className="text-md mt-1">Track your financial flow with financial records</p>

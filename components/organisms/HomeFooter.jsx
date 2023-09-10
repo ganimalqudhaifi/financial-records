@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function HomeFooter() {
   return (
-    <footer className="flex flex-col md:flex-row justify-between px-4">
+    <footer className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between px-4 sm:px-14">
       <div className="flex flex-col md:flex-row space-y-2.5 md:space-x-3 md:space-y-0">
         <div className="flex items-center justify-center text-gray-300">Powered by</div>
         <div className="flex items-center justify-center space-x-0.5">

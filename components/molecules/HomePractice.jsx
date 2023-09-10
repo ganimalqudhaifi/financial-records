@@ -13,7 +13,7 @@ export default function HomePractice() {
     {
       id: 3,
       title: 'Rincikan Pengeluaran Anda',
-      description: 'Buat daftar semua pengeluaran Anda, termasuk biaya rutin seperti sewa/mortgage, tagihan utilitas, transportasi, makanan, hiburan, dan pengeluaran diskresioner lainnya. Gunakan catatan keuangan atau aplikasi keuangan untuk membantu Anda melacak pengeluaran dengan lebih rinci.',
+      description: 'Buat daftar semua pengeluaran Anda, termasuk biaya rutin seperti sewa/mortgage, tagihan utilitas, transportasi, makanan, hiburan, dan pengeluaran diskresioner lainnya.',
     },
     {
       id: 4,

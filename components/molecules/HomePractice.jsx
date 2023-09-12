@@ -48,7 +48,7 @@ export default function HomePractice() {
   ];
 
   return (
-    <section id="Practice" className="flex flex-col justify-center items-center px-6 md:px-12">
+    <section id="Practice" className="flex flex-col justify-center items-center px-6 md:px-12 scroll-mt-32">
       <h2 className="text-5xl font-bold text-center text-main-color">Practice</h2>
       <p className="max-w-4xl py-12 tracking-wide text-justify text-gray-200">Melakukan personal budgeting adalah langkah penting dalam mengelola keuangan pribadi Anda dengan baik. Ini membantu Anda mengontrol pengeluaran, mengalokasikan dana dengan bijaksana, dan mencapai tujuan keuangan Anda. Berikut adalah panduan langkah demi langkah untuk melakukan personal budgeting:</p>
       <ol className="relative max-w-4xl border-l border-gray-700">

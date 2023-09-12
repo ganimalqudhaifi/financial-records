@@ -50,7 +50,7 @@ export default function Home() {
         <title>Financial Records - Home</title>
       </Head>
 
-      <div className="w-full min-h-[100vh] bg-bg-color text-text-color scroll-smooth">
+      <div className="w-full min-h-[100vh] bg-bg-color text-text-color">
         <header className="sticky top-0 z-50 flex lg:grid grid-cols-3 justify-items-center items-center max-w-7xl mx-auto px-4 sm:px-8 lg:px-20 py-3.5 md:py-4 bg-bg-color border-b border-neutral-800 shadow-md duration-500">
           <Logo />
           <HomeUserDropdown
@@ -66,7 +66,7 @@ export default function Home() {
           />
         </header>
 
-        <main className="my-10 sm:px-[5%] lg:px-[8%] flex-1 flex flex-col gap-y-10 items-center">
+        <main className="flex flex-col flex-1 gap-y-12 items-center mb-10 sm:px-[5%] lg:px-[8%]">
           <HomeBanner />
           <HomeAboutMe />
           <HomePractice />

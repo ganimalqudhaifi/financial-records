@@ -30,7 +30,7 @@ export default function HomeUserDropdown({ isLogin, user, isUserDropdownOpen, ha
       </button>
 
       {/* user-dropdown-menu */}
-      <div className={`${!isUserDropdownOpen ? 'opacity-0 invisible ' : 'opacity-100 visible'} absolute top-full right-4 sm:right-8 lg:right-[7%] z-50 w-fit text-base list-none  divide-y rounded-lg shadow bg-gray-700 divide-gray-600 duration-300`}>
+      <div className={`${!isUserDropdownOpen ? 'opacity-0 invisible -translate-y-1.5' : 'opacity-100 visible translate-y-0'} absolute top-full right-4 sm:right-8 lg:right-[7%] z-50 w-fit text-base list-none  divide-y rounded-lg shadow-xl bg-gray-700 divide-gray-600 duration-300`}>
         <div className="px-4 py-3">
           <span className="block text-sm text-white">{user.displayName}</span>
           <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>

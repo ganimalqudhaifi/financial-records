@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { useGlobalContext } from '../context';
 import { checkUserAuth, userSignOut } from '../utils';
-import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
+import { HomeAboutMe, HomeBanner, HomeContactUs, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
 
 export default function Home() {
   const {
@@ -72,6 +72,7 @@ export default function Home() {
           <HomePractice />
         </main>
 
+        <HomeContactUs />
         <HomeFooter />
         <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
         <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />

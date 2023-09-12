@@ -44,14 +44,18 @@ export default function AppSidebar({ user }) {
 
       <aside className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && '-translate-x-full'} lg:translate-x-0`}>
         <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
-          <div className="w-full flex flex-col items-center">
-            <Image
-              width="200"
-              height="200"
-              src="/avatar.jpg"
-              alt="Rounded avatar"
-              className="mb-4 w-20 h-20 rounded-full"
-            />
+          <div className=" w-full flex flex-col items-center">
+            <div className="relative mb-4">
+              <Image
+                width="200"
+                height="200"
+                src="/avatar/boy_01.svg"
+                alt="Rounded avatar"
+                className="w-20 h-20 rounded-full"
+              />
+              <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
+              <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
+            </div>
             <p className="text-white text-xl font-semibold capitalize">{user.displayName}</p>
             <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link

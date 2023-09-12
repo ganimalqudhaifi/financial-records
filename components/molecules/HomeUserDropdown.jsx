@@ -25,7 +25,13 @@ export default function HomeUserDropdown({ isLogin, user, isUserDropdownOpen, ha
         className="relative lg:order-last flex justify-self-end mr-2.5 lg:mr-0 text-sm  rounded-full ring-2 ring-[rgb(47,50,51)] active:scale-110 duration-500"
       >
         <span className="sr-only">Open user menu</span>
-        <Image width="200" height="200" className="w-12 h-12 lg:w-[52px] lg:h-[52px] rounded-full" src="/avatar2.svg" alt="user photo" />
+        <Image
+          width="200"
+          height="200"
+          className="w-12 h-12 lg:w-[52px] lg:h-[52px] rounded-full"
+          src="/avatar/boy_01.svg"
+          alt="user photo"
+        />
         <div className="absolute bottom-0 -right-1.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full" />
       </button>
 

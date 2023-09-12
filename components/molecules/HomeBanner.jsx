@@ -14,7 +14,7 @@ export default function HomeBanner() {
         <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold hover:scale-105 duration-200 active:scale-100" href="/demo">Try Demo</Link>
       </div>
       <div className="grid place-items-center">
-        <Image src="/vector1.svg" alt="vector" width={400} height={0} />
+        <Image src="/hero_image.svg" alt="vector" width={400} height={0} />
       </div>
     </div>
   );

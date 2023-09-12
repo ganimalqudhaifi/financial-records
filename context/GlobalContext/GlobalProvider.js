@@ -6,11 +6,11 @@ export default function GlobalContextProvider(props) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);
 
   const changeIsDemoState = (payload) => {
-    dispatch({ type: globalActionType.ISDEMO, payload });
+    dispatch({ type: globalActionType.CHANGE_ISDEMO, payload });
   };
 
   const changeIsLoginState = (payload) => {
-    dispatch({ type: globalActionType.ISLOGIN, payload });
+    dispatch({ type: globalActionType.CHANGE_ISLOGIN, payload });
   };
 
   const changeUserState = (payload) => {
@@ -22,7 +22,7 @@ export default function GlobalContextProvider(props) {
   };
 
   const changePaginationIndexState = (btnpagination) => {
-    dispatch({ type: globalActionType.CHANGE_PAGINATION_INDEX, payload: btnpagination });
+    dispatch({ type: globalActionType.HANDLE_PAGINATION_INDEX, payload: btnpagination });
   };
 
   const changeFilterPeriodState = (e) => {

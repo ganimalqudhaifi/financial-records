@@ -14,15 +14,15 @@ export const globalActionType = {
   HANDLE_SEARCH: 'HANDLE_SEARCH',
   HANDLE_SLICE: 'HANDLE_SLICE',
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
-  CHANGE_PAGINATION_INDEX: 'CHANGE_PAGINATION_INDEX',
+  HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_SALDO_AWAL: 'CHANGE_SALDO_AWAL',
   CREATE_RECORD: 'CREATE_RECORD',
   GET_RECORDS: 'GET_RECORDS',
   UPDATE_RECORD: 'UPDATE_RECORD',
   DELETE_RECORD: 'DELETE_RECORD',
   CHANGE_USER: 'CHANGE_USER',
-  ISLOGIN: 'ISLOGIN',
-  ISDEMO: 'ISDEMO',
+  CHANGE_ISLOGIN: 'CHANGE_ISLOGIN',
+  CHANGE_ISDEMO: 'CHANGE_ISDEMO',
 };
 
 export const globalReducer = (state, action) => {
@@ -42,7 +42,7 @@ export const globalReducer = (state, action) => {
         ...state,
         filterPeriod: action.payload,
       };
-    case globalActionType.CHANGE_PAGINATION_INDEX:
+    case globalActionType.HANDLE_PAGINATION_INDEX:
       return {
         ...state,
         paginationIndex: action.payload,
@@ -57,12 +57,12 @@ export const globalReducer = (state, action) => {
         ...state,
         user: action.payload,
       };
-    case globalActionType.ISLOGIN:
+    case globalActionType.CHANGE_ISLOGIN:
       return {
         ...state,
         isLogin: action.payload,
       };
-    case globalActionType.ISDEMO:
+    case globalActionType.CHANGE_ISDEMO:
       return {
         ...state,
         isDemo: action.payload,

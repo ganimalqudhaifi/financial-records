@@ -38,16 +38,6 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
   };
 
-  const changeSocialMediaLinksState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_LINKS, payload });
-  };
-
-  const changeSocialMediaAttachmentState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.CHANGE_SOCIAL_MEDIA_ATTACHMENT, payload });
-  };
-
   const pushRecordState = (payload, callback) => {
     callback && callback(payload);
     dispatch({ type: globalActionType.CREATE_RECORD, payload });
@@ -74,8 +64,6 @@ export default function GlobalContextProvider(props) {
     changeFilterPeriodState,
     changeSliceShowState,
     changeSaldoAwalState,
-    changeSocialMediaLinksState,
-    changeSocialMediaAttachmentState,
     pushRecordState,
     removeRecordState,
     updateRecordState,

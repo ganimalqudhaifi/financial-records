@@ -1,36 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { globalInitialState, useGlobalContext } from '../../../context';
-import { getSocialMediaAttachment, getSocialMediaLinks, userSignOut } from '../../../utils';
+import { useGlobalContext } from '../../../context';
+import { userSignOut } from '../../../utils';
 
 export default function AppSidebar({ user }) {
-  const {
-    state,
-    changeSocialMediaLinksState,
-    changeSocialMediaAttachmentState,
-  } = useGlobalContext();
-  const {
-    isDemo,
-    isLogin,
-    socialMediaLinks,
-    socialMediaAttachment,
-  } = state;
+  const { state } = useGlobalContext();
+  const { isDemo } = state;
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
-
-  useEffect(() => {
-    if (!isDemo) {
-      changeSocialMediaAttachmentState(
-        getSocialMediaAttachment() || globalInitialState.socialMediaAttachment,
-      );
-
-      changeSocialMediaLinksState(
-        getSocialMediaLinks() || globalInitialState.socialMediaLinks,
-      );
-    }
-  }, [isDemo]);
 
   const handleSignOut = () => {
     userSignOut();
@@ -94,37 +73,6 @@ export default function AppSidebar({ user }) {
               </svg>
               <span className="text-gray-400 text-sm font-medium">Logout</span>
             </Link>
-            <div className="flex gap-x-4 ">
-              {
-                [
-                  {
-                    name: 'facebook',
-                    iconClassName: 'bx bxl-facebook-square text-3xl text-blue-800 hover:animate-pulse hover:scale-105',
-                  },
-                  {
-                    name: 'instagram',
-                    iconClassName: '"bx bxl-instagram-alt text-3xl bg-clip-text text-transparent bg-gradient-to-b from-purple-800 to-amber-400 hover:animate-pulse hover:scale-105"',
-                  },
-                  {
-                    name: 'twitter',
-                    iconClassName: '"bx bxl-twitter text-3xl text-blue-500 hover:animate-pulse hover:scale-105"',
-                  },
-                ].map((socialMedia) => (
-                  <Link
-                    key={socialMedia.name}
-                    href={`${isLogin && socialMediaLinks[socialMedia]}`}
-                    target="_blank"
-                    className={`${
-                      isLogin && socialMediaAttachment[socialMedia]
-                        ? 'visible'
-                        : 'hidden'
-                    }`}
-                  >
-                    <i className={socialMedia.iconClassName} />
-                  </Link>
-                ))
-              }
-            </div>
           </div>
           <ul className="mt-2 pt-5 space-y-2 border-t-[1px] border-gray-700">
             <li>

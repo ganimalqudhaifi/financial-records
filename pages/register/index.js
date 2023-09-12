@@ -3,20 +3,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
-import { globalInitialState, useGlobalContext } from '../../context';
-import {
-  alertToast,
-  updateSaldoAwal,
-  updateSocialMediaAttachment,
-  updateSocialMediaLinks,
-} from '../../utils';
+import { useGlobalContext } from '../../context';
+import { alertToast, updateSaldoAwal } from '../../utils';
 
 export default function Register() {
   const {
     changeUserState,
     changeSaldoAwalState,
-    changeSocialMediaLinksState,
-    changeSocialMediaAttachmentState,
   } = useGlobalContext();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -49,8 +42,6 @@ export default function Register() {
         };
         changeUserState(dataUser);
         changeSaldoAwalState(0, updateSaldoAwal());
-        changeSocialMediaAttachmentState(globalInitialState.socialMediaAttachment, updateSocialMediaAttachment());
-        changeSocialMediaLinksState(globalInitialState.socialMediaLinks, updateSocialMediaLinks());
         setInputs({ email: '', password: '' });
         router.push('/app');
       })

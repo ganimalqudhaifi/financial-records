@@ -3,7 +3,7 @@ import { useGlobalContext } from '../../../context';
 
 export default function FinancialRecordsInformation() {
   const { state } = useGlobalContext();
-  const { records, saldoAwal } = state;
+  const { records, initialBalance } = state;
 
   const [penerimaan, setPenerimaan] = useState(0);
   const [pengeluaran, setPengeluaran] = useState(0);
@@ -20,7 +20,7 @@ export default function FinancialRecordsInformation() {
       <div className="p-2 bg-white border-l-8 border-l-cyan-500 rounded">
         <div className="text-sm">Saldo Awal</div>
         <div>
-          {`Rp ${saldoAwal.toLocaleString('id-ID')}`}
+          {`Rp ${initialBalance.toLocaleString('id-ID')}`}
         </div>
       </div>
       <div className="p-2 bg-white border-l-8 border-l-emerald-500 rounded">
@@ -38,7 +38,7 @@ export default function FinancialRecordsInformation() {
       <div className="p-2 bg-white border-l-8 border-l-rose-500 rounded">
         <div className="text-sm">Saldo Akhir</div>
         <div>
-          {`Rp ${(saldoAwal + penerimaan - pengeluaran).toLocaleString('id-ID')}`}
+          {`Rp ${(initialBalance + penerimaan - pengeluaran).toLocaleString('id-ID')}`}
         </div>
       </div>
     </div>

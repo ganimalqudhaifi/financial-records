@@ -46,10 +46,10 @@ export const getSocialMediaAttachment = async () => {
   });
 };
 
-export const observeSaldoAwal = (callback) => {
+export const observeInitialBalance = (callback) => {
   checkUserUid((uid) => {
-    const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
-    onValue(saldoAwalRef, callback);
+    const InitialBalanceRef = ref(database, `users/${uid}/initialBalance`);
+    onValue(InitialBalanceRef, callback);
   });
 };
 
@@ -60,10 +60,10 @@ export const observeRecords = (callback) => {
   });
 };
 
-export const updateSaldoAwal = () => (payload) => {
+export const updateInitialBalance = () => (payload) => {
   checkUserUid((uid) => {
-    const saldoAwalRef = ref(database, `users/${uid}/saldoAwal`);
-    set(saldoAwalRef, payload);
+    const InitialBalanceRef = ref(database, `users/${uid}/initialBalance`);
+    set(InitialBalanceRef, payload);
   });
 };
 

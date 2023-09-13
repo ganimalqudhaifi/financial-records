@@ -5,7 +5,7 @@ import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../../context';
-import { checkUserAuth, observeRecords, observeSaldoAwal } from '../../../utils';
+import { checkUserAuth, observeRecords, observeInitialBalance } from '../../../utils';
 
 export default function App() {
   const {
@@ -13,7 +13,7 @@ export default function App() {
     changeRecordsState,
     changeIsLoginState,
     changeUserState,
-    changeSaldoAwalState,
+    changeInitialBalanceState,
   } = useGlobalContext();
   const { isLogin, user } = state;
 
@@ -31,8 +31,8 @@ export default function App() {
       }
     });
 
-    observeSaldoAwal((snapshot) => {
-      changeSaldoAwalState(snapshot.val());
+    observeInitialBalance((snapshot) => {
+      changeInitialBalanceState(snapshot.val());
     });
 
     observeRecords((snapshot) => {

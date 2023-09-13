@@ -5,7 +5,7 @@ import { useGlobalContext } from '../../context';
 import { getData } from '../../utils/data';
 
 export default function Demo({ records }) {
-  const { state, changeIsDemoState, changeRecordsState, changeSaldoAwalState } = useGlobalContext();
+  const { state, changeIsDemoState, changeRecordsState, changeInitialBalanceState } = useGlobalContext();
   const { isDemo } = state;
   const user = {
     displayName: 'Demo',
@@ -14,8 +14,9 @@ export default function Demo({ records }) {
 
   useEffect(() => {
     changeIsDemoState(true);
+
     changeRecordsState(records);
-    changeSaldoAwalState(0);
+    changeInitialBalanceState(0);
 
     return () => {
       changeIsDemoState(false);

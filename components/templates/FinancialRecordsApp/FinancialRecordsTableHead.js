@@ -1,22 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useGlobalContext } from '../../../context';
-import { modal, updateSaldoAwal } from '../../../utils';
+import { modal, updateInitialBalance } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
-  const { state, changeSaldoAwalState } = useGlobalContext();
-  const { saldoAwal } = state;
+  const { state, changeInitialBalanceState } = useGlobalContext();
+  const { initialBalance } = state;
 
-  const uniqueId = 'changeSaldoAwalModal';
-  const [inputs, setInputs] = useState(saldoAwal);
+  const uniqueId = 'changeInitialBalanceModal';
+  const [inputs, setInputs] = useState(initialBalance);
 
   useEffect(() => {
-    setInputs(saldoAwal);
-  }, [saldoAwal]);
+    setInputs(initialBalance);
+  }, [initialBalance]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    changeSaldoAwalState(inputs, updateSaldoAwal());
+    changeInitialBalanceState(inputs, updateInitialBalance());
     modal.hide(uniqueId);
   };
 
@@ -36,7 +36,7 @@ export default function FinancialRecordsTableHead() {
         <th />
         <th>
           {'Rp '}
-          {saldoAwal.toLocaleString('id-ID')}
+          {initialBalance.toLocaleString('id-ID')}
         </th>
         <td>
           <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => modal.show(uniqueId)}>Edit</button>
@@ -47,8 +47,8 @@ export default function FinancialRecordsTableHead() {
               <input
                 className="block p-2.5 mb-6 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
                 type="number"
-                id="saldoAwal"
-                name="saldoAwal"
+                id="initialBalance"
+                name="initialBalance"
                 value={inputs}
                 placeholder="Masukkan saldo awal"
                 onChange={(e) => setInputs(parseFloat(e.target.value))}

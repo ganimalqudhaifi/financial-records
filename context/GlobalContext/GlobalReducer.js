@@ -1,6 +1,6 @@
 export const globalInitialState = {
   records: [],
-  saldoAwal: 0,
+  initialBalance: 0,
   searchKeyword: '',
   sliceShow: 10,
   paginationIndex: 1,
@@ -16,7 +16,7 @@ export const globalActionType = {
   HANDLE_SLICE: 'HANDLE_SLICE',
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
-  CHANGE_SALDO_AWAL: 'CHANGE_SALDO_AWAL',
+  CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
   CREATE_RECORD: 'CREATE_RECORD',
   GET_RECORDS: 'GET_RECORDS',
   UPDATE_RECORD: 'UPDATE_RECORD',
@@ -49,10 +49,10 @@ export const globalReducer = (state, action) => {
         ...state,
         paginationIndex: action.payload,
       };
-    case globalActionType.CHANGE_SALDO_AWAL:
+    case globalActionType.CHANGE_INITIAL_BALANCE:
       return {
         ...state,
-        saldoAwal: parseInt(action.payload, 10),
+        initialBalance: parseInt(action.payload, 10),
       };
     case globalActionType.CHANGE_USER:
       return {

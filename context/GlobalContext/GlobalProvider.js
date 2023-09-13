@@ -33,9 +33,9 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.HANDLE_SLICE, payload: e.target.value });
   };
 
-  const changeSaldoAwalState = (payload, callback) => {
+  const changeInitialBalanceState = (payload, callback) => {
     callback && callback(payload);
-    dispatch({ type: globalActionType.CHANGE_SALDO_AWAL, payload });
+    dispatch({ type: globalActionType.CHANGE_INITIAL_BALANCE, payload });
   };
 
   const pushRecordState = (payload, callback) => {
@@ -67,7 +67,7 @@ export default function GlobalContextProvider(props) {
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,
-    changeSaldoAwalState,
+    changeInitialBalanceState,
     pushRecordState,
     removeRecordState,
     updateRecordState,

@@ -43,6 +43,11 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CREATE_RECORD, payload });
   };
 
+  const pushAccountsState = (payload, callback) => {
+    callback && callback(payload);
+    dispatch({ type: globalActionType.CREATE_ACCOUNT, payload });
+  };
+
   const removeRecordState = (id, callback) => {
     callback && callback(id);
     dispatch({ type: globalActionType.DELETE_RECORD, id });
@@ -69,6 +74,7 @@ export default function GlobalContextProvider(props) {
     changeSliceShowState,
     changeInitialBalanceState,
     pushRecordState,
+    pushAccountsState,
     removeRecordState,
     updateRecordState,
     changeHasLoadDataState,

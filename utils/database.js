@@ -8,6 +8,13 @@ export const pushRecord = () => (payload) => {
   });
 };
 
+export const pushAccount = () => (payload) => {
+  checkUserUid((uid) => {
+    const accountsRef = ref(database, `users/${uid}/accounts`);
+    push(accountsRef, payload);
+  });
+};
+
 export const removeRecord = () => (id) => {
   checkUserUid((uid) => {
     const recordRef = ref(database, `users/${uid}/records/${id}`);

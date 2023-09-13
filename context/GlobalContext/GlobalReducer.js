@@ -1,5 +1,6 @@
 export const globalInitialState = {
   records: [],
+  accounts: [],
   initialBalance: 0,
   searchKeyword: '',
   sliceShow: 10,
@@ -18,6 +19,7 @@ export const globalActionType = {
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
   CREATE_RECORD: 'CREATE_RECORD',
+  CREATE_ACCOUNT: 'CREATE_ACCOUNT',
   GET_RECORDS: 'GET_RECORDS',
   UPDATE_RECORD: 'UPDATE_RECORD',
   DELETE_RECORD: 'DELETE_RECORD',
@@ -74,9 +76,18 @@ export const globalReducer = (state, action) => {
         ...state,
         records: [
           ...state.records,
-          { ...action.payload },
+          action.payload,
         ],
       };
+    case globalActionType.CREATE_ACCOUNT: {
+      return {
+        ...state,
+        accounts: [
+          ...state.accounts,
+          action.payload,
+        ],
+      };
+    }
     case globalActionType.GET_RECORDS:
       return {
         ...state,

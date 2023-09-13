@@ -5,10 +5,16 @@ import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../../context';
-import { checkUserAuth, observeRecords } from '../../../utils';
+import { checkUserAuth, observeRecords, observeSaldoAwal } from '../../../utils';
 
 export default function App() {
-  const { state, changeRecordsState, changeIsLoginState, changeUserState } = useGlobalContext();
+  const {
+    state,
+    changeRecordsState,
+    changeIsLoginState,
+    changeUserState,
+    changeSaldoAwalState,
+  } = useGlobalContext();
   const { isLogin, user } = state;
 
   const router = useRouter();
@@ -23,6 +29,10 @@ export default function App() {
         changeIsLoginState(false);
         router.push('/');
       }
+    });
+
+    observeSaldoAwal((snapshot) => {
+      changeSaldoAwalState(snapshot.val());
     });
 
     observeRecords((snapshot) => {

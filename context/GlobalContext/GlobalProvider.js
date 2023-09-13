@@ -48,9 +48,13 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.DELETE_RECORD, id });
   };
 
-  const updateRecordState = () => (payload, callback) => {
+  const updateRecordState = (payload, callback) => {
     callback && callback(payload);
     dispatch({ type: globalActionType.UPDATE_RECORD, payload });
+  };
+
+  const changeHasLoadDataState = (payload) => {
+    dispatch({ type: globalActionType.CHANGE_HAS_LOAD_DATA, payload });
   };
 
   const value = useMemo(() => ({
@@ -67,6 +71,7 @@ export default function GlobalContextProvider(props) {
     pushRecordState,
     removeRecordState,
     updateRecordState,
+    changeHasLoadDataState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

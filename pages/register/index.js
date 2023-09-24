@@ -4,14 +4,15 @@ import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
-import { alertToast, pushAccount, updateInitialBalance } from '../../utils';
+import { alertToast, updateInitialBalance } from '../../utils';
+import useAccounts from '../../hooks';
 
 export default function Register() {
   const {
     changeUserState,
     changeInitialBalanceState,
-    pushAccountsState,
   } = useGlobalContext();
+  const { addAccount } = useAccounts();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
@@ -41,8 +42,12 @@ export default function Register() {
           photoURL: res.user.photoURL,
           emailVerified: res.user.emailVerified,
         };
+        const newAccount = {
+          name: 'Personal',
+          initialBalance: 0,
+        };
         changeUserState(dataUser);
-        pushAccountsState({ name: 'personal' }, pushAccount());
+        addAccount(newAccount);
         changeInitialBalanceState(0, updateInitialBalance());
         setInputs({ email: '', password: '' });
         router.push('/app');

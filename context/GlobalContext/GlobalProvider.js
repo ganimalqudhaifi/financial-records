@@ -43,11 +43,6 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CREATE_RECORD, payload });
   };
 
-  const pushAccountsState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.CREATE_ACCOUNT, payload });
-  };
-
   const removeRecordState = (id, callback) => {
     callback && callback(id);
     dispatch({ type: globalActionType.DELETE_RECORD, id });
@@ -62,6 +57,10 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CHANGE_HAS_LOAD_DATA, payload });
   };
 
+  const changeSelectedAccountIdState = (payload) => {
+    dispatch({ type: globalActionType.SELECTED_ACCOUNT_ID, payload });
+  };
+
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -73,8 +72,8 @@ export default function GlobalContextProvider(props) {
     changeFilterPeriodState,
     changeSliceShowState,
     changeInitialBalanceState,
+    changeSelectedAccountIdState,
     pushRecordState,
-    pushAccountsState,
     removeRecordState,
     updateRecordState,
     changeHasLoadDataState,

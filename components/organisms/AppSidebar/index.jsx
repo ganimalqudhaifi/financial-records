@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useGlobalContext } from '../../../context';
 import { userSignOut } from '../../../utils';
+import { AccountsDropdown } from '../../molecules';
 
 export default function AppSidebar({ user }) {
   const { state } = useGlobalContext();
@@ -42,8 +43,8 @@ export default function AppSidebar({ user }) {
         className={`fixed top-0 left-0 z-30 w-full h-screen bg-gray-900/50 ${!isActive && 'hidden'} lg:hidden`}
       />
 
-      <aside className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && '-translate-x-full'} lg:translate-x-0`}>
-        <div className="h-full px-3 py-4 overflow-y-auto bg-slate-900">
+      <aside className={`fixed shrink-0 top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && '-translate-x-full'} lg:translate-x-0`}>
+        <div className="no-scrollbar h-full px-3 py-4 overflow-y-auto bg-slate-900 divide-y-[1px] divide-gray-700">
           <div className=" w-full flex flex-col items-center">
             <div className="relative mb-4">
               <Image
@@ -78,7 +79,10 @@ export default function AppSidebar({ user }) {
               <span className="text-gray-400 text-sm font-medium">Logout</span>
             </Link>
           </div>
-          <ul className="mt-2 pt-5 space-y-2 border-t-[1px] border-gray-700">
+          <div>
+            <AccountsDropdown />
+          </div>
+          <ul className="pt-5 space-y-2">
             <li>
               <Link
                 href={`${!isDemo ? '/app/dashboard' : '/demo/dashboard'}`}

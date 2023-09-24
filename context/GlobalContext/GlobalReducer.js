@@ -1,6 +1,6 @@
 export const globalInitialState = {
   records: [],
-  accounts: [],
+  selectedAccountId: '',
   initialBalance: 0,
   searchKeyword: '',
   sliceShow: 10,
@@ -19,7 +19,6 @@ export const globalActionType = {
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
   CREATE_RECORD: 'CREATE_RECORD',
-  CREATE_ACCOUNT: 'CREATE_ACCOUNT',
   GET_RECORDS: 'GET_RECORDS',
   UPDATE_RECORD: 'UPDATE_RECORD',
   DELETE_RECORD: 'DELETE_RECORD',
@@ -27,6 +26,7 @@ export const globalActionType = {
   CHANGE_ISLOGIN: 'CHANGE_ISLOGIN',
   CHANGE_ISDEMO: 'CHANGE_ISDEMO',
   CHANGE_HAS_LOAD_DATA: 'CHANGE_HAS_LOAD_DATA',
+  SELECTED_ACCOUNT_ID: 'SELECTED_ACCOUNT_ID',
 };
 
 export const globalReducer = (state, action) => {
@@ -79,15 +79,6 @@ export const globalReducer = (state, action) => {
           action.payload,
         ],
       };
-    case globalActionType.CREATE_ACCOUNT: {
-      return {
-        ...state,
-        accounts: [
-          ...state.accounts,
-          action.payload,
-        ],
-      };
-    }
     case globalActionType.GET_RECORDS:
       return {
         ...state,
@@ -112,6 +103,12 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         hasLoadData: action.payload,
+      };
+    }
+    case globalActionType.SELECTED_ACCOUNT_ID: {
+      return {
+        ...state,
+        selectedAccountId: action.payload,
       };
     }
     default:

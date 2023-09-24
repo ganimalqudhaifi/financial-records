@@ -5,3 +5,5 @@ export { default as HomeNavigationDropdown } from './HomeNavigationDropdown';
 export { default as HomeBanner } from './HomeBanner';
 export { default as HomeAboutMe } from './HomeAboutMe';
 export { default as HomePractice } from './HomePractice';
+export { default as AccountsDropdown } from './AccountsDropdown';
+export { default as EditableAccount } from './EditableAccount';

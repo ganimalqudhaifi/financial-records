@@ -8,13 +8,6 @@ export const pushRecord = () => (payload) => {
   });
 };
 
-export const pushAccount = () => (payload) => {
-  checkUserUid((uid) => {
-    const accountsRef = ref(database, `users/${uid}/accounts`);
-    push(accountsRef, payload);
-  });
-};
-
 export const removeRecord = () => (id) => {
   checkUserUid((uid) => {
     const recordRef = ref(database, `users/${uid}/records/${id}`);
@@ -26,6 +19,13 @@ export const updateRecord = () => (payload) => {
   checkUserUid((uid) => {
     const recordRef = ref(database, `users/${uid}/records/${payload.id}`);
     set(recordRef, payload);
+  });
+};
+
+export const observeRecords = (callback) => {
+  checkUserUid((uid) => {
+    const recordsRef = ref(database, `users/${uid}/records`);
+    onValue(recordsRef, callback);
   });
 };
 
@@ -57,13 +57,6 @@ export const observeInitialBalance = (callback) => {
   checkUserUid((uid) => {
     const InitialBalanceRef = ref(database, `users/${uid}/initialBalance`);
     onValue(InitialBalanceRef, callback);
-  });
-};
-
-export const observeRecords = (callback) => {
-  checkUserUid((uid) => {
-    const recordsRef = ref(database, `users/${uid}/records`);
-    onValue(recordsRef, callback);
   });
 };
 

@@ -14,7 +14,7 @@ export default function HomeNavigationDropdown({ isNavigationDropdownOpen, handl
 
       {/* navigation-menu */}
       <nav className={`${!isNavigationDropdownOpen ? 'opacity-0 invisible -translate-y-1.5 lg:translate-y-0' : 'opacity-100 visible translate-y-0'} duration-500 lg lg:opacity-100 lg:visible absolute top-full inset-x-4 sm:inset-x-8 lg:static lg:w-auto h-0 lg:h-auto`}>
-        <ul className="rounded-lg overflow-hidden shadow-lg lg:flex ">
+        <ul className="rounded-lg overflow-hidden shadow-lg lg:shadow-none lg:flex ">
           <li className="last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]"><Link href="#" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]" onClick={handleNavigationDropdown}>Home</Link></li>
           <li className="last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]"><Link href="#About" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]" onClick={handleNavigationDropdown}>About</Link></li>
           <li className="last:lg:hidden last:border-t-2 last:border-gray-500 active:brightness-200 active:duration-[0ms]"><Link href="#Practice" className="block px-5 py-[10px] text-gray-200 font-medium duration-200 bg-gray-700 hover:bg-gray-600 hover:duration-[0ms] hover:text-main-color lg:bg-transparent lg:px-6 lg:hover:bg-transparent lg:duration-[0ms]" onClick={handleNavigationDropdown}>Practice</Link></li>

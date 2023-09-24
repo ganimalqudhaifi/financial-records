@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AppLayout } from '../../../components';
+import { AppLayout, EditableAccount } from '../../../components';
 import { auth, updateProfile } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
 import {
   alertToast,
   checkUserAuth,
 } from '../../../utils';
+import { useAccounts } from '../../../hooks';
 
 export default function App() {
   const {
@@ -15,6 +16,8 @@ export default function App() {
     changeIsLoginState,
     changeUserState,
   } = useGlobalContext();
+  const { accounts, addAccount } = useAccounts();
+
   const {
     isLogin,
     user,
@@ -79,10 +82,6 @@ export default function App() {
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>
                     <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.phoneNumber} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
-                  {/* <div className="flex flex-col ">
-                    <label htmlFor="bio" className="mb-1 text-sm">Bio</label>
-                    <input id="bio" name="bio" type="text" placeholder="-" onChange={(e) => changePersonalInformationState({ ...personalInformation, [e.target.name]: e.target.value }, updatePersonalInformation())} value={personalInformation.bio} className={`${edits.personalInformation && 'border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
-                  </div> */}
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">
                   <button
@@ -101,11 +100,19 @@ export default function App() {
               </form>
             </div>
 
-            {/* <!-- Social Media  --> */}
+            {/* <!-- Accounts  --> */}
             <div className="p-5 mt-2.5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Accounts</h3>
-              <div className="w-full h-10 mt-4 bg-slate-200">
-                <div />
+              <div className="p-4 mt-2 bg-gray-100">
+                <p className="text-xs italic mb-2">* double click to edit accounts name</p>
+                <ul className="w-full grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-2">
+                  { accounts.length && accounts.map((account) => (
+                    <li key={account.id}>
+                      <EditableAccount account={account} />
+                    </li>
+                  )) }
+                  <li><button className="w-full py-2 rounded-lg border-2 border-slate-500 border-dashed" onClick={() => addAccount({ name: 'New Account' })}>New Account +</button></li>
+                </ul>
               </div>
             </div>
           </div>

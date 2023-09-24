@@ -25,11 +25,10 @@ ChartJS.register(
 export default function FinancialRecordsChart() {
   const { state } = useGlobalContext();
   const { records, selectedAccount } = state;
+  const uniqueId = 'chartModal';
 
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
-
-  const uniqueId = 'chartModal';
 
   const valueDate = (date) => {
     const target = new Date(date);
@@ -38,12 +37,12 @@ export default function FinancialRecordsChart() {
 
   useEffect(() => {
     if (records.length) {
-      records.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+      records.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       const arrListPeriod = records
         .filter((record) => record.accountId === selectedAccount.id)
         .reduce((acc, record) => {
-          const d = new Date(record.tanggal);
+          const d = new Date(record.date);
           const year = d.getFullYear();
           const month = d.getMonth();
           const period = `${year}-${month}`;
@@ -54,22 +53,20 @@ export default function FinancialRecordsChart() {
           return acc;
         }, []);
 
-      const penerimaan = arrListPeriod.map((filterPeriod) => records
-        .filter((record) => valueDate(record.tanggal) === filterPeriod)
-        .filter((record) => record.accountId === selectedAccount.id)
-        .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.value : 0), 0));
+      const pemasukan = arrListPeriod.map((filterPeriod) => records
+        .filter((record) => valueDate(record.date) === filterPeriod)
+        .reduce((a, b) => a + (b.categoryId < 200 ? b.value : 0), 0));
 
       const pengeluaran = arrListPeriod.map((filterPeriod) => records
-        .filter((record) => valueDate(record.tanggal) === filterPeriod)
-        .filter((record) => record.accountId === selectedAccount.id)
-        .reduce((a, b) => a + (b.jenis === 'Pengeluaran' ? b.value : 0), 0));
+        .filter((record) => valueDate(record.date) === filterPeriod)
+        .reduce((a, b) => a + (b.categoryId > 200 ? b.value : 0), 0));
 
       setChartData({
         labels: arrListPeriod,
         datasets: [
           {
-            label: 'Penerimaan Rp',
-            data: penerimaan,
+            label: 'Pemasukan Rp',
+            data: pemasukan,
             borderColor: 'rgb(75, 192, 192)',
             backgroundColor: 'rgba(75, 192, 192, 0.2)',
             borderWidth: 1,
@@ -91,7 +88,7 @@ export default function FinancialRecordsChart() {
         legend: { display: false },
         title: {
           display: true,
-          text: 'Financial Records',
+          text: 'Financial Flow Chart',
         },
       },
       scales: {

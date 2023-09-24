@@ -6,13 +6,14 @@ export default function FinancialRecordsInformation() {
   const { records, selectedAccount } = state;
 
   const [initialBalance, setInitialBalance] = useState(0);
-  const [penerimaan, setPenerimaan] = useState(0);
+  const [pemasukan, setPenerimaan] = useState(0);
   const [pengeluaran, setPengeluaran] = useState(0);
 
   useEffect(() => {
     if (records.length) {
-      setPenerimaan(records.filter((record) => record.accountId === selectedAccount.id).filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
-      setPengeluaran(records.filter((record) => record.accountId === selectedAccount.id).filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
+      const filteredRecords = records.filter((record) => record.accountId === selectedAccount.id);
+      setPenerimaan(filteredRecords.filter((record) => record.categoryId < 200).reduce((previousValue, currentValue) => previousValue + currentValue.amount, 0));
+      setPengeluaran(filteredRecords.filter((record) => record.categoryId > 200).reduce((previousValue, currentValue) => previousValue + currentValue.amount, 0));
     }
   }, [records, selectedAccount]);
 
@@ -29,9 +30,9 @@ export default function FinancialRecordsInformation() {
         </div>
       </div>
       <div className="p-2 bg-white border-l-8 border-l-emerald-500 rounded">
-        <div className="text-sm">Penerimaan</div>
+        <div className="text-sm">Pemasukan</div>
         <div>
-          {`Rp ${penerimaan.toLocaleString('id-ID')}`}
+          {`Rp ${pemasukan.toLocaleString('id-ID')}`}
         </div>
       </div>
       <div className="p-2 bg-white border-l-8 border-l-amber-500 rounded">
@@ -43,7 +44,7 @@ export default function FinancialRecordsInformation() {
       <div className="p-2 bg-white border-l-8 border-l-rose-500 rounded">
         <div className="text-sm">Saldo Akhir</div>
         <div>
-          {`Rp ${(initialBalance + penerimaan - pengeluaran).toLocaleString('id-ID')}`}
+          {`Rp ${(initialBalance + pemasukan - pengeluaran).toLocaleString('id-ID')}`}
         </div>
       </div>
     </div>

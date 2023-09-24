@@ -5,20 +5,20 @@ import { templateDateDMY } from '../../../utils/templateDate';
 export default function FinancialRecordsTableBody({ no, record, saldoAkhir }) {
   const {
     id,
-    tanggal,
-    keterangan,
-    jenis,
-    jumlah,
+    date,
+    description,
+    categoryId,
+    amount,
   } = record;
 
   return (
     <tr>
       <td>{no}</td>
-      <td>{keterangan}</td>
-      <td>{templateDateDMY(tanggal)}</td>
-      <td>{jenis}</td>
-      <td className={`${jenis === 'Penerimaan' ? 'text-green-600' : 'text-red-600'}`}>
-        {`Rp ${jumlah.toLocaleString('id-ID')}`}
+      <td>{description}</td>
+      <td>{templateDateDMY(date)}</td>
+      <td>{categoryId}</td>
+      <td className={`${categoryId < 200 ? 'text-green-600' : 'text-red-600'}`}>
+        {`Rp ${amount.toLocaleString('id-ID')}`}
       </td>
       <td>
         {`Rp ${saldoAkhir.toLocaleString('id-ID')}`}

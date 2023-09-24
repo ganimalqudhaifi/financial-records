@@ -7,29 +7,29 @@ export default function FinancialRecordsActionEdit({ no, record }) {
   const { state, updateRecordState } = useGlobalContext();
   const { isDemo } = state;
   const uniqueId = `editModal${no}`;
-  const {
-    id,
-    tanggal,
-    keterangan,
-    jenis,
-    jumlah,
-    createdAt,
-  } = record;
+  const { ...rest } = record;
 
-  const [inputs, setInputs] = useState({
-    id,
-    tanggal,
-    keterangan,
-    jenis,
-    jumlah,
-    createdAt,
-  });
+  const categories = [
+    { id: 101, name: 'Pendapatan' },
+    { id: 201, name: 'Pengeluaran' },
+    { id: 202, name: 'Tagihan Utilitas' },
+    { id: 203, name: 'Makanan' },
+    { id: 204, name: 'Transportasi' },
+    { id: 205, name: 'Tempat Tinggal' },
+    { id: 206, name: 'Hiburan' },
+  ];
+
+  const [inputs, setInputs] = useState({ ...rest });
 
   const handleChange = (event) => {
     const { name } = event.target;
     let { value } = event.target;
 
-    if (name === 'jumlah') {
+    if (name === 'amount') {
+      value = parseInt(value, 10);
+    }
+
+    if (name === 'categoryId') {
       value = parseInt(value, 10);
     }
 
@@ -41,7 +41,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
     const newInputs = {
       ...inputs,
       updatedAt: new Date().toISOString(),
-      value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
+      value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
     };
     updateRecordState(newInputs, !isDemo && updateRecord());
     modal.hide(uniqueId);
@@ -56,44 +56,47 @@ export default function FinancialRecordsActionEdit({ no, record }) {
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Mengubah Catatan</h3>
         <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6 text-left">
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jumlah${uniqueId}`}>Jumlah</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`amount${uniqueId}`}>Jumlah</label>
             <input
-              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
+              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
               type="number"
-              id={`jumlah${uniqueId}`}
-              name="jumlah"
-              value={inputs.jumlah}
-              placeholder="jumlah"
+              id={`amount${uniqueId}`}
+              name="amount"
+              value={inputs.amount}
+              placeholder="Masukkan Jumlah"
               onChange={handleChange}
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`keterangan${uniqueId}`}>Keterangan</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`description${uniqueId}`}>Keterangan</label>
             <input
-              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
+              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
               type="text"
-              id={`keterangan${uniqueId}`}
-              name="keterangan"
-              value={inputs.keterangan}
-              placeholder="keterangan"
+              id={`description${uniqueId}`}
+              name="description"
+              value={inputs.description}
+              placeholder="Masukkan Keterangan"
               onChange={handleChange}
               required
             />
           </div>
 
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`jenis${uniqueId}`}>Jenis</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor={`categoryId${uniqueId}`}>categoryId</label>
             <select
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
-              id={`jenis${uniqueId}`}
-              name="jenis"
-              value={inputs.jenis}
+              id={`categoryId${uniqueId}`}
+              name="categoryId"
+              value={inputs.categoryId}
               onChange={handleChange}
             >
-              <option>Penerimaan</option>
-              <option>Pengeluaran</option>
+              {
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>{category.name}</option>
+                ))
+              }
             </select>
           </div>
 
@@ -103,8 +106,8 @@ export default function FinancialRecordsActionEdit({ no, record }) {
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="date"
               id={`date${uniqueId}`}
-              name="tanggal"
-              value={inputs.tanggal}
+              name="date"
+              value={inputs.date}
               onChange={handleChange}
               required
             />

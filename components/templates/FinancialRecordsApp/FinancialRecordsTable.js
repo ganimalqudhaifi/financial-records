@@ -24,10 +24,10 @@ export default function FinancialRecordsTable() {
               {
                 records
                   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                  .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
+                  .sort((a, b) => new Date(b.date) - new Date(a.date))
                   .filter((record) => record.accountId === selectedAccount.id)
-                  .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
-                  .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
+                  .filter((record) => record.description.toLowerCase().includes(searchKeyword))
+                  .filter((record) => valueDate(record.date).includes(filterPeriod))
                   .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
                   .map((record, i) => (
                     <FinancialRecordsTableBody
@@ -35,10 +35,10 @@ export default function FinancialRecordsTable() {
                       no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
                       record={record}
                       saldoAkhir={records
-                        .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
-                        .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
+                        .filter((record) => record.description.toLowerCase().includes(searchKeyword))
+                        .filter((record) => valueDate(record.date).includes(filterPeriod))
                         .slice(0, ((paginationIndex * sliceShow) - sliceShow) + i + 1)
-                        .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.jumlah : (b.jumlah * -1)), initialBalance)}
+                        .reduce((a, b) => a + b.amount, initialBalance)}
                     />
                   ))
               }

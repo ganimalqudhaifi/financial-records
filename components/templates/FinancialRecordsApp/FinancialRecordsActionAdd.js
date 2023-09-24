@@ -6,21 +6,36 @@ import { modal, pushRecord, successToast } from '../../../utils';
 export default function FinancialRecordsActionAdd() {
   const { state, pushRecordState } = useGlobalContext();
   const { isDemo, selectedAccount } = state;
-
-  const [inputs, setInputs] = useState({
-    tanggal: '',
-    keterangan: '',
-    jenis: 'Penerimaan',
-    jumlah: null,
-  });
-
   const uniqueId = 'addModal';
+
+  const categories = [
+    { id: 101, name: 'Pendapatan' },
+    { id: 201, name: 'Pengeluaran' },
+    { id: 202, name: 'Tagihan Utilitas' },
+    { id: 203, name: 'Makanan' },
+    { id: 204, name: 'Transportasi' },
+    { id: 205, name: 'Tempat Tinggal' },
+    { id: 206, name: 'Hiburan' },
+  ];
+
+  const initialInputs = {
+    date: '',
+    description: '',
+    categoryId: categories[0].id,
+    amount: 0,
+  };
+
+  const [inputs, setInputs] = useState(initialInputs);
 
   const handleChange = (event) => {
     const { name } = event.target;
     let { value } = event.target;
 
-    if (name === 'jumlah') {
+    if (name === 'amount') {
+      value = parseInt(value, 10);
+    }
+
+    if (name === 'categoryId') {
       value = parseInt(value, 10);
     }
 
@@ -31,9 +46,9 @@ export default function FinancialRecordsActionAdd() {
     event.preventDefault();
     const newInputs = {
       ...inputs,
+      value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
       accountId: selectedAccount.id,
     };
 
@@ -43,12 +58,7 @@ export default function FinancialRecordsActionAdd() {
       pushRecordState({ ...newInputs, id: new Date().toISOString() });
     }
     modal.hide(uniqueId);
-    setInputs({
-      tanggal: '',
-      keterangan: '',
-      jenis: 'Penerimaan',
-      jumlah: null,
-    });
+    setInputs(initialInputs);
 
     successToast('Data berhasil ditambahkan');
   };
@@ -61,43 +71,46 @@ export default function FinancialRecordsActionAdd() {
         <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">Membuat Catatan Baru</h3>
         <form onSubmit={handleSubmit} spellCheck="false" className="space-y-6">
           <div>
-            <label className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white" htmlFor="jumlah">Jumlah</label>
+            <label className="block mb-1.5 text-sm font-medium text-gray-900 dark:text-white" htmlFor="amount">Jumlah</label>
             <input
-              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
+              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
               type="number"
-              id="jumlah"
-              name="jumlah"
-              value={inputs.jumlah || ''}
-              placeholder="jumlah"
-              step="10"
+              id="amount"
+              name="amount"
+              value={inputs.amount || ''}
+              placeholder="Masukkan Jumlah"
+              step="1000"
               onChange={handleChange}
               required
             />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor="keterangan">Keterangan</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor="description">Keterangan</label>
             <input
-              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
+              className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
               type="text"
-              id="keterangan"
-              name="keterangan"
-              value={inputs.keterangan || ''}
-              placeholder="keterangan"
+              id="description"
+              name="description"
+              value={inputs.description || ''}
+              placeholder="Masukkan Keterangan"
               onChange={handleChange}
               required
             />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor="jenis">Jenis</label>
+            <label className="block mb-1 text-sm font-medium text-gray-900 dark:text-white" htmlFor="categoryId">Kategori</label>
             <select
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
-              id="jenis"
-              name="jenis"
-              value={inputs.jenis || 'Penerimaan'}
+              id="categoryId"
+              name="categoryId"
+              value={inputs.categoryId}
               onChange={handleChange}
             >
-              <option>Penerimaan</option>
-              <option>Pengeluaran</option>
+              {
+                categories.map((category) => (
+                  <option key={category.id} value={category.id}>{category.name}</option>
+                ))
+              }
             </select>
           </div>
           <div>
@@ -106,9 +119,8 @@ export default function FinancialRecordsActionAdd() {
               className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
               type="date"
               id="date"
-              name="tanggal"
-              value={inputs.tanggal || ''}
-              placeholder="Select date"
+              name="date"
+              value={inputs.date || ''}
               onChange={handleChange}
               required
             />

@@ -5,7 +5,7 @@ export default function FinancialRecordsPaginantion() {
   const { records, searchKeyword, sliceShow, paginationIndex, filterPeriod } = state;
 
   const arrPagination = [];
-  const entires = records.length && records.filter((record) => record.keterangan.toLowerCase().includes(searchKeyword)).length;
+  const entires = records.length && records.filter((record) => record.description.toLowerCase().includes(searchKeyword)).length;
 
   const valueDate = (date) => {
     const target = new Date(date);
@@ -13,7 +13,7 @@ export default function FinancialRecordsPaginantion() {
   };
 
   for (let i = 1; i < Math.ceil(records.length && records
-    .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
+    .filter((record) => record.description.toLowerCase().includes(searchKeyword))
     .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
     .length / sliceShow) + 1; i += 1) {
     arrPagination.push(i);

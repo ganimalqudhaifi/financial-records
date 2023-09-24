@@ -111,7 +111,14 @@ export default function App() {
                       <EditableAccount account={account} />
                     </li>
                   )) }
-                  <li><button className="w-full py-2 rounded-lg border-2 border-slate-500 border-dashed" onClick={() => addAccount({ name: 'New Account' })}>New Account +</button></li>
+                  <li>
+                    <button
+                      onClick={() => addAccount({ name: 'New Account', initialBalance: 0 })}
+                      className="w-full py-2 rounded-lg border-2 border-slate-500 border-dashed"
+                    >
+                      New Account +
+                    </button>
+                  </li>
                 </ul>
               </div>
             </div>

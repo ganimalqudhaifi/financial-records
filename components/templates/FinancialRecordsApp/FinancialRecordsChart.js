@@ -24,7 +24,7 @@ ChartJS.register(
 
 export default function FinancialRecordsChart() {
   const { state } = useGlobalContext();
-  const { initialBalance, records } = state;
+  const { records } = state;
 
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
@@ -97,7 +97,7 @@ export default function FinancialRecordsChart() {
 
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [initialBalance, records]);
+  }, [records]);
 
   return (
     <div className="flex items-start justify-center mt-5 p-5 w-full bg-white rounded">

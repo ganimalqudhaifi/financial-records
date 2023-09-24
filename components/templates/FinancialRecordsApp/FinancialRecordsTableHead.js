@@ -1,22 +1,26 @@
 import { useEffect, useState } from 'react';
 import { useGlobalContext } from '../../../context';
-import { modal, updateInitialBalance } from '../../../utils';
+import { useAccounts } from '../../../hooks';
+import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
+  const { editAccount } = useAccounts();
   const { state, changeInitialBalanceState } = useGlobalContext();
-  const { initialBalance } = state;
+  const { selectedAccount } = state;
 
   const uniqueId = 'changeInitialBalanceModal';
-  const [inputs, setInputs] = useState(initialBalance);
+  const [inputs, setInputs] = useState(0);
 
   useEffect(() => {
-    setInputs(initialBalance);
-  }, [initialBalance]);
+    Object.keys(selectedAccount).length && setInputs(selectedAccount.initialBalance);
+  }, [selectedAccount]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    changeInitialBalanceState(inputs, updateInitialBalance());
+    changeInitialBalanceState(inputs);
+    const { id, ...rest } = selectedAccount;
+    editAccount(id, { ...rest, initialBalance: inputs });
     modal.hide(uniqueId);
   };
 
@@ -34,10 +38,7 @@ export default function FinancialRecordsTableHead() {
       <tr>
         <th colSpan="4">Saldo Awal</th>
         <th />
-        <th>
-          {'Rp '}
-          {initialBalance.toLocaleString('id-ID')}
-        </th>
+        <th>{`Rp ${inputs.toLocaleString('id-ID')}`}</th>
         <td>
           <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => modal.show(uniqueId)}>Edit</button>
 

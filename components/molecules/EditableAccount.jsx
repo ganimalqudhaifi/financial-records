@@ -15,12 +15,14 @@ export default function EditableAccount({ account }) {
 
   const handleKeyDown = (e) => {
     (e.key === 'Enter') && setIsDisabled(true);
-    editAccount(account.id, { name: inputValue });
+    const { id, ...rest } = account;
+    editAccount(account.id, { ...rest, name: inputValue });
   };
 
   const handleBlur = () => {
     setIsDisabled(true);
-    editAccount(account.id, { name: inputValue });
+    const { id, ...rest } = account;
+    editAccount(account.id, { ...rest, name: inputValue });
   };
 
   const handleChange = (e) => {

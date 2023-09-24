@@ -1,6 +1,6 @@
 export const globalInitialState = {
   records: [],
-  selectedAccountId: '',
+  selectedAccount: {},
   initialBalance: 0,
   searchKeyword: '',
   sliceShow: 10,
@@ -26,7 +26,7 @@ export const globalActionType = {
   CHANGE_ISLOGIN: 'CHANGE_ISLOGIN',
   CHANGE_ISDEMO: 'CHANGE_ISDEMO',
   CHANGE_HAS_LOAD_DATA: 'CHANGE_HAS_LOAD_DATA',
-  SELECTED_ACCOUNT_ID: 'SELECTED_ACCOUNT_ID',
+  CHANGE_SELECTED_ACCOUNT: 'CHANGE_SELECTED_ACCOUNT',
 };
 
 export const globalReducer = (state, action) => {
@@ -105,10 +105,10 @@ export const globalReducer = (state, action) => {
         hasLoadData: action.payload,
       };
     }
-    case globalActionType.SELECTED_ACCOUNT_ID: {
+    case globalActionType.SELECTED_ACCOUNT: {
       return {
         ...state,
-        selectedAccountId: action.payload,
+        selectedAccount: action.payload,
       };
     }
     default:

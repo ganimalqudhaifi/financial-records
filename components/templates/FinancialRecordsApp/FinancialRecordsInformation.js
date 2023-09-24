@@ -3,8 +3,9 @@ import { useGlobalContext } from '../../../context';
 
 export default function FinancialRecordsInformation() {
   const { state } = useGlobalContext();
-  const { records, initialBalance } = state;
+  const { records, selectedAccount } = state;
 
+  const [initialBalance, setInitialBalance] = useState(0);
   const [penerimaan, setPenerimaan] = useState(0);
   const [pengeluaran, setPengeluaran] = useState(0);
 
@@ -14,6 +15,10 @@ export default function FinancialRecordsInformation() {
       setPengeluaran(records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
     }
   }, [records]);
+
+  useEffect(() => {
+    Object.keys(selectedAccount).length && setInitialBalance(selectedAccount.initialBalance);
+  }, [selectedAccount]);
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 py-2 gap-6">

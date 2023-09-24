@@ -57,8 +57,8 @@ export default function GlobalContextProvider(props) {
     dispatch({ type: globalActionType.CHANGE_HAS_LOAD_DATA, payload });
   };
 
-  const changeSelectedAccountIdState = (payload) => {
-    dispatch({ type: globalActionType.SELECTED_ACCOUNT_ID, payload });
+  const changeSelectedAccountState = (payload) => {
+    dispatch({ type: globalActionType.SELECTED_ACCOUNT, payload });
   };
 
   const value = useMemo(() => ({
@@ -72,7 +72,7 @@ export default function GlobalContextProvider(props) {
     changeFilterPeriodState,
     changeSliceShowState,
     changeInitialBalanceState,
-    changeSelectedAccountIdState,
+    changeSelectedAccountState,
     pushRecordState,
     removeRecordState,
     updateRecordState,

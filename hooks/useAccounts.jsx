@@ -4,7 +4,8 @@ import { database, onValue, push, ref, remove, set } from '../config/firebase';
 
 export default function useAccounts() {
   const [accounts, setAccounts] = useState([]);
-  const [selectedAccounts, setSelectedAccounts] = useState({});
+  const [indexAccount, setIndexAccount] = useState(0);
+  const [selectedAccount, setSelectedAccount] = useState({});
 
   useEffect(() => {
     checkUserUid((uid) => {
@@ -21,8 +22,11 @@ export default function useAccounts() {
     });
   }, []);
 
+  useEffect(() => {
+    accounts.length && setSelectedAccount(accounts[indexAccount]);
+  }, [accounts, indexAccount]);
+
   const addAccount = (payload) => {
-    // max accounts 8
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else {
@@ -69,7 +73,8 @@ export default function useAccounts() {
     addAccount,
     editAccount,
     deleteAccount,
-    selectedAccounts,
-    setSelectedAccounts,
+    selectedAccount,
+    indexAccount,
+    setIndexAccount,
   };
 }

@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppLayout, FinancialRecords } from '../../components';
 import { useGlobalContext } from '../../context';
-import { checkUserAuth, observeRecords, observeInitialBalance } from '../../utils';
+import { checkUserAuth, observeRecords } from '../../utils';
 
 export default function App() {
   const {
@@ -11,7 +11,6 @@ export default function App() {
     changeIsLoginState,
     changeUserState,
     changeRecordsState,
-    changeInitialBalanceState,
   } = useGlobalContext();
   const { isLogin, user } = state;
 
@@ -27,10 +26,6 @@ export default function App() {
         changeIsLoginState(false);
         router.push('/');
       }
-    });
-
-    observeInitialBalance((snapshot) => {
-      changeInitialBalanceState(snapshot.val());
     });
 
     observeRecords((snapshot) => {

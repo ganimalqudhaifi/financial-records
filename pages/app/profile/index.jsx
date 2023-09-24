@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AppLayout, EditableAccount } from '../../../components';
+import Image from 'next/image';
+import { AppLayout, EditableAccount, Modal } from '../../../components';
 import { auth, updateProfile } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
 import {
   alertToast,
   checkUserAuth,
+  modal,
 } from '../../../utils';
 import { useAccounts } from '../../../hooks';
 
@@ -18,6 +20,23 @@ export default function App() {
   const [edits, setEdits] = useState({ personalInformation: false });
 
   const router = useRouter();
+
+  const avatarLists = [
+    '/avatar/boy_01.svg',
+    '/avatar/boy_02.svg',
+    '/avatar/boy_03.svg',
+    '/avatar/boy_04.svg',
+    '/avatar/boy_05.svg',
+    '/avatar/boy_06.svg',
+    '/avatar/boy_07.svg',
+    '/avatar/girl_01.svg',
+    '/avatar/girl_02.svg',
+    '/avatar/girl_03.svg',
+    '/avatar/girl_04.svg',
+    '/avatar/girl_05.svg',
+    '/avatar/girl_06.svg',
+    '/avatar/girl_07.svg',
+  ];
 
   useEffect(() => {
     checkUserAuth((user) => {
@@ -51,6 +70,23 @@ export default function App() {
       });
   };
 
+  const handleProfilePicture = async (pathURL) => {
+    await updateProfile(auth.currentUser, { photoURL: pathURL })
+      .then(() => {
+        changeUserState({
+          uid: auth.currentUser.uid,
+          displayName: auth.currentUser.displayName,
+          email: auth.currentUser.email,
+          photoURL: auth.currentUser.photoURL,
+          phoneNumber: auth.currentUser.phoneNumber,
+          emailVerified: auth.currentUser.emailVerified,
+        });
+      }).catch((error) => {
+        alertToast(error.message);
+      });
+    modal.hide('changeAvatar');
+  };
+
   if (isLogin) {
     return (
       <>
@@ -78,7 +114,7 @@ export default function App() {
                     <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={user.phoneNumber || '-'} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
-                <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch  items-start">
+                <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch items-start space-y-4 lg:space-y-2">
                   <button
                     onClick={(e) => {
                       edits.personalInformation && handleSubmit(e);
@@ -91,6 +127,32 @@ export default function App() {
                     </p>
                     {edits.personalInformation ? <i className="ml-1 bx bx-save text-base " /> : <i className="ml-1 bx bx-edit-alt text-base " />}
                   </button>
+                  <button
+                    className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center bg-slate-700 hover:bg-slate-800/90 border-slate-800 active:border-slate-600 text-slate-200 hover:text-slate-100 active:text-slate-200 rounded"
+                    onClick={() => modal.show('changeAvatar')}
+                  >
+                    Change Avatar
+                  </button>
+                  <Modal style="modal-content-delete" id="changeAvatar">
+                    <div className="p-2">
+                      <h3 className="text-center text-2xl font-bold tracking-wide mb-6 mt-2">Chose Avatar</h3>
+                      <div className="grid grid-cols-4 lg:grid-cols-5 gap-4">
+                        {
+                        avatarLists.map((path) => (
+                          <Image
+                            key={path}
+                            src={path}
+                            alt="avatar"
+                            width={100}
+                            height={100}
+                            className="w-30 transition duration-200 grayscale-[40%] cursor-pointer hover:grayscale-0 hover:scale-105 active:scale-100"
+                            onClick={() => handleProfilePicture(path)}
+                          />
+                        ))
+                      }
+                      </div>
+                    </div>
+                  </Modal>
                 </div>
               </form>
             </div>

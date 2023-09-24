@@ -50,9 +50,9 @@ export default function AppSidebar({ user }) {
               <Image
                 width="200"
                 height="200"
-                src="/avatar/boy_01.svg"
+                src={user.photoURL}
                 alt="Rounded avatar"
-                className="w-20 h-20 rounded-full"
+                className="w-20 h-20 rounded-full grayscale-[30%]"
               />
               <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
               <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />

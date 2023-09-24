@@ -33,7 +33,7 @@ export default function Register() {
     const { email, password } = inputs;
     await createUserWithEmailAndPassword(auth, email, password)
       .then((res) => {
-        updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}` });
+        updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
         const dataUser = {
           uid: res.user.uid,
           displayName: `user${res.user.uid.substring(0, 11)}`,

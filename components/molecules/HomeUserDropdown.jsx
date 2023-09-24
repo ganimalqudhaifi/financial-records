@@ -28,8 +28,8 @@ export default function HomeUserDropdown({ isLogin, user, isUserDropdownOpen, ha
         <Image
           width="200"
           height="200"
-          className="w-12 h-12 lg:w-[52px] lg:h-[52px] rounded-full"
-          src="/avatar/boy_01.svg"
+          className="w-12 h-12 lg:w-[52px] lg:h-[52px] rounded-full grayscale-[30%]"
+          src={user.photoURL}
           alt="user photo"
         />
         <div className="absolute bottom-0 -right-1.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full" />

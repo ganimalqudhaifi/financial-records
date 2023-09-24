@@ -5,7 +5,7 @@ import styles from './FinancialRecordsTable.module.css';
 
 export default function FinancialRecordsTable() {
   const { state } = useGlobalContext();
-  const { records, searchKeyword, filterPeriod, initialBalance, sliceShow, paginationIndex } = state;
+  const { records, searchKeyword, filterPeriod, initialBalance, sliceShow, paginationIndex, selectedAccount } = state;
 
   const valueDate = (date) => {
     const target = new Date(date);
@@ -25,6 +25,7 @@ export default function FinancialRecordsTable() {
                 records
                   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                   .sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal))
+                  .filter((record) => record.accountId === selectedAccount.id)
                   .filter((record) => record.keterangan.toLowerCase().includes(searchKeyword))
                   .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
                   .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)

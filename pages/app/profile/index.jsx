@@ -40,6 +40,8 @@ export default function App() {
     });
   }, []);
 
+  const handleInputs = (e) => changeUserState({ ...user, [e.target.name]: e.target.value });
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     await updateProfile(auth.currentUser, { displayName: user.displayName })
@@ -72,15 +74,15 @@ export default function App() {
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="displayName" className="mb-1 text-sm">displayName</label>
-                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.displayName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={user.displayName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>
-                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={(e) => changeUserState({ ...user, [e.target.name]: e.target.value })} value={user.phoneNumber} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={user.phoneNumber} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
                   </div>
                 </div>
                 <div className="md:px-5 pt-6 md:pt-2 grid col-span-3 md:col-span-1 justify-start md:justify-end items-start">

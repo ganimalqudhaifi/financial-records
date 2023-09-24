@@ -11,10 +11,10 @@ export default function FinancialRecordsInformation() {
 
   useEffect(() => {
     if (records.length) {
-      setPenerimaan(records.filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
-      setPengeluaran(records.filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
+      setPenerimaan(records.filter((record) => record.accountId === selectedAccount.id).filter((record) => record.jenis === 'Penerimaan').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
+      setPengeluaran(records.filter((record) => record.accountId === selectedAccount.id).filter((record) => record.jenis === 'Pengeluaran').reduce((previousValue, currentValue) => previousValue + currentValue.jumlah, 0));
     }
-  }, [records]);
+  }, [records, selectedAccount]);
 
   useEffect(() => {
     Object.keys(selectedAccount).length && setInitialBalance(selectedAccount.initialBalance);

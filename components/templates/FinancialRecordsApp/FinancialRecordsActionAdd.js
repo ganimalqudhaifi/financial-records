@@ -5,7 +5,7 @@ import { modal, pushRecord, successToast } from '../../../utils';
 
 export default function FinancialRecordsActionAdd() {
   const { state, pushRecordState } = useGlobalContext();
-  const { isDemo } = state;
+  const { isDemo, selectedAccount } = state;
 
   const [inputs, setInputs] = useState({
     tanggal: '',
@@ -34,6 +34,7 @@ export default function FinancialRecordsActionAdd() {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       value: (inputs.jenis === 'Penerimaan' ? inputs.jumlah : inputs.jumlah * -1),
+      accountId: selectedAccount.id,
     };
 
     if (!isDemo) {

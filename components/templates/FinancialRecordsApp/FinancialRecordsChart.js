@@ -24,7 +24,7 @@ ChartJS.register(
 
 export default function FinancialRecordsChart() {
   const { state } = useGlobalContext();
-  const { records } = state;
+  const { records, selectedAccount } = state;
 
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
@@ -40,24 +40,28 @@ export default function FinancialRecordsChart() {
     if (records.length) {
       records.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
 
-      const arrListPeriod = records.reduce((acc, record) => {
-        const d = new Date(record.tanggal);
-        const year = d.getFullYear();
-        const month = d.getMonth();
-        const period = `${year}-${month}`;
+      const arrListPeriod = records
+        .filter((record) => record.accountId === selectedAccount.id)
+        .reduce((acc, record) => {
+          const d = new Date(record.tanggal);
+          const year = d.getFullYear();
+          const month = d.getMonth();
+          const period = `${year}-${month}`;
 
-        if (!acc.includes(period)) {
-          acc.push(period);
-        }
-        return acc;
-      }, []);
+          if (!acc.includes(period)) {
+            acc.push(period);
+          }
+          return acc;
+        }, []);
 
       const penerimaan = arrListPeriod.map((filterPeriod) => records
         .filter((record) => valueDate(record.tanggal) === filterPeriod)
+        .filter((record) => record.accountId === selectedAccount.id)
         .reduce((a, b) => a + (b.jenis === 'Penerimaan' ? b.value : 0), 0));
 
       const pengeluaran = arrListPeriod.map((filterPeriod) => records
         .filter((record) => valueDate(record.tanggal) === filterPeriod)
+        .filter((record) => record.accountId === selectedAccount.id)
         .reduce((a, b) => a + (b.jenis === 'Pengeluaran' ? b.value : 0), 0));
 
       setChartData({
@@ -97,7 +101,7 @@ export default function FinancialRecordsChart() {
 
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [records]);
+  }, [records, selectedAccount]);
 
   return (
     <div className="flex items-start justify-center mt-5 p-5 w-full bg-white rounded">

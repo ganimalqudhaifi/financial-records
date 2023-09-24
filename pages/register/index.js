@@ -5,7 +5,7 @@ import Script from 'next/script';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
 import { useGlobalContext } from '../../context';
 import { alertToast, updateInitialBalance } from '../../utils';
-import useAccounts from '../../hooks';
+import { useAccounts } from '../../hooks';
 
 export default function Register() {
   const {

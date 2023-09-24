@@ -30,7 +30,7 @@ export default function FinancialRecordsTableHead() {
         <th>No</th>
         <th>Keterangan</th>
         <th>Tanggal</th>
-        <th>Jenis</th>
+        <th>Kategori</th>
         <th>Jumlah</th>
         <th>Saldo</th>
         <th>Action</th>

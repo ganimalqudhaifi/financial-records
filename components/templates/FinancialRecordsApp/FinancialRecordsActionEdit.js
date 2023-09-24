@@ -112,7 +112,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
               required
             />
           </div>
-          <button className="py-2.5 w-full font-medium text-lg text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg" type="submit">Kirim</button>
+          <button className="py-2.5 w-full font-medium text-lg text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg" type="submit">Terapkan</button>
         </form>
       </Modal>
     </>

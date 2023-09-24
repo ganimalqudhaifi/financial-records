@@ -1,4 +1,4 @@
-import { AppSidebar, Footers } from '../../organisms';
+import { AppSidebar } from '../../organisms';
 
 export default function AppLayout({ children, ...rest }) {
   return (
@@ -6,9 +6,6 @@ export default function AppLayout({ children, ...rest }) {
       <div className="lg:flex flex-1 w-full">
         <AppSidebar {...rest} />
         {children}
-      </div>
-      <div className="lg:ml-64">
-        <Footers />
       </div>
     </div>
   );

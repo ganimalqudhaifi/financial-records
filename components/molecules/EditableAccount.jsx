@@ -38,13 +38,12 @@ export default function EditableAccount({ account }) {
   if (isDisabled) {
     return (
       <div
-        className="relative w-full px-2 py-2 rounded-lg border border-slate-500 bg-gray-200"
+        className="relative w-full px-2 py-2 rounded-lg border border-gray-400 bg-gray-200 text-gray-700 hover:text-gray-800"
         onDoubleClick={handleDoubleClick}
       >
         <button
           className="absolute inset-y-auto right-0 px-1 text-gray-700 hover:text-red-700 hover:animate-wiggle"
           onClick={() => {
-            // deleteAccount(account.id);
             modal.show(account.id);
           }}
         >

@@ -109,9 +109,9 @@ export default function App() {
                   <li>
                     <button
                       onClick={() => addAccount({ name: 'New Account', initialBalance: 0 })}
-                      className="w-full py-2 rounded-lg border-2 border-slate-500 border-dashed"
+                      className="w-full p-2 rounded-lg border border-slate-700 border-dashed text-gray-900 "
                     >
-                      New Account +
+                      <span>New Account +</span>
                     </button>
                   </li>
                 </ul>

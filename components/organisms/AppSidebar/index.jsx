@@ -85,6 +85,7 @@ export default function AppSidebar({ user }) {
           <ul className="pt-5 space-y-2">
             <li>
               <Link
+                prefetch
                 href={`${!isDemo ? '/app/dashboard' : '/demo/dashboard'}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
@@ -104,7 +105,8 @@ export default function AppSidebar({ user }) {
             <li>
               <Link
                 // eslint-disable-next-line quotes
-                href={`${!isDemo ? "/app" : "/demo"}`}
+                prefetch
+                href={`${!isDemo ? '/app' : '/demo'}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <svg
@@ -121,6 +123,7 @@ export default function AppSidebar({ user }) {
             </li>
             <li>
               <Link
+                prefetch
                 href={`${!isDemo ? '/app/profile' : '/login'}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
                 disabled

@@ -1,6 +1,6 @@
 export const modal = {
   show: (id) => {
-    document.getElementById(id).style.display = 'block';
+    document.getElementById(id).style.display = 'flex';
   },
   hide: (id) => {
     document.getElementById(id).style.display = 'none';

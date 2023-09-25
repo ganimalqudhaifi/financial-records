@@ -108,8 +108,8 @@ export default function FinancialRecordsChart() {
         </div>
       </div>
 
-      <Modal id={uniqueId} style="modal-content-graph">
-        <div className="p-4">
+      <Modal id={uniqueId}>
+        <div className="w-screen max-w-4xl p-4">
           <Bar options={chartOptions} data={chartData} />
         </div>
       </Modal>

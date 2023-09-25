@@ -99,22 +99,22 @@ export default function App() {
             <h2 className="font-medium text-3xl mb-4">Profile</h2>
             <div className="p-5 w-full bg-white rounded">
               <h3 className="font-medium text-xl">Personal Information</h3>
-              <form onSubmit={handleSubmit} className="mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600">
+              <form onSubmit={handleSubmit} className={`group ${edits.personalInformation && 'can-edit'} mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600`}>
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="displayName" className="mb-1 text-sm">Display Name</label>
-                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={user.displayName} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={user.displayName} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 " disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={user.email} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={user.email} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>
-                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={user.phoneNumber || '-'} className={`${edits.personalInformation && ' border-2 border-slate-400 rounded focus:border-slate-500'} p-1 disabled:bg-slate-400/10 disabled:rounded`} disabled={!edits.personalInformation} />
+                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={user.phoneNumber || '-'} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled={!edits.personalInformation} />
                   </div>
                 </div>
-                <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch items-start space-y-4 lg:space-y-2">
+                <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch items-start">
                   <button
                     onClick={(e) => {
                       edits.personalInformation && handleSubmit(e);
@@ -128,7 +128,7 @@ export default function App() {
                     {edits.personalInformation ? <i className="ml-1 bx bx-save text-base " /> : <i className="ml-1 bx bx-edit-alt text-base " />}
                   </button>
                   <button
-                    className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center bg-slate-700 hover:bg-slate-800/90 border-slate-800 active:border-slate-600 text-slate-200 hover:text-slate-100 active:text-slate-200 rounded"
+                    className="grid grid-flow-col px-16 py-1 mt-4 md:px-2 lg:mt-2 border justify-center items-center bg-slate-700 hover:bg-slate-800/90 border-slate-800 active:border-slate-600 text-slate-200 hover:text-slate-100 active:text-slate-200 rounded"
                     onClick={() => modal.show('changeAvatar')}
                   >
                     Change Avatar

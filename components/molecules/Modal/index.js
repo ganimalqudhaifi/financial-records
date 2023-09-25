@@ -1,11 +1,10 @@
 import { modal } from '../../../utils';
-import styles from './Modal.module.css';
 
-export default function Modal({ id, children, style }) {
+export default function Modal({ id, children }) {
   return (
-    <div id={id} onDoubleClick={(e) => e.stopPropagation()} className="fixed top-0 left-0 hidden z-50 p-4 w-full h-full bg-black/40" onClick={(e) => modal.close(e, id)}>
-      <div className={`relative mx-auto rounded-lg bg-white ${styles[style]} animate-pop`}>
-        <span className="absolute top-px right-3.5 font-bold text-3xl md:text-4xl cursor-pointer" onClick={() => modal.hide(id)}>&times;</span>
+    <div id={id} onDoubleClick={(e) => e.stopPropagation()} className="hidden items-center justify-center fixed inset-0 z-50 p-4 bg-black/40" onClick={(e) => modal.close(e, id)}>
+      <div className="relative max-w-4xl mx-auto p-2.5 bg-white rounded-md animate-pop md:p-4 lg:p-5">
+        <span className="absolute top-px right-3.5 font-bold text-3xl cursor-pointer md:text-4xl" onClick={() => modal.hide(id)}>&times;</span>
         {children}
       </div>
     </div>

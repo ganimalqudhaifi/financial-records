@@ -1,5 +1,5 @@
 import { alertToast, checkUserUid } from '../utils';
-import { database, push, ref, remove, set } from '../config/firebase';
+import { database, onValue, push, ref, remove, set } from '../config/firebase';
 import { appActionType, useAppContext } from '../context';
 
 export default function useAccounts() {
@@ -36,6 +36,17 @@ export default function useAccounts() {
     checkUserUid((uid) => {
       const accountRef = ref(database, `users/${uid}/accounts/${id}`);
       remove(accountRef);
+      const recordsRef = ref(database, `users/${uid}/records/`);
+      onValue(recordsRef, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+          const childKey = childSnapshot.key;
+          const childData = childSnapshot.val();
+          if (childData.accountId === id) {
+            const recordRef = ref(database, `users/${uid}/records/${childKey}`);
+            remove(recordRef);
+          }
+        });
+      }, { onlyOnce: true });
     });
   };
 

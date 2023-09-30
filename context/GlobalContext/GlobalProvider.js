@@ -17,10 +17,6 @@ export function GlobalProvider(props) {
     dispatch({ type: globalActionType.CHANGE_USER, payload });
   };
 
-  const changeRecordsState = (payload) => {
-    dispatch({ type: globalActionType.GET_RECORDS, payload });
-  };
-
   const changePaginationIndexState = (btnpagination) => {
     dispatch({ type: globalActionType.HANDLE_PAGINATION_INDEX, payload: btnpagination });
   };
@@ -38,21 +34,6 @@ export function GlobalProvider(props) {
     dispatch({ type: globalActionType.CHANGE_INITIAL_BALANCE, payload });
   };
 
-  const pushRecordState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.CREATE_RECORD, payload });
-  };
-
-  const removeRecordState = (id, callback) => {
-    callback && callback(id);
-    dispatch({ type: globalActionType.DELETE_RECORD, id });
-  };
-
-  const updateRecordState = (payload, callback) => {
-    callback && callback(payload);
-    dispatch({ type: globalActionType.UPDATE_RECORD, payload });
-  };
-
   const value = useMemo(() => ({
     state,
     dispatch,
@@ -63,10 +44,6 @@ export function GlobalProvider(props) {
     changeFilterPeriodState,
     changeSliceShowState,
     changeInitialBalanceState,
-    changeRecordsState,
-    pushRecordState,
-    updateRecordState,
-    removeRecordState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { Modal } from '../../molecules';
+import { modal, successToast } from '../../../utils';
+import { useRecords } from '../../../hooks';
 import { useGlobalContext } from '../../../context';
-import { modal, successToast, updateRecord } from '../../../utils';
 
 export default function FinancialRecordsActionEdit({ no, record }) {
-  const { state, updateRecordState } = useGlobalContext();
+  const { editRecord } = useRecords();
+  const { state } = useGlobalContext();
   const { isDemo } = state;
   const uniqueId = `editModal${no}`;
   const { ...rest } = record;
@@ -43,7 +45,9 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       updatedAt: new Date().toISOString(),
       value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
     };
-    updateRecordState(newInputs, !isDemo && updateRecord());
+    if (!isDemo) {
+      editRecord(newInputs);
+    }
     modal.hide(uniqueId);
     successToast('Data berhasil diubah');
   };

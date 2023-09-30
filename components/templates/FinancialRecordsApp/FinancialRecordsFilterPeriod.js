@@ -1,9 +1,10 @@
 import { useGlobalContext } from '../../../context';
 import { generatePeriodYM, templateDateMY } from '../../../utils';
+import { useRecords } from '../../../hooks';
 
 export default function FinancialRecordsFilterPeriod() {
-  const { state, changeFilterPeriodState } = useGlobalContext();
-  const { records } = state;
+  const { records } = useRecords();
+  const { changeFilterPeriodState } = useGlobalContext();
 
   const listPeriod = !records.length ? [] : records.reduce((acc, record) => {
     const period = generatePeriodYM(record.tanggal);

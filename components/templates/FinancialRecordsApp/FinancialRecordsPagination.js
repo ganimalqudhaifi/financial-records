@@ -1,8 +1,11 @@
 import { useGlobalContext } from '../../../context';
+import { useRecords } from '../../../hooks';
 
 export default function FinancialRecordsPaginantion() {
+  const { records } = useRecords();
+
   const { state, changePaginationIndexState } = useGlobalContext();
-  const { records, searchKeyword, sliceShow, paginationIndex, filterPeriod } = state;
+  const { searchKeyword, sliceShow, paginationIndex, filterPeriod } = state;
 
   const arrPagination = [];
   const entires = records.length && records.filter((record) => record.description.toLowerCase().includes(searchKeyword)).length;

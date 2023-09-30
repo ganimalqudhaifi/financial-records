@@ -3,14 +3,15 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppLayout, FinancialRecords } from '../../components';
 import { useGlobalContext } from '../../context';
-import { checkUserAuth, observeRecords } from '../../utils';
+import { checkUserAuth } from '../../utils';
+import { useDatabaseObserver, useRecords } from '../../hooks';
 
 export default function App() {
+  const { setRecords } = useRecords();
   const {
     state,
     changeIsLoginState,
     changeUserState,
-    changeRecordsState,
   } = useGlobalContext();
   const { isLogin, user } = state;
 
@@ -27,17 +28,11 @@ export default function App() {
         router.push('/');
       }
     });
-
-    observeRecords((snapshot) => {
-      if (snapshot.exists()) {
-        const data = Object.keys(snapshot.val()).map((key) => ({
-          ...snapshot.val()[key],
-          id: key,
-        }));
-        changeRecordsState(data);
-      }
-    });
   }, []);
+
+  useDatabaseObserver('records', (data) => {
+    setRecords(data);
+  });
 
   if (isLogin) {
     return (

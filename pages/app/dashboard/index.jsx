@@ -5,15 +5,15 @@ import { AppLayout } from '../../../components';
 import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../../context';
-import { checkUserAuth, observeRecords, observeInitialBalance } from '../../../utils';
+import { checkUserAuth } from '../../../utils';
+import { useDatabaseObserver, useRecords } from '../../../hooks';
 
 export default function App() {
+  const { setRecords } = useRecords();
   const {
     state,
-    changeRecordsState,
     changeIsLoginState,
     changeUserState,
-    changeInitialBalanceState,
   } = useGlobalContext();
   const { isLogin, user } = state;
 
@@ -30,21 +30,11 @@ export default function App() {
         router.push('/');
       }
     });
-
-    observeInitialBalance((snapshot) => {
-      changeInitialBalanceState(snapshot.val());
-    });
-
-    observeRecords((snapshot) => {
-      if (snapshot.exists()) {
-        const data = Object.keys(snapshot.val()).map((key) => ({
-          ...snapshot.val()[key],
-          id: key,
-        }));
-        changeRecordsState(data);
-      }
-    });
   }, []);
+
+  useDatabaseObserver('records', (data) => {
+    setRecords(data);
+  });
 
   if (isLogin) {
     return (

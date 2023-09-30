@@ -2,12 +2,19 @@ import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
 import { useGlobalContext } from '../../../context';
 import styles from './FinancialRecordsTable.module.css';
-import { useAccounts } from '../../../hooks';
+import { useAccounts, useRecords } from '../../../hooks';
 
 export default function FinancialRecordsTable() {
   const { selectedAccount } = useAccounts();
+  const { records } = useRecords();
   const { state } = useGlobalContext();
-  const { records, searchKeyword, filterPeriod, initialBalance, sliceShow, paginationIndex } = state;
+  const {
+    searchKeyword,
+    filterPeriod,
+    initialBalance,
+    sliceShow,
+    paginationIndex,
+  } = state;
 
   const valueDate = (date) => {
     const target = new Date(date);

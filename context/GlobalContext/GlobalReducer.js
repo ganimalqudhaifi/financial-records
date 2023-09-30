@@ -1,5 +1,4 @@
 export const globalInitialState = {
-  records: [],
   initialBalance: 0,
   searchKeyword: '',
   sliceShow: 10,
@@ -17,10 +16,6 @@ export const globalActionType = {
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
-  GET_RECORDS: 'GET_RECORDS',
-  CREATE_RECORD: 'CREATE_RECORD',
-  UPDATE_RECORD: 'UPDATE_RECORD',
-  DELETE_RECORD: 'DELETE_RECORD',
   CHANGE_USER: 'CHANGE_USER',
   CHANGE_ISLOGIN: 'CHANGE_ISLOGIN',
   CHANGE_ISDEMO: 'CHANGE_ISDEMO',
@@ -68,34 +63,6 @@ export const globalReducer = (state, action) => {
         ...state,
         isDemo: action.payload,
       };
-    case globalActionType.GET_RECORDS:
-      return {
-        ...state,
-        records: action.payload,
-      };
-    case globalActionType.CREATE_RECORD:
-      return {
-        ...state,
-        records: [
-          ...state.records,
-          action.payload,
-        ],
-      };
-    case globalActionType.UPDATE_RECORD: {
-      const indexRecord = state.records.findIndex((record) => record.id === action.payload.id);
-      const updatedRecords = state.records.fill(action.payload, indexRecord, indexRecord + 1);
-      return {
-        ...state,
-        records: updatedRecords,
-      };
-    }
-    case globalActionType.DELETE_RECORD: {
-      const records = state.records.filter((record) => record.id !== action.id);
-      return {
-        ...state,
-        records,
-      };
-    }
     default:
       return state;
   }

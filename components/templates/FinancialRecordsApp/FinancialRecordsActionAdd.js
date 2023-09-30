@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { Modal } from '../../molecules';
 import { useGlobalContext } from '../../../context';
-import { modal, pushRecord, successToast } from '../../../utils';
-import { useAccounts } from '../../../hooks';
+import { modal, successToast } from '../../../utils';
+import { useAccounts, useRecords } from '../../../hooks';
 
 export default function FinancialRecordsActionAdd() {
   const { selectedAccount } = useAccounts();
-  const { state, pushRecordState } = useGlobalContext();
+  const { addRecord } = useRecords();
+  const { state } = useGlobalContext();
   const { isDemo } = state;
   const uniqueId = 'addModal';
 
@@ -55,9 +56,7 @@ export default function FinancialRecordsActionAdd() {
     };
 
     if (!isDemo) {
-      pushRecordState(newInputs, pushRecord());
-    } else {
-      pushRecordState({ ...newInputs, id: new Date().toISOString() });
+      addRecord(newInputs);
     }
     modal.hide(uniqueId);
     setInputs(initialInputs);

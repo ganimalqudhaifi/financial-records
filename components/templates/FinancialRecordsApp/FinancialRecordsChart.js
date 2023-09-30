@@ -9,10 +9,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useGlobalContext } from '../../../context';
 import { Modal } from '../../molecules';
 import { modal } from '../../../utils';
-import { useAccounts } from '../../../hooks';
+import { useAccounts, useRecords } from '../../../hooks';
 
 ChartJS.register(
   CategoryScale,
@@ -25,8 +24,7 @@ ChartJS.register(
 
 export default function FinancialRecordsChart() {
   const { selectedAccount } = useAccounts();
-  const { state } = useGlobalContext();
-  const { records } = state;
+  const { records } = useRecords();
   const uniqueId = 'chartModal';
 
   const [chartData, setChartData] = useState({ datasets: [] });

@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useGlobalContext, useAppContext, appActionType } from '../../../context';
+import { useGlobalContext } from '../../../context';
 import { userSignOut } from '../../../utils';
 import { AccountsDropdown } from '../../molecules';
-import { useDatabaseObserver } from '../../../hooks';
+import { useAccounts, useDatabaseObserver } from '../../../hooks';
 
 export default function AppSidebar({ user }) {
-  const { dispatch } = useAppContext();
+  const { setAccounts } = useAccounts();
   const { state } = useGlobalContext();
   const { isDemo } = state;
 
@@ -19,7 +19,7 @@ export default function AppSidebar({ user }) {
   };
 
   useDatabaseObserver('accounts', (data) => {
-    dispatch({ type: appActionType.SET_ACCOUNTS, payload: data });
+    setAccounts(data);
   });
 
   return (

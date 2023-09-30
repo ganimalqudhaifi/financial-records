@@ -6,6 +6,10 @@ export default function useAccounts() {
   const { state, dispatch } = useAppContext();
   const { accounts, activeAccountIndex, selectedAccount } = state;
 
+  const setAccounts = (payload) => {
+    dispatch({ type: appActionType.SET_ACCOUNTS, payload });
+  };
+
   const addAccount = (payload) => {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
@@ -45,6 +49,7 @@ export default function useAccounts() {
 
   return {
     accounts,
+    setAccounts,
     addAccount,
     editAccount,
     deleteAccount,

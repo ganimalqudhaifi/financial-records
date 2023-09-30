@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
 import { alertToast, checkUserUid } from '../utils';
 import { database, onValue, push, ref, remove, set } from '../config/firebase';
+import { appActionType, useAppContext } from '../context';
 
 export default function useAccounts() {
-  const [accounts, setAccounts] = useState([]);
+  const { state, dispatch } = useAppContext();
+  const { accounts } = state;
+
   const [indexAccount, setIndexAccount] = useState(0);
   const [selectedAccount, setSelectedAccount] = useState({});
 
@@ -16,7 +19,7 @@ export default function useAccounts() {
             ...snapshot.val()[key],
             id: key,
           }));
-          setAccounts(data);
+          dispatch({ type: appActionType.SET_ACCOUNTS, payload: data });
         }
       });
     });
@@ -30,26 +33,19 @@ export default function useAccounts() {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else {
-      setAccounts((prevState) => ({
-        ...prevState,
-        payload,
-      }));
       checkUserUid((uid) => {
         const accountsRef = ref(database, `users/${uid}/accounts`);
         push(accountsRef, payload);
+        dispatch({ type: appActionType.ADD_ACCOUNTS, payload });
       });
     }
   };
 
   const editAccount = (id, payload) => {
-    const accountIndex = accounts.findIndex((account) => account.id === id);
-    const updatedAccounts = accounts.fill(payload, accountIndex, accountIndex + 1);
-    setAccounts(
-      updatedAccounts,
-    );
     checkUserUid((uid) => {
       const accountRef = ref(database, `users/${uid}/accounts/${id}`);
       set(accountRef, payload);
+      dispatch({ type: appActionType.EDIT_ACCOUNTS, id, payload });
     });
   };
 
@@ -58,13 +54,10 @@ export default function useAccounts() {
       alertToast('Minimal 1 Akun Diperlukan');
       return;
     }
-    const filteredAccounts = accounts.filter((account) => account.id !== id);
-    setAccounts(
-      filteredAccounts,
-    );
     checkUserUid((uid) => {
       const accountRef = ref(database, `users/${uid}/accounts/${id}`);
       remove(accountRef);
+      dispatch({ type: appActionType.DELETE_ACCOUNTS, id });
     });
   };
 

@@ -32,10 +32,10 @@ export const appReducer = (state, action) => {
       };
     }
     case appActionType.DELETE_ACCOUNTS: {
-      const accounts = state.accounts.filter((record) => record.id !== action.id);
+      const filteredAccounts = state.accounts.filter((record) => record.id !== action.id);
       return {
         ...state,
-        accounts,
+        accounts: filteredAccounts,
       };
     }
     default:

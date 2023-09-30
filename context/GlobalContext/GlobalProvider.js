@@ -2,7 +2,7 @@ import { useMemo, useReducer } from 'react';
 import { globalReducer, globalInitialState, globalActionType } from './GlobalReducer';
 import GlobalContext from './GlobalContext';
 
-export default function GlobalContextProvider(props) {
+export function GlobalProvider(props) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);
 
   const changeIsDemoState = (payload) => {

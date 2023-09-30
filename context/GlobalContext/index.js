@@ -1,3 +1,3 @@
-export { useGlobalContext } from './GlobalContext';
-export { default as GlobalContextProvider } from './GlobalProvider';
-export { globalInitialState, globalActionType } from './GlobalReducer';
+export * from './GlobalContext';
+export * from './GlobalProvider';
+export * from './GlobalReducer';

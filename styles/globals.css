@@ -20,12 +20,12 @@
   @variants responsive {
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
-      @apply bg-slate-300 w-1.5;
+      @apply bg-slate-900 w-2;
     }
 
     .no-scrollbar::-webkit-scrollbar-thumb {
       /* Customize the scrollbar track */
-      @apply bg-slate-800 rounded-full;
+      @apply bg-slate-400 rounded-full;
     }
 
     /* Hide scrollbar for IE, Edge and Firefox */

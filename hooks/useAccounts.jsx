@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { alertToast, checkUserUid } from '../utils';
-import { database, onValue, push, ref, remove, set } from '../config/firebase';
+import { database, push, ref, remove, set } from '../config/firebase';
 import { appActionType, useAppContext } from '../context';
 
 export default function useAccounts() {
@@ -9,21 +9,6 @@ export default function useAccounts() {
 
   const [indexAccount, setIndexAccount] = useState(0);
   const [selectedAccount, setSelectedAccount] = useState({});
-
-  useEffect(() => {
-    checkUserUid((uid) => {
-      const accountsRef = ref(database, `users/${uid}/accounts`);
-      onValue(accountsRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = Object.keys(snapshot.val()).map((key) => ({
-            ...snapshot.val()[key],
-            id: key,
-          }));
-          dispatch({ type: appActionType.SET_ACCOUNTS, payload: data });
-        }
-      });
-    });
-  }, []);
 
   useEffect(() => {
     accounts.length && setSelectedAccount(accounts[indexAccount]);

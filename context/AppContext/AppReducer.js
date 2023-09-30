@@ -1,11 +1,16 @@
-export const appInitialState = { accounts: [] };
+export const appInitialState = {
+  accounts: [],
+  activeAccountIndex: 0,
+  selectedAccount: {},
+};
 
 export const appActionType = {
   SET_ACCOUNTS: 'SET_ACCOUNTS',
   ADD_ACCOUNTS: 'ADD_ACCOUNTS',
   EDIT_ACCOUNTS: 'EDIT_ACCOUNTS',
   DELETE_ACCOUNTS: 'DELETE_ACCOUNTS',
-
+  SET_ACTIVE_ACCOUNT_INDEX: 'SET_ACTIVE_ACCOUNT_INDEX',
+  SET_SELECTED_ACCOUNT: 'SET_SELECTED_ACCOUNT',
 };
 
 export const appReducer = (state, action) => {
@@ -36,6 +41,18 @@ export const appReducer = (state, action) => {
       return {
         ...state,
         accounts: filteredAccounts,
+      };
+    }
+    case appActionType.SET_ACTIVE_ACCOUNT_INDEX: {
+      return {
+        ...state,
+        activeAccountIndex: action.payload,
+      };
+    }
+    case appActionType.SET_SELECTED_ACCOUNT: {
+      return {
+        ...state,
+        selectedAccount: action.payload,
       };
     }
     default:

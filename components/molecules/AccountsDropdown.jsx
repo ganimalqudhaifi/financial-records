@@ -1,15 +1,26 @@
 import { useEffect, useState } from 'react';
-import { useGlobalContext } from '../../context';
 import { useAccounts } from '../../hooks';
 
 export default function AccountsDropdown() {
-  const { accounts, setIndexAccount, selectedAccount } = useAccounts();
-  const { changeSelectedAccountState } = useGlobalContext();
+  const {
+    accounts,
+    activeAccountIndex,
+    setActiveAccountIndex,
+    selectedAccount,
+    setSelectedAccount,
+  } = useAccounts();
+
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
-    changeSelectedAccountState(selectedAccount);
-  }, [selectedAccount]);
+    if (accounts.length) {
+      if (accounts.length > activeAccountIndex) {
+        setSelectedAccount(accounts[activeAccountIndex]);
+      } else {
+        setSelectedAccount(accounts[activeAccountIndex - 1]);
+      }
+    }
+  }, [accounts, activeAccountIndex]);
 
   return (
     <div className="my-1.5">
@@ -31,7 +42,7 @@ export default function AccountsDropdown() {
                 className="w-full p-2 text-left"
                 onClick={() => {
                   setIsActive(!isActive);
-                  setIndexAccount(i);
+                  setActiveAccountIndex(i);
                 }}
               >
                 {account.name}

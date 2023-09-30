@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useGlobalContext } from '../../../context';
+import { useAccounts } from '../../../hooks';
 
 export default function FinancialRecordsInformation() {
+  const { selectedAccount } = useAccounts();
   const { state } = useGlobalContext();
-  const { records, selectedAccount } = state;
+  const { records } = state;
 
   const [initialBalance, setInitialBalance] = useState(0);
   const [pemasukan, setPenerimaan] = useState(0);

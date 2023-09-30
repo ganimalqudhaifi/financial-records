@@ -1,4 +1,4 @@
-import { GlobalProvider } from '../context';
+import { AppProvider, GlobalProvider } from '../context';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
@@ -6,7 +6,9 @@ function MyApp({ Component, pageProps }) {
     <>
       <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
       <GlobalProvider>
-        <Component {...pageProps} />
+        <AppProvider>
+          <Component {...pageProps} />
+        </AppProvider>
       </GlobalProvider>
     </>
   );

@@ -1,18 +1,10 @@
-import { useEffect, useState } from 'react';
 import { alertToast, checkUserUid } from '../utils';
 import { database, push, ref, remove, set } from '../config/firebase';
 import { appActionType, useAppContext } from '../context';
 
 export default function useAccounts() {
   const { state, dispatch } = useAppContext();
-  const { accounts } = state;
-
-  const [indexAccount, setIndexAccount] = useState(0);
-  const [selectedAccount, setSelectedAccount] = useState({});
-
-  useEffect(() => {
-    accounts.length && setSelectedAccount(accounts[indexAccount]);
-  }, [accounts, indexAccount]);
+  const { accounts, activeAccountIndex, selectedAccount } = state;
 
   const addAccount = (payload) => {
     if (accounts.length >= 8) {
@@ -21,7 +13,6 @@ export default function useAccounts() {
       checkUserUid((uid) => {
         const accountsRef = ref(database, `users/${uid}/accounts`);
         push(accountsRef, payload);
-        dispatch({ type: appActionType.ADD_ACCOUNTS, payload });
       });
     }
   };
@@ -30,7 +21,6 @@ export default function useAccounts() {
     checkUserUid((uid) => {
       const accountRef = ref(database, `users/${uid}/accounts/${id}`);
       set(accountRef, payload);
-      dispatch({ type: appActionType.EDIT_ACCOUNTS, id, payload });
     });
   };
 
@@ -42,8 +32,15 @@ export default function useAccounts() {
     checkUserUid((uid) => {
       const accountRef = ref(database, `users/${uid}/accounts/${id}`);
       remove(accountRef);
-      dispatch({ type: appActionType.DELETE_ACCOUNTS, id });
     });
+  };
+
+  const setActiveAccountIndex = (payload) => {
+    dispatch({ type: appActionType.SET_ACTIVE_ACCOUNT_INDEX, payload });
+  };
+
+  const setSelectedAccount = (payload) => {
+    dispatch({ type: appActionType.SET_SELECTED_ACCOUNT, payload });
   };
 
   return {
@@ -51,8 +48,9 @@ export default function useAccounts() {
     addAccount,
     editAccount,
     deleteAccount,
+    activeAccountIndex,
+    setActiveAccountIndex,
     selectedAccount,
-    indexAccount,
-    setIndexAccount,
+    setSelectedAccount,
   };
 }

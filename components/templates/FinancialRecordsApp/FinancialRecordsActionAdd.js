@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Modal } from '../../molecules';
 import { useGlobalContext } from '../../../context';
 import { modal, pushRecord, successToast } from '../../../utils';
+import { useAccounts } from '../../../hooks';
 
 export default function FinancialRecordsActionAdd() {
+  const { selectedAccount } = useAccounts();
   const { state, pushRecordState } = useGlobalContext();
-  const { isDemo, selectedAccount } = state;
+  const { isDemo } = state;
   const uniqueId = 'addModal';
 
   const categories = [

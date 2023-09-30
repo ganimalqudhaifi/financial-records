@@ -5,15 +5,19 @@ import { modal } from '../../../utils';
 import { Modal } from '../../molecules';
 
 export default function FinancialRecordsTableHead() {
-  const { editAccount } = useAccounts();
+  const { editAccount, selectedAccount } = useAccounts();
   const { state, changeInitialBalanceState } = useGlobalContext();
-  const { selectedAccount } = state;
+  const { initialBalance } = state;
 
-  const uniqueId = 'changeInitialBalanceModal';
   const [inputs, setInputs] = useState(0);
 
+  const uniqueId = 'changeInitialBalanceModal';
+
   useEffect(() => {
-    Object.keys(selectedAccount).length && setInputs(selectedAccount.initialBalance);
+    if (Object.keys(selectedAccount).length) {
+      setInputs(selectedAccount.initialBalance);
+      changeInitialBalanceState(selectedAccount.initialBalance);
+    }
   }, [selectedAccount]);
 
   const handleSubmit = (e) => {
@@ -38,7 +42,7 @@ export default function FinancialRecordsTableHead() {
       <tr>
         <th colSpan="4">Saldo Awal</th>
         <th />
-        <th>{`Rp ${inputs.toLocaleString('id-ID')}`}</th>
+        <th>{`Rp ${initialBalance.toLocaleString('id-ID')}`}</th>
         <td>
           <button className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded" onClick={() => modal.show(uniqueId)}>Edit</button>
 

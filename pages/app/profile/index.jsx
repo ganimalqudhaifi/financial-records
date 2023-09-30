@@ -12,7 +12,7 @@ import {
 } from '../../../utils';
 import { useAccounts } from '../../../hooks';
 
-export default function App() {
+export default function Profile() {
   const { accounts, addAccount } = useAccounts();
   const { state, changeIsLoginState, changeUserState } = useGlobalContext();
   const { isLogin, user } = state;

@@ -12,6 +12,7 @@ import { Bar } from 'react-chartjs-2';
 import { useGlobalContext } from '../../../context';
 import { Modal } from '../../molecules';
 import { modal } from '../../../utils';
+import { useAccounts } from '../../../hooks';
 
 ChartJS.register(
   CategoryScale,
@@ -23,8 +24,9 @@ ChartJS.register(
 );
 
 export default function FinancialRecordsChart() {
+  const { selectedAccount } = useAccounts();
   const { state } = useGlobalContext();
-  const { records, selectedAccount } = state;
+  const { records } = state;
   const uniqueId = 'chartModal';
 
   const [chartData, setChartData] = useState({ datasets: [] });
@@ -40,7 +42,6 @@ export default function FinancialRecordsChart() {
       records.sort((a, b) => new Date(a.date) - new Date(b.date));
 
       const arrListPeriod = records
-        .filter((record) => record.accountId === selectedAccount.id)
         .reduce((acc, record) => {
           const d = new Date(record.date);
           const year = d.getFullYear();
@@ -55,10 +56,12 @@ export default function FinancialRecordsChart() {
 
       const pemasukan = arrListPeriod.map((filterPeriod) => records
         .filter((record) => valueDate(record.date) === filterPeriod)
+        .filter((record) => record.accountId === selectedAccount.id)
         .reduce((a, b) => a + (b.categoryId < 200 ? b.value : 0), 0));
 
       const pengeluaran = arrListPeriod.map((filterPeriod) => records
         .filter((record) => valueDate(record.date) === filterPeriod)
+        .filter((record) => record.accountId === selectedAccount.id)
         .reduce((a, b) => a + (b.categoryId > 200 ? b.value : 0), 0));
 
       setChartData({

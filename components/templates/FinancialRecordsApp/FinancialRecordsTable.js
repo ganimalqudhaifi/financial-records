@@ -2,10 +2,12 @@ import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
 import { useGlobalContext } from '../../../context';
 import styles from './FinancialRecordsTable.module.css';
+import { useAccounts } from '../../../hooks';
 
 export default function FinancialRecordsTable() {
+  const { selectedAccount } = useAccounts();
   const { state } = useGlobalContext();
-  const { records, searchKeyword, filterPeriod, initialBalance, sliceShow, paginationIndex, selectedAccount } = state;
+  const { records, searchKeyword, filterPeriod, initialBalance, sliceShow, paginationIndex } = state;
 
   const valueDate = (date) => {
     const target = new Date(date);
@@ -35,10 +37,11 @@ export default function FinancialRecordsTable() {
                       no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
                       record={record}
                       saldoAkhir={records
+                        .filter((record) => record.accountId === selectedAccount.id)
                         .filter((record) => record.description.toLowerCase().includes(searchKeyword))
                         .filter((record) => valueDate(record.date).includes(filterPeriod))
                         .slice(0, ((paginationIndex * sliceShow) - sliceShow) + i + 1)
-                        .reduce((a, b) => a + b.amount, initialBalance)}
+                        .reduce((a, b) => a + b.value, initialBalance)}
                     />
                   ))
               }

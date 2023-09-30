@@ -46,7 +46,7 @@ export default function FinancialRecordsActionEdit({ no, record }) {
       value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
     };
     if (!isDemo) {
-      editRecord(newInputs);
+      editRecord(inputs.id, newInputs);
     }
     modal.hide(uniqueId);
     successToast('Data berhasil diubah');

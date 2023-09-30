@@ -2,6 +2,7 @@ export const appInitialState = {
   accounts: [],
   activeAccountIndex: 0,
   selectedAccount: {},
+  records: [],
 };
 
 export const appActionType = {
@@ -11,6 +12,10 @@ export const appActionType = {
   DELETE_ACCOUNTS: 'DELETE_ACCOUNTS',
   SET_ACTIVE_ACCOUNT_INDEX: 'SET_ACTIVE_ACCOUNT_INDEX',
   SET_SELECTED_ACCOUNT: 'SET_SELECTED_ACCOUNT',
+  SET_RECORDS: 'SET_RECORDS',
+  ADD_RECORDS: 'ADD_RECORDS',
+  EDIT_RECORDS: 'EDIT_RECORDS',
+  DELETE_RECORDS: 'DELETE_RECORDS',
 };
 
 export const appReducer = (state, action) => {
@@ -43,16 +48,42 @@ export const appReducer = (state, action) => {
         accounts: filteredAccounts,
       };
     }
-    case appActionType.SET_ACTIVE_ACCOUNT_INDEX: {
+    case appActionType.SET_ACTIVE_ACCOUNT_INDEX:
       return {
         ...state,
         activeAccountIndex: action.payload,
       };
-    }
-    case appActionType.SET_SELECTED_ACCOUNT: {
+    case appActionType.SET_SELECTED_ACCOUNT:
       return {
         ...state,
         selectedAccount: action.payload,
+      };
+    case appActionType.SET_RECORDS:
+      return {
+        ...state,
+        records: action.payload,
+      };
+    case appActionType.ADD_RECORDS:
+      return {
+        ...state,
+        records: [
+          ...state.records,
+          action.payload,
+        ],
+      };
+    case appActionType.EDIT_RECORDS: {
+      const indexRecord = state.records.findIndex((record) => record.id === action.id);
+      const updatedRecord = state.records.fill(action.payload, indexRecord, indexRecord + 1);
+      return {
+        ...state,
+        records: updatedRecord,
+      };
+    }
+    case appActionType.DELETE_RECORDS: {
+      const filteredRecords = state.records.filter((record) => record.id !== action.id);
+      return {
+        ...state,
+        records: filteredRecords,
       };
     }
     default:

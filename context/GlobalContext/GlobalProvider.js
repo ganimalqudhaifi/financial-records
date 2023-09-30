@@ -53,30 +53,20 @@ export function GlobalProvider(props) {
     dispatch({ type: globalActionType.UPDATE_RECORD, payload });
   };
 
-  const changeHasLoadDataState = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_HAS_LOAD_DATA, payload });
-  };
-
-  const changeSelectedAccountState = (payload) => {
-    dispatch({ type: globalActionType.SELECTED_ACCOUNT, payload });
-  };
-
   const value = useMemo(() => ({
     state,
     dispatch,
     changeIsLoginState,
-    changeUserState,
     changeIsDemoState,
-    changeRecordsState,
+    changeUserState,
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,
     changeInitialBalanceState,
-    changeSelectedAccountState,
+    changeRecordsState,
     pushRecordState,
-    removeRecordState,
     updateRecordState,
-    changeHasLoadDataState,
+    removeRecordState,
   }), [state]);
   return (<GlobalContext.Provider value={value} {...props} />);
 }

@@ -14,10 +14,11 @@ import { useAccounts } from '../../../hooks';
 
 export default function Profile() {
   const { accounts, addAccount } = useAccounts();
-  const { state, changeIsLoginState, changeUserState } = useGlobalContext();
-  const { isLogin, user } = state;
+  const { state, changeUserState } = useGlobalContext();
+  const { user } = state;
 
   const [edits, setEdits] = useState({ personalInformation: false });
+  const [isLogin, setIsLogin] = useState(false);
 
   const router = useRouter();
 
@@ -42,10 +43,10 @@ export default function Profile() {
     checkUserAuth((user) => {
       if (user) {
         const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        changeIsLoginState(true);
+        setIsLogin(true);
         changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
       } else {
-        changeIsLoginState(false);
+        setIsLogin(false);
         router.push('/');
       }
     });

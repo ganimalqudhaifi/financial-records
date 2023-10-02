@@ -8,13 +8,14 @@ import { useAccounts, useDatabaseObserver } from '../../../hooks';
 
 export default function AppSidebar({ user }) {
   const { setAccounts } = useAccounts();
-  const { state } = useGlobalContext();
+  const { state, changeUserState } = useGlobalContext();
   const { isDemo } = state;
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   const handleSignOut = () => {
+    changeUserState({});
     userSignOut();
   };
 
@@ -56,7 +57,7 @@ export default function AppSidebar({ user }) {
               <Image
                 width="200"
                 height="200"
-                src={user.photoURL}
+                src={user.photoURL || '/avatar/boy_01.svg'}
                 alt="Rounded avatar"
                 className="w-20 h-20 rounded-full grayscale-[30%]"
               />

@@ -8,29 +8,30 @@ import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePracti
 export default function Home() {
   const {
     state,
-    changeIsLoginState,
     changeUserState,
   } = useGlobalContext();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
-  const { isLogin, user } = state;
+  const { user } = state;
 
   useEffect(() => {
     checkUserAuth((user) => {
       if (user) {
         const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        changeIsLoginState(true);
+        setIsLogin(true);
         changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
       } else {
-        changeIsLoginState(false);
+        setIsLogin(false);
       }
     });
   }, []);
 
   const handleSignOut = () => {
     userSignOut();
+    changeUserState({});
     setisUserDropdownOpen(!isUserDropdownOpen);
   };
 

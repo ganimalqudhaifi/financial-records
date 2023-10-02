@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppLayout, FinancialRecords } from '../../components';
@@ -10,10 +10,10 @@ export default function App() {
   const { setRecords } = useRecords();
   const {
     state,
-    changeIsLoginState,
     changeUserState,
   } = useGlobalContext();
-  const { isLogin, user } = state;
+  const { user } = state;
+  const [isLogin, setIsLogin] = useState(false);
 
   const router = useRouter();
 
@@ -21,10 +21,10 @@ export default function App() {
     checkUserAuth((user) => {
       if (user) {
         const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        changeIsLoginState(true);
+        setIsLogin(true);
         changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
       } else {
-        changeIsLoginState(false);
+        setIsLogin(false);
         router.push('/');
       }
     });

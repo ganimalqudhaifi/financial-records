@@ -7,6 +7,7 @@ export default function useDatabaseObserver(path, callback) {
     checkUserUid((uid) => {
       const accountsRef = ref(database, `users/${uid}/${path}`);
       onValue(accountsRef, (snapshot) => {
+        console.log('this message from onValue Observer');
         if (snapshot.exists()) {
           const data = Object.keys(snapshot.val()).map((key) => ({
             ...snapshot.val()[key],

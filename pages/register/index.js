@@ -3,12 +3,10 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { auth, createUserWithEmailAndPassword, updateProfile } from '../../config/firebase';
-import { useGlobalContext } from '../../context';
 import { alertToast } from '../../utils';
 import { useAccounts } from '../../hooks';
 
 export default function Register() {
-  const { changeUserState } = useGlobalContext();
   const { addAccount } = useAccounts();
 
   const [inputs, setInputs] = useState({ email: '', password: '' });
@@ -29,21 +27,12 @@ export default function Register() {
     e.preventDefault();
     const { email, password } = inputs;
     await createUserWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
-        const dataUser = {
-          uid: res.user.uid,
-          displayName: `user${res.user.uid.substring(0, 11)}`,
-          email: res.user.email,
-          phoneNumber: res.user.phoneNumber,
-          photoURL: res.user.photoURL,
-          emailVerified: res.user.emailVerified,
-        };
+      .then(async (res) => {
+        await updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
         const newAccount = {
           name: 'Personal',
           initialBalance: 0,
         };
-        changeUserState(dataUser);
         addAccount(newAccount);
         setInputs({ email: '', password: '' });
         router.push('/app');

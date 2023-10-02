@@ -3,12 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
 import { auth, signInWithEmailAndPassword } from '../../config/firebase';
-import { useGlobalContext } from '../../context';
 import { alertToast } from '../../utils';
 
 export default function Login() {
-  const { changeUserState } = useGlobalContext();
-
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -27,15 +24,7 @@ export default function Login() {
     e.preventDefault();
     const { email, password } = inputs;
     await signInWithEmailAndPassword(auth, email, password)
-      .then((res) => {
-        const dataUser = {
-          uid: res.user.uid,
-          displayName: res.user.displayName,
-          email: res.user.email,
-          photoURL: res.user.photoURL,
-          emailVerified: res.user.emailVerified,
-        };
-        changeUserState(dataUser);
+      .then(() => {
         setInputs({ email: '', password: '' });
         router.push('/app');
       })

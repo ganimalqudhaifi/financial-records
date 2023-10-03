@@ -4,58 +4,56 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { AppLayout, EditableAccount, Modal } from '../../components';
 import { auth, updateProfile } from '../../config/firebase';
-import { useAuthContext, useGlobalContext } from '../../context';
+import { useAuthContext } from '../../context';
 import {
   alertToast,
   modal,
 } from '../../utils';
 import { useAccounts } from '../../hooks';
 
-const avatarLists = [
-  '/avatar/boy_01.svg',
-  '/avatar/boy_02.svg',
-  '/avatar/boy_03.svg',
-  '/avatar/boy_04.svg',
-  '/avatar/boy_05.svg',
-  '/avatar/boy_06.svg',
-  '/avatar/boy_07.svg',
-  '/avatar/girl_01.svg',
-  '/avatar/girl_02.svg',
-  '/avatar/girl_03.svg',
-  '/avatar/girl_04.svg',
-  '/avatar/girl_05.svg',
-  '/avatar/girl_06.svg',
-  '/avatar/girl_07.svg',
-];
-
 export default function Profile() {
+  const avatarLists = [
+    '/avatar/boy_01.svg',
+    '/avatar/boy_02.svg',
+    '/avatar/boy_03.svg',
+    '/avatar/boy_04.svg',
+    '/avatar/boy_05.svg',
+    '/avatar/boy_06.svg',
+    '/avatar/boy_07.svg',
+    '/avatar/girl_01.svg',
+    '/avatar/girl_02.svg',
+    '/avatar/girl_03.svg',
+    '/avatar/girl_04.svg',
+    '/avatar/girl_05.svg',
+    '/avatar/girl_06.svg',
+    '/avatar/girl_07.svg',
+  ];
   const router = useRouter();
   const [edits, setEdits] = useState({ personalInformation: false });
 
-  const { changeUserState } = useGlobalContext();
-  const { user, isLogin } = useAuthContext();
+  const { user, setUser, isLogin } = useAuthContext();
+
+  const [inputs, setInputs] = useState({});
 
   const { accounts, addAccount } = useAccounts();
 
   useEffect(() => {
-    if (user === null) router.push('/');
-  }, []);
+    if (user === null) {
+      router.push('/');
+    } else {
+      setInputs(user);
+    }
+  }, [user]);
 
-  const handleInputs = (e) => changeUserState({ ...user, [e.target.name]: e.target.value });
+  const handleInputs = (e) => setInputs({ ...inputs, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await updateProfile(auth.currentUser, { displayName: user.displayName })
+    await updateProfile(auth.currentUser, { displayName: inputs.displayName })
       .then(() => {
-        changeUserState({
-          uid: auth.currentUser.uid,
-          displayName: auth.currentUser.displayName,
-          email: auth.currentUser.email,
-          photoURL: auth.currentUser.photoURL,
-          phoneNumber: auth.currentUser.phoneNumber,
-          emailVerified: auth.currentUser.emailVerified,
-        });
-      }).catch((error) => {
+        setUser({ ...user, displayName: inputs.displayName });
+      })
+      .catch((error) => {
         alertToast(error.message);
       });
   };
@@ -63,18 +61,13 @@ export default function Profile() {
   const handleProfilePicture = async (pathURL) => {
     await updateProfile(auth.currentUser, { photoURL: pathURL })
       .then(() => {
-        changeUserState({
-          uid: auth.currentUser.uid,
-          displayName: auth.currentUser.displayName,
-          email: auth.currentUser.email,
-          photoURL: auth.currentUser.photoURL,
-          phoneNumber: auth.currentUser.phoneNumber,
-          emailVerified: auth.currentUser.emailVerified,
-        });
-      }).catch((error) => {
+        setUser({ ...user, photoURL: pathURL });
+        modal.hide('changeAvatar');
+      })
+      .catch((error) => {
         alertToast(error.message);
+        modal.hide('changeAvatar');
       });
-    modal.hide('changeAvatar');
   };
 
   if (isLogin) {
@@ -93,15 +86,15 @@ export default function Profile() {
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="displayName" className="mb-1 text-sm">Display Name</label>
-                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={user.displayName} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 " disabled={!edits.personalInformation} />
+                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={inputs.displayName} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 " disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={user.email} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={inputs.email} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>
-                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={user.phoneNumber || '-'} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled={!edits.personalInformation} />
+                    <input id="phoneNumber" name="phoneNumber" type="tel" placeholder="-" onChange={handleInputs} value={inputs.phoneNumber || '-'} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
                   </div>
                 </div>
                 <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch items-start">

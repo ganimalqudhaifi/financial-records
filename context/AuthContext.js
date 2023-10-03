@@ -31,7 +31,7 @@ export function AuthContextProvider(props) {
     return () => unsubscribe();
   }, []);
 
-  const value = useMemo(() => ({ user, isLogin }), [user, isLogin]);
+  const value = useMemo(() => ({ user, setUser, isLogin }), [user, isLogin]);
 
   return (<AuthContext.Provider value={value} {...props} />);
 }

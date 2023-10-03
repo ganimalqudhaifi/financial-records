@@ -55,16 +55,11 @@ export default function useAccounts() {
     dispatch({ type: appActionType.SET_SELECTED_ACCOUNT, payload });
   };
 
-  const resetAccount = () => {
-    dispatch({ type: appActionType.RESET_STATE });
-  };
-
   return {
     accounts,
     setAccounts,
     addAccount,
     editAccount,
-    resetAccount,
     deleteAccount,
     activeAccountIndex,
     setActiveAccountIndex,

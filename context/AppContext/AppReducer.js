@@ -16,7 +16,6 @@ export const appActionType = {
   ADD_RECORDS: 'ADD_RECORDS',
   EDIT_RECORDS: 'EDIT_RECORDS',
   DELETE_RECORDS: 'DELETE_RECORDS',
-  RESET_STATE: 'RESET_STATE',
 };
 
 export const appReducer = (state, action) => {
@@ -85,13 +84,6 @@ export const appReducer = (state, action) => {
       return {
         ...state,
         records: filteredRecords,
-      };
-    }
-    case appActionType.RESET_STATE: {
-      return {
-        ...state,
-        accounts: appInitialState.accounts,
-        records: appInitialState.records,
       };
     }
     default:

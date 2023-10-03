@@ -1,37 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Script from 'next/script';
-import { useGlobalContext } from '../context';
-import { checkUserAuth, userSignOut } from '../utils';
+import { userSignOut } from '../utils';
 import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
+import useAuthStateChange from '../hooks/useAuthStateChange';
 
 export default function Home() {
-  const {
-    state,
-    changeUserState,
-  } = useGlobalContext();
+  const { user, isLogin } = useAuthStateChange();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-
-  const { user } = state;
-
-  useEffect(() => {
-    checkUserAuth((user) => {
-      if (user) {
-        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        setIsLogin(true);
-        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
-      } else {
-        setIsLogin(false);
-      }
-    });
-  }, []);
 
   const handleSignOut = () => {
     userSignOut();
-    changeUserState({});
     setisUserDropdownOpen(!isUserDropdownOpen);
   };
 

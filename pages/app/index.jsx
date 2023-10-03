@@ -1,34 +1,14 @@
-import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { AppLayout, FinancialRecords } from '../../components';
-import { useGlobalContext } from '../../context';
-import { checkUserAuth } from '../../utils';
 import { useDatabaseObserver, useRecords } from '../../hooks';
+import useAuthStateChange from '../../hooks/useAuthStateChange';
 
 export default function App() {
-  const { setRecords } = useRecords();
-  const {
-    state,
-    changeUserState,
-  } = useGlobalContext();
-  const { user } = state;
-  const [isLogin, setIsLogin] = useState(false);
-
   const router = useRouter();
 
-  useEffect(() => {
-    checkUserAuth((user) => {
-      if (user) {
-        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        setIsLogin(true);
-        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
-      } else {
-        setIsLogin(false);
-        router.push('/');
-      }
-    });
-  }, []);
+  const { setRecords } = useRecords();
+  const { user, isLogin } = useAuthStateChange(() => router.push('/'));
 
   useDatabaseObserver('records', (data) => {
     setRecords(data);

@@ -9,15 +9,6 @@ export function GlobalProvider(props) {
     dispatch({ type: globalActionType.CHANGE_ISDEMO, payload });
   };
 
-  const changeIsLoginStateDupe = (payload) => {
-    console.log('isLogin State Changed 2.0');
-    dispatch({ type: globalActionType.CHANGE_ISLOGIN, payload });
-  };
-
-  const changeUserState = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_USER, payload });
-  };
-
   const changePaginationIndexState = (btnpagination) => {
     dispatch({ type: globalActionType.HANDLE_PAGINATION_INDEX, payload: btnpagination });
   };
@@ -38,9 +29,7 @@ export function GlobalProvider(props) {
   const value = useMemo(() => ({
     state,
     dispatch,
-    changeIsLoginStateDupe,
     changeIsDemoState,
-    changeUserState,
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,

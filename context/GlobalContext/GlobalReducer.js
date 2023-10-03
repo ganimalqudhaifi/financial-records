@@ -4,9 +4,7 @@ export const globalInitialState = {
   sliceShow: 10,
   paginationIndex: 1,
   filterPeriod: '',
-  isLogin: false,
   isDemo: false,
-  user: {},
   hasLoadData: false,
 };
 
@@ -16,8 +14,6 @@ export const globalActionType = {
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
-  CHANGE_USER: 'CHANGE_USER',
-  CHANGE_ISLOGIN: 'CHANGE_ISLOGIN',
   CHANGE_ISDEMO: 'CHANGE_ISDEMO',
 };
 
@@ -47,16 +43,6 @@ export const globalReducer = (state, action) => {
       return {
         ...state,
         initialBalance: parseInt(action.payload, 10),
-      };
-    case globalActionType.CHANGE_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
-    case globalActionType.CHANGE_ISLOGIN:
-      return {
-        ...state,
-        isLogin: action.payload,
       };
     case globalActionType.CHANGE_ISDEMO:
       return {

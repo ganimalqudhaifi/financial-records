@@ -8,14 +8,13 @@ import { useAccounts, useDatabaseObserver } from '../../../hooks';
 
 export default function AppSidebar({ user }) {
   const { setAccounts } = useAccounts();
-  const { state, changeUserState } = useGlobalContext();
+  const { state } = useGlobalContext();
   const { isDemo } = state;
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   const handleSignOut = () => {
-    changeUserState({});
     userSignOut();
   };
 

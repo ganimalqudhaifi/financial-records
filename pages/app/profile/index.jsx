@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
@@ -7,20 +7,19 @@ import { auth, updateProfile } from '../../../config/firebase';
 import { useGlobalContext } from '../../../context';
 import {
   alertToast,
-  checkUserAuth,
   modal,
 } from '../../../utils';
 import { useAccounts } from '../../../hooks';
+import useAuthStateChange from '../../../hooks/useAuthStateChange';
 
 export default function Profile() {
   const { accounts, addAccount } = useAccounts();
-  const { state, changeUserState } = useGlobalContext();
-  const { user } = state;
+  const { changeUserState } = useGlobalContext();
 
   const [edits, setEdits] = useState({ personalInformation: false });
-  const [isLogin, setIsLogin] = useState(false);
 
   const router = useRouter();
+  const { user, isLogin } = useAuthStateChange(() => router.push('/'));
 
   const avatarLists = [
     '/avatar/boy_01.svg',
@@ -38,19 +37,6 @@ export default function Profile() {
     '/avatar/girl_06.svg',
     '/avatar/girl_07.svg',
   ];
-
-  useEffect(() => {
-    checkUserAuth((user) => {
-      if (user) {
-        const { displayName, email, phoneNumber, photoURL, emailVerified, uid } = user;
-        setIsLogin(true);
-        changeUserState({ displayName, email, phoneNumber, photoURL, emailVerified, uid });
-      } else {
-        setIsLogin(false);
-        router.push('/');
-      }
-    });
-  }, []);
 
   const handleInputs = (e) => changeUserState({ ...user, [e.target.name]: e.target.value });
 

@@ -1,5 +1,5 @@
 import { StrictMode } from 'react';
-import { AppProvider, GlobalProvider } from '../context';
+import { AppProvider, AuthContextProvider, GlobalProvider } from '../context';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }) {
@@ -8,9 +8,11 @@ function MyApp({ Component, pageProps }) {
       <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
       <GlobalProvider>
         <AppProvider>
-          <StrictMode>
-            <Component {...pageProps} />
-          </StrictMode>
+          <AuthContextProvider>
+            <StrictMode>
+              <Component {...pageProps} />
+            </StrictMode>
+          </AuthContextProvider>
         </AppProvider>
       </GlobalProvider>
     </>

@@ -1,42 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
-import { AppLayout, EditableAccount, Modal } from '../../../components';
-import { auth, updateProfile } from '../../../config/firebase';
-import { useGlobalContext } from '../../../context';
+import { AppLayout, EditableAccount, Modal } from '../../components';
+import { auth, updateProfile } from '../../config/firebase';
+import { useAuthContext, useGlobalContext } from '../../context';
 import {
   alertToast,
   modal,
-} from '../../../utils';
-import { useAccounts } from '../../../hooks';
-import useAuthStateChange from '../../../hooks/useAuthStateChange';
+} from '../../utils';
+import { useAccounts } from '../../hooks';
+
+const avatarLists = [
+  '/avatar/boy_01.svg',
+  '/avatar/boy_02.svg',
+  '/avatar/boy_03.svg',
+  '/avatar/boy_04.svg',
+  '/avatar/boy_05.svg',
+  '/avatar/boy_06.svg',
+  '/avatar/boy_07.svg',
+  '/avatar/girl_01.svg',
+  '/avatar/girl_02.svg',
+  '/avatar/girl_03.svg',
+  '/avatar/girl_04.svg',
+  '/avatar/girl_05.svg',
+  '/avatar/girl_06.svg',
+  '/avatar/girl_07.svg',
+];
 
 export default function Profile() {
-  const { accounts, addAccount } = useAccounts();
-  const { changeUserState } = useGlobalContext();
-
+  const router = useRouter();
   const [edits, setEdits] = useState({ personalInformation: false });
 
-  const router = useRouter();
-  const { user, isLogin } = useAuthStateChange(() => router.push('/'));
+  const { changeUserState } = useGlobalContext();
+  const { user, isLogin } = useAuthContext();
 
-  const avatarLists = [
-    '/avatar/boy_01.svg',
-    '/avatar/boy_02.svg',
-    '/avatar/boy_03.svg',
-    '/avatar/boy_04.svg',
-    '/avatar/boy_05.svg',
-    '/avatar/boy_06.svg',
-    '/avatar/boy_07.svg',
-    '/avatar/girl_01.svg',
-    '/avatar/girl_02.svg',
-    '/avatar/girl_03.svg',
-    '/avatar/girl_04.svg',
-    '/avatar/girl_05.svg',
-    '/avatar/girl_06.svg',
-    '/avatar/girl_07.svg',
-  ];
+  const { accounts, addAccount } = useAccounts();
+
+  useEffect(() => {
+    if (user === null) router.push('/');
+  }, []);
 
   const handleInputs = (e) => changeUserState({ ...user, [e.target.name]: e.target.value });
 

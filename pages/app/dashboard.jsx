@@ -1,16 +1,21 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { AppLayout } from '../../../components';
-import FinancialRecordsInformation from '../../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
-import FinancialRecordsChart from '../../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { useDatabaseObserver, useRecords } from '../../../hooks';
-import useAuthStateChange from '../../../hooks/useAuthStateChange';
+import { useEffect } from 'react';
+import { AppLayout } from '../../components';
+import FinancialRecordsInformation from '../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
+import FinancialRecordsChart from '../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
+import { useDatabaseObserver, useRecords } from '../../hooks';
+import { useAuthContext } from '../../context';
 
 export default function App() {
   const router = useRouter();
 
   const { setRecords } = useRecords();
-  const { user, isLogin } = useAuthStateChange(() => router.push('/'));
+  const { user, isLogin } = useAuthContext();
+
+  useEffect(() => {
+    if (user === null) router.push('/');
+  }, []);
 
   useDatabaseObserver('records', (data) => {
     setRecords(data);

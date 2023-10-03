@@ -1,14 +1,19 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 import { AppLayout, FinancialRecords } from '../../components';
+import { useAuthContext } from '../../context';
 import { useDatabaseObserver, useRecords } from '../../hooks';
-import useAuthStateChange from '../../hooks/useAuthStateChange';
 
 export default function App() {
   const router = useRouter();
 
   const { setRecords } = useRecords();
-  const { user, isLogin } = useAuthStateChange(() => router.push('/'));
+  const { user, isLogin } = useAuthContext();
+
+  useEffect(() => {
+    if (!isLogin) router.push('/');
+  }, []);
 
   useDatabaseObserver('records', (data) => {
     setRecords(data);

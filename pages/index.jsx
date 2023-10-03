@@ -3,10 +3,10 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { userSignOut } from '../utils';
 import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
-import useAuthStateChange from '../hooks/useAuthStateChange';
+import { useAuthContext } from '../context';
 
 export default function Home() {
-  const { user, isLogin } = useAuthStateChange();
+  const { user, isLogin } = useAuthContext();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);

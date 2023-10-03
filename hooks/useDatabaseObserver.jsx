@@ -1,10 +1,13 @@
 import { useEffect } from 'react';
-import { auth, database, onAuthStateChanged, onValue, ref } from '../config/firebase';
+import { database, onValue, ref } from '../config/firebase';
+import { useAuthContext } from '../context';
 
 export default function useDatabaseObserver(path, callback) {
+  const { user } = useAuthContext();
+
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
+    const unsubscribe = () => {
+      if (user !== null) {
         const { uid } = user;
         const accountsRef = ref(database, `users/${uid}/${path}`);
         onValue(accountsRef, (snapshot) => {
@@ -17,6 +20,8 @@ export default function useDatabaseObserver(path, callback) {
           }
         });
       }
-    });
+    };
+
+    return () => unsubscribe();
   }, []);
 }

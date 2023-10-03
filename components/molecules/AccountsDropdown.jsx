@@ -29,7 +29,11 @@ export default function AccountsDropdown() {
         className={`group peer ${isActive && 'is-active'} inline-flex justify-between items-center w-full p-2 rounded-lg text-white font-medium hover:bg-slate-800`}
         onClick={() => setIsActive(!isActive)}
       >
-        {selectedAccount.name}
+        {
+          selectedAccount.name
+            ? <p>{selectedAccount.name}</p>
+            : <p>...</p>
+        }
         <svg className="w-2.5 h-2.5 ml-2.5 group-[.is-active]:-rotate-90 duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
           <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
         </svg>

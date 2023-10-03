@@ -1,5 +1,5 @@
-import { alertToast, checkUserUid } from '../utils';
-import { database, onValue, push, ref, remove, set } from '../config/firebase';
+import { alertToast } from '../utils';
+import { auth, database, onValue, push, ref, remove, set } from '../config/firebase';
 import { appActionType, useAppContext } from '../context';
 
 export default function useAccounts() {
@@ -14,18 +14,16 @@ export default function useAccounts() {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else {
-      checkUserUid((uid) => {
-        const accountsRef = ref(database, `users/${uid}/accounts`);
-        push(accountsRef, payload);
-      });
+      const { uid } = auth.currentUser;
+      const accountsRef = ref(database, `users/${uid}/accounts`);
+      push(accountsRef, payload);
     }
   };
 
   const editAccount = (id, payload) => {
-    checkUserUid((uid) => {
-      const accountRef = ref(database, `users/${uid}/accounts/${id}`);
-      set(accountRef, payload);
-    });
+    const { uid } = auth.currentUser;
+    const accountRef = ref(database, `users/${uid}/accounts/${id}`);
+    set(accountRef, payload);
   };
 
   const deleteAccount = (id) => {
@@ -33,21 +31,20 @@ export default function useAccounts() {
       alertToast('Minimal 1 Akun Diperlukan');
       return;
     }
-    checkUserUid((uid) => {
-      const accountRef = ref(database, `users/${uid}/accounts/${id}`);
-      remove(accountRef);
-      const recordsRef = ref(database, `users/${uid}/records/`);
-      onValue(recordsRef, (snapshot) => {
-        snapshot.forEach((childSnapshot) => {
-          const childKey = childSnapshot.key;
-          const childData = childSnapshot.val();
-          if (childData.accountId === id) {
-            const recordRef = ref(database, `users/${uid}/records/${childKey}`);
-            remove(recordRef);
-          }
-        });
-      }, { onlyOnce: true });
-    });
+    const { uid } = auth.currentUser;
+    const accountRef = ref(database, `users/${uid}/accounts/${id}`);
+    remove(accountRef);
+    const recordsRef = ref(database, `users/${uid}/records/`);
+    onValue(recordsRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const childKey = childSnapshot.key;
+        const childData = childSnapshot.val();
+        if (childData.accountId === id) {
+          const recordRef = ref(database, `users/${uid}/records/${childKey}`);
+          remove(recordRef);
+        }
+      });
+    }, { onlyOnce: true });
   };
 
   const setActiveAccountIndex = (payload) => {
@@ -58,11 +55,16 @@ export default function useAccounts() {
     dispatch({ type: appActionType.SET_SELECTED_ACCOUNT, payload });
   };
 
+  const resetAccount = () => {
+    dispatch({ type: appActionType.RESET_STATE });
+  };
+
   return {
     accounts,
     setAccounts,
     addAccount,
     editAccount,
+    resetAccount,
     deleteAccount,
     activeAccountIndex,
     setActiveAccountIndex,

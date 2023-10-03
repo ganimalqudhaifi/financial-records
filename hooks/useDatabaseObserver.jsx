@@ -1,20 +1,18 @@
 import { useEffect } from 'react';
-import { database, onValue, ref } from '../config/firebase';
-import { checkUserUid } from '../utils';
+import { auth, database, onValue, ref } from '../config/firebase';
 
 export default function useDatabaseObserver(path, callback) {
   useEffect(() => {
-    checkUserUid((uid) => {
-      const accountsRef = ref(database, `users/${uid}/${path}`);
-      onValue(accountsRef, (snapshot) => {
-        if (snapshot.exists()) {
-          const data = Object.keys(snapshot.val()).map((key) => ({
-            ...snapshot.val()[key],
-            id: key,
-          }));
-          callback(data);
-        }
-      });
+    const { uid } = auth.currentUser;
+    const accountsRef = ref(database, `users/${uid}/${path}`);
+    onValue(accountsRef, (snapshot) => {
+      if (snapshot.exists()) {
+        const data = Object.keys(snapshot.val()).map((key) => ({
+          ...snapshot.val()[key],
+          id: key,
+        }));
+        callback(data);
+      }
     });
-  }, []);
+  }, [auth]);
 }

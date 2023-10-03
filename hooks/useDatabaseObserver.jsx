@@ -23,5 +23,5 @@ export default function useDatabaseObserver(path, callback) {
     };
 
     return () => unsubscribe();
-  }, []);
+  }, [user]);
 }

@@ -14,7 +14,7 @@ export const globalActionType = {
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
   HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
   CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
-  CHANGE_ISDEMO: 'CHANGE_ISDEMO',
+  SET_ISDEMO: 'SET_ISDEMO',
 };
 
 export const globalReducer = (state, action) => {
@@ -44,7 +44,7 @@ export const globalReducer = (state, action) => {
         ...state,
         initialBalance: parseInt(action.payload, 10),
       };
-    case globalActionType.CHANGE_ISDEMO:
+    case globalActionType.SET_ISDEMO:
       return {
         ...state,
         isDemo: action.payload,

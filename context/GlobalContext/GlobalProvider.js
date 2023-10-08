@@ -5,8 +5,8 @@ import GlobalContext from './GlobalContext';
 export function GlobalProvider(props) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);
 
-  const changeIsDemoState = (payload) => {
-    dispatch({ type: globalActionType.CHANGE_ISDEMO, payload });
+  const setIsDemo = (payload) => {
+    dispatch({ type: globalActionType.SET_ISDEMO, payload });
   };
 
   const changePaginationIndexState = (btnpagination) => {
@@ -29,7 +29,7 @@ export function GlobalProvider(props) {
   const value = useMemo(() => ({
     state,
     dispatch,
-    changeIsDemoState,
+    setIsDemo,
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,

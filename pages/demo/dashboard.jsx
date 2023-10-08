@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
-import { AppLayout, FinancialRecords } from '../../components';
+import { AppLayout } from '../../components';
+import FinancialRecordsInformation from '../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
+import FinancialRecordsChart from '../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useGlobalContext } from '../../context';
-import { getData } from '../../utils/data';
 import { useAccounts, useRecords } from '../../hooks';
+import { getData } from '../../utils';
 
 const user = {
   displayName: 'Demo',
@@ -17,7 +19,7 @@ const demoAccount = {
   initialBalance: 0,
 };
 
-export default function Demo() {
+export default function DemoDashboard() {
   const { setIsDemo } = useGlobalContext();
   const { setAccounts } = useAccounts();
   const { setRecords, hasDemoLoadRecords, setHasDemoLoadRecords } = useRecords();
@@ -39,13 +41,14 @@ export default function Demo() {
   return (
     <>
       <Head>
-        <title>Financial Records - Demo</title>
+        <title>Financial Records - Demo Dashboard</title>
       </Head>
 
       <AppLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
-          <h2 className="font-medium text-3xl mb-4">Table</h2>
-          <FinancialRecords />
+          <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
+          <FinancialRecordsInformation />
+          <FinancialRecordsChart />
         </div>
       </AppLayout>
     </>

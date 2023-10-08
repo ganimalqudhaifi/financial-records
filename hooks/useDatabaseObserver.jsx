@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import { database, onValue, ref } from '../config/firebase';
-import { useAuthContext } from '../context';
+import { useAuthContext, useGlobalContext } from '../context';
 
 export default function useDatabaseObserver(path, callback) {
+  const { state } = useGlobalContext();
+  const { isDemo } = state;
+
   const { user } = useAuthContext();
 
   useEffect(() => {
-    if (user !== null) {
+    if ((user !== null) && (isDemo === false)) {
       const { uid } = user;
       const accountsRef = ref(database, `users/${uid}/${path}`);
       onValue(accountsRef, (snapshot) => {

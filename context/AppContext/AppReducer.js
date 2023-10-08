@@ -3,6 +3,7 @@ export const appInitialState = {
   activeAccountIndex: 0,
   selectedAccount: {},
   records: [],
+  hasDemoLoadRecords: false,
 };
 
 export const appActionType = {
@@ -16,6 +17,7 @@ export const appActionType = {
   ADD_RECORDS: 'ADD_RECORDS',
   EDIT_RECORDS: 'EDIT_RECORDS',
   DELETE_RECORDS: 'DELETE_RECORDS',
+  SET_HAS_DEMO_LOAD_RECORDS: 'SET_HAS_DEMO_LOAD_RECORDS',
 };
 
 export const appReducer = (state, action) => {
@@ -86,6 +88,11 @@ export const appReducer = (state, action) => {
         records: filteredRecords,
       };
     }
+    case appActionType.SET_HAS_DEMO_LOAD_RECORDS:
+      return {
+        ...state,
+        hasDemoLoadRecords: action.payload,
+      };
     default:
       return state;
   }

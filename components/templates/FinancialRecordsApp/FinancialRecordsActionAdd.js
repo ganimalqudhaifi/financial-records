@@ -1,32 +1,29 @@
 import { useState } from 'react';
 import { Modal } from '../../molecules';
-import { useGlobalContext } from '../../../context';
 import { modal, successToast } from '../../../utils';
 import { useAccounts, useRecords } from '../../../hooks';
+
+const categories = [
+  { id: 101, name: 'Pendapatan' },
+  { id: 201, name: 'Pengeluaran' },
+  { id: 202, name: 'Tagihan Utilitas' },
+  { id: 203, name: 'Makanan' },
+  { id: 204, name: 'Transportasi' },
+  { id: 205, name: 'Tempat Tinggal' },
+  { id: 206, name: 'Hiburan' },
+];
+
+const initialInputs = {
+  date: '',
+  description: '',
+  categoryId: categories[0].id,
+  amount: 0,
+};
 
 export default function FinancialRecordsActionAdd() {
   const { selectedAccount } = useAccounts();
   const { addRecord } = useRecords();
-  const { state } = useGlobalContext();
-  const { isDemo } = state;
   const uniqueId = 'addModal';
-
-  const categories = [
-    { id: 101, name: 'Pendapatan' },
-    { id: 201, name: 'Pengeluaran' },
-    { id: 202, name: 'Tagihan Utilitas' },
-    { id: 203, name: 'Makanan' },
-    { id: 204, name: 'Transportasi' },
-    { id: 205, name: 'Tempat Tinggal' },
-    { id: 206, name: 'Hiburan' },
-  ];
-
-  const initialInputs = {
-    date: '',
-    description: '',
-    categoryId: categories[0].id,
-    amount: 0,
-  };
 
   const [inputs, setInputs] = useState(initialInputs);
 
@@ -54,10 +51,7 @@ export default function FinancialRecordsActionAdd() {
       updatedAt: new Date().toISOString(),
       accountId: selectedAccount.id,
     };
-
-    if (!isDemo) {
-      addRecord(newInputs);
-    }
+    addRecord(newInputs);
     modal.hide(uniqueId);
     setInputs(initialInputs);
 

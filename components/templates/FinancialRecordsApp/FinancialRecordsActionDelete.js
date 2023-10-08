@@ -4,15 +4,13 @@ import { modal } from '../../../utils';
 import { useRecords } from '../../../hooks';
 
 export default function FinancialRecordsActionDelete({ id }) {
-  const { records, deleteRecord } = useRecords();
   const { state, changePaginationIndexState } = useGlobalContext();
-  const { isDemo, paginationIndex, sliceShow } = state;
+  const { paginationIndex, sliceShow } = state;
+  const { records, deleteRecord } = useRecords();
   const uniqueId = `deleteModal${id}`;
 
   const handleDelete = () => {
-    if (!isDemo) {
-      deleteRecord(id);
-    }
+    deleteRecord(id);
     if (records.length - 1 + 10 <= paginationIndex * sliceShow) {
       paginationIndex > 1 && changePaginationIndexState(paginationIndex - 1);
     }

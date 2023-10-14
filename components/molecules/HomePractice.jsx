@@ -1,3 +1,5 @@
+import { motion } from 'framer-motion';
+
 export default function HomePractice() {
   const practiceLists = [
     {
@@ -47,25 +49,75 @@ export default function HomePractice() {
     },
   ];
 
+  const list = {
+    visible: { opacity: 1 },
+    hidden: { opacity: 0 },
+  };
+
+  const itemIcon = {
+    visible: (i) => ({
+      opacity: 1,
+      transition: { delay: i * 0.3 },
+    }),
+    hidden: { opacity: 0 },
+  };
+
+  const itemText = {
+    visible: (i) => ({
+      opacity: 1,
+      x: 0,
+      transition: { delay: i * 0.3, ease: 'circOut' },
+    }),
+    hidden: { opacity: 0, x: 50 },
+  };
+
   return (
     <section id="Practice" className="flex flex-col justify-center items-center px-6 md:px-12 scroll-mt-32">
-      <h2 className="text-5xl font-bold text-center text-main-color">Practice</h2>
-      <p className="max-w-4xl py-12 tracking-normal text-justify text-gray-200">Melakukan personal budgeting adalah langkah penting dalam mengelola keuangan pribadi Anda dengan baik. Ini membantu Anda mengontrol pengeluaran, mengalokasikan dana dengan bijaksana, dan mencapai tujuan keuangan Anda. Berikut adalah panduan langkah demi langkah untuk melakukan personal budgeting:</p>
-      <ol className="relative max-w-4xl border-l border-gray-700">
+      <motion.h2
+        initial={{ opacity: 0, y: -20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        className="text-5xl font-bold text-center text-main-color"
+      >
+        Practice
+      </motion.h2>
+      <motion.p
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+        className="max-w-4xl py-12 tracking-normal text-justify text-gray-200"
+      >
+        Melakukan personal budgeting adalah langkah penting dalam mengelola keuangan pribadi Anda dengan baik. Ini membantu Anda mengontrol pengeluaran, mengalokasikan dana dengan bijaksana, dan mencapai tujuan keuangan Anda. Berikut adalah panduan langkah demi langkah untuk melakukan personal budgeting:
+      </motion.p>
+      <motion.ol
+        initial="hidden"
+        whileInView="visible"
+        variants={list}
+        className="relative max-w-4xl border-l border-gray-700"
+      >
         {
-          practiceLists.map((list) => (
+          practiceLists.map((list, i) => (
             <li className="mb-10 ml-6" key={list.id}>
-              <span className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-bg-color bg-[#41a353]">
+              <motion.span
+                custom={i}
+                variants={itemIcon}
+                className="absolute flex items-center justify-center w-6 h-6 rounded-full -left-3 ring-8 ring-bg-color bg-[#41a353]"
+              >
                 <svg className="w-2.5 h-2.5  text-[#ccecd2]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                 </svg>
-              </span>
-              <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-100">{list.title}</h3>
-              <p className="text-base font-normal text-gray-400">{list.description}</p>
+              </motion.span>
+              <motion.div
+                custom={i}
+                variants={itemText}
+              >
+                <h3 className="flex items-center mb-1 text-lg font-semibold text-gray-100">{list.title}</h3>
+                <p className="text-base font-normal text-gray-400">{list.description}</p>
+              </motion.div>
             </li>
           ))
         }
-      </ol>
+      </motion.ol>
     </section>
   );
 }

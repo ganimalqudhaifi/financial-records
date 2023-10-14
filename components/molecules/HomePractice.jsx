@@ -73,22 +73,17 @@ export default function HomePractice() {
 
   return (
     <section id="Practice" className="flex flex-col justify-center items-center px-6 md:px-12 scroll-mt-32">
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.3 }}
-        className="text-5xl font-bold text-center text-main-color"
-      >
-        Practice
-      </motion.h2>
+      <motion.h2 className="text-5xl font-bold text-center text-main-color">Practice</motion.h2>
+
       <motion.p
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.3 }}
+        initial={{ opacity: 0, x: 15 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        transition={{ ease: 'circOut' }}
         className="max-w-4xl py-12 tracking-normal text-justify text-gray-200"
       >
         Melakukan personal budgeting adalah langkah penting dalam mengelola keuangan pribadi Anda dengan baik. Ini membantu Anda mengontrol pengeluaran, mengalokasikan dana dengan bijaksana, dan mencapai tujuan keuangan Anda. Berikut adalah panduan langkah demi langkah untuk melakukan personal budgeting:
       </motion.p>
+
       <motion.ol
         initial="hidden"
         whileInView="visible"

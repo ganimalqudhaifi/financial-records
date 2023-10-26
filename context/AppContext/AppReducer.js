@@ -6,7 +6,7 @@ export const appInitialState = {
   hasDemoLoadRecords: false,
 };
 
-export const appActionType = {
+export const APP_ACTION_TYPE = {
   SET_ACCOUNTS: 'SET_ACCOUNTS',
   ADD_ACCOUNTS: 'ADD_ACCOUNTS',
   EDIT_ACCOUNTS: 'EDIT_ACCOUNTS',
@@ -22,12 +22,12 @@ export const appActionType = {
 
 export const appReducer = (state, action) => {
   switch (action.type) {
-    case appActionType.SET_ACCOUNTS:
+    case APP_ACTION_TYPE.SET_ACCOUNTS:
       return {
         ...state,
         accounts: action.payload,
       };
-    case appActionType.ADD_ACCOUNTS:
+    case APP_ACTION_TYPE.ADD_ACCOUNTS:
       return {
         ...state,
         accounts: [
@@ -35,7 +35,7 @@ export const appReducer = (state, action) => {
           action.payload,
         ],
       };
-    case appActionType.EDIT_ACCOUNTS: {
+    case APP_ACTION_TYPE.EDIT_ACCOUNTS: {
       const indexAccount = state.accounts.findIndex((account) => account.id === action.id);
       const updatedAccount = state.accounts.fill(action.payload, indexAccount, indexAccount + 1);
       return {
@@ -43,29 +43,29 @@ export const appReducer = (state, action) => {
         accounts: updatedAccount,
       };
     }
-    case appActionType.DELETE_ACCOUNTS: {
+    case APP_ACTION_TYPE.DELETE_ACCOUNTS: {
       const filteredAccounts = state.accounts.filter((record) => record.id !== action.id);
       return {
         ...state,
         accounts: filteredAccounts,
       };
     }
-    case appActionType.SET_ACTIVE_ACCOUNT_INDEX:
+    case APP_ACTION_TYPE.SET_ACTIVE_ACCOUNT_INDEX:
       return {
         ...state,
         activeAccountIndex: action.payload,
       };
-    case appActionType.SET_SELECTED_ACCOUNT:
+    case APP_ACTION_TYPE.SET_SELECTED_ACCOUNT:
       return {
         ...state,
         selectedAccount: action.payload,
       };
-    case appActionType.SET_RECORDS:
+    case APP_ACTION_TYPE.SET_RECORDS:
       return {
         ...state,
         records: action.payload,
       };
-    case appActionType.ADD_RECORDS:
+    case APP_ACTION_TYPE.ADD_RECORDS:
       return {
         ...state,
         records: [
@@ -73,7 +73,7 @@ export const appReducer = (state, action) => {
           action.payload,
         ],
       };
-    case appActionType.EDIT_RECORDS: {
+    case APP_ACTION_TYPE.EDIT_RECORDS: {
       const indexRecord = state.records.findIndex((record) => record.id === action.id);
       const updatedRecord = state.records.fill(action.payload, indexRecord, indexRecord + 1);
       return {
@@ -81,14 +81,14 @@ export const appReducer = (state, action) => {
         records: updatedRecord,
       };
     }
-    case appActionType.DELETE_RECORDS: {
+    case APP_ACTION_TYPE.DELETE_RECORDS: {
       const filteredRecords = state.records.filter((record) => record.id !== action.id);
       return {
         ...state,
         records: filteredRecords,
       };
     }
-    case appActionType.SET_HAS_DEMO_LOAD_RECORDS:
+    case APP_ACTION_TYPE.SET_HAS_DEMO_LOAD_RECORDS:
       return {
         ...state,
         hasDemoLoadRecords: action.payload,

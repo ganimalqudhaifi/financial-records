@@ -1,10 +1,10 @@
-import { globalActionType, useGlobalContext } from '../../../context';
+import { GLOBAL_ACTION_TYPE, useGlobalContext } from '../../../context/GlobalContext';
 
 function FinancialRecordsSearch() {
   const { dispatch } = useGlobalContext();
 
   const changeSearchState = (e) => {
-    dispatch({ type: globalActionType.HANDLE_SEARCH, payload: e.target.value });
+    dispatch({ type: GLOBAL_ACTION_TYPE.HANDLE_SEARCH, payload: e.target.value });
   };
 
   return (

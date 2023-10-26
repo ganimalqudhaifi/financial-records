@@ -5,7 +5,7 @@ import { AppLayout } from '../../components';
 import FinancialRecordsInformation from '../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
 import { useDatabaseObserver, useRecords } from '../../hooks';
-import { useAuthContext } from '../../context';
+import { useAuthContext } from '../../context/AuthContext';
 
 export default function App() {
   const router = useRouter();

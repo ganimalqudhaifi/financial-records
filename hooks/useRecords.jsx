@@ -1,5 +1,8 @@
-import { appActionType, useAppContext, useAuthContext, useGlobalContext } from '../context';
 import { database, ref, push, set, remove } from '../config/firebase';
+
+import { useAuthContext } from '../context/AuthContext';
+import { useGlobalContext } from '../context/GlobalContext';
+import { APP_ACTION_TYPE, useAppContext } from '../context/AppContext';
 
 export default function useRecords() {
   const { state: globalState } = useGlobalContext();
@@ -19,12 +22,12 @@ export default function useRecords() {
   };
 
   const setRecords = (payload) => {
-    dispatch({ type: appActionType.SET_RECORDS, payload });
+    dispatch({ type: APP_ACTION_TYPE.SET_RECORDS, payload });
   };
 
   const addRecord = (payload) => {
     if (isDemo) {
-      dispatch({ type: appActionType.ADD_RECORDS, payload });
+      dispatch({ type: APP_ACTION_TYPE.ADD_RECORDS, payload });
     } else {
       checkUid((uid) => {
         const recordsRef = ref(database, `users/${uid}/records`);
@@ -35,7 +38,7 @@ export default function useRecords() {
 
   const editRecord = (id, payload) => {
     if (isDemo) {
-      dispatch({ type: appActionType.EDIT_RECORDS, id, payload });
+      dispatch({ type: APP_ACTION_TYPE.EDIT_RECORDS, id, payload });
     } else {
       checkUid((uid) => {
         const recordRef = ref(database, `users/${uid}/records/${id}`);
@@ -46,7 +49,7 @@ export default function useRecords() {
 
   const deleteRecord = (id) => {
     if (isDemo) {
-      dispatch({ type: appActionType.DELETE_RECORDS, id });
+      dispatch({ type: APP_ACTION_TYPE.DELETE_RECORDS, id });
     } else {
       checkUid((uid) => {
         const recordRef = ref(database, `users/${uid}/records/${id}`);
@@ -56,7 +59,7 @@ export default function useRecords() {
   };
 
   const setHasDemoLoadRecords = (payload) => {
-    dispatch({ type: appActionType.SET_HAS_DEMO_LOAD_RECORDS, payload });
+    dispatch({ type: APP_ACTION_TYPE.SET_HAS_DEMO_LOAD_RECORDS, payload });
   };
 
   return {

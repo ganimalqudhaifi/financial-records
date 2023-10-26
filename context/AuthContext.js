@@ -1,19 +1,24 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth, onAuthStateChanged } from '../config/firebase';
 
+// Create context
 export const AuthContext = createContext();
 
+// Hook
 export function useAuthContext() {
   const contextValue = useContext(AuthContext);
 
   if (!contextValue) {
-    throw new Error('useAppContext must be called from within a AppContextProvider');
+    throw new Error('useAuthContext must be called from within a AppContextProvider');
   }
 
-  return contextValue;
+  const { user, setUser, isLogin } = contextValue;
+
+  return { user, setUser, isLogin };
 }
 
-export function AuthContextProvider(props) {
+// Provider
+export default function AuthContextProvider(props) {
   const [user, setUser] = useState(null);
   const [isLogin, setIsLogin] = useState(false);
 

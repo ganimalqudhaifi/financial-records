@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { database, onValue, ref } from '../config/firebase';
-import { useAuthContext, useGlobalContext } from '../context';
+
+import { useAuthContext } from '../context/AuthContext';
+import { useGlobalContext } from '../context/GlobalContext';
 
 export default function useDatabaseObserver(path, callback) {
   const { state } = useGlobalContext();

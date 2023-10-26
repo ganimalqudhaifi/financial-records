@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context/GlobalContext';
 import { userSignOut } from '../../../utils';
 import { AccountsDropdown } from '../../molecules';
 import { useAccounts, useDatabaseObserver } from '../../../hooks';

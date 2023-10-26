@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Script from 'next/script';
 import { userSignOut } from '../utils';
 import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
-import { useAuthContext } from '../context';
+import { useAuthContext } from '../context/AuthContext';
 
 export default function Home() {
   const { user, isLogin } = useAuthContext();

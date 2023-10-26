@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { AppLayout, EditableAccount, Modal } from '../../components';
 import { auth, updateProfile } from '../../config/firebase';
-import { useAuthContext } from '../../context';
+import { useAuthContext } from '../../context/AuthContext';
 import {
   alertToast,
   modal,

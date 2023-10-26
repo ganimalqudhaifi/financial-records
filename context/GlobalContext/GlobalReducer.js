@@ -8,7 +8,7 @@ export const globalInitialState = {
   hasLoadData: false,
 };
 
-export const globalActionType = {
+export const GLOBAL_ACTION_TYPE = {
   HANDLE_SEARCH: 'HANDLE_SEARCH',
   HANDLE_SLICE: 'HANDLE_SLICE',
   HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
@@ -19,32 +19,32 @@ export const globalActionType = {
 
 export const globalReducer = (state, action) => {
   switch (action.type) {
-    case globalActionType.HANDLE_SEARCH:
+    case GLOBAL_ACTION_TYPE.HANDLE_SEARCH:
       return {
         ...state,
         searchKeyword: action.payload.toLowerCase(),
       };
-    case globalActionType.HANDLE_SLICE:
+    case GLOBAL_ACTION_TYPE.HANDLE_SLICE:
       return {
         ...state,
         sliceShow: parseInt(action.payload, 19),
       };
-    case globalActionType.HANDLE_FILTER_PERIOD:
+    case GLOBAL_ACTION_TYPE.HANDLE_FILTER_PERIOD:
       return {
         ...state,
         filterPeriod: action.payload,
       };
-    case globalActionType.HANDLE_PAGINATION_INDEX:
+    case GLOBAL_ACTION_TYPE.HANDLE_PAGINATION_INDEX:
       return {
         ...state,
         paginationIndex: action.payload,
       };
-    case globalActionType.CHANGE_INITIAL_BALANCE:
+    case GLOBAL_ACTION_TYPE.CHANGE_INITIAL_BALANCE:
       return {
         ...state,
         initialBalance: parseInt(action.payload, 10),
       };
-    case globalActionType.SET_ISDEMO:
+    case GLOBAL_ACTION_TYPE.SET_ISDEMO:
       return {
         ...state,
         isDemo: action.payload,

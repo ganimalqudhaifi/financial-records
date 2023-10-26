@@ -1,5 +1,5 @@
 import { Modal } from '../../molecules';
-import { useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context/GlobalContext';
 import { modal } from '../../../utils';
 import { useRecords } from '../../../hooks';
 

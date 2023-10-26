@@ -1,6 +1,6 @@
 import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
-import { useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context/GlobalContext';
 import styles from './FinancialRecordsTable.module.css';
 import { useAccounts, useRecords } from '../../../hooks';
 

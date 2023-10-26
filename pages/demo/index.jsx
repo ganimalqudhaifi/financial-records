@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { AppLayout, FinancialRecords } from '../../components';
-import { useGlobalContext } from '../../context';
+import { useGlobalContext } from '../../context/GlobalContext';
 import { getData } from '../../utils/data';
 import { useAccounts, useRecords } from '../../hooks';
 

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useGlobalContext } from '../../../context';
+import { useGlobalContext } from '../../../context/GlobalContext';
 import { useAccounts } from '../../../hooks';
 import { modal } from '../../../utils';
 import { Modal } from '../../molecules';

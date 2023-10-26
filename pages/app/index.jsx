@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { AppLayout, FinancialRecords } from '../../components';
-import { useAuthContext } from '../../context';
+import { useAuthContext } from '../../context/AuthContext';
 import { useDatabaseObserver, useRecords } from '../../hooks';
 
 export default function App() {

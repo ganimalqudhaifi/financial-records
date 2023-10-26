@@ -3,7 +3,7 @@ import Head from 'next/head';
 import { AppLayout } from '../../components';
 import FinancialRecordsInformation from '../../components/templates/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../components/templates/FinancialRecordsApp/FinancialRecordsChart';
-import { useGlobalContext } from '../../context';
+import { useGlobalContext } from '../../context/GlobalContext';
 import { useAccounts, useRecords } from '../../hooks';
 import { getData } from '../../utils';
 

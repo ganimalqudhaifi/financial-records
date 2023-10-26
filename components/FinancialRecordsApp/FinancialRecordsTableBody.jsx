@@ -1,6 +1,6 @@
 import FinancialRecordsActionEdit from './FinancialRecordsActionEdit';
 import FinancialRecordsActionDelete from './FinancialRecordsActionDelete';
-import { templateDateDMY } from '../../../utils/templateDate';
+import { templateDateDMY } from '../../utils/templateDate';
 
 export default function FinancialRecordsTableBody({ no, record, saldoAkhir }) {
   const {

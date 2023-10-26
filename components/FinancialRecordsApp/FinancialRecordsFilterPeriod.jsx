@@ -1,6 +1,6 @@
-import { useGlobalContext } from '../../../context/GlobalContext';
-import { generatePeriodYM, templateDateMY } from '../../../utils';
-import { useRecords } from '../../../hooks';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { generatePeriodYM, templateDateMY } from '../../utils';
+import { useRecords } from '../../hooks';
 
 export default function FinancialRecordsFilterPeriod() {
   const { records } = useRecords();

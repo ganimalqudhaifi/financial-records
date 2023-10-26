@@ -1,4 +1,4 @@
-import { GLOBAL_ACTION_TYPE, useGlobalContext } from '../../../context/GlobalContext';
+import { GLOBAL_ACTION_TYPE, useGlobalContext } from '../../context/GlobalContext';
 
 function FinancialRecordsSearch() {
   const { dispatch } = useGlobalContext();

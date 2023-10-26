@@ -1,7 +1,8 @@
-import { Modal } from '../../molecules';
-import { useGlobalContext } from '../../../context/GlobalContext';
-import { modal } from '../../../utils';
-import { useRecords } from '../../../hooks';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { modal } from '../../utils';
+import { useRecords } from '../../hooks';
+
+import Modal from '../Modal';
 
 export default function FinancialRecordsActionDelete({ id }) {
   const { state, changePaginationIndexState } = useGlobalContext();

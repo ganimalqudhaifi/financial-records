@@ -1,4 +1,4 @@
-import { AppSidebar } from '../../organisms';
+import AppSidebar from './AppSidebar';
 
 export default function AppLayout({ children, ...rest }) {
   return (

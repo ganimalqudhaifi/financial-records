@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { useAccounts } from '../../hooks';
-import { modal } from '../../utils';
+import { useAccounts } from '../hooks';
+import { modal } from '../utils';
 import Modal from './Modal';
 
 export default function EditableAccount({ account }) {

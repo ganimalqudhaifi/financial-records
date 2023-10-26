@@ -1,4 +1,4 @@
-import { modal } from '../../../utils';
+import { modal } from '../utils';
 
 export default function Modal({ id, children }) {
   return (

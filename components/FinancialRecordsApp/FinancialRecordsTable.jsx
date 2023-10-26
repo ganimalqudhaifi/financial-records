@@ -1,8 +1,8 @@
 import FinancialRecordsTableHead from './FinancialRecordsTableHead';
 import FinancialRecordsTableBody from './FinancialRecordsTableBody';
-import { useGlobalContext } from '../../../context/GlobalContext';
+import { useGlobalContext } from '../../context/GlobalContext';
 import styles from './FinancialRecordsTable.module.css';
-import { useAccounts, useRecords } from '../../../hooks';
+import { useAccounts, useRecords } from '../../hooks';
 
 export default function FinancialRecordsTable() {
   const { selectedAccount } = useAccounts();

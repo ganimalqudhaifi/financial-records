@@ -1,5 +1,5 @@
-import { useGlobalContext } from '../../../context/GlobalContext';
-import { useRecords } from '../../../hooks';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { useRecords } from '../../hooks';
 
 export default function FinancialRecordsPaginantion() {
   const { records } = useRecords();

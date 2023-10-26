@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useGlobalContext } from '../../../context/GlobalContext';
-import { useAccounts } from '../../../hooks';
-import { modal } from '../../../utils';
-import { Modal } from '../../molecules';
+import { useGlobalContext } from '../../context/GlobalContext';
+import { useAccounts } from '../../hooks';
+import { modal } from '../../utils';
+
+import Modal from '../Modal';
 
 export default function FinancialRecordsTableHead() {
   const { editAccount, selectedAccount } = useAccounts();

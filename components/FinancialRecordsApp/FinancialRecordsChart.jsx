@@ -9,9 +9,9 @@ import {
   Legend,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { Modal } from '../../molecules';
-import { modal } from '../../../utils';
-import { useAccounts, useRecords } from '../../../hooks';
+import { modal } from '../../utils';
+import { useAccounts, useRecords } from '../../hooks';
+import Modal from '../Modal';
 
 ChartJS.register(
   CategoryScale,

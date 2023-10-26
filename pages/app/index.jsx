@@ -9,17 +9,17 @@ export default function App() {
   const router = useRouter();
 
   const { setRecords } = useRecords();
-  const { user, isLogin } = useAuthContext();
+  const { user } = useAuthContext();
 
   useEffect(() => {
-    if (!isLogin) router.push('/');
+    if (!user) router.push('/');
   }, []);
 
   useDatabaseObserver('records', (data) => {
     setRecords(data);
   });
 
-  if (isLogin) {
+  if (user) {
     return (
       <>
         <Head>

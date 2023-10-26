@@ -31,14 +31,14 @@ export default function Profile() {
   const router = useRouter();
   const [edits, setEdits] = useState({ personalInformation: false });
 
-  const { user, setUser, isLogin } = useAuthContext();
+  const { user, setUser } = useAuthContext();
 
   const [inputs, setInputs] = useState({});
 
   const { accounts, addAccount } = useAccounts();
 
   useEffect(() => {
-    if (user === null) {
+    if (!user) {
       router.push('/');
     } else {
       setInputs(user);
@@ -70,7 +70,7 @@ export default function Profile() {
       });
   };
 
-  if (isLogin) {
+  if (user) {
     return (
       <>
         <Head>

@@ -6,7 +6,7 @@ import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePracti
 import { useAuthContext } from '../context/AuthContext';
 
 export default function Home() {
-  const { user, isLogin } = useAuthContext();
+  const { user } = useAuthContext();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
@@ -26,6 +26,10 @@ export default function Home() {
     setisNavigationDropdownOpen(!isNavigationDropdownOpen);
   };
 
+  if (user) {
+    console.log({ userData: user });
+  }
+
   return (
     <>
       <Head>
@@ -36,7 +40,6 @@ export default function Home() {
         <header className="sticky top-0 z-50 flex lg:grid grid-cols-3 justify-items-center items-center max-w-7xl mx-auto px-4 sm:px-8 lg:px-20 py-3.5 md:py-4 bg-bg-color border-b border-neutral-800 shadow-md duration-500">
           <Logo />
           <HomeUserDropdown
-            isLogin={isLogin}
             user={user}
             isUserDropdownOpen={isUserDropdownOpen}
             handleUserDropdown={handleUserDropdown}

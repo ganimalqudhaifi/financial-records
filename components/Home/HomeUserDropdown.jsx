@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function HomeUserDropdown({ isLogin, user, isUserDropdownOpen, handleUserDropdown, handleSignOut }) {
-  if (!isLogin) {
+export default function HomeUserDropdown({ user, isUserDropdownOpen, handleUserDropdown, handleSignOut }) {
+  if (!user) {
     return (
       <div className="flex lg:order-last justify-self-end">
         <Link href="/login" className="flex gap-2 hover:bg-gray-700 px-4 py-2 font-medium rounded-lg focus:ring-4 focus:ring-gray-800">

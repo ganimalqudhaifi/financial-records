@@ -12,31 +12,28 @@ export function useAuthContext() {
     throw new Error('useAuthContext must be called from within a AppContextProvider');
   }
 
-  const { user, setUser, isLogin } = contextValue;
+  const { user, setUser } = contextValue;
 
-  return { user, setUser, isLogin };
+  return { user, setUser };
 }
 
 // Provider
 export default function AuthContextProvider(props) {
   const [user, setUser] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        setIsLogin(true);
       } else {
         setUser(null);
-        setIsLogin(false);
       }
     });
 
     return () => unsubscribe();
   }, []);
 
-  const value = useMemo(() => ({ user, setUser, isLogin }), [user, isLogin]);
+  const value = useMemo(() => ({ user, setUser }), [user]);
 
   return (<AuthContext.Provider value={value} {...props} />);
 }

@@ -2,10 +2,13 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { auth, signInWithEmailAndPassword } from '../../config/firebase';
-import { alertToast } from '../../utils';
+import { auth, createUserWithEmailAndPassword, updateProfile } from '../config/firebase';
+import { alertToast } from '../utils';
+import { useAccounts } from '../hooks';
 
-export default function Login() {
+export default function Register() {
+  const { addAccount } = useAccounts();
+
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,22 +26,28 @@ export default function Login() {
     setIsLoading(true);
     e.preventDefault();
     const { email, password } = inputs;
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then(async (res) => {
+        await updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
+        const newAccount = {
+          name: 'Personal',
+          initialBalance: 0,
+        };
+        addAccount(newAccount);
         setInputs({ email: '', password: '' });
         router.push('/app');
       })
       .catch((err) => {
         let errMsg;
         switch (err.code) {
-          case 'auth/user-not-found':
-            errMsg = 'Email tidak ditemukan';
+          case 'auth/email-already-in-use':
+            errMsg = 'Email telah digunakan';
             break;
           case 'auth/invalid-email':
             errMsg = 'Email tidak sah';
             break;
-          case 'auth/wrong-password':
-            errMsg = 'Password salah';
+          case 'auth/weak-password':
+            errMsg = 'Password lemah';
             break;
           default:
             errMsg = 'Terjadi kesalahan';
@@ -52,8 +61,7 @@ export default function Login() {
     <div className="font-['Poppins','sans-serif'] flex justify-center items-center min-h-screen bg-bg-color">
       <div className="relative w-[350px] min-h-[500px] flex justify-center items-center bg-bg-color p-[50px] rounded-[30px] shadow-[25px_25px_75px_rgba(0,0,0,.25),10px_10px_70px_rgba(0,0,0,.25),inset_5px_5px_10px_rgba(0,0,0,.5),inset_5px_5px_20px_rgba(255,255,255,.2),inset_-5px_-5px_15px_rgba(0,0,0,.75)]">
         <form onSubmit={handleSubmit} spellCheck="false" className="relative w-full">
-          <h3 className="text-white font-semibold text-[2em] w-full text-center mb-[30px] tracking-[2px] uppercase">Log In</h3>
-          <div className="firebaseui-auth-container" />
+          <h3 className="text-white font-semibold text-[2em] w-full text-center mb-[30px] tracking-[2px] uppercase">Register</h3>
           <div className="relative w-full mb-5">
             <label htmlFor="email" className="inline-block text-white mb-[10px] uppercase tracking-[1px] text-xs border-l-4 border-white pl-1 leading-[1em]">Email</label>
             <div className="flex">
@@ -65,7 +73,7 @@ export default function Login() {
                 placeholder="Masukkan email..."
                 onChange={handleChange}
                 className="relative w-full px-5 py-[10px] rounded-full shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(0,0,0,.35),inset_-3px_-3px_5px_rgba(0,0,0,.5)] outline-0 text-sm leading-[24px]"
-                autoComplete="email"
+                autoComplete="off"
                 required
               />
             </div>
@@ -109,11 +117,11 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <button className={`w-full px-5 py-[10px] mb-6 rounded-full bg-[#1f83f2] shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(255,255,255,.25),inset_-3px_-3px_5px_rgba(0,0,0,.5)] text-white uppercase tracking-[2px] font-semibold mt-[10px] hover:brightness-110 active:brightness-100 ${isLoading && 'grayscale'}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
-          <Link className="text-white text-sm text-center w-full inline-block" href="/register">
-            {'Belum punya akun? '}
-            <span className="text-main-color">Daftar</span>
-          </Link>
+          <button className={`w-full px-5 py-[10px] mb-6 rounded-full bg-[#1f83f2] shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(255,255,255,.25),inset_-3px_-3px_5px_rgba(0,0,0,.5)] text-white uppercase tracking-[2px] font-semibold mt-[10px] hover:brightness-110 ${isLoading ? 'grayscale' : ''}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Daftar'}</button>
+          <div className="text-white text-sm text-center w-full inline-block">
+            {'Sudah punya akun? '}
+            <Link href="/login" className="text-main-color">Login</Link>
+          </div>
         </form>
       </div>
       <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />

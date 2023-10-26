@@ -26,10 +26,6 @@ export default function Home() {
     setisNavigationDropdownOpen(!isNavigationDropdownOpen);
   };
 
-  if (user) {
-    console.log({ userData: user });
-  }
-
   return (
     <>
       <Head>

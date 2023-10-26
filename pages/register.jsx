@@ -9,6 +9,7 @@ import { useAccounts } from '../hooks';
 export default function Register() {
   const { addAccount } = useAccounts();
 
+  const [errorMsg, setErorrMsg] = useState('');
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -23,37 +24,36 @@ export default function Register() {
   };
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
     const { email, password } = inputs;
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then(async (res) => {
-        await updateProfile(auth.currentUser, { displayName: `user${res.user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
-        const newAccount = {
-          name: 'Personal',
-          initialBalance: 0,
-        };
-        addAccount(newAccount);
-        setInputs({ email: '', password: '' });
-        router.push('/app');
-      })
-      .catch((err) => {
-        let errMsg;
-        switch (err.code) {
-          case 'auth/email-already-in-use':
-            errMsg = 'Email telah digunakan';
-            break;
-          case 'auth/invalid-email':
-            errMsg = 'Email tidak sah';
-            break;
-          case 'auth/weak-password':
-            errMsg = 'Password lemah';
-            break;
-          default:
-            errMsg = 'Terjadi kesalahan';
-        }
-        alertToast(errMsg);
-      });
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = userCredential;
+      await updateProfile(auth.currentUser, { displayName: `user${user.uid.substring(0, 11)}`, photoURL: '/avatar/boy_01.svg' });
+      const newAccount = {
+        name: 'Personal',
+        initialBalance: 0,
+      };
+      addAccount(newAccount);
+      setInputs({ email: '', password: '' });
+      router.replace('/app');
+    } catch (err) {
+      switch (err.code) {
+        case 'auth/email-already-in-use':
+          setErorrMsg('Email telah digunakan');
+          break;
+        case 'auth/invalid-email':
+          setErorrMsg('Email tidak sah');
+          break;
+        case 'auth/weak-password':
+          setErorrMsg('Password lemah');
+          break;
+        default:
+          setErorrMsg('Terjadi kesalahan');
+      }
+      alertToast(errorMsg);
+    }
     setIsLoading(false);
   };
 

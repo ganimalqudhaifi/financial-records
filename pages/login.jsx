@@ -6,6 +6,7 @@ import { auth, signInWithEmailAndPassword } from '../config/firebase';
 import { alertToast } from '../utils';
 
 export default function Login() {
+  const [errorMsg, setErorrMsg] = useState('');
   const [inputs, setInputs] = useState({ email: '', password: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -20,31 +21,29 @@ export default function Login() {
   };
 
   const handleSubmit = async (e) => {
-    setIsLoading(true);
     e.preventDefault();
+    setIsLoading(true);
     const { email, password } = inputs;
-    await signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setInputs({ email: '', password: '' });
-        router.push('/app');
-      })
-      .catch((err) => {
-        let errMsg;
-        switch (err.code) {
-          case 'auth/user-not-found':
-            errMsg = 'Email tidak ditemukan';
-            break;
-          case 'auth/invalid-email':
-            errMsg = 'Email tidak sah';
-            break;
-          case 'auth/wrong-password':
-            errMsg = 'Password salah';
-            break;
-          default:
-            errMsg = 'Terjadi kesalahan';
-        }
-        alertToast(errMsg);
-      });
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      setInputs({ email: '', password: '' });
+      router.replace('/app');
+    } catch (err) {
+      switch (err.code) {
+        case 'auth/user-not-found':
+          setErorrMsg('Email tidak ditemukan');
+          break;
+        case 'auth/invalid-email':
+          setErorrMsg('Email tidak sah');
+          break;
+        case 'auth/wrong-password':
+          setErorrMsg('Password salah');
+          break;
+        default:
+          setErorrMsg('Terjadi kesalahan');
+      }
+      alertToast(errorMsg);
+    }
     setIsLoading(false);
   };
 

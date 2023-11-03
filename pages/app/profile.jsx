@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import { AppLayout, EditableAccount, Modal } from '../../components';
 import { auth, updateProfile } from '../../config/firebase';
@@ -11,36 +10,32 @@ import {
 } from '../../utils';
 import { useAccounts } from '../../hooks';
 
+const avatarLists = [
+  '/avatar/boy_01.svg',
+  '/avatar/boy_02.svg',
+  '/avatar/boy_03.svg',
+  '/avatar/boy_04.svg',
+  '/avatar/boy_05.svg',
+  '/avatar/boy_06.svg',
+  '/avatar/boy_07.svg',
+  '/avatar/girl_01.svg',
+  '/avatar/girl_02.svg',
+  '/avatar/girl_03.svg',
+  '/avatar/girl_04.svg',
+  '/avatar/girl_05.svg',
+  '/avatar/girl_06.svg',
+  '/avatar/girl_07.svg',
+];
+
 export default function Profile() {
-  const avatarLists = [
-    '/avatar/boy_01.svg',
-    '/avatar/boy_02.svg',
-    '/avatar/boy_03.svg',
-    '/avatar/boy_04.svg',
-    '/avatar/boy_05.svg',
-    '/avatar/boy_06.svg',
-    '/avatar/boy_07.svg',
-    '/avatar/girl_01.svg',
-    '/avatar/girl_02.svg',
-    '/avatar/girl_03.svg',
-    '/avatar/girl_04.svg',
-    '/avatar/girl_05.svg',
-    '/avatar/girl_06.svg',
-    '/avatar/girl_07.svg',
-  ];
-  const router = useRouter();
-  const [edits, setEdits] = useState({ personalInformation: false });
-
   const { user, setUser } = useAuthContext();
-
-  const [inputs, setInputs] = useState({});
-
   const { accounts, addAccount } = useAccounts();
 
+  const [edits, setEdits] = useState({ personalInformation: false });
+  const [inputs, setInputs] = useState({});
+
   useEffect(() => {
-    if (!user) {
-      router.push('/');
-    } else {
+    if (user) {
       setInputs(user);
     }
   }, [user]);

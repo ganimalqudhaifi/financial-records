@@ -5,6 +5,14 @@ import { userSignOut } from '../utils';
 import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
 import { useAuthContext } from '../context/AuthContext';
 
+export async function getServerSideProps({ req }) {
+  const { user } = req.cookies;
+  if (user) {
+    return { props: { user: JSON.parse(user) } };
+  }
+  return { props: { } };
+}
+
 export default function Home() {
   const { user } = useAuthContext();
 

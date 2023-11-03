@@ -1,6 +1,4 @@
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { AppLayout } from '../../components';
 import FinancialRecordsInformation from '../../components/FinancialRecordsApp/FinancialRecordsInformation';
 import FinancialRecordsChart from '../../components/FinancialRecordsApp/FinancialRecordsChart';
@@ -8,14 +6,8 @@ import { useDatabaseObserver, useRecords } from '../../hooks';
 import { useAuthContext } from '../../context/AuthContext';
 
 export default function App() {
-  const router = useRouter();
-
   const { setRecords } = useRecords();
   const { user } = useAuthContext();
-
-  useEffect(() => {
-    if (!user) router.push('/');
-  }, []);
 
   useDatabaseObserver('records', (data) => {
     setRecords(data);

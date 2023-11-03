@@ -22,10 +22,26 @@ export default function AuthContextProvider(props) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setUser(user);
+        const dataUser = {
+          displayName: user.displayName,
+          email: user.email,
+          phoneNumber: user.phoneNumber,
+          photoURL: user.photoURL,
+          uid: user.uid,
+        };
+        await fetch('/api/cookie', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user: JSON.stringify(dataUser) }),
+        });
+        setUser(dataUser);
       } else {
+        await fetch('/api/cookie', {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+        });
         setUser(null);
       }
     });

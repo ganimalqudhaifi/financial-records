@@ -129,7 +129,7 @@ export default function AppSidebar({ user }) {
             </li>
             <li>
               <Link
-                href={`${!isDemo ? '/app/profile' : '/login'}`}
+                href={`${!isDemo ? '/app/profile' : '/demo'}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
                 disabled
               >
@@ -178,8 +178,7 @@ export default function AppSidebar({ user }) {
               </button>
             </div>
             <p className="mb-3 text-sm  text-blue-400">
-              Preview the dashboard navigation! For some reason profile page is not
-              available in demo.
+              Please login to use the profile features! For some reason profile page is not available in demo.
             </p>
             <Link href="/" className="text-sm  underline font-medium text-blue-400 hover:text-blue-300">Back to Home Page </Link>
           </div>

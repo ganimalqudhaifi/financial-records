@@ -55,7 +55,7 @@ export default function Home() {
           />
         </header>
 
-        <main className="flex flex-col flex-1 gap-y-12 items-center mb-10 sm:px-[5%] lg:px-[8%]">
+        <main className="flex flex-col flex-1 gap-y-12 items-center mb-10 sm:px-[5%] lg:px-[8%] overflow-x-hidden">
           <HomeBanner />
           <HomeAboutMe />
           <HomePractice />

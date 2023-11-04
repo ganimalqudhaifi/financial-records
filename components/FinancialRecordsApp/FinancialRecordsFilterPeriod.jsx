@@ -7,8 +7,7 @@ export default function FinancialRecordsFilterPeriod() {
   const { changeFilterPeriodState } = useGlobalContext();
 
   const listPeriod = !records.length ? [] : records.reduce((acc, record) => {
-    const period = generatePeriodYM(record.tanggal);
-
+    const period = generatePeriodYM(record.date);
     if (!acc.includes(period)) {
       acc.push(period);
     }

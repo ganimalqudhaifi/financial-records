@@ -41,7 +41,7 @@ export default function Home() {
       </Head>
 
       <div className="w-full min-h-[100vh] bg-bg-color text-text-color">
-        <header className="sticky top-0 z-50 flex lg:grid grid-cols-3 justify-items-center items-center max-w-7xl mx-auto px-4 sm:px-8 lg:px-20 py-3.5 md:py-4 bg-bg-color border-b border-neutral-800 shadow-md duration-500">
+        <header className="sticky top-0 z-50 flex items-center max-w-7xl mx-auto px-4 py-3.5 bg-bg-color border-b border-neutral-800 shadow-md duration-500 sm:px-8 md:py-4 lg:px-20 lg:grid lg:grid-cols-3 lg:justify-items-center">
           <Logo />
           <HomeUserDropdown
             user={user}

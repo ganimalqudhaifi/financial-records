@@ -72,7 +72,7 @@ export default function HomePractice() {
   };
 
   return (
-    <section id="Practice" className="flex flex-col justify-center items-center px-6 md:px-12 scroll-mt-32">
+    <section id="Practice" className="flex flex-col justify-center items-center px-6 scroll-mt-32 md:px-12">
       <motion.h2 className="text-5xl font-bold text-center text-main-color">Practice</motion.h2>
 
       <motion.p

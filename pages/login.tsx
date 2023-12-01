@@ -81,7 +81,7 @@ export default function Login() {
                   placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;"
                   onChange={handleChange}
                   className="relative w-full px-5 py-[10px] pr-10 rounded-full shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(0,0,0,.35),inset_-3px_-3px_5px_rgba(0,0,0,.5)] outline-0 text-sm leading-[24px]"
-                  minLength="6"
+                  minLength={6}
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center">
@@ -108,7 +108,7 @@ export default function Login() {
               </div>
             </div>
           </div>
-          <button className={`w-full px-5 py-[10px] mb-6 rounded-full bg-[#1f83f2] shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(255,255,255,.25),inset_-3px_-3px_5px_rgba(0,0,0,.5)] text-white uppercase tracking-[2px] font-semibold mt-[10px] hover:brightness-110 active:brightness-100 ${isLoading && 'grayscale'}`} type="Submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
+          <button className={`w-full px-5 py-[10px] mb-6 rounded-full bg-[#1f83f2] shadow-[5px_5px_7px_rgba(0,0,0,.25),inset_2px_2px_5px_rgba(255,255,255,.25),inset_-3px_-3px_5px_rgba(0,0,0,.5)] text-white uppercase tracking-[2px] font-semibold mt-[10px] hover:brightness-110 active:brightness-100 ${isLoading && 'grayscale'}`} type="submit" disabled={isLoading}>{isLoading ? 'Loading...' : 'Masuk'}</button>
           <Link className="text-white text-sm text-center w-full inline-block" href="/register">
             {'Belum punya akun? '}
             <span className="text-main-color">Daftar</span>
@@ -116,7 +116,7 @@ export default function Login() {
         </form>
       </div>
       <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
-      <Script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
+      <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
     </div>
   );
 }

@@ -32,7 +32,7 @@ export default function Profile() {
   const { accounts, addAccount } = useAccounts();
 
   const [edits, setEdits] = useState({ personalInformation: false });
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({ displayName: '', email: '', phoneNumber: '' });
 
   useEffect(() => {
     if (user) {
@@ -111,7 +111,7 @@ export default function Profile() {
                   >
                     Change Avatar
                   </button>
-                  <Modal style="modal-content-delete" id="changeAvatar">
+                  <Modal id="changeAvatar">
                     <div className="p-2">
                       <h3 className="text-center text-2xl font-bold tracking-wide mb-6 mt-2">Chose Avatar</h3>
                       <div className="grid grid-cols-4 lg:grid-cols-5 gap-4">

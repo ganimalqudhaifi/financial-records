@@ -2,7 +2,7 @@ import { createContext, useContext, useMemo, useReducer } from 'react';
 import { appInitialState, appReducer } from './AppReducer';
 
 // Create context
-export const AppContext = createContext();
+export const AppContext = createContext(null);
 
 // Hook
 export function useAppContext() {

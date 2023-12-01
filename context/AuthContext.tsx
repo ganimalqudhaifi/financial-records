@@ -2,7 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth, onAuthStateChanged } from '../config/firebase';
 
 // Create context
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 // Hook
 export function useAuthContext() {

@@ -18,7 +18,7 @@
   },
   "plugins": ["react"],
   "rules": {
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
     "react/button-has-type": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
@@ -39,6 +39,10 @@
     // "consistent-return": "off",
     "object-curly-newline": ["error", { "multiline": true }],
     // "linebreak-style": ["error", "windows"],
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "import/extensions": [
+      "error",
+      { "ts": "never" }
+    ]
   }
 }

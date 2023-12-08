@@ -1,4 +1,6 @@
-export default function handler(req, res) {
+import { NextApiRequest, NextApiResponse } from 'next';
+
+export default function handler(req : NextApiRequest, res: NextApiResponse) {
   if (req.method === 'POST') {
     const { user } = req.body;
     res.setHeader('Set-Cookie', `user=${user}; Path=/; HttpOnly`);

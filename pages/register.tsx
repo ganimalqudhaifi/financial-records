@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { FormEvent, SyntheticEvent, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { auth, createUserWithEmailAndPassword, updateProfile } from '../config/firebase';
+import { useRouter } from 'next/router';
+
 import { alertToast } from '../utils';
 import { useAccounts } from '../hooks';
+import { auth, createUserWithEmailAndPassword, updateProfile } from '../config/firebase';
 
 export default function Register() {
   const { addAccount } = useAccounts();
@@ -16,14 +17,14 @@ export default function Register() {
 
   const router = useRouter();
 
-  const handleChange = (e) => {
+  const handleChange = (e : FormEvent<HTMLInputElement>) => {
     setInputs((values) => ({
       ...values,
-      [e.target.name]: e.target.value,
+      [e.currentTarget.name]: e.currentTarget.value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const { email, password } = inputs;

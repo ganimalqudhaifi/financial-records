@@ -1,4 +1,5 @@
 import Head from 'next/head';
+
 import { AppLayout, FinancialRecords } from '../../components';
 import { useAuthContext } from '../../context/AuthContext';
 import { useDatabaseObserver, useRecords } from '../../hooks';
@@ -7,6 +8,7 @@ export default function App() {
   const { setRecords } = useRecords();
   const { user } = useAuthContext();
 
+  // TODO!: Typescript definition for callback required later
   useDatabaseObserver('records', (data) => {
     setRecords(data);
   });

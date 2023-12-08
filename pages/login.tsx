@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { FormEvent, SyntheticEvent, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import Script from 'next/script';
-import { auth, signInWithEmailAndPassword } from '../config/firebase';
+import { useRouter } from 'next/router';
+
 import { alertToast } from '../utils';
+import { auth, signInWithEmailAndPassword } from '../config/firebase';
 
 export default function Login() {
   const [errorMsg, setErorrMsg] = useState('');
@@ -13,14 +14,14 @@ export default function Login() {
 
   const router = useRouter();
 
-  const handleChange = (e) => {
+  const handleChange = (e : FormEvent<HTMLInputElement>) => {
     setInputs((values) => ({
       ...values,
-      [e.target.name]: e.target.value,
+      [e.currentTarget.name]: e.currentTarget.value,
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
     const { email, password } = inputs;

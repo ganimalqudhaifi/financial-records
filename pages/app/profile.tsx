@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
+
 import { AppLayout, EditableAccount, Modal } from '../../components';
 import { auth, updateProfile } from '../../config/firebase';
 import { useAuthContext } from '../../context/AuthContext';
-import {
-  alertToast,
-  modal,
-} from '../../utils';
+import { alertToast, modal } from '../../utils';
 import { useAccounts } from '../../hooks';
 
 const avatarLists = [
@@ -40,9 +38,11 @@ export default function Profile() {
     }
   }, [user]);
 
-  const handleInputs = (e) => setInputs({ ...inputs, [e.target.name]: e.target.value });
+  const handleInputs = (e : FormEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.currentTarget.name]: e.currentTarget.value });
+  };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e : SyntheticEvent) => {
     e.preventDefault();
     await updateProfile(auth.currentUser, { displayName: inputs.displayName })
       .then(() => {
@@ -53,7 +53,7 @@ export default function Profile() {
       });
   };
 
-  const handleProfilePicture = async (pathURL) => {
+  const handleProfilePicture = async (pathURL : string) => {
     await updateProfile(auth.currentUser, { photoURL: pathURL })
       .then(() => {
         setUser({ ...user, photoURL: pathURL });

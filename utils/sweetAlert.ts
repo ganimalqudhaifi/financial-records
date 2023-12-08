@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-export function alertToast(errMsg) {
+export function alertToast(errMsg : string) {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top',
@@ -19,7 +19,7 @@ export function alertToast(errMsg) {
   });
 }
 
-export const successToast = (succMsg) => {
+export const successToast = (succMsg : string) => {
   const Toast = Swal.mixin({
     toast: true,
     position: 'top-end',

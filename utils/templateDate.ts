@@ -1,4 +1,4 @@
-export const templateDateDMY = (date) => {
+export const templateDateDMY = (date : string) : string => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = d.getMonth();
@@ -8,7 +8,7 @@ export const templateDateDMY = (date) => {
   return `${day} ${arrMonth[month]} ${year}`;
 };
 
-export const templateDateMY = (date) => {
+export const templateDateMY = (date : string) : string => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = d.getMonth();
@@ -17,7 +17,7 @@ export const templateDateMY = (date) => {
   return `${arrMonth[month + 1]} ${year}`;
 };
 
-export const generatePeriodYM = (date) => {
+export const generatePeriodYM = (date : string) : string => {
   const d = new Date(date);
   const year = d.getFullYear();
   const month = d.getMonth();

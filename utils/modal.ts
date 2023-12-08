@@ -1,11 +1,13 @@
+import { SyntheticEvent } from 'react';
+
 export const modal = {
-  show: (id) => {
+  show: (id : string) => {
     document.getElementById(id).style.display = 'flex';
   },
-  hide: (id) => {
+  hide: (id : string) => {
     document.getElementById(id).style.display = 'none';
   },
-  close: (e, id) => {
+  close: (e: SyntheticEvent, id : string) => {
     if (e.target === document.getElementById(id)) {
       document.getElementById(id).style.display = 'none';
     }

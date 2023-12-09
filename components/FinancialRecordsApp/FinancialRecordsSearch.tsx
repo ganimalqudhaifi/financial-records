@@ -1,10 +1,11 @@
-import { GLOBAL_ACTION_TYPE, useGlobalContext } from '../../context/GlobalContext';
+import { FormEvent } from 'react';
+import { useGlobalContext } from '../../context/GlobalContext';
 
 function FinancialRecordsSearch() {
   const { dispatch } = useGlobalContext();
 
-  const changeSearchState = (e) => {
-    dispatch({ type: GLOBAL_ACTION_TYPE.HANDLE_SEARCH, payload: e.target.value });
+  const changeSearchState = (e: FormEvent<HTMLInputElement>) => {
+    dispatch({ type: 'HANDLE_SEARCH', payload: e.currentTarget.value });
   };
 
   return (

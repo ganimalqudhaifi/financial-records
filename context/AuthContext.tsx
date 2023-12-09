@@ -18,7 +18,7 @@ export function useAuthContext() {
 }
 
 // Provider
-export default function AuthContextProvider(props) {
+export default function AuthContextProvider(props: any) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {

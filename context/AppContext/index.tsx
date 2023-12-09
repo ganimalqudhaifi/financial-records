@@ -1,8 +1,13 @@
-import { createContext, useContext, useMemo, useReducer } from 'react';
-import { appInitialState, appReducer } from './AppReducer';
+import { createContext, Dispatch, useContext, useMemo, useReducer } from 'react';
+import { ACTION_TYPE, appInitialState, appReducer } from './AppReducer';
+
+type TAppContext = {
+  state: typeof appInitialState,
+  dispatch: Dispatch<ACTION_TYPE>
+}
 
 // Create context
-export const AppContext = createContext(null);
+export const AppContext = createContext<TAppContext | null>(null);
 
 // Hook
 export function useAppContext() {
@@ -18,7 +23,7 @@ export function useAppContext() {
 }
 
 // Provider
-export default function AppContextProvider(props) {
+export default function AppContextProvider(props: any) {
   const [state, dispatch] = useReducer(appReducer, appInitialState);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);

@@ -8,43 +8,43 @@ export const globalInitialState = {
   hasLoadData: false,
 };
 
-export const GLOBAL_ACTION_TYPE = {
-  HANDLE_SEARCH: 'HANDLE_SEARCH',
-  HANDLE_SLICE: 'HANDLE_SLICE',
-  HANDLE_FILTER_PERIOD: 'HANDLE_FILTER_PERIOD',
-  HANDLE_PAGINATION_INDEX: 'HANDLE_PAGINATION_INDEX',
-  CHANGE_INITIAL_BALANCE: 'CHANGE_AINITIAL_BALANCE',
-  SET_ISDEMO: 'SET_ISDEMO',
-};
+export type ACTION_TYPE =
+  | { type: 'HANDLE_SEARCH', payload: string }
+  | { type: 'HANDLE_SLICE', payload: string } // need check how to change it to number
+  | { type: 'HANDLE_FILTER_PERIOD', payload: string }
+  | { type: 'HANDLE_PAGINATION_INDEX', payload: number }
+  | { type: 'CHANGE_INITIAL_BALANCE', payload: string } // need check how to change it to number
+  | { type: 'SET_ISDEMO', payload: boolean }
 
-export const globalReducer = (state, action) => {
+// TODO! Cross Check all related to action type on this reducer
+export const globalReducer = (state: typeof globalInitialState, action: ACTION_TYPE) => {
   switch (action.type) {
-    case GLOBAL_ACTION_TYPE.HANDLE_SEARCH:
+    case 'HANDLE_SEARCH':
       return {
         ...state,
         searchKeyword: action.payload.toLowerCase(),
       };
-    case GLOBAL_ACTION_TYPE.HANDLE_SLICE:
+    case 'HANDLE_SLICE':
       return {
         ...state,
         sliceShow: parseInt(action.payload, 19),
       };
-    case GLOBAL_ACTION_TYPE.HANDLE_FILTER_PERIOD:
+    case 'HANDLE_FILTER_PERIOD':
       return {
         ...state,
         filterPeriod: action.payload,
       };
-    case GLOBAL_ACTION_TYPE.HANDLE_PAGINATION_INDEX:
+    case 'HANDLE_PAGINATION_INDEX':
       return {
         ...state,
         paginationIndex: action.payload,
       };
-    case GLOBAL_ACTION_TYPE.CHANGE_INITIAL_BALANCE:
+    case 'CHANGE_INITIAL_BALANCE':
       return {
         ...state,
         initialBalance: parseInt(action.payload, 10),
       };
-    case GLOBAL_ACTION_TYPE.SET_ISDEMO:
+    case 'SET_ISDEMO':
       return {
         ...state,
         isDemo: action.payload,

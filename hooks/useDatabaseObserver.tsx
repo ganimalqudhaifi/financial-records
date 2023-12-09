@@ -4,7 +4,7 @@ import { database, onValue, ref } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 
-export default function useDatabaseObserver(path, callback) {
+export default function useDatabaseObserver(path: string, callback: any) {
   const { state } = useGlobalContext();
   const { isDemo } = state;
 

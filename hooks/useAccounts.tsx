@@ -3,7 +3,7 @@ import { database, onValue, push, ref, remove, set } from '../config/firebase';
 
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
-import { APP_ACTION_TYPE, useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext';
 
 export default function useAccounts() {
   const { state: globalState } = useGlobalContext();
@@ -14,7 +14,7 @@ export default function useAccounts() {
 
   const { accounts, activeAccountIndex, selectedAccount } = appState;
 
-  const checkUid = (callback) => {
+  const checkUid = (callback: any) => {
     if (user !== null) {
       callback(user.uid);
     } else {
@@ -23,14 +23,14 @@ export default function useAccounts() {
   };
 
   const setAccounts = (payload) => {
-    dispatch({ type: APP_ACTION_TYPE.SET_ACCOUNTS, payload });
+    dispatch({ type: 'SET_ACCOUNTS', payload });
   };
 
   const addAccount = (payload) => {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else if (isDemo) {
-      dispatch({ type: APP_ACTION_TYPE.ADD_ACCOUNTS, payload });
+      dispatch({ type: 'ADD_ACCOUNTS', payload });
     } else {
       checkUid((uid) => {
         const accountsRef = ref(database, `users/${uid}/accounts`);
@@ -41,7 +41,7 @@ export default function useAccounts() {
 
   const editAccount = (id, payload) => {
     if (isDemo) {
-      dispatch({ type: APP_ACTION_TYPE.EDIT_ACCOUNTS, id, payload });
+      dispatch({ type: 'EDIT_ACCOUNTS', id, payload });
     } else {
       checkUid((uid) => {
         const accountRef = ref(database, `users/${uid}/accounts/${id}`);
@@ -54,7 +54,7 @@ export default function useAccounts() {
     if (accounts.length <= 1) {
       alertToast('Minimal 1 Akun Diperlukan');
     } else if (isDemo) {
-      dispatch({ type: APP_ACTION_TYPE.DELETE_ACCOUNTS, id });
+      dispatch({ type: 'DELETE_ACCOUNTS', id });
     } else {
       checkUid((uid) => {
         const accountRef = ref(database, `users/${uid}/accounts/${id}`);
@@ -75,11 +75,11 @@ export default function useAccounts() {
   };
 
   const setActiveAccountIndex = (payload) => {
-    dispatch({ type: APP_ACTION_TYPE.SET_ACTIVE_ACCOUNT_INDEX, payload });
+    dispatch({ type: 'SET_ACTIVE_ACCOUNT_INDEX', payload });
   };
 
   const setSelectedAccount = (payload) => {
-    dispatch({ type: APP_ACTION_TYPE.SET_SELECTED_ACCOUNT, payload });
+    dispatch({ type: 'SET_SELECTED_ACCOUNT', payload });
   };
 
   return {

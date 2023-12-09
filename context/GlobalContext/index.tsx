@@ -1,8 +1,13 @@
-import { createContext, useContext, useMemo, useReducer } from 'react';
-import { globalReducer, globalInitialState, GLOBAL_ACTION_TYPE } from './GlobalReducer';
+import { createContext, Dispatch, FormEvent, useContext, useMemo, useReducer } from 'react';
+import { globalReducer, globalInitialState, ACTION_TYPE } from './GlobalReducer';
+
+type TGlobalContext = {
+  state: typeof globalInitialState,
+  dispatch: Dispatch<ACTION_TYPE>
+}
 
 // Create context
-const GlobalContext = createContext();
+const GlobalContext = createContext<TGlobalContext | null>(null);
 
 // Hook
 export const useGlobalContext = () => {
@@ -14,25 +19,25 @@ export const useGlobalContext = () => {
 
   const { state, dispatch } = contextValue;
 
-  const setIsDemo = (payload) => {
-    dispatch({ type: GLOBAL_ACTION_TYPE.SET_ISDEMO, payload });
+  const setIsDemo = (payload: boolean) => {
+    dispatch({ type: 'SET_ISDEMO', payload });
   };
 
-  const changePaginationIndexState = (btnpagination) => {
-    dispatch({ type: GLOBAL_ACTION_TYPE.HANDLE_PAGINATION_INDEX, payload: btnpagination });
+  const changePaginationIndexState = (btnpagination : number) => {
+    dispatch({ type: 'HANDLE_PAGINATION_INDEX', payload: btnpagination });
   };
 
-  const changeFilterPeriodState = (e) => {
-    dispatch({ type: GLOBAL_ACTION_TYPE.HANDLE_FILTER_PERIOD, payload: e.target.value });
+  const changeFilterPeriodState = (e : FormEvent<HTMLInputElement>) => {
+    dispatch({ type: 'HANDLE_FILTER_PERIOD', payload: e.currentTarget.value });
   };
 
-  const changeSliceShowState = (e) => {
-    dispatch({ type: GLOBAL_ACTION_TYPE.HANDLE_SLICE, payload: e.target.value });
+  const changeSliceShowState = (e: FormEvent<HTMLInputElement>) => {
+    dispatch({ type: 'HANDLE_SLICE', payload: e.currentTarget.value });
   };
 
-  const changeInitialBalanceState = (payload, callback) => {
+  const changeInitialBalanceState = (payload: string, callback: any) => {
     callback && callback(payload);
-    dispatch({ type: GLOBAL_ACTION_TYPE.CHANGE_INITIAL_BALANCE, payload });
+    dispatch({ type: 'CHANGE_INITIAL_BALANCE', payload });
   };
 
   return {
@@ -47,7 +52,7 @@ export const useGlobalContext = () => {
 };
 
 // Provider
-export default function GlobalContextProvider(props) {
+export default function GlobalContextProvider(props: any) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);

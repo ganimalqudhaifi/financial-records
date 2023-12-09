@@ -1,33 +1,32 @@
 export const appInitialState = {
-  accounts: [],
+  accounts: [] as any[], // change it later
   activeAccountIndex: 0,
   selectedAccount: {},
-  records: [],
+  records: [] as any[], // change it later
   hasDemoLoadRecords: false,
 };
 
-export const APP_ACTION_TYPE = {
-  SET_ACCOUNTS: 'SET_ACCOUNTS',
-  ADD_ACCOUNTS: 'ADD_ACCOUNTS',
-  EDIT_ACCOUNTS: 'EDIT_ACCOUNTS',
-  DELETE_ACCOUNTS: 'DELETE_ACCOUNTS',
-  SET_ACTIVE_ACCOUNT_INDEX: 'SET_ACTIVE_ACCOUNT_INDEX',
-  SET_SELECTED_ACCOUNT: 'SET_SELECTED_ACCOUNT',
-  SET_RECORDS: 'SET_RECORDS',
-  ADD_RECORDS: 'ADD_RECORDS',
-  EDIT_RECORDS: 'EDIT_RECORDS',
-  DELETE_RECORDS: 'DELETE_RECORDS',
-  SET_HAS_DEMO_LOAD_RECORDS: 'SET_HAS_DEMO_LOAD_RECORDS',
-};
+export type ACTION_TYPE =
+  | {type: 'SET_ACCOUNTS', payload: any} // neeed to research
+  | {type: 'ADD_ACCOUNTS', payload: any} // neeed to research
+  | {type: 'EDIT_ACCOUNTS', payload: any, id: any} // neeed to research
+  | {type: 'DELETE_ACCOUNTS', id: any} // neeed to research
+  | {type: 'SET_ACTIVE_ACCOUNT_INDEX', payload: any} // neeed to research
+  | {type: 'SET_SELECTED_ACCOUNT', payload: any} // neeed to research
+  | {type: 'SET_RECORDS', payload: any} // neeed to research
+  | {type: 'ADD_RECORDS', payload: any} // neeed to research
+  | {type: 'EDIT_RECORDS', payload: any, id: any} // neeed to research
+  | {type: 'DELETE_RECORDS', id: any} // neeed to research
+  | {type: 'SET_HAS_DEMO_LOAD_RECORDS', payload: any} // neeed to research
 
-export const appReducer = (state, action) => {
+export const appReducer = (state: typeof appInitialState, action: ACTION_TYPE) => {
   switch (action.type) {
-    case APP_ACTION_TYPE.SET_ACCOUNTS:
+    case 'SET_ACCOUNTS':
       return {
         ...state,
         accounts: action.payload,
       };
-    case APP_ACTION_TYPE.ADD_ACCOUNTS:
+    case 'ADD_ACCOUNTS':
       return {
         ...state,
         accounts: [
@@ -35,7 +34,7 @@ export const appReducer = (state, action) => {
           action.payload,
         ],
       };
-    case APP_ACTION_TYPE.EDIT_ACCOUNTS: {
+    case 'EDIT_ACCOUNTS': {
       const indexAccount = state.accounts.findIndex((account) => account.id === action.id);
       const updatedAccount = state.accounts.fill(action.payload, indexAccount, indexAccount + 1);
       return {
@@ -43,29 +42,29 @@ export const appReducer = (state, action) => {
         accounts: updatedAccount,
       };
     }
-    case APP_ACTION_TYPE.DELETE_ACCOUNTS: {
+    case 'DELETE_ACCOUNTS': {
       const filteredAccounts = state.accounts.filter((record) => record.id !== action.id);
       return {
         ...state,
         accounts: filteredAccounts,
       };
     }
-    case APP_ACTION_TYPE.SET_ACTIVE_ACCOUNT_INDEX:
+    case 'SET_ACTIVE_ACCOUNT_INDEX':
       return {
         ...state,
         activeAccountIndex: action.payload,
       };
-    case APP_ACTION_TYPE.SET_SELECTED_ACCOUNT:
+    case 'SET_SELECTED_ACCOUNT':
       return {
         ...state,
         selectedAccount: action.payload,
       };
-    case APP_ACTION_TYPE.SET_RECORDS:
+    case 'SET_RECORDS':
       return {
         ...state,
         records: action.payload,
       };
-    case APP_ACTION_TYPE.ADD_RECORDS:
+    case 'ADD_RECORDS':
       return {
         ...state,
         records: [
@@ -73,7 +72,7 @@ export const appReducer = (state, action) => {
           action.payload,
         ],
       };
-    case APP_ACTION_TYPE.EDIT_RECORDS: {
+    case 'EDIT_RECORDS': {
       const indexRecord = state.records.findIndex((record) => record.id === action.id);
       const updatedRecord = state.records.fill(action.payload, indexRecord, indexRecord + 1);
       return {
@@ -81,14 +80,14 @@ export const appReducer = (state, action) => {
         records: updatedRecord,
       };
     }
-    case APP_ACTION_TYPE.DELETE_RECORDS: {
+    case 'DELETE_RECORDS': {
       const filteredRecords = state.records.filter((record) => record.id !== action.id);
       return {
         ...state,
         records: filteredRecords,
       };
     }
-    case APP_ACTION_TYPE.SET_HAS_DEMO_LOAD_RECORDS:
+    case 'SET_HAS_DEMO_LOAD_RECORDS':
       return {
         ...state,
         hasDemoLoadRecords: action.payload,

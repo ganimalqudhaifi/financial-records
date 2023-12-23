@@ -3,13 +3,13 @@ import { getAuth } from 'firebase/auth';
 import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAvrAGVwIl28CWZ7TIrqn8f966MyWUnvRE',
-  authDomain: 'financial-records-firebase.firebaseapp.com',
-  projectId: 'financial-records-firebase',
-  storageBucket: 'financial-records-firebase.appspot.com',
-  messagingSenderId: '53898876663',
-  appId: '1:53898876663:web:44c8362f53910ca13765f2',
-  measurementId: 'G-RJD9696EFB',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASURMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);

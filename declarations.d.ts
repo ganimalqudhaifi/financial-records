@@ -5,3 +5,7 @@ declare module JSX {
     'ion-icon': any; // or specific type if available
   }
 }
+
+interface ProcessEnv {
+  GITHUB_AUTH_TOKEN: string;
+}

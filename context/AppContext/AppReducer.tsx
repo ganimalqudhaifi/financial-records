@@ -1,8 +1,8 @@
 export const appInitialState = {
-  accounts: [] as any[], // change it later
+  accounts: [] as any[], // change it to Account[] which accout as object
   activeAccountIndex: 0,
   selectedAccount: {},
-  records: [] as any[], // change it later
+  records: [] as any[], // change it to Record[] which record as object
   hasDemoLoadRecords: false,
 };
 

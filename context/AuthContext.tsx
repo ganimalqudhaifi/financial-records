@@ -1,6 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { auth, onAuthStateChanged } from '../config/firebase';
 
+type TDataUser = {
+  displayName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  photoURL: string | null;
+  uid: string;
+}
+
 // Create context
 export const AuthContext = createContext(null);
 
@@ -19,7 +27,7 @@ export function useAuthContext() {
 
 // Provider
 export default function AuthContextProvider(props: any) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<TDataUser | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

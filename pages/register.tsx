@@ -1,11 +1,12 @@
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { FormEvent, SyntheticEvent, useState } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
 
+import { auth } from '../config/firebase';
 import { alertToast } from '../utils';
 import { useAccounts } from '../hooks';
-import { auth, createUserWithEmailAndPassword, updateProfile } from '../config/firebase';
 
 export default function Register() {
   const { addAccount } = useAccounts();

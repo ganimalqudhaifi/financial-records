@@ -1,6 +1,7 @@
+import { onValue, ref } from 'firebase/database';
 import { useEffect } from 'react';
-import { database, onValue, ref } from '../config/firebase';
 
+import { database } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 

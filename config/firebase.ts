@@ -15,5 +15,5 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const database = getDatabase(app, 'https://financial-records-firebase-default-rtdb.asia-southeast1.firebasedatabase.app/');
-export * from 'firebase/database';
-export * from 'firebase/auth';
+// export * from 'firebase/database';
+// export * from 'firebase/auth';

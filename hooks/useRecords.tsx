@@ -1,5 +1,6 @@
-import { database, ref, push, set, remove } from '../config/firebase';
+import { push, ref, remove, set } from 'firebase/database';
 
+import { database } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useAppContext } from '../context/AppContext';

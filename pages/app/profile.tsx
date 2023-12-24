@@ -1,9 +1,10 @@
 import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import { updateProfile } from 'firebase/auth';
 import Head from 'next/head';
 import Image from 'next/image';
 
+import { auth } from '../../config/firebase';
 import { AppLayout, EditableAccount, Modal } from '../../components';
-import { auth, updateProfile } from '../../config/firebase';
 import { useAuthContext } from '../../context/AuthContext';
 import { alertToast, modal } from '../../utils';
 import { useAccounts } from '../../hooks';

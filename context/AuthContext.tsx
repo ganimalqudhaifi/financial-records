@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, Dispatch, SetStateAction, useContext, useEffect, useMemo, useState } from 'react';
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
@@ -11,8 +11,13 @@ type TDataUser = {
   uid: string;
 }
 
+type TAuthContext = {
+  user: TDataUser;
+  setUser: Dispatch<SetStateAction<TDataUser>>;
+}
+
 // Create context
-export const AuthContext = createContext(null);
+export const AuthContext = createContext<TAuthContext | null>(null);
 
 // Hook
 export function useAuthContext() {

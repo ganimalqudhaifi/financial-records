@@ -12,11 +12,11 @@ const user = {
   photoURL: '/avatar/boy_01.svg',
 };
 
-const demoAccount = {
-  id: 301,
+const demoAccount = [{
+  id: '301',
   name: 'Personal',
   initialBalance: 0,
-};
+}];
 
 export default function Demo() {
   const { setIsDemo } = useGlobalContext();
@@ -30,7 +30,7 @@ export default function Demo() {
       setHasDemoLoadRecords(true);
     }
 
-    setAccounts([demoAccount]);
+    setAccounts(demoAccount);
 
     return () => {
       setIsDemo(false);

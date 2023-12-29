@@ -5,6 +5,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useAppContext } from '../context/AppContext';
 import { database } from '../config/firebase';
+import { Account } from '../types';
 
 export default function useAccounts() {
   const { state: globalState } = useGlobalContext();
@@ -15,7 +16,8 @@ export default function useAccounts() {
 
   const { accounts, activeAccountIndex, selectedAccount } = appState;
 
-  const checkUid = (callback: any) => {
+  // eslint-disable-next-line no-unused-vars
+  const checkUid = (callback: (uid: any) => void) => {
     if (user !== null) {
       callback(user.uid);
     } else {
@@ -23,11 +25,11 @@ export default function useAccounts() {
     }
   };
 
-  const setAccounts = (payload) => {
+  const setAccounts = (payload: Account[]) => {
     dispatch({ type: 'SET_ACCOUNTS', payload });
   };
 
-  const addAccount = (payload) => {
+  const addAccount = (payload: Account) => {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else if (isDemo) {
@@ -40,7 +42,7 @@ export default function useAccounts() {
     }
   };
 
-  const editAccount = (id, payload) => {
+  const editAccount = (id: Account['id'], payload: Account) => {
     if (isDemo) {
       dispatch({ type: 'EDIT_ACCOUNTS', id, payload });
     } else {
@@ -51,7 +53,7 @@ export default function useAccounts() {
     }
   };
 
-  const deleteAccount = (id) => {
+  const deleteAccount = (id: Account['id']) => {
     if (accounts.length <= 1) {
       alertToast('Minimal 1 Akun Diperlukan');
     } else if (isDemo) {
@@ -75,11 +77,11 @@ export default function useAccounts() {
     }
   };
 
-  const setActiveAccountIndex = (payload) => {
+  const setActiveAccountIndex = (payload: number) => {
     dispatch({ type: 'SET_ACTIVE_ACCOUNT_INDEX', payload });
   };
 
-  const setSelectedAccount = (payload) => {
+  const setSelectedAccount = (payload: Account) => {
     dispatch({ type: 'SET_SELECTED_ACCOUNT', payload });
   };
 

@@ -1,23 +1,25 @@
+import { Account, Record } from '../../types';
+
 export const appInitialState = {
-  accounts: [] as any[], // change it to Account[] which accout as object
+  accounts: [] as Account[],
   activeAccountIndex: 0,
-  selectedAccount: {},
-  records: [] as any[], // change it to Record[] which record as object
+  selectedAccount: {} as Account,
+  records: [] as Record[],
   hasDemoLoadRecords: false,
 };
 
 export type ACTION_TYPE =
-  | {type: 'SET_ACCOUNTS', payload: any} // neeed to research
-  | {type: 'ADD_ACCOUNTS', payload: any} // neeed to research
-  | {type: 'EDIT_ACCOUNTS', payload: any, id: any} // neeed to research
-  | {type: 'DELETE_ACCOUNTS', id: any} // neeed to research
-  | {type: 'SET_ACTIVE_ACCOUNT_INDEX', payload: any} // neeed to research
-  | {type: 'SET_SELECTED_ACCOUNT', payload: any} // neeed to research
-  | {type: 'SET_RECORDS', payload: any} // neeed to research
-  | {type: 'ADD_RECORDS', payload: any} // neeed to research
-  | {type: 'EDIT_RECORDS', payload: any, id: any} // neeed to research
-  | {type: 'DELETE_RECORDS', id: any} // neeed to research
-  | {type: 'SET_HAS_DEMO_LOAD_RECORDS', payload: any} // neeed to research
+  | {type: 'SET_ACCOUNTS', payload: Account[]}
+  | {type: 'ADD_ACCOUNTS', payload: Account}
+  | {type: 'EDIT_ACCOUNTS', payload: Account, id: Account['id']}
+  | {type: 'DELETE_ACCOUNTS', id: Account['id']}
+  | {type: 'SET_ACTIVE_ACCOUNT_INDEX', payload: number}
+  | {type: 'SET_SELECTED_ACCOUNT', payload: Account}
+  | {type: 'SET_RECORDS', payload: Record[]}
+  | {type: 'ADD_RECORDS', payload: Record}
+  | {type: 'EDIT_RECORDS', payload: Record, id: Record['id']}
+  | {type: 'DELETE_RECORDS', id: Record['id']}
+  | {type: 'SET_HAS_DEMO_LOAD_RECORDS', payload: boolean}
 
 export const appReducer = (state: typeof appInitialState, action: ACTION_TYPE) => {
   switch (action.type) {

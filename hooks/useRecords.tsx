@@ -4,6 +4,7 @@ import { database } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useAppContext } from '../context/AppContext';
+import { Record } from '../types';
 
 export default function useRecords() {
   const { state: globalState } = useGlobalContext();
@@ -14,7 +15,8 @@ export default function useRecords() {
 
   const { user } = useAuthContext();
 
-  const checkUid = (callback) => {
+  // eslint-disable-next-line no-unused-vars
+  const checkUid = (callback: (uid: any) => void) => {
     if (user !== null) {
       callback(user.uid);
     } else {
@@ -22,11 +24,11 @@ export default function useRecords() {
     }
   };
 
-  const setRecords = (payload) => {
+  const setRecords = (payload: Record[]) => {
     dispatch({ type: 'SET_RECORDS', payload });
   };
 
-  const addRecord = (payload) => {
+  const addRecord = (payload: Record) => {
     if (isDemo) {
       dispatch({ type: 'ADD_RECORDS', payload });
     } else {
@@ -37,7 +39,7 @@ export default function useRecords() {
     }
   };
 
-  const editRecord = (id, payload) => {
+  const editRecord = (payload: Record, id: Record['id']) => {
     if (isDemo) {
       dispatch({ type: 'EDIT_RECORDS', id, payload });
     } else {
@@ -48,7 +50,7 @@ export default function useRecords() {
     }
   };
 
-  const deleteRecord = (id) => {
+  const deleteRecord = (id: Record['id']) => {
     if (isDemo) {
       dispatch({ type: 'DELETE_RECORDS', id });
     } else {
@@ -59,7 +61,7 @@ export default function useRecords() {
     }
   };
 
-  const setHasDemoLoadRecords = (payload) => {
+  const setHasDemoLoadRecords = (payload: boolean) => {
     dispatch({ type: 'SET_HAS_DEMO_LOAD_RECORDS', payload });
   };
 

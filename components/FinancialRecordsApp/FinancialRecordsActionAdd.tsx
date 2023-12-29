@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { modal, successToast } from '../../utils';
 import { useAccounts, useRecords } from '../../hooks';
 
@@ -28,7 +28,7 @@ export default function FinancialRecordsActionAdd() {
 
   const [inputs, setInputs] = useState(initialInputs);
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name } = event.target;
     let { value } = event.target;
 
@@ -43,14 +43,14 @@ export default function FinancialRecordsActionAdd() {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     const newInputs = {
       ...inputs,
       value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
-      accountId: selectedAccount.id,
+      accountId: selectedAccount.id!,
     };
     addRecord(newInputs);
     modal.hide(uniqueId);

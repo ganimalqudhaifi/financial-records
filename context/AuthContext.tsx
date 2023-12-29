@@ -2,18 +2,11 @@ import { createContext, Dispatch, SetStateAction, useContext, useEffect, useMemo
 
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebase';
-
-type TDataUser = {
-  displayName: string | null;
-  email: string | null;
-  phoneNumber: string | null;
-  photoURL: string | null;
-  uid: string;
-}
+import { IDataUser } from '../types';
 
 type TAuthContext = {
-  user: TDataUser;
-  setUser: Dispatch<SetStateAction<TDataUser>>;
+  user: IDataUser;
+  setUser: Dispatch<SetStateAction<IDataUser>>;
 }
 
 // Create context
@@ -34,7 +27,7 @@ export function useAuthContext() {
 
 // Provider
 export default function AuthContextProvider(props: any) {
-  const [user, setUser] = useState<TDataUser | null>(null);
+  const [user, setUser] = useState<IDataUser | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {

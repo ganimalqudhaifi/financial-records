@@ -16,4 +16,10 @@ export interface Record {
   accountId: string,
 }
 
-export type OptionalCallback = () => void | any
+export interface IDataUser {
+  displayName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  photoURL: string | null;
+  uid: string;
+}

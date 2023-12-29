@@ -10,10 +10,10 @@ export const globalInitialState = {
 
 export type ACTION_TYPE =
   | { type: 'HANDLE_SEARCH', payload: string }
-  | { type: 'HANDLE_SLICE', payload: string } // need check how to change it to number
+  | { type: 'HANDLE_SLICE', payload: number }
   | { type: 'HANDLE_FILTER_PERIOD', payload: string }
   | { type: 'HANDLE_PAGINATION_INDEX', payload: number }
-  | { type: 'CHANGE_INITIAL_BALANCE', payload: string } // need check how to change it to number
+  | { type: 'CHANGE_INITIAL_BALANCE', payload: number }
   | { type: 'SET_ISDEMO', payload: boolean }
 
 // TODO! Cross Check all related to action type on this reducer
@@ -27,7 +27,7 @@ export const globalReducer = (state: typeof globalInitialState, action: ACTION_T
     case 'HANDLE_SLICE':
       return {
         ...state,
-        sliceShow: parseInt(action.payload, 19),
+        sliceShow: action.payload,
       };
     case 'HANDLE_FILTER_PERIOD':
       return {
@@ -42,7 +42,7 @@ export const globalReducer = (state: typeof globalInitialState, action: ACTION_T
     case 'CHANGE_INITIAL_BALANCE':
       return {
         ...state,
-        initialBalance: parseInt(action.payload, 10),
+        initialBalance: action.payload,
       };
     case 'SET_ISDEMO':
       return {

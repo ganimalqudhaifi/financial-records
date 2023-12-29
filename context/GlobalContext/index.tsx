@@ -1,4 +1,4 @@
-import { createContext, Dispatch, FormEvent, useContext, useMemo, useReducer } from 'react';
+import { ChangeEvent, createContext, Dispatch, useContext, useMemo, useReducer } from 'react';
 import { globalReducer, globalInitialState, ACTION_TYPE } from './GlobalReducer';
 
 type TGlobalContext = {
@@ -27,16 +27,15 @@ export const useGlobalContext = () => {
     dispatch({ type: 'HANDLE_PAGINATION_INDEX', payload: btnpagination });
   };
 
-  const changeFilterPeriodState = (e : FormEvent<HTMLInputElement>) => {
+  const changeFilterPeriodState = (e : ChangeEvent<HTMLSelectElement>) => {
     dispatch({ type: 'HANDLE_FILTER_PERIOD', payload: e.currentTarget.value });
   };
 
-  const changeSliceShowState = (e: FormEvent<HTMLInputElement>) => {
-    dispatch({ type: 'HANDLE_SLICE', payload: e.currentTarget.value });
+  const changeSliceShowState = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch({ type: 'HANDLE_SLICE', payload: parseInt(e.target.value, 19) });
   };
 
-  const changeInitialBalanceState = (payload: string, callback: any) => {
-    callback && callback(payload);
+  const changeInitialBalanceState = (payload: number) => {
     dispatch({ type: 'CHANGE_INITIAL_BALANCE', payload });
   };
 

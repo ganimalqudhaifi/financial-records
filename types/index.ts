@@ -15,3 +15,5 @@ export interface Record {
   updatedAt: string, // new Date?
   accountId: string,
 }
+
+export type OptionalCallback = () => void | any

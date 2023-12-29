@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { SyntheticEvent, useEffect, useState } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { useAccounts } from '../../hooks';
 import { modal } from '../../utils';
@@ -21,7 +21,7 @@ export default function FinancialRecordsTableHead() {
     }
   }, [selectedAccount]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     changeInitialBalanceState(inputs);
     const { id, ...rest } = selectedAccount;
@@ -41,7 +41,7 @@ export default function FinancialRecordsTableHead() {
         <th>Action</th>
       </tr>
       <tr>
-        <th colSpan="4">Saldo Awal</th>
+        <th colSpan={4}>Saldo Awal</th>
         <th />
         <th>{`Rp ${initialBalance.toLocaleString('id-ID')}`}</th>
         <td>

@@ -13,5 +13,7 @@ export default function handler(req : NextApiRequest, res: NextApiResponse) {
   }
 
   const { user } = req.cookies;
-  res.status(200).json(JSON.parse(user));
+  if (user) {
+    res.status(200).json(JSON.parse(user));
+  }
 }

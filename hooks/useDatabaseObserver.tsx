@@ -5,7 +5,8 @@ import { database } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 
-export default function useDatabaseObserver(path: string, callback: any) {
+// eslint-disable-next-line no-unused-vars
+export default function useDatabaseObserver(path: string, callback: (data: any) => void) {
   const { state } = useGlobalContext();
   const { isDemo } = state;
 

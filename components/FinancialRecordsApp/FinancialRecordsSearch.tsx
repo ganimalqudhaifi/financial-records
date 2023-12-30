@@ -1,11 +1,11 @@
-import { FormEvent } from 'react';
+import { ChangeEvent } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 
 function FinancialRecordsSearch() {
   const { dispatch } = useGlobalContext();
 
-  const changeSearchState = (e: FormEvent<HTMLInputElement>) => {
-    dispatch({ type: 'HANDLE_SEARCH', payload: e.currentTarget.value });
+  const changeSearchState = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch({ type: 'HANDLE_SEARCH', payload: e.target.value });
   };
 
   return (

@@ -55,7 +55,7 @@ export default function HomePractice() {
   };
 
   const itemIcon = {
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       transition: { delay: i * 0.3 },
     }),
@@ -63,7 +63,7 @@ export default function HomePractice() {
   };
 
   const itemText = {
-    visible: (i) => ({
+    visible: (i: number) => ({
       opacity: 1,
       x: 0,
       transition: { delay: i * 0.3, ease: 'circOut' },

@@ -28,7 +28,7 @@ export const useGlobalContext = () => {
   };
 
   const changeFilterPeriodState = (e : ChangeEvent<HTMLSelectElement>) => {
-    dispatch({ type: 'HANDLE_FILTER_PERIOD', payload: e.currentTarget.value });
+    dispatch({ type: 'HANDLE_FILTER_PERIOD', payload: e.target.value });
   };
 
   const changeSliceShowState = (e: ChangeEvent<HTMLSelectElement>) => {

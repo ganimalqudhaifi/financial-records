@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 
 import { auth } from '../config/firebase';
 import { alertToast } from '../utils';
+import { AuthenticationError } from '../types';
 
 export default function Login() {
   const [errorMsg, setErorrMsg] = useState('');
@@ -31,18 +32,20 @@ export default function Login() {
       setInputs({ email: '', password: '' });
       router.replace('/app');
     } catch (err) {
-      switch (err.code) {
-        case 'auth/user-not-found':
-          setErorrMsg('Email tidak ditemukan');
-          break;
-        case 'auth/invalid-email':
-          setErorrMsg('Email tidak sah');
-          break;
-        case 'auth/wrong-password':
-          setErorrMsg('Password salah');
-          break;
-        default:
-          setErorrMsg('Terjadi kesalahan');
+      if (err instanceof AuthenticationError) {
+        switch (err.code) {
+          case 'auth/user-not-found':
+            setErorrMsg('Email tidak ditemukan');
+            break;
+          case 'auth/invalid-email':
+            setErorrMsg('Email tidak sah');
+            break;
+          case 'auth/wrong-password':
+            setErorrMsg('Password salah');
+            break;
+          default:
+            setErorrMsg('Terjadi kesalahan');
+        }
       }
       alertToast(errorMsg);
     }

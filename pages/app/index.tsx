@@ -8,7 +8,6 @@ export default function App() {
   const { setRecords } = useRecords();
   const { user } = useAuthContext();
 
-  // TODO!: Typescript definition for callback required later
   useDatabaseObserver('records', (data) => {
     setRecords(data);
   });

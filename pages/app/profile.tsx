@@ -1,4 +1,4 @@
-import { FormEvent, SyntheticEvent, useEffect, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
 import { updateProfile } from 'firebase/auth';
 import Head from 'next/head';
 import Image from 'next/image';
@@ -8,6 +8,9 @@ import { AppLayout, EditableAccount, Modal } from '../../components';
 import { useAuthContext } from '../../context/AuthContext';
 import { alertToast, modal } from '../../utils';
 import { useAccounts } from '../../hooks';
+import { IDataUser } from '../../types';
+
+type TInputs = Pick<IDataUser, 'displayName' | 'email' | 'phoneNumber'>
 
 const avatarLists = [
   '/avatar/boy_01.svg',
@@ -31,7 +34,7 @@ export default function Profile() {
   const { accounts, addAccount } = useAccounts();
 
   const [edits, setEdits] = useState({ personalInformation: false });
-  const [inputs, setInputs] = useState({ displayName: '', email: '', phoneNumber: '' });
+  const [inputs, setInputs] = useState<TInputs>({ displayName: '', email: '', phoneNumber: '' });
 
   useEffect(() => {
     if (user) {
@@ -39,13 +42,13 @@ export default function Profile() {
     }
   }, [user]);
 
-  const handleInputs = (e : FormEvent<HTMLInputElement>) => {
-    setInputs({ ...inputs, [e.currentTarget.name]: e.currentTarget.value });
+  const handleInputs = (e : ChangeEvent<HTMLInputElement>) => {
+    setInputs({ ...inputs, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e : SyntheticEvent) => {
     e.preventDefault();
-    await updateProfile(auth.currentUser, { displayName: inputs.displayName })
+    await updateProfile(auth.currentUser!, { displayName: inputs.displayName })
       .then(() => {
         setUser({ ...user, displayName: inputs.displayName });
       })
@@ -55,7 +58,7 @@ export default function Profile() {
   };
 
   const handleProfilePicture = async (pathURL : string) => {
-    await updateProfile(auth.currentUser, { photoURL: pathURL })
+    await updateProfile(auth.currentUser!, { photoURL: pathURL })
       .then(() => {
         setUser({ ...user, photoURL: pathURL });
         modal.hide('changeAvatar');
@@ -82,11 +85,11 @@ export default function Profile() {
                 <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
                   <div className="flex flex-col">
                     <label htmlFor="displayName" className="mb-1 text-sm">Display Name</label>
-                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={inputs.displayName} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 " disabled={!edits.personalInformation} />
+                    <input id="displayName" name="displayName" type="text" placeholder="displayName" onChange={handleInputs} value={inputs.displayName!} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 " disabled={!edits.personalInformation} />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="email" className="mb-1 text-sm">Email Address</label>
-                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={inputs.email} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
+                    <input id="email" name="email" type="text" placeholder="emailAddress" onChange={handleInputs} value={inputs.email!} className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400" disabled />
                   </div>
                   <div className="flex flex-col ">
                     <label htmlFor="phoneNumber" className="mb-1 text-sm">Phone</label>

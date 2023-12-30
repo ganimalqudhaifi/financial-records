@@ -1,5 +1,5 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
-import { FormEvent, SyntheticEvent, useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import Link from 'next/link';
 import Script from 'next/script';
 import { useRouter } from 'next/router';
@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { auth } from '../config/firebase';
 import { alertToast } from '../utils';
 import { useAccounts } from '../hooks';
+import { AuthenticationError } from '../types';
 
 export default function Register() {
   const { addAccount } = useAccounts();
@@ -18,10 +19,10 @@ export default function Register() {
 
   const router = useRouter();
 
-  const handleChange = (e : FormEvent<HTMLInputElement>) => {
+  const handleChange = (e : ChangeEvent<HTMLInputElement>) => {
     setInputs((values) => ({
       ...values,
-      [e.currentTarget.name]: e.currentTarget.value,
+      [e.target.name]: e.target.value,
     }));
   };
 
@@ -41,18 +42,20 @@ export default function Register() {
       setInputs({ email: '', password: '' });
       router.replace('/app');
     } catch (err) {
-      switch (err.code) {
-        case 'auth/email-already-in-use':
-          setErorrMsg('Email telah digunakan');
-          break;
-        case 'auth/invalid-email':
-          setErorrMsg('Email tidak sah');
-          break;
-        case 'auth/weak-password':
-          setErorrMsg('Password lemah');
-          break;
-        default:
-          setErorrMsg('Terjadi kesalahan');
+      if (err instanceof AuthenticationError) {
+        switch (err.code) {
+          case 'auth/email-already-in-use':
+            setErorrMsg('Email telah digunakan');
+            break;
+          case 'auth/invalid-email':
+            setErorrMsg('Email tidak sah');
+            break;
+          case 'auth/weak-password':
+            setErorrMsg('Password lemah');
+            break;
+          default:
+            setErorrMsg('Terjadi kesalahan');
+        }
       }
       alertToast(errorMsg);
     }

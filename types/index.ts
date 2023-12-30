@@ -23,3 +23,13 @@ export interface IDataUser {
   photoURL: string | null;
   uid: string;
 }
+
+export class AuthenticationError extends Error {
+  code: string;
+
+  constructor(code: string, message: string) {
+    super(message);
+    this.name = 'AuthenticationError';
+    this.code = code;
+  }
+}

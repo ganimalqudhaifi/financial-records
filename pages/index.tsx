@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Script from 'next/script';
 
 import { GetServerSideProps } from 'next';
 import { userSignOut } from '../utils';
@@ -64,8 +63,6 @@ export default function Home() {
         </main>
 
         <HomeFooter />
-        <Script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js" />
-        <Script noModule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js" />
       </div>
     </>
   );

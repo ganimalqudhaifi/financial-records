@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 
-import { AppLayout, FinancialRecords } from '../../components';
+import { AppLayout, RecordsOrganism } from '../../components';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { getData } from '../../utils/data';
 import { useAccounts, useRecords } from '../../hooks';
@@ -46,7 +46,7 @@ export default function Demo() {
       <AppLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
           <h2 className="font-medium text-3xl mb-4">Table</h2>
-          <FinancialRecords />
+          <RecordsOrganism />
         </div>
       </AppLayout>
     </>

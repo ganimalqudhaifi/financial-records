@@ -1,8 +1,8 @@
-import FinancialRecordsActionEdit from './FinancialRecordsActionEdit';
-import FinancialRecordsActionDelete from './FinancialRecordsActionDelete';
 import { templateDateDMY } from '../../utils/templateDate';
+import RecordsActionDelete from './RecordsActionDelete';
+import RecordsActionEdit from './RecordsActionEdit';
 
-export default function FinancialRecordsTableBody({ no, record, saldoAkhir }) {
+export default function RecordsTableBody({ no, record, saldoAkhir }) {
   const {
     id,
     date,
@@ -37,8 +37,8 @@ export default function FinancialRecordsTableBody({ no, record, saldoAkhir }) {
       </td>
       <td>
         <div className="flex items-center justify-center space-x-2 w-full">
-          <FinancialRecordsActionEdit no={no} record={record} />
-          <FinancialRecordsActionDelete id={id} />
+          <RecordsActionEdit no={no} record={record} />
+          <RecordsActionDelete id={id} />
         </div>
       </td>
     </tr>

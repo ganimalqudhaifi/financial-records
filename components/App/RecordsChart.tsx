@@ -22,7 +22,7 @@ ChartJS.register(
   Legend,
 );
 
-export default function FinancialRecordsChart() {
+export default function RecordsChart() {
   const { selectedAccount } = useAccounts();
   const { records } = useRecords();
   const uniqueId = 'chartModal';

@@ -1,9 +1,7 @@
 import Head from 'next/head';
-import { AppLayout } from '../../components';
-import FinancialRecordsInformation from '../../components/FinancialRecordsApp/FinancialRecordsInformation';
-import FinancialRecordsChart from '../../components/FinancialRecordsApp/FinancialRecordsChart';
-import { useDatabaseObserver, useRecords } from '../../hooks';
 import { useAuthContext } from '../../context/AuthContext';
+import { useDatabaseObserver, useRecords } from '../../hooks';
+import { AppLayout, RecordsChart, RecordsInformation } from '../../components';
 
 export default function App() {
   const { setRecords } = useRecords();
@@ -23,8 +21,8 @@ export default function App() {
         <AppLayout user={user}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
-            <FinancialRecordsInformation />
-            <FinancialRecordsChart />
+            <RecordsInformation />
+            <RecordsChart />
           </div>
         </AppLayout>
       </>

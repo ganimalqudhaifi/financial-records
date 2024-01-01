@@ -6,7 +6,7 @@ import { useGlobalContext } from '../../context/GlobalContext';
 import { userSignOut } from '../../utils';
 import { useAccounts, useDatabaseObserver } from '../../hooks';
 
-import AccountsDropdown from '../AccountsDropdown';
+import AccountsDropdown from './AccountsDropdown';
 
 export default function AppSidebar({ user }) {
   const { setAccounts } = useAccounts();

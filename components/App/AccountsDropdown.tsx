@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useAccounts } from '../hooks';
+import { useAccounts } from '../../hooks';
 
 export default function AccountsDropdown() {
   const {

@@ -4,7 +4,7 @@ import { useRecords } from '../../hooks';
 
 import Modal from '../Modal';
 
-export default function FinancialRecordsActionEdit({ no, record }) {
+export default function RecordsActionEdit({ no, record }) {
   const { editRecord } = useRecords();
   const uniqueId = `editModal${no}`;
   const { ...rest } = record;

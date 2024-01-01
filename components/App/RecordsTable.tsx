@@ -1,10 +1,10 @@
-import FinancialRecordsTableHead from './FinancialRecordsTableHead';
-import FinancialRecordsTableBody from './FinancialRecordsTableBody';
+import RecordsTableHead from './RecordsTableHead';
+import RecordsTableBody from './RecordsTableBody';
 import { useGlobalContext } from '../../context/GlobalContext';
-import styles from './FinancialRecordsTable.module.css';
+import styles from './RecordsTable.module.css';
 import { useAccounts, useRecords } from '../../hooks';
 
-export default function FinancialRecordsTable() {
+export default function RecordsTable() {
   const { selectedAccount } = useAccounts();
   const { records } = useRecords();
   const { state } = useGlobalContext();
@@ -24,7 +24,7 @@ export default function FinancialRecordsTable() {
   return (
     <table className={styles['main-table']}>
       <thead>
-        <FinancialRecordsTableHead />
+        <RecordsTableHead />
       </thead>
       {
         records.length
@@ -39,7 +39,7 @@ export default function FinancialRecordsTable() {
                   .filter((record) => valueDate(record.date).includes(filterPeriod))
                   .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
                   .map((record, i) => (
-                    <FinancialRecordsTableBody
+                    <RecordsTableBody
                       key={record.id}
                       no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
                       record={record}

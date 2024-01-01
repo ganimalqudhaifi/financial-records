@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import { useGlobalContext } from '../../context/GlobalContext';
 
-function FinancialRecordsSearch() {
+export default function RecordsSearch() {
   const { dispatch } = useGlobalContext();
 
   const changeSearchState = (e: ChangeEvent<HTMLInputElement>) => {
@@ -17,5 +17,3 @@ function FinancialRecordsSearch() {
     </div>
   );
 }
-
-export default FinancialRecordsSearch;

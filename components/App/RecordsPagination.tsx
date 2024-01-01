@@ -1,7 +1,7 @@
 import { useGlobalContext } from '../../context/GlobalContext';
 import { useRecords } from '../../hooks';
 
-export default function FinancialRecordsPaginantion() {
+export default function RecordsPaginantion() {
   const { records } = useRecords();
 
   const { state, changePaginationIndexState } = useGlobalContext();

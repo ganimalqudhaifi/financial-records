@@ -1,6 +1,6 @@
 import { useGlobalContext } from '../../context/GlobalContext';
 
-export default function FinancialRecordsSlice() {
+export default function RecordsSlice() {
   const { changeSliceShowState } = useGlobalContext();
 
   return (

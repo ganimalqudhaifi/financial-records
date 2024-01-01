@@ -5,7 +5,7 @@ import { modal } from '../../utils';
 
 import Modal from '../Modal';
 
-export default function FinancialRecordsTableHead() {
+export default function RecordsTableHead() {
   const { editAccount, selectedAccount } = useAccounts();
   const { state, changeInitialBalanceState } = useGlobalContext();
   const { initialBalance } = state;

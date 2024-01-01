@@ -4,7 +4,6 @@ export default function Modal({ id, children }) {
   return (
     <div
       id={id}
-      // onClick={(e) => modal.close(e, id)}
       onDoubleClick={(e) => e.stopPropagation()}
       className="hidden items-center justify-center fixed inset-0 z-50 p-4 bg-black/40"
     >

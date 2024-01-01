@@ -5,7 +5,7 @@ import { useRecords } from '../../hooks';
 
 import Modal from '../Modal';
 
-export default function FinancialRecordsActionDelete({ id }) {
+export default function RecordsActionDelete({ id }) {
   const { state, changePaginationIndexState } = useGlobalContext();
   const { paginationIndex, sliceShow } = state;
   const { records, deleteRecord } = useRecords();

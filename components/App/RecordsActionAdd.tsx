@@ -21,7 +21,7 @@ const initialInputs = {
   amount: 0,
 };
 
-export default function FinancialRecordsActionAdd() {
+export default function RecordsActionAdd() {
   const { selectedAccount } = useAccounts();
   const { addRecord } = useRecords();
   const uniqueId = 'addModal';

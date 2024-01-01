@@ -1,6 +1,6 @@
 import Head from 'next/head';
 
-import { AppLayout, FinancialRecords } from '../../components';
+import { AppLayout, RecordsOrganism } from '../../components';
 import { useAuthContext } from '../../context/AuthContext';
 import { useDatabaseObserver, useRecords } from '../../hooks';
 
@@ -22,7 +22,7 @@ export default function App() {
         <AppLayout user={user}>
           <div className="w-full p-4 lg:ml-64">
             <h2 className="font-medium text-3xl mb-4">Table</h2>
-            <FinancialRecords />
+            <RecordsOrganism />
           </div>
         </AppLayout>
       </>

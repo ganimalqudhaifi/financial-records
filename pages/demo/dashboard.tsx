@@ -1,9 +1,7 @@
 import { useEffect } from 'react';
 import Head from 'next/head';
 
-import { AppLayout } from '../../components';
-import FinancialRecordsChart from '../../components/FinancialRecordsApp/FinancialRecordsChart';
-import FinancialRecordsInformation from '../../components/FinancialRecordsApp/FinancialRecordsInformation';
+import { AppLayout, RecordsChart, RecordsInformation } from '../../components';
 import { useGlobalContext } from '../../context/GlobalContext';
 import { useAccounts, useRecords } from '../../hooks';
 import { getData } from '../../utils';
@@ -48,8 +46,8 @@ export default function DemoDashboard() {
       <AppLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
           <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
-          <FinancialRecordsInformation />
-          <FinancialRecordsChart />
+          <RecordsInformation />
+          <RecordsChart />
         </div>
       </AppLayout>
     </>

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { IoTrashOutline } from 'react-icons/io5';
-import { useAccounts } from '../hooks';
-import { modal } from '../utils';
-import Modal from './Modal';
+import { useAccounts } from '../../hooks';
+import { modal } from '../../utils';
+import Modal from '../Modal';
 
 export default function EditableAccount({ account }) {
   const { editAccount, deleteAccount } = useAccounts();

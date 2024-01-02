@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { IoTrashOutline } from 'react-icons/io5';
+import { IoTrashOutline, IoAlertCircleOutline } from 'react-icons/io5';
 import { useAccounts } from '../../hooks';
 import { modal } from '../../utils';
 import Modal from '../Modal';
@@ -55,7 +55,7 @@ export default function EditableAccount({ account }) {
 
         <Modal id={account.id}>
           <div className="w-screen max-w-sm">
-            <svg aria-hidden="true" className="mx-auto mb-4 text-gray-400 w-14 h-14" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <IoAlertCircleOutline className="mx-auto mb-4 text-gray-400 w-14 h-14" />
             <h3 className="px-3 my-7 text-lg lg:text-xl text-gray-500 text-center whitespace-normal">
               Apakah anda yakin ingin menghapus
               <br />

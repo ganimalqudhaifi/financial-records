@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { IoChevronDownOutline } from 'react-icons/io5';
 import { useAccounts } from '../../hooks';
 
 export default function AccountsDropdown() {
@@ -34,9 +35,7 @@ export default function AccountsDropdown() {
             ? <p>{selectedAccount.name}</p>
             : <p>...</p>
         }
-        <svg className="w-2.5 h-2.5 ml-2.5 group-[.is-active]:-rotate-90 duration-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-          <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 4 4 4-4" />
-        </svg>
+        <IoChevronDownOutline className="ml-2.5 group-[.is-active]:-rotate-90 duration-300" />
       </button>
       <div className="overflow-hidden max-h-72 duration-500 peer-[.is-active]:max-h-0 peer-[.is-active]:duration-200">
         <ul>

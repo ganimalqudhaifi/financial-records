@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { IoPerson } from 'react-icons/io5';
 
 export default function HomeUserDropdown({ user, isUserDropdownOpen, handleUserDropdown, handleSignOut }) {
   if (!user) {
     return (
       <div className="flex justify-self-end lg:order-last">
         <Link href="/login" className="flex gap-2 px-4 py-2 font-medium rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-800">
-          <svg className="w-6 fill-main-color" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 6.5C7.5 8.981 9.519 11 12 11s4.5-2.019 4.5-4.5S14.481 2 12 2 7.5 4.019 7.5 6.5zM20 21h1v-1c0-3.859-3.141-7-7-7h-4c-3.86 0-7 3.141-7 7v1h17z" /></svg>
+          <IoPerson className="w-6 h-6 fill-main-color" />
           Login
         </Link>
         <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden rounded-lg hover:bg-gray-700 lg:block">

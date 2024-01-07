@@ -11,8 +11,13 @@ import { userSignOut } from '../../utils';
 import { useAccounts, useDatabaseObserver } from '../../hooks';
 
 import AccountsDropdown from './AccountsDropdown';
+import { IDataUser } from '../../types';
 
-export default function AppSidebar({ user }) {
+type AppSidebarProps = {
+  user: IDataUser
+}
+
+export default function AppSidebar({ user }: AppSidebarProps) {
   const { setAccounts } = useAccounts();
   const { state } = useGlobalContext();
   const { isDemo } = state;
@@ -95,7 +100,6 @@ export default function AppSidebar({ user }) {
               <Link
                 href={`${!isDemo ? '/app/profile' : '/demo'}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-                disabled
               >
                 <BiSolidUser className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
                 <span className="ml-3">Profile</span>

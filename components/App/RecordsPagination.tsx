@@ -10,14 +10,14 @@ export default function RecordsPaginantion() {
   const arrPagination = [];
   const entires = records.length && records.filter((record) => record.description.toLowerCase().includes(searchKeyword)).length;
 
-  const valueDate = (date) => {
+  const valueDate = (date: string) => {
     const target = new Date(date);
     return `${target.getFullYear()}-${target.getMonth()}`;
   };
 
   for (let i = 1; i < Math.ceil(records.length && records
     .filter((record) => record.description.toLowerCase().includes(searchKeyword))
-    .filter((record) => valueDate(record.tanggal).includes(filterPeriod))
+    .filter((record) => valueDate(record.date).includes(filterPeriod))
     .length / sliceShow) + 1; i += 1) {
     arrPagination.push(i);
   }

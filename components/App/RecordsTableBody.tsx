@@ -1,8 +1,15 @@
+import { Record } from '../../types';
 import { templateDateDMY } from '../../utils/templateDate';
 import RecordsActionDelete from './RecordsActionDelete';
 import RecordsActionEdit from './RecordsActionEdit';
 
-export default function RecordsTableBody({ no, record, saldoAkhir }) {
+type RecordsTableBodyProps = {
+  no: number,
+  record: Record,
+  saldoAkhir: number
+}
+
+export default function RecordsTableBody({ no, record, saldoAkhir }: RecordsTableBodyProps) {
   const {
     id,
     date,

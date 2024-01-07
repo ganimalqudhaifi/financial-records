@@ -16,7 +16,7 @@ export default function RecordsTable() {
     paginationIndex,
   } = state;
 
-  const valueDate = (date) => {
+  const valueDate = (date: string) => {
     const target = new Date(date);
     return `${target.getFullYear()}-${target.getMonth()}`;
   };

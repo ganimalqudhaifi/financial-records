@@ -1,20 +1,25 @@
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, KeyboardEvent, useState } from 'react';
 import { IoTrashOutline, IoAlertCircleOutline } from 'react-icons/io5';
 import { useAccounts } from '../../hooks';
+import { Account } from '../../types';
 import { modal } from '../../utils';
 import Modal from '../Modal';
 
-export default function EditableAccount({ account }) {
+type EditableAccountProps = {
+  account: Required<Account>
+}
+
+export default function EditableAccount({ account }: EditableAccountProps) {
   const { editAccount, deleteAccount } = useAccounts();
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputValue, setInputValue] = useState(account.name);
-  const inputRef = useRef(null);
+  // const inputRef = useRef(null);
 
   const handleDoubleClick = () => {
     setIsDisabled(false);
   };
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setIsDisabled(true);
       const { id, ...rest } = account;
@@ -28,15 +33,15 @@ export default function EditableAccount({ account }) {
     editAccount(account.id, { ...rest, name: inputValue });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  useEffect(() => {
-    if (!isDisabled) {
-      inputRef.current.focus();
-    }
-  }, [isDisabled]);
+  // useEffect(() => {
+  //   if (!isDisabled) {
+  //     inputRef.current.focus();
+  //   }
+  // }, [isDisabled]);
 
   if (isDisabled) {
     return (
@@ -81,7 +86,7 @@ export default function EditableAccount({ account }) {
     <div>
       <input
         type="text"
-        ref={inputRef}
+        // ref={inputRef}
         value={inputValue}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}

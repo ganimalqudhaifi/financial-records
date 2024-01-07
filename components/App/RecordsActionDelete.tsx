@@ -5,7 +5,11 @@ import { useRecords } from '../../hooks';
 
 import Modal from '../Modal';
 
-export default function RecordsActionDelete({ id }) {
+type RecordsActionDeleteProps = {
+  id: string
+}
+
+export default function RecordsActionDelete({ id }: RecordsActionDeleteProps) {
   const { state, changePaginationIndexState } = useGlobalContext();
   const { paginationIndex, sliceShow } = state;
   const { records, deleteRecord } = useRecords();

@@ -1,10 +1,16 @@
-import { useState } from 'react';
+import { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { modal, successToast } from '../../utils';
 import { useRecords } from '../../hooks';
 
 import Modal from '../Modal';
+import { Record } from '../../types';
 
-export default function RecordsActionEdit({ no, record }) {
+type RecordsActionEditProps = {
+  no: number,
+  record: Record
+}
+
+export default function RecordsActionEdit({ no, record }: RecordsActionEditProps) {
   const { editRecord } = useRecords();
   const uniqueId = `editModal${no}`;
   const { ...rest } = record;
@@ -21,7 +27,7 @@ export default function RecordsActionEdit({ no, record }) {
 
   const [inputs, setInputs] = useState({ ...rest });
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name } = event.target;
     let { value } = event.target;
 
@@ -36,14 +42,14 @@ export default function RecordsActionEdit({ no, record }) {
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     const newInputs = {
       ...inputs,
       updatedAt: new Date().toISOString(),
       value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
     };
-    editRecord(inputs.id, newInputs);
+    editRecord(newInputs, inputs.id);
     modal.hide(uniqueId);
     successToast('Data berhasil diubah');
   };

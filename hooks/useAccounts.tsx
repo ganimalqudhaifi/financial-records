@@ -5,7 +5,7 @@ import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useAppContext } from '../context/AppContext';
 import { database } from '../config/firebase';
-import { Account } from '../types';
+import { Account, AddAccountArgs } from '../types';
 
 export default function useAccounts() {
   const { state: globalState } = useGlobalContext();
@@ -29,7 +29,7 @@ export default function useAccounts() {
     dispatch({ type: 'SET_ACCOUNTS', payload });
   };
 
-  const addAccount = (payload: Account) => {
+  const addAccount = (payload: AddAccountArgs) => {
     if (accounts.length >= 8) {
       alertToast('Maximum of 8 Accounts Reached');
     } else if (isDemo) {
@@ -42,12 +42,12 @@ export default function useAccounts() {
     }
   };
 
-  const editAccount = (id: Account['id'], payload: Account) => {
+  const editAccount = (payload: Account) => {
     if (isDemo) {
-      dispatch({ type: 'EDIT_ACCOUNTS', id, payload });
+      dispatch({ type: 'EDIT_ACCOUNTS', payload });
     } else {
       checkUid((uid) => {
-        const accountRef = ref(database, `users/${uid}/accounts/${id}`);
+        const accountRef = ref(database, `users/${uid}/accounts/${payload.id}`);
         set(accountRef, payload);
       });
     }

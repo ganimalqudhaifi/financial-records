@@ -6,7 +6,7 @@ import { modal } from '../../utils';
 import Modal from '../Modal';
 
 type EditableAccountProps = {
-  account: Required<Account>
+  account: Account
 }
 
 export default function EditableAccount({ account }: EditableAccountProps) {
@@ -22,15 +22,13 @@ export default function EditableAccount({ account }: EditableAccountProps) {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       setIsDisabled(true);
-      const { id, ...rest } = account;
-      editAccount(account.id, { ...rest, name: inputValue });
+      editAccount({ ...account, name: inputValue });
     }
   };
 
   const handleBlur = () => {
     setIsDisabled(true);
-    const { id, ...rest } = account;
-    editAccount(account.id, { ...rest, name: inputValue });
+    editAccount({ ...account, name: inputValue });
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {

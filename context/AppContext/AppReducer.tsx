@@ -1,4 +1,4 @@
-import { Account, Record } from '../../types';
+import { Account, AddAccountArgs, AddRecordArgs, Record } from '../../types';
 
 export const appInitialState = {
   accounts: [] as Account[],
@@ -10,14 +10,14 @@ export const appInitialState = {
 
 export type ACTION_TYPE =
   | {type: 'SET_ACCOUNTS', payload: Account[]}
-  | {type: 'ADD_ACCOUNTS', payload: Account}
-  | {type: 'EDIT_ACCOUNTS', payload: Account, id: Account['id']}
+  | {type: 'ADD_ACCOUNTS', payload: AddAccountArgs}
+  | {type: 'EDIT_ACCOUNTS', payload: Account}
   | {type: 'DELETE_ACCOUNTS', id: Account['id']}
   | {type: 'SET_ACTIVE_ACCOUNT_INDEX', payload: number}
   | {type: 'SET_SELECTED_ACCOUNT', payload: Account}
   | {type: 'SET_RECORDS', payload: Record[]}
-  | {type: 'ADD_RECORDS', payload: Record}
-  | {type: 'EDIT_RECORDS', payload: Record, id: Record['id']}
+  | {type: 'ADD_RECORDS', payload: AddRecordArgs}
+  | {type: 'EDIT_RECORDS', payload: Record,}
   | {type: 'DELETE_RECORDS', id: Record['id']}
   | {type: 'SET_HAS_DEMO_LOAD_RECORDS', payload: boolean}
 
@@ -37,7 +37,7 @@ export const appReducer = (state: typeof appInitialState, action: ACTION_TYPE) =
         ],
       };
     case 'EDIT_ACCOUNTS': {
-      const indexAccount = state.accounts.findIndex((account) => account.id === action.id);
+      const indexAccount = state.accounts.findIndex((account) => account.id === action.payload.id);
       const updatedAccount = state.accounts.fill(action.payload, indexAccount, indexAccount + 1);
       return {
         ...state,
@@ -75,7 +75,7 @@ export const appReducer = (state: typeof appInitialState, action: ACTION_TYPE) =
         ],
       };
     case 'EDIT_RECORDS': {
-      const indexRecord = state.records.findIndex((record) => record.id === action.id);
+      const indexRecord = state.records.findIndex((record) => record.id === action.payload.id);
       const updatedRecord = state.records.fill(action.payload, indexRecord, indexRecord + 1);
       return {
         ...state,

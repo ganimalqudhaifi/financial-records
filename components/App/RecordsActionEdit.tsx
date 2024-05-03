@@ -13,7 +13,6 @@ type RecordsActionEditProps = {
 export default function RecordsActionEdit({ no, record }: RecordsActionEditProps) {
   const { editRecord } = useRecords();
   const uniqueId = `editModal${no}`;
-  const { ...rest } = record;
 
   const categories = [
     { id: 101, name: 'Pendapatan' },
@@ -25,7 +24,7 @@ export default function RecordsActionEdit({ no, record }: RecordsActionEditProps
     { id: 206, name: 'Hiburan' },
   ];
 
-  const [inputs, setInputs] = useState({ ...rest });
+  const [inputs, setInputs] = useState(record);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name } = event.target;
@@ -49,7 +48,7 @@ export default function RecordsActionEdit({ no, record }: RecordsActionEditProps
       updatedAt: new Date().toISOString(),
       value: (inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1),
     };
-    editRecord(newInputs, inputs.id);
+    editRecord(newInputs);
     modal.hide(uniqueId);
     successToast('Data berhasil diubah');
   };

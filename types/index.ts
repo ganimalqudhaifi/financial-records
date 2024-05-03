@@ -1,22 +1,26 @@
 export interface Account {
-  id?: string,
+  id: string,
   name: string,
   initialBalance: number,
 }
 
+export type AddAccountArgs = Pick<Account, 'name' | 'initialBalance'>
+
 export interface Record {
-  id?: string,
-  date: string, // new Date?
+  id: string,
+  date: string,
   description: string,
   categoryId: number,
   amount: number,
   value: number,
-  createdAt: string, // new Date?
-  updatedAt: string, // new Date?
+  createdAt: string,
+  updatedAt: string,
   accountId: string,
 }
 
-export interface IDataUser {
+export type AddRecordArgs = Omit<Record, 'id'>
+
+export interface DataUser {
   displayName: string | null;
   email: string | null;
   phoneNumber: string | null;

@@ -8,9 +8,9 @@ import { AppLayout, EditableAccount, Modal } from '../../components';
 import { useAuthContext } from '../../context/AuthContext';
 import { alertToast, modal } from '../../utils';
 import { useAccounts } from '../../hooks';
-import { IDataUser } from '../../types';
+import { DataUser } from '../../types';
 
-type TInputs = Pick<IDataUser, 'displayName' | 'email' | 'phoneNumber'>
+type TInputs = Pick<DataUser, 'displayName' | 'email' | 'phoneNumber'>
 
 const avatarLists = [
   '/avatar/boy_01.svg',

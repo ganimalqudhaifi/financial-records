@@ -11,10 +11,10 @@ import { userSignOut } from '../../utils';
 import { useAccounts, useDatabaseObserver } from '../../hooks';
 
 import AccountsDropdown from './AccountsDropdown';
-import { IDataUser } from '../../types';
+import { DataUser } from '../../types';
 
 type AppSidebarProps = {
-  user: IDataUser
+  user: DataUser
 }
 
 export default function AppSidebar({ user }: AppSidebarProps) {

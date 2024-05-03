@@ -24,8 +24,7 @@ export default function RecordsTableHead() {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     changeInitialBalanceState(inputs);
-    const { id, ...rest } = selectedAccount;
-    editAccount(id, { ...rest, initialBalance: inputs });
+    editAccount({ ...selectedAccount, initialBalance: inputs });
     modal.hide(uniqueId);
   };
 

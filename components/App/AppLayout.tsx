@@ -1,10 +1,10 @@
 import { ReactNode } from 'react';
-import { IDataUser } from '../../types';
+import { DataUser } from '../../types';
 import AppSidebar from './AppSidebar';
 
 type AppLayoutProps = {
   children: ReactNode,
-  user: IDataUser,
+  user: DataUser,
 }
 
 export default function AppLayout({ children, user, ...rest }: AppLayoutProps) {

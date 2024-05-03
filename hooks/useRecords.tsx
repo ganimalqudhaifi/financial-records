@@ -4,7 +4,7 @@ import { database } from '../config/firebase';
 import { useAuthContext } from '../context/AuthContext';
 import { useGlobalContext } from '../context/GlobalContext';
 import { useAppContext } from '../context/AppContext';
-import { Record } from '../types';
+import { AddRecordArgs, Record } from '../types';
 
 export default function useRecords() {
   const { state: globalState } = useGlobalContext();
@@ -28,7 +28,7 @@ export default function useRecords() {
     dispatch({ type: 'SET_RECORDS', payload });
   };
 
-  const addRecord = (payload: Record) => {
+  const addRecord = (payload: AddRecordArgs) => {
     if (isDemo) {
       dispatch({ type: 'ADD_RECORDS', payload });
     } else {
@@ -39,12 +39,12 @@ export default function useRecords() {
     }
   };
 
-  const editRecord = (payload: Record, id: Record['id']) => {
+  const editRecord = (payload: Record) => {
     if (isDemo) {
-      dispatch({ type: 'EDIT_RECORDS', id, payload });
+      dispatch({ type: 'EDIT_RECORDS', payload });
     } else {
       checkUid((uid) => {
-        const recordRef = ref(database, `users/${uid}/records/${id}`);
+        const recordRef = ref(database, `users/${uid}/records/${payload.id}`);
         set(recordRef, payload);
       });
     }

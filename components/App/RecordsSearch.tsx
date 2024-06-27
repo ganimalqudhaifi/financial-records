@@ -1,6 +1,6 @@
-import { useGlobalContext } from "../../context/GlobalContext";
 import { ChangeEvent } from "react";
 import { IoSearchOutline } from "react-icons/io5";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 export default function RecordsSearch() {
   const { dispatch } = useGlobalContext();

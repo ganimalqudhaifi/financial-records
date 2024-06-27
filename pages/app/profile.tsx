@@ -1,13 +1,13 @@
-import { AppLayout, EditableAccount, Modal } from "../../components";
-import { auth } from "../../config/firebase";
-import { useAuthContext } from "../../context/AuthContext";
-import { useAccounts } from "../../hooks";
-import { DataUser } from "../../types";
-import { alertToast, modal } from "../../utils";
 import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { AppLayout, EditableAccount, Modal } from "../../components";
+import { auth } from "../../config/firebase";
+import { useAccounts } from "../../hooks";
+import { useAuthContext } from "../../hooks/useAuthContext";
+import { DataUser } from "../../types";
+import { alertToast, modal } from "../../utils";
 
 type TInputs = Pick<DataUser, "displayName" | "email" | "phoneNumber">;
 

@@ -1,5 +1,5 @@
-import { useAccounts, useRecords } from "../../hooks";
 import { useEffect, useState } from "react";
+import { useAccounts, useRecords } from "../../hooks";
 
 export default function RecordsInformation() {
   const { selectedAccount } = useAccounts();

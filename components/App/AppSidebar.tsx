@@ -1,14 +1,14 @@
-import { useGlobalContext } from "../../context/GlobalContext";
-import { useAccounts, useDatabaseObserver } from "../../hooks";
-import { DataUser } from "../../types";
-import { userSignOut } from "../../utils";
-import AccountsDropdown from "./AccountsDropdown";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
-import { TbLogout, TbChartPieFilled } from "react-icons/tb";
+import { TbChartPieFilled, TbLogout } from "react-icons/tb";
+import { useAccounts, useDatabaseObserver } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { DataUser } from "../../types";
+import { userSignOut } from "../../utils";
+import AccountsDropdown from "./AccountsDropdown";
 
 type AppSidebarProps = {
   user: DataUser;

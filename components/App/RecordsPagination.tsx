@@ -1,5 +1,5 @@
-import { useGlobalContext } from "../../context/GlobalContext";
 import { useRecords } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 export default function RecordsPaginantion() {
   const { records } = useRecords();

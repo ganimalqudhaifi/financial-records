@@ -1,3 +1,6 @@
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { useState } from "react";
 import {
   HomeAboutMe,
   HomeBanner,
@@ -7,11 +10,8 @@ import {
   HomeUserDropdown,
   Logo,
 } from "../components";
-import { useAuthContext } from "../context/AuthContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { userSignOut } from "../utils";
-import { GetServerSideProps } from "next";
-import Head from "next/head";
-import { useState } from "react";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = req.cookies;

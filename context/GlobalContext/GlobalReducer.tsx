@@ -1,14 +1,14 @@
-export const globalInitialState = {
-  initialBalance: 0,
-  searchKeyword: "",
-  sliceShow: 10,
-  paginationIndex: 1,
-  filterPeriod: "",
-  isDemo: false,
-  hasLoadData: false,
-};
+export interface GlobalState {
+  initialBalance: number;
+  searchKeyword: string;
+  sliceShow: number;
+  paginationIndex: number;
+  filterPeriod: string;
+  isDemo: boolean;
+  hasLoadData: boolean;
+}
 
-export type ACTION_TYPE =
+export type ActionType =
   | { type: "HANDLE_SEARCH"; payload: string }
   | { type: "HANDLE_SLICE"; payload: number }
   | { type: "HANDLE_FILTER_PERIOD"; payload: string }
@@ -17,10 +17,7 @@ export type ACTION_TYPE =
   | { type: "SET_ISDEMO"; payload: boolean };
 
 // TODO! Cross Check all related to action type on this reducer
-export const globalReducer = (
-  state: typeof globalInitialState,
-  action: ACTION_TYPE,
-) => {
+export const globalReducer = (state: GlobalState, action: ActionType) => {
   switch (action.type) {
     case "HANDLE_SEARCH":
       return {

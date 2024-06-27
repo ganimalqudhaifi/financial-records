@@ -1,7 +1,7 @@
-import { AppLayout, RecordsChart, RecordsInformation } from "../../components";
-import { useAuthContext } from "../../context/AuthContext";
-import { useDatabaseObserver, useRecords } from "../../hooks";
 import Head from "next/head";
+import { AppLayout, RecordsChart, RecordsInformation } from "../../components";
+import { useDatabaseObserver, useRecords } from "../../hooks";
+import { useAuthContext } from "../../hooks/useAuthContext";
 
 export default function App() {
   const { setRecords } = useRecords();

@@ -1,49 +1,46 @@
-import { auth } from "../config/firebase";
-import { DataUser } from "../types";
 import { onAuthStateChanged } from "firebase/auth";
 import {
-  createContext,
   Dispatch,
   PropsWithChildren,
   SetStateAction,
-  useContext,
+  createContext,
   useEffect,
   useMemo,
   useState,
 } from "react";
+import { auth } from "../config/firebase";
+import { DataUser } from "../types";
 
 type TAuthContext = {
   user: DataUser;
   setUser: Dispatch<SetStateAction<DataUser>>;
 };
 
-// Create context
 export const AuthContext = createContext<TAuthContext | null>(null);
 
-// Hook
-export function useAuthContext() {
-  const contextValue = useContext(AuthContext);
-
-  if (!contextValue) {
-    throw new Error(
-      "useAuthContext must be called from within a AppContextProvider",
-    );
-  }
-
-  const { user, setUser } = contextValue;
-
-  return { user, setUser };
-}
-
-// Provider
 export default function AuthContextProvider(props: PropsWithChildren) {
-  const [user, setUser] = useState<DataUser>({
+  const initialUserState: DataUser = {
     displayName: "",
     email: "",
     phoneNumber: "",
     photoURL: "",
     uid: "",
-  });
+  };
+
+  const [user, setUser] = useState<DataUser>(initialUserState);
+
+  const updateUserCookie = async (
+    method: "POST" | "DELETE",
+    user?: DataUser,
+  ) => {
+    const body =
+      method === "POST" ? JSON.stringify({ user: JSON.stringify(user) }) : null;
+    await fetch("/api/cookie", {
+      method,
+      headers: { "Content-Type": "application/json" },
+      body,
+    });
+  };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
@@ -55,24 +52,11 @@ export default function AuthContextProvider(props: PropsWithChildren) {
           photoURL: user.photoURL || "",
           uid: user.uid || "",
         };
-        await fetch("/api/cookie", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: JSON.stringify(dataUser) }),
-        });
+        await updateUserCookie("POST", dataUser);
         setUser(dataUser);
       } else {
-        await fetch("/api/cookie", {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-        });
-        setUser({
-          displayName: "",
-          email: "",
-          phoneNumber: "",
-          photoURL: "",
-          uid: "",
-        });
+        await updateUserCookie("DELETE");
+        setUser(initialUserState);
       }
     });
 

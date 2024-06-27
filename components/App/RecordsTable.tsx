@@ -1,5 +1,5 @@
-import { useGlobalContext } from "../../context/GlobalContext";
 import { useAccounts, useRecords } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";

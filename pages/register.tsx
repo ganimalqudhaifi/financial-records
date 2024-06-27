@@ -1,12 +1,12 @@
-import { auth } from "../config/firebase";
-import { useAccounts } from "../hooks";
-import { AuthenticationError } from "../types";
-import { alertToast } from "../utils";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { IoPerson, IoLockClosed, IoEye, IoEyeOff } from "react-icons/io5";
+import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
+import { auth } from "../config/firebase";
+import { useAccounts } from "../hooks";
+import { AuthenticationError } from "../types";
+import { alertToast } from "../utils";
 
 export default function Register() {
   const { addAccount } = useAccounts();

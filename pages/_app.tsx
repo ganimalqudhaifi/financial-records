@@ -1,9 +1,9 @@
+import { AppProps } from "next/app";
+import { StrictMode } from "react";
 import AppContextProvider from "../context/AppContext";
 import AuthContextProvider from "../context/AuthContext";
 import GlobalContextProvider from "../context/GlobalContext";
 import "../styles/globals.css";
-import { AppProps } from "next/app";
-import { StrictMode } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (

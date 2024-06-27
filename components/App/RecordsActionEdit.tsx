@@ -1,8 +1,8 @@
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useRecords } from "../../hooks";
 import { Record } from "../../types";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
 
 type RecordsActionEditProps = {
   no: number;

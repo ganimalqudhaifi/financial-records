@@ -1,42 +1,32 @@
-import { ACTION_TYPE, appInitialState, appReducer } from "./AppReducer";
 import {
-  createContext,
   Dispatch,
   PropsWithChildren,
+  createContext,
   useContext,
   useMemo,
   useReducer,
 } from "react";
+import { Account, Record } from "../../types";
+import { ActionType, AppState, appReducer } from "./AppReducer";
 
 type TAppContext = {
-  state: typeof appInitialState;
-  dispatch: Dispatch<ACTION_TYPE>;
+  state: AppState;
+  dispatch: Dispatch<ActionType>;
 };
 
-// Create context
+export const appInitialState = {
+  accounts: [] as Account[],
+  activeAccountIndex: 0,
+  selectedAccount: {} as Account,
+  records: [] as Record[],
+  hasDemoLoadRecords: false,
+};
+
 export const AppContext = createContext<TAppContext | null>(null);
 
-// Hook
-export function useAppContext() {
-  const contextValue = useContext(AppContext);
-
-  if (!contextValue) {
-    throw new Error(
-      "useAppContext must be called from within a AppContextProvider",
-    );
-  }
-
-  const { state, dispatch } = contextValue;
-
-  return { state, dispatch };
-}
-
-// Provider
 export default function AppContextProvider(props: PropsWithChildren) {
   const [state, dispatch] = useReducer(appReducer, appInitialState);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
   return <AppContext.Provider value={value} {...props} />;
 }
-
-export * from "./AppReducer";

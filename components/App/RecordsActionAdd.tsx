@@ -1,7 +1,7 @@
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useAccounts, useRecords } from "../../hooks";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
 
 const categories = [
   { id: 101, name: "Pendapatan" },

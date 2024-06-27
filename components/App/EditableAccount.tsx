@@ -1,9 +1,9 @@
+import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
 import { useAccounts } from "../../hooks";
 import { Account } from "../../types";
 import { modal } from "../../utils";
 import Modal from "../Modal";
-import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { IoTrashOutline, IoAlertCircleOutline } from "react-icons/io5";
 
 type EditableAccountProps = {
   account: Account;

@@ -1,17 +1,17 @@
+import {
+  BarElement,
+  CategoryScale,
+  Chart as ChartJS,
+  Legend,
+  LinearScale,
+  Title,
+  Tooltip,
+} from "chart.js";
+import { useEffect, useState } from "react";
+import { Bar } from "react-chartjs-2";
 import { useAccounts, useRecords } from "../../hooks";
 import { modal } from "../../utils";
 import Modal from "../Modal";
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from "chart.js";
-import { useState, useEffect } from "react";
-import { Bar } from "react-chartjs-2";
 
 ChartJS.register(
   CategoryScale,

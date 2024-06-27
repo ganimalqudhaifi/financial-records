@@ -1,8 +1,8 @@
-import { database } from "../config/firebase";
-import { useAuthContext } from "../context/AuthContext";
-import { useGlobalContext } from "../context/GlobalContext";
 import { onValue, ref } from "firebase/database";
 import { useEffect } from "react";
+import { database } from "../config/firebase";
+import { useAuthContext } from "./useAuthContext";
+import { useGlobalContext } from "./useGlobalContext";
 
 // eslint-disable-next-line no-unused-vars
 export default function useDatabaseObserver(

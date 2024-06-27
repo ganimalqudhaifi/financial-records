@@ -1,9 +1,9 @@
-import { database } from "../config/firebase";
-import { useAppContext } from "../context/AppContext";
-import { useAuthContext } from "../context/AuthContext";
-import { useGlobalContext } from "../context/GlobalContext";
-import { Record } from "../types";
 import { push, ref, remove, set } from "firebase/database";
+import { database } from "../config/firebase";
+import { Record } from "../types";
+import { useAppContext } from "./useAppContext";
+import { useAuthContext } from "./useAuthContext";
+import { useGlobalContext } from "./useGlobalContext";
 
 export default function useRecords() {
   const { state: globalState } = useGlobalContext();

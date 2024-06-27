@@ -1,14 +1,16 @@
-import { AppLayout, RecordsOrganism } from "../../components";
-import { useGlobalContext } from "../../context/GlobalContext";
-import { useAccounts, useRecords } from "../../hooks";
-import { getData } from "../../utils/data";
 import Head from "next/head";
 import { useEffect } from "react";
+import { AppLayout, RecordsOrganism } from "../../components";
+import { useAccounts, useRecords } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { getData } from "../../utils/data";
 
 const user = {
+  uid: "demouser",
   displayName: "Demo",
   email: "name@company.com",
   photoURL: "/avatar/boy_01.svg",
+  phoneNumber: "",
 };
 
 const demoAccount = [

@@ -1,6 +1,6 @@
-import { useAccounts } from "../../hooks";
 import { useEffect, useState } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
+import { useAccounts } from "../../hooks";
 
 export default function AccountsDropdown() {
   const {

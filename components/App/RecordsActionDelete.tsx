@@ -1,8 +1,8 @@
-import { useGlobalContext } from "../../context/GlobalContext";
+import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
 import { useRecords } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { modal } from "../../utils";
 import Modal from "../Modal";
-import { IoTrashOutline, IoAlertCircleOutline } from "react-icons/io5";
 
 type RecordsActionDeleteProps = {
   id: string;

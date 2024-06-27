@@ -1,6 +1,6 @@
+import { ReactNode } from "react";
 import { DataUser } from "../../types";
 import AppSidebar from "./AppSidebar";
-import { ReactNode } from "react";
 
 type AppLayoutProps = {
   children: ReactNode;

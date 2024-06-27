@@ -1,11 +1,11 @@
-import { auth } from "../config/firebase";
-import { AuthenticationError } from "../types";
-import { alertToast } from "../utils";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { IoPerson, IoLockClosed, IoEye, IoEyeOff } from "react-icons/io5";
+import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
+import { auth } from "../config/firebase";
+import { AuthenticationError } from "../types";
+import { alertToast } from "../utils";
 
 export default function Login() {
   const [errorMsg, setErorrMsg] = useState("");

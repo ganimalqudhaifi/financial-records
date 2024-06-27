@@ -1,10 +1,10 @@
+import { onValue, push, ref, remove, set } from "firebase/database";
 import { database } from "../config/firebase";
-import { useAppContext } from "../context/AppContext";
-import { useAuthContext } from "../context/AuthContext";
-import { useGlobalContext } from "../context/GlobalContext";
 import { Account } from "../types";
 import { alertToast } from "../utils";
-import { onValue, push, ref, remove, set } from "firebase/database";
+import { useAppContext } from "./useAppContext";
+import { useAuthContext } from "./useAuthContext";
+import { useGlobalContext } from "./useGlobalContext";
 
 export default function useAccounts() {
   const { state: globalState } = useGlobalContext();

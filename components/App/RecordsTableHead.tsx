@@ -1,8 +1,8 @@
-import { useGlobalContext } from "../../context/GlobalContext";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useAccounts } from "../../hooks";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { modal } from "../../utils";
 import Modal from "../Modal";
-import { SyntheticEvent, useEffect, useState } from "react";
 
 export default function RecordsTableHead() {
   const { editAccount, selectedAccount } = useAccounts();

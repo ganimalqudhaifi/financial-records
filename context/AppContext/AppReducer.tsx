@@ -1,14 +1,14 @@
 import { Account, Record } from "../../types";
 
-export const appInitialState = {
-  accounts: [] as Account[],
-  activeAccountIndex: 0,
-  selectedAccount: {} as Account,
-  records: [] as Record[],
-  hasDemoLoadRecords: false,
-};
+export interface AppState {
+  accounts: Account[];
+  activeAccountIndex: number;
+  selectedAccount: Account;
+  records: Record[];
+  hasDemoLoadRecords: boolean;
+}
 
-export type ACTION_TYPE =
+export type ActionType =
   | { type: "SET_ACCOUNTS"; payload: Account[] }
   | { type: "ADD_ACCOUNTS"; payload: Account }
   | { type: "EDIT_ACCOUNTS"; payload: Account }
@@ -21,10 +21,7 @@ export type ACTION_TYPE =
   | { type: "DELETE_RECORDS"; id: Record["id"] }
   | { type: "SET_HAS_DEMO_LOAD_RECORDS"; payload: boolean };
 
-export const appReducer = (
-  state: typeof appInitialState,
-  action: ACTION_TYPE,
-) => {
+export const appReducer = (state: AppState, action: ActionType) => {
   switch (action.type) {
     case "SET_ACCOUNTS":
       return {

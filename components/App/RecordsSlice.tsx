@@ -1,4 +1,4 @@
-import { useGlobalContext } from "../../context/GlobalContext";
+import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 export default function RecordsSlice() {
   const { changeSliceShowState } = useGlobalContext();

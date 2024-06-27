@@ -1,6 +1,6 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion } from "framer-motion";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function HomeBanner() {
   return (
@@ -11,13 +11,20 @@ export default function HomeBanner() {
         transition={{ duration: 0.5 }}
         className="my-auto"
       >
-        <h1 className="text-[52px] leading-none text-main-color font-bold sm:text-[54px] md:text-[56px] lg:text-5xl">Financial Records.</h1>
+        <h1 className="text-[52px] leading-none text-main-color font-bold sm:text-[54px] md:text-[56px] lg:text-5xl">
+          Financial Records.
+        </h1>
         <p className="text-md mt-1">
-          {'Track your financial flow with '}
+          {"Track your financial flow with "}
           <br className="hidden sm:inline lg:hidden" />
           financial records
         </p>
-        <Link className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold duration-200 hover:scale-105 active:scale-100" href="/demo">Try Demo</Link>
+        <Link
+          className="inline-block px-4 py-2 mt-6 rounded-md text-lg bg-main-color text-bg-color font-semibold duration-200 hover:scale-105 active:scale-100"
+          href="/demo"
+        >
+          Try Demo
+        </Link>
       </motion.div>
       <motion.div
         initial={{ opacity: 0, x: 50 }}
@@ -25,7 +32,13 @@ export default function HomeBanner() {
         transition={{ duration: 0.5 }}
         className="grid place-items-center"
       >
-        <Image src="/hero_image.svg" alt="vector" width={400} height={0} priority />
+        <Image
+          src="/hero_image.svg"
+          alt="vector"
+          width={400}
+          height={0}
+          priority
+        />
       </motion.div>
     </div>
   );

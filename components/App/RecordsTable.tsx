@@ -1,8 +1,8 @@
-import RecordsTableHead from './RecordsTableHead';
-import RecordsTableBody from './RecordsTableBody';
-import { useGlobalContext } from '../../context/GlobalContext';
-import styles from './RecordsTable.module.css';
-import { useAccounts, useRecords } from '../../hooks';
+import { useGlobalContext } from "../../context/GlobalContext";
+import { useAccounts, useRecords } from "../../hooks";
+import styles from "./RecordsTable.module.css";
+import RecordsTableBody from "./RecordsTableBody";
+import RecordsTableHead from "./RecordsTableHead";
 
 export default function RecordsTable() {
   const { selectedAccount } = useAccounts();
@@ -22,40 +22,45 @@ export default function RecordsTable() {
   };
 
   return (
-    <table className={styles['main-table']}>
+    <table className={styles["main-table"]}>
       <thead>
         <RecordsTableHead />
       </thead>
-      {
-        records.length
-          ? (
-            <tbody>
-              {
-                records
-                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                  .sort((a, b) => new Date(b.date) - new Date(a.date))
+      {records.length ? (
+        <tbody>
+          {records
+            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .filter((record) => record.accountId === selectedAccount.id)
+            .filter((record) =>
+              record.description.toLowerCase().includes(searchKeyword),
+            )
+            .filter((record) => valueDate(record.date).includes(filterPeriod))
+            .slice(
+              (paginationIndex - 1) * sliceShow,
+              (paginationIndex - 1) * sliceShow + sliceShow,
+            )
+            .map((record, i) => (
+              <RecordsTableBody
+                key={record.id}
+                no={paginationIndex * sliceShow - sliceShow + i + 1}
+                record={record}
+                saldoAkhir={records
                   .filter((record) => record.accountId === selectedAccount.id)
-                  .filter((record) => record.description.toLowerCase().includes(searchKeyword))
-                  .filter((record) => valueDate(record.date).includes(filterPeriod))
-                  .slice((paginationIndex - 1) * sliceShow, ((paginationIndex - 1) * sliceShow) + sliceShow)
-                  .map((record, i) => (
-                    <RecordsTableBody
-                      key={record.id}
-                      no={((paginationIndex * sliceShow) - sliceShow) + i + 1}
-                      record={record}
-                      saldoAkhir={records
-                        .filter((record) => record.accountId === selectedAccount.id)
-                        .filter((record) => record.description.toLowerCase().includes(searchKeyword))
-                        .filter((record) => valueDate(record.date).includes(filterPeriod))
-                        .slice(0, ((paginationIndex * sliceShow) - sliceShow) + i + 1)
-                        .reduce((a, b) => a + b.value, initialBalance)}
-                    />
-                  ))
-              }
-            </tbody>
-          )
-          : <tbody />
-      }
+                  .filter((record) =>
+                    record.description.toLowerCase().includes(searchKeyword),
+                  )
+                  .filter((record) =>
+                    valueDate(record.date).includes(filterPeriod),
+                  )
+                  .slice(0, paginationIndex * sliceShow - sliceShow + i + 1)
+                  .reduce((a, b) => a + b.value, initialBalance)}
+              />
+            ))}
+        </tbody>
+      ) : (
+        <tbody />
+      )}
     </table>
   );
 }

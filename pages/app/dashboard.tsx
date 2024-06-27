@@ -1,13 +1,13 @@
-import Head from 'next/head';
-import { useAuthContext } from '../../context/AuthContext';
-import { useDatabaseObserver, useRecords } from '../../hooks';
-import { AppLayout, RecordsChart, RecordsInformation } from '../../components';
+import { AppLayout, RecordsChart, RecordsInformation } from "../../components";
+import { useAuthContext } from "../../context/AuthContext";
+import { useDatabaseObserver, useRecords } from "../../hooks";
+import Head from "next/head";
 
 export default function App() {
   const { setRecords } = useRecords();
   const { user } = useAuthContext();
 
-  useDatabaseObserver('records', (data) => {
+  useDatabaseObserver("records", (data) => {
     setRecords(data);
   });
 

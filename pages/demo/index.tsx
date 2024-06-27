@@ -1,27 +1,29 @@
-import { useEffect } from 'react';
-import Head from 'next/head';
-
-import { AppLayout, RecordsOrganism } from '../../components';
-import { useGlobalContext } from '../../context/GlobalContext';
-import { getData } from '../../utils/data';
-import { useAccounts, useRecords } from '../../hooks';
+import { AppLayout, RecordsOrganism } from "../../components";
+import { useGlobalContext } from "../../context/GlobalContext";
+import { useAccounts, useRecords } from "../../hooks";
+import { getData } from "../../utils/data";
+import Head from "next/head";
+import { useEffect } from "react";
 
 const user = {
-  displayName: 'Demo',
-  email: 'name@company.com',
-  photoURL: '/avatar/boy_01.svg',
+  displayName: "Demo",
+  email: "name@company.com",
+  photoURL: "/avatar/boy_01.svg",
 };
 
-const demoAccount = [{
-  id: '301',
-  name: 'Personal',
-  initialBalance: 0,
-}];
+const demoAccount = [
+  {
+    id: "301",
+    name: "Personal",
+    initialBalance: 0,
+  },
+];
 
 export default function Demo() {
   const { setIsDemo } = useGlobalContext();
   const { setAccounts } = useAccounts();
-  const { setRecords, hasDemoLoadRecords, setHasDemoLoadRecords } = useRecords();
+  const { setRecords, hasDemoLoadRecords, setHasDemoLoadRecords } =
+    useRecords();
 
   useEffect(() => {
     setIsDemo(true);

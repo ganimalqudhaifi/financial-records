@@ -1,19 +1,21 @@
-import { onValue, ref } from 'firebase/database';
-import { useEffect } from 'react';
-
-import { database } from '../config/firebase';
-import { useAuthContext } from '../context/AuthContext';
-import { useGlobalContext } from '../context/GlobalContext';
+import { database } from "../config/firebase";
+import { useAuthContext } from "../context/AuthContext";
+import { useGlobalContext } from "../context/GlobalContext";
+import { onValue, ref } from "firebase/database";
+import { useEffect } from "react";
 
 // eslint-disable-next-line no-unused-vars
-export default function useDatabaseObserver(path: string, callback: (data: any) => void) {
+export default function useDatabaseObserver(
+  path: string,
+  callback: (data: any) => void,
+) {
   const { state } = useGlobalContext();
   const { isDemo } = state;
 
   const { user } = useAuthContext();
 
   useEffect(() => {
-    if ((user !== null) && (isDemo === false)) {
+    if (user !== null && isDemo === false) {
       const { uid } = user;
       const accountsRef = ref(database, `users/${uid}/${path}`);
       onValue(accountsRef, (snapshot) => {

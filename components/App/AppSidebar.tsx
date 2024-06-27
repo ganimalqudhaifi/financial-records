@@ -1,21 +1,18 @@
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-
-import { TbLogout, TbChartPieFilled } from 'react-icons/tb';
-import { BiSolidGridAlt, BiSolidUser, BiX } from 'react-icons/bi';
-import { HiMiniBars3BottomLeft } from 'react-icons/hi2';
-
-import { useGlobalContext } from '../../context/GlobalContext';
-import { userSignOut } from '../../utils';
-import { useAccounts, useDatabaseObserver } from '../../hooks';
-
-import AccountsDropdown from './AccountsDropdown';
-import { DataUser } from '../../types';
+import { useGlobalContext } from "../../context/GlobalContext";
+import { useAccounts, useDatabaseObserver } from "../../hooks";
+import { DataUser } from "../../types";
+import { userSignOut } from "../../utils";
+import AccountsDropdown from "./AccountsDropdown";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
+import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
+import { HiMiniBars3BottomLeft } from "react-icons/hi2";
+import { TbLogout, TbChartPieFilled } from "react-icons/tb";
 
 type AppSidebarProps = {
-  user: DataUser
-}
+  user: DataUser;
+};
 
 export default function AppSidebar({ user }: AppSidebarProps) {
   const { setAccounts } = useAccounts();
@@ -29,7 +26,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
     userSignOut();
   };
 
-  useDatabaseObserver('accounts', (data) => {
+  useDatabaseObserver("accounts", (data) => {
     setAccounts(data);
   });
 
@@ -45,24 +42,28 @@ export default function AppSidebar({ user }: AppSidebarProps) {
 
       <div
         onClick={() => setIsActive(false)}
-        className={`fixed top-0 left-0 z-30 w-full h-screen bg-gray-900/50 ${!isActive && 'hidden'} lg:hidden`}
+        className={`fixed top-0 left-0 z-30 w-full h-screen bg-gray-900/50 ${!isActive && "hidden"} lg:hidden`}
       />
 
-      <aside className={`fixed shrink-0 top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && '-translate-x-full'} lg:translate-x-0`}>
+      <aside
+        className={`fixed shrink-0 top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && "-translate-x-full"} lg:translate-x-0`}
+      >
         <div className="no-scrollbar h-full px-3 py-4 overflow-y-auto bg-slate-900 divide-y-[1px] divide-gray-700">
           <div className=" w-full flex flex-col items-center">
             <div className="relative mb-4">
               <Image
                 width="200"
                 height="200"
-                src={user.photoURL || '/avatar/boy_01.svg'}
+                src={user.photoURL || "/avatar/boy_01.svg"}
                 alt="Rounded avatar"
                 className="w-20 h-20 rounded-full grayscale-[30%]"
               />
               <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
               <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
             </div>
-            <p className="text-white text-xl font-semibold capitalize">{user.displayName}</p>
+            <p className="text-white text-xl font-semibold capitalize">
+              {user.displayName}
+            </p>
             <p className="text-gray-400 text-md font-light">{user.email}</p>
             <Link
               href="/"
@@ -79,7 +80,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
           <ul className="pt-5 space-y-2">
             <li>
               <Link
-                href={`${!isDemo ? '/app/dashboard' : '/demo/dashboard'}`}
+                href={`${!isDemo ? "/app/dashboard" : "/demo/dashboard"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <TbChartPieFilled className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
@@ -89,7 +90,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <li>
               <Link
                 // eslint-disable-next-line quotes
-                href={`${!isDemo ? '/app' : '/demo'}`}
+                href={`${!isDemo ? "/app" : "/demo"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <BiSolidGridAlt className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
@@ -98,7 +99,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             </li>
             <li>
               <Link
-                href={`${!isDemo ? '/app/profile' : '/demo'}`}
+                href={`${!isDemo ? "/app/profile" : "/demo"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <BiSolidUser className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
@@ -107,9 +108,13 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             </li>
           </ul>
 
-          <div className={`${isDemo ? 'block' : 'hidden'} ${ctaButton && 'invisible'} p-4 mt-6 rounded-lg bg-blue-900`}>
+          <div
+            className={`${isDemo ? "block" : "hidden"} ${ctaButton && "invisible"} p-4 mt-6 rounded-lg bg-blue-900`}
+          >
             <div className="flex items-center mb-3">
-              <span className=" text-sm font-semibold mr-2 px-2.5 py-0.5 rounded bg-orange-200 text-orange-900">Beta</span>
+              <span className=" text-sm font-semibold mr-2 px-2.5 py-0.5 rounded bg-orange-200 text-orange-900">
+                Beta
+              </span>
               <button
                 type="button"
                 data-dismiss-target="#dropdown-cta"
@@ -122,9 +127,15 @@ export default function AppSidebar({ user }: AppSidebarProps) {
               </button>
             </div>
             <p className="mb-3 text-sm  text-blue-400">
-              Please login to use the profile features! For some reason profile page is not available in demo.
+              Please login to use the profile features! For some reason profile
+              page is not available in demo.
             </p>
-            <Link href="/" className="text-sm  underline font-medium text-blue-400 hover:text-blue-300">Back to Home Page </Link>
+            <Link
+              href="/"
+              className="text-sm  underline font-medium text-blue-400 hover:text-blue-300"
+            >
+              Back to Home Page{" "}
+            </Link>
           </div>
         </div>
       </aside>

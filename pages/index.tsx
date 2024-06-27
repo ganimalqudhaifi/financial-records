@@ -1,23 +1,31 @@
-import { useState } from 'react';
-import Head from 'next/head';
+import {
+  HomeAboutMe,
+  HomeBanner,
+  HomeFooter,
+  HomeNavigationDropdown,
+  HomePractice,
+  HomeUserDropdown,
+  Logo,
+} from "../components";
+import { useAuthContext } from "../context/AuthContext";
+import { userSignOut } from "../utils";
+import { GetServerSideProps } from "next";
+import Head from "next/head";
+import { useState } from "react";
 
-import { GetServerSideProps } from 'next';
-import { userSignOut } from '../utils';
-import { useAuthContext } from '../context/AuthContext';
-import { HomeAboutMe, HomeBanner, HomeFooter, HomeNavigationDropdown, HomePractice, HomeUserDropdown, Logo } from '../components';
-
-export const getServerSideProps : GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const { user } = req.cookies;
   if (user) {
     return { props: { user: JSON.parse(user) } };
   }
-  return { props: { } };
+  return { props: {} };
 };
 
 export default function Home() {
   const { user } = useAuthContext();
 
-  const [isNavigationDropdownOpen, setisNavigationDropdownOpen] = useState(false);
+  const [isNavigationDropdownOpen, setisNavigationDropdownOpen] =
+    useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
 
   const handleSignOut = () => {

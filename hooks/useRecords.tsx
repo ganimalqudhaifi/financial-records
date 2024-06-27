@@ -1,10 +1,9 @@
-import { push, ref, remove, set } from 'firebase/database';
-
-import { database } from '../config/firebase';
-import { useAuthContext } from '../context/AuthContext';
-import { useGlobalContext } from '../context/GlobalContext';
-import { useAppContext } from '../context/AppContext';
-import { AddRecordArgs, Record } from '../types';
+import { database } from "../config/firebase";
+import { useAppContext } from "../context/AppContext";
+import { useAuthContext } from "../context/AuthContext";
+import { useGlobalContext } from "../context/GlobalContext";
+import { Record } from "../types";
+import { push, ref, remove, set } from "firebase/database";
 
 export default function useRecords() {
   const { state: globalState } = useGlobalContext();
@@ -16,21 +15,21 @@ export default function useRecords() {
   const { user } = useAuthContext();
 
   // eslint-disable-next-line no-unused-vars
-  const checkUid = (callback: (uid: any) => void) => {
+  const checkUid = (callback: (uid: string) => void) => {
     if (user !== null) {
       callback(user.uid);
     } else {
-      throw new Error('user data has not loaded');
+      throw new Error("user data has not loaded");
     }
   };
 
   const setRecords = (payload: Record[]) => {
-    dispatch({ type: 'SET_RECORDS', payload });
+    dispatch({ type: "SET_RECORDS", payload });
   };
 
-  const addRecord = (payload: AddRecordArgs) => {
+  const addRecord = (payload: Record) => {
     if (isDemo) {
-      dispatch({ type: 'ADD_RECORDS', payload });
+      dispatch({ type: "ADD_RECORDS", payload });
     } else {
       checkUid((uid) => {
         const recordsRef = ref(database, `users/${uid}/records`);
@@ -41,7 +40,7 @@ export default function useRecords() {
 
   const editRecord = (payload: Record) => {
     if (isDemo) {
-      dispatch({ type: 'EDIT_RECORDS', payload });
+      dispatch({ type: "EDIT_RECORDS", payload });
     } else {
       checkUid((uid) => {
         const recordRef = ref(database, `users/${uid}/records/${payload.id}`);
@@ -50,9 +49,9 @@ export default function useRecords() {
     }
   };
 
-  const deleteRecord = (id: Record['id']) => {
+  const deleteRecord = (id: Record["id"]) => {
     if (isDemo) {
-      dispatch({ type: 'DELETE_RECORDS', id });
+      dispatch({ type: "DELETE_RECORDS", id });
     } else {
       checkUid((uid) => {
         const recordRef = ref(database, `users/${uid}/records/${id}`);
@@ -62,7 +61,7 @@ export default function useRecords() {
   };
 
   const setHasDemoLoadRecords = (payload: boolean) => {
-    dispatch({ type: 'SET_HAS_DEMO_LOAD_RECORDS', payload });
+    dispatch({ type: "SET_HAS_DEMO_LOAD_RECORDS", payload });
   };
 
   return {

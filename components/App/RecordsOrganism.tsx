@@ -1,9 +1,9 @@
-import RecordsActionAdd from './RecordsActionAdd';
-import RecordsSlice from './RecordsSlice';
-import RecordsSearch from './RecordsSearch';
-import RecordsTable from './RecordsTable';
-import RecordsPaginantion from './RecordsPagination';
-import RecordsFilterPeriod from './RecordsFilterPeriod';
+import RecordsActionAdd from "./RecordsActionAdd";
+import RecordsFilterPeriod from "./RecordsFilterPeriod";
+import RecordsPaginantion from "./RecordsPagination";
+import RecordsSearch from "./RecordsSearch";
+import RecordsSlice from "./RecordsSlice";
+import RecordsTable from "./RecordsTable";
 
 export default function RecordsOrganism() {
   return (

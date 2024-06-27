@@ -1,16 +1,27 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { IoPerson } from 'react-icons/io5';
+import Image from "next/image";
+import Link from "next/link";
+import { IoPerson } from "react-icons/io5";
 
-export default function HomeUserDropdown({ user, isUserDropdownOpen, handleUserDropdown, handleSignOut }) {
+export default function HomeUserDropdown({
+  user,
+  isUserDropdownOpen,
+  handleUserDropdown,
+  handleSignOut,
+}) {
   if (!user) {
     return (
       <div className="flex justify-self-end lg:order-last">
-        <Link href="/login" className="flex gap-2 px-4 py-2 font-medium rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-800">
+        <Link
+          href="/login"
+          className="flex gap-2 px-4 py-2 font-medium rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-800"
+        >
           <IoPerson className="w-6 h-6 fill-main-color" />
           Login
         </Link>
-        <Link href="/register" className="duration-300 mx-0 px-4 py-2 font-medium hidden rounded-lg hover:bg-gray-700 lg:block">
+        <Link
+          href="/register"
+          className="duration-300 mx-0 px-4 py-2 font-medium hidden rounded-lg hover:bg-gray-700 lg:block"
+        >
           Register
         </Link>
       </div>
@@ -37,15 +48,40 @@ export default function HomeUserDropdown({ user, isUserDropdownOpen, handleUserD
       </button>
 
       {/* user-dropdown-menu */}
-      <div className={`${!isUserDropdownOpen ? 'opacity-0 invisible -translate-y-1.5' : 'opacity-100 visible translate-y-0'} absolute top-full right-4 z-50 w-fit text-base list-none  divide-y rounded-lg shadow-xl bg-gray-700 divide-gray-600 duration-300 sm:right-8 lg:right-[7%]`}>
+      <div
+        className={`${!isUserDropdownOpen ? "opacity-0 invisible -translate-y-1.5" : "opacity-100 visible translate-y-0"} absolute top-full right-4 z-50 w-fit text-base list-none  divide-y rounded-lg shadow-xl bg-gray-700 divide-gray-600 duration-300 sm:right-8 lg:right-[7%]`}
+      >
         <div className="px-4 py-3">
           <span className="block text-sm text-white">{user.displayName}</span>
-          <span className="block text-sm font-medium truncate text-gray-400">{user.email}</span>
+          <span className="block text-sm font-medium truncate text-gray-400">
+            {user.email}
+          </span>
         </div>
         <ul className="py-2" aria-labelledby="user-menu-button">
-          <li><Link href="/app/dashboard" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Dashboard</Link></li>
-          <li><Link href="/app" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Table</Link></li>
-          <li><Link href="/app/profile" className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white">Profile</Link></li>
+          <li>
+            <Link
+              href="/app/dashboard"
+              className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+            >
+              Dashboard
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/app"
+              className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+            >
+              Table
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/app/profile"
+              className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
+            >
+              Profile
+            </Link>
+          </li>
           <li>
             <button
               onClick={handleSignOut}

@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
-import { DataUser } from '../../types';
-import AppSidebar from './AppSidebar';
+import { DataUser } from "../../types";
+import AppSidebar from "./AppSidebar";
+import { ReactNode } from "react";
 
 type AppLayoutProps = {
-  children: ReactNode,
-  user: DataUser,
-}
+  children: ReactNode;
+  user: DataUser;
+};
 
 export default function AppLayout({ children, user, ...rest }: AppLayoutProps) {
   return (

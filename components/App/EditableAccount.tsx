@@ -1,13 +1,13 @@
-import { ChangeEvent, KeyboardEvent, useState } from 'react';
-import { IoTrashOutline, IoAlertCircleOutline } from 'react-icons/io5';
-import { useAccounts } from '../../hooks';
-import { Account } from '../../types';
-import { modal } from '../../utils';
-import Modal from '../Modal';
+import { useAccounts } from "../../hooks";
+import { Account } from "../../types";
+import { modal } from "../../utils";
+import Modal from "../Modal";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { IoTrashOutline, IoAlertCircleOutline } from "react-icons/io5";
 
 type EditableAccountProps = {
-  account: Account
-}
+  account: Account;
+};
 
 export default function EditableAccount({ account }: EditableAccountProps) {
   const { editAccount, deleteAccount } = useAccounts();
@@ -20,7 +20,7 @@ export default function EditableAccount({ account }: EditableAccountProps) {
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       setIsDisabled(true);
       editAccount({ ...account, name: inputValue });
     }
@@ -71,7 +71,12 @@ export default function EditableAccount({ account }: EditableAccountProps) {
               >
                 Hapus
               </button>
-              <button className="px-5 py-2.5 text-gray-600 text-sm lg:text-lg font-medium hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200/50" onClick={() => modal.hide(account.id)}>Batal</button>
+              <button
+                className="px-5 py-2.5 text-gray-600 text-sm lg:text-lg font-medium hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200/50"
+                onClick={() => modal.hide(account.id)}
+              >
+                Batal
+              </button>
             </div>
           </div>
         </Modal>

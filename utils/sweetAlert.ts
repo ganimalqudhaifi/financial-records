@@ -1,39 +1,39 @@
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
-export function alertToast(errMsg : string) {
+export function alertToast(errMsg: string) {
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top',
+    position: "top",
     showConfirmButton: false,
     timer: 1500,
     timerProgressBar: false,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
 
   Toast.fire({
-    icon: 'error',
+    icon: "error",
     title: errMsg,
   });
 }
 
-export const successToast = (succMsg : string) => {
+export const successToast = (succMsg: string) => {
   const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: "top-end",
     showConfirmButton: false,
     timer: 1500,
     timerProgressBar: false,
     didOpen: (toast) => {
-      toast.addEventListener('mouseenter', Swal.stopTimer);
-      toast.addEventListener('mouseleave', Swal.resumeTimer);
+      toast.addEventListener("mouseenter", Swal.stopTimer);
+      toast.addEventListener("mouseleave", Swal.resumeTimer);
     },
   });
 
   Toast.fire({
-    icon: 'success',
+    icon: "success",
     title: succMsg,
   });
 };

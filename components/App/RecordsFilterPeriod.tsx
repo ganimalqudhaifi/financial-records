@@ -8,11 +8,13 @@ export default function RecordsFilterPeriod() {
 
   const listPeriod = !records.length
     ? []
-    : records.reduce((acc, record) => {
+    : records.reduce<string[]>((acc, record) => {
         const period = generatePeriodYM(record.date);
+
         if (!acc.includes(period)) {
           acc.push(period);
         }
+
         return acc;
       }, []);
 

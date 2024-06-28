@@ -17,12 +17,12 @@ export const globalInitialState = {
   hasLoadData: false,
 };
 
-type TGlobalContext = {
+type GlobalContext = {
   state: GlobalState;
   dispatch: Dispatch<ActionType>;
 };
 
-export const GlobalContext = createContext<TGlobalContext | null>(null);
+export const GlobalContext = createContext<GlobalContext | null>(null);
 
 export default function GlobalContextProvider(props: PropsWithChildren) {
   const [state, dispatch] = useReducer(globalReducer, globalInitialState);

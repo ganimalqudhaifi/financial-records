@@ -9,7 +9,7 @@ import {
 import { Account, Record } from "../../types";
 import { ActionType, AppState, appReducer } from "./AppReducer";
 
-type TAppContext = {
+type AppContext = {
   state: AppState;
   dispatch: Dispatch<ActionType>;
 };
@@ -22,7 +22,7 @@ export const appInitialState = {
   hasDemoLoadRecords: false,
 };
 
-export const AppContext = createContext<TAppContext | null>(null);
+export const AppContext = createContext<AppContext | null>(null);
 
 export default function AppContextProvider(props: PropsWithChildren) {
   const [state, dispatch] = useReducer(appReducer, appInitialState);

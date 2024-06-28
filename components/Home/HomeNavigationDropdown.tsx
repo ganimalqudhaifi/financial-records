@@ -1,9 +1,14 @@
 import Link from "next/link";
 
+interface HomeNavigationDropdownProps {
+  isNavigationDropdownOpen: boolean;
+  handleNavigationDropdown: () => void;
+}
+
 export default function HomeNavigationDropdown({
   isNavigationDropdownOpen,
   handleNavigationDropdown,
-}) {
+}: HomeNavigationDropdownProps) {
   return (
     <>
       {/* navigation-button */}

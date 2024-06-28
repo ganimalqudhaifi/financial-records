@@ -1,22 +1,20 @@
 export interface Account {
-  id?: string;
+  id: string;
   name: string;
   initialBalance: number;
 }
 
 export interface Record {
   id: string;
-  date: string;
+  date: Date | string;
   description: string;
   categoryId: number;
   amount: number;
   value: number;
-  createdAt: string;
-  updatedAt: string;
+  createdAt: Date | string;
+  updatedAt: Date | string;
   accountId: string;
 }
-
-export type AddRecordArgs = Omit<Record, "id">;
 
 export interface DataUser {
   displayName: string;

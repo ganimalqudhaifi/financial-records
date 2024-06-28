@@ -30,16 +30,18 @@ export default function RecordsChart() {
   const [chartData, setChartData] = useState({ datasets: [] });
   const [chartOptions, setChartOptions] = useState({});
 
-  const valueDate = (date) => {
+  const valueDate = (date: Date) => {
     const target = new Date(date);
     return `${target.getFullYear()}-${target.getMonth()}`;
   };
 
   useEffect(() => {
     if (records.length) {
-      records.sort((a, b) => new Date(a.date) - new Date(b.date));
+      records.sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
+      );
 
-      const arrListPeriod = records.reduce((acc, record) => {
+      const arrListPeriod = records.reduce<string[]>((acc, record) => {
         const d = new Date(record.date);
         const year = d.getFullYear();
         const month = d.getMonth();

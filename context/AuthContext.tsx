@@ -11,12 +11,12 @@ import {
 import { auth } from "../config/firebase";
 import { DataUser } from "../types";
 
-type TAuthContext = {
+type AuthContext = {
   user: DataUser;
   setUser: Dispatch<SetStateAction<DataUser>>;
 };
 
-export const AuthContext = createContext<TAuthContext | null>(null);
+export const AuthContext = createContext<AuthContext | null>(null);
 
 export default function AuthContextProvider(props: PropsWithChildren) {
   const initialUserState: DataUser = {

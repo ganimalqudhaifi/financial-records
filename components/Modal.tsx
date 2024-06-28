@@ -1,6 +1,13 @@
+import React from "react";
 import { modal } from "../utils";
 
-export default function Modal({ id, children }) {
+export default function Modal({
+  id,
+  children,
+}: {
+  id: string;
+  children: React.ReactNode;
+}) {
   return (
     <div
       id={id}

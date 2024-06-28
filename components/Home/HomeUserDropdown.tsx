@@ -2,12 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { IoPerson } from "react-icons/io5";
 
+interface HomeUserDropdownProps {
+  user: any;
+  isUserDropdownOpen: boolean;
+  handleUserDropdown: () => void;
+  handleSignOut: () => void;
+}
+
 export default function HomeUserDropdown({
   user,
   isUserDropdownOpen,
   handleUserDropdown,
   handleSignOut,
-}) {
+}: HomeUserDropdownProps) {
   if (!user) {
     return (
       <div className="flex justify-self-end lg:order-last">

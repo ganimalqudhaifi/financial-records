@@ -16,7 +16,6 @@ export type ActionType =
   | { type: "CHANGE_INITIAL_BALANCE"; payload: number }
   | { type: "SET_ISDEMO"; payload: boolean };
 
-// TODO! Cross Check all related to action type on this reducer
 export const globalReducer = (state: GlobalState, action: ActionType) => {
   switch (action.type) {
     case "HANDLE_SEARCH":

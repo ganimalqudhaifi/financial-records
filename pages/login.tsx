@@ -4,8 +4,8 @@ import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
 import { auth } from "../config/firebase";
-import { AuthenticationError } from "../types";
 import { alertToast } from "../utils";
+import { getErrorMessage } from "../utils/getErrorMessage";
 
 export default function Login() {
   const [errorMsg, setErorrMsg] = useState("");
@@ -27,25 +27,30 @@ export default function Login() {
     setIsLoading(true);
     const { email, password } = inputs;
     try {
-      await signInWithEmailAndPassword(auth, email, password);
-      setInputs({ email: "", password: "" });
-      router.replace("/app");
-    } catch (err) {
-      if (err instanceof AuthenticationError) {
-        switch (err.code) {
-          case "auth/user-not-found":
-            setErorrMsg("Email tidak ditemukan");
-            break;
-          case "auth/invalid-email":
-            setErorrMsg("Email tidak sah");
-            break;
-          case "auth/wrong-password":
-            setErorrMsg("Password salah");
-            break;
-          default:
-            setErorrMsg("Terjadi kesalahan");
-        }
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const uid = userCredential.user.uid;
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ uid }),
+      });
+
+      if (res.ok) {
+        setInputs({ email: "", password: "" });
+        router.replace("/app");
+      } else {
+        console.log("Gagal masuk. Silakan coba lagi.");
       }
+    } catch (err) {
+      const message = getErrorMessage(err);
+      setErorrMsg(message);
       alertToast(errorMsg);
     }
     setIsLoading(false);

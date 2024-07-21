@@ -1,10 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(request) {
+export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith("/app")) {
-    if (request.cookies.has("user")) {
+    const token = request.cookies.get("token");
+
+    if (token) {
       return NextResponse.next();
     }
+
     return NextResponse.redirect(new URL("/", request.url));
   }
 

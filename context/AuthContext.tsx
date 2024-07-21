@@ -12,22 +12,22 @@ import { auth } from "../config/firebase";
 import { DataUser } from "../types";
 
 type AuthContext = {
-  user: DataUser;
-  setUser: Dispatch<SetStateAction<DataUser>>;
+  user: DataUser | null;
+  setUser: Dispatch<SetStateAction<DataUser | null>>;
 };
 
 export const AuthContext = createContext<AuthContext | null>(null);
 
-export default function AuthContextProvider(props: PropsWithChildren) {
-  const initialUserState: DataUser = {
-    displayName: "",
-    email: "",
-    phoneNumber: "",
-    photoURL: "",
-    uid: "",
-  };
+const initialUserState: DataUser = {
+  displayName: "",
+  email: "",
+  phoneNumber: "",
+  photoURL: "",
+  uid: "",
+};
 
-  const [user, setUser] = useState<DataUser>(initialUserState);
+export default function AuthContextProvider(props: PropsWithChildren) {
+  const [user, setUser] = useState<DataUser | null>(null);
 
   const updateUserCookie = async (
     method: "POST" | "DELETE",
@@ -45,13 +45,18 @@ export default function AuthContextProvider(props: PropsWithChildren) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        const dataUser = {
+        // Alternate API for retrieving user data
+        // const res = await fetch("/api/user");
+        // const userRecord = await res.json();
+
+        const dataUser: DataUser = {
           displayName: user.displayName || "",
           email: user.email || "",
           phoneNumber: user.phoneNumber || "",
           photoURL: user.photoURL || "",
-          uid: user.uid || "",
+          uid: user.uid || "-",
         };
+
         await updateUserCookie("POST", dataUser);
         setUser(dataUser);
       } else {

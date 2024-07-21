@@ -29,19 +29,6 @@ const initialUserState: DataUser = {
 export default function AuthContextProvider(props: PropsWithChildren) {
   const [user, setUser] = useState<DataUser | null>(null);
 
-  const updateUserCookie = async (
-    method: "POST" | "DELETE",
-    user?: DataUser,
-  ) => {
-    const body =
-      method === "POST" ? JSON.stringify({ user: JSON.stringify(user) }) : null;
-    await fetch("/api/cookie", {
-      method,
-      headers: { "Content-Type": "application/json" },
-      body,
-    });
-  };
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
@@ -57,10 +44,8 @@ export default function AuthContextProvider(props: PropsWithChildren) {
           uid: user.uid || "-",
         };
 
-        await updateUserCookie("POST", dataUser);
         setUser(dataUser);
       } else {
-        await updateUserCookie("DELETE");
         setUser(initialUserState);
       }
     });

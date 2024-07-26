@@ -1,11 +1,9 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { auth } from "../config/firebase";
-import { alertToast } from "../utils";
-import { getErrorMessage } from "../utils/getErrorMessage";
+import { alertToast } from "@/utils";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export default function Login() {
   const [errorMsg, setErorrMsg] = useState("");
@@ -26,20 +24,14 @@ export default function Login() {
     e.preventDefault();
     setIsLoading(true);
     const { email, password } = inputs;
-    try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      const uid = userCredential.user.uid;
 
+    try {
       const res = await fetch("/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ uid }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (res.ok) {

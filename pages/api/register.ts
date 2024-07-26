@@ -1,16 +1,19 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
-import { signIn } from "@/lib/firebase/auth";
+import { signUp, updateUser } from "@/lib/firebase/auth";
+import { addAccount } from "@/lib/firebase/database";
 import { createToken } from "@/lib/jwt";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    const { email, password } = req.body;
-
-    const user = await signIn(email, password);
-    const uid = user.uid;
+    const { email, password, newAccount } = req.body;
 
     try {
+      const user = await signUp(email, password);
+      const uid = user.uid;
+
+      await updateUser(uid);
+
       const jwtToken = await createToken({ uid });
 
       const setCookie = cookie.serialize("token", jwtToken, {
@@ -21,7 +24,9 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       });
       res.setHeader("Set-Cookie", setCookie);
 
-      res.status(200).json({ message: "Logged in successfully" });
+      addAccount(uid, newAccount);
+
+      res.status(200).json({ message: "Signed up successfully" });
     } catch (error) {
       res.status(401).json({ message: "Unauthorized: Invalid token" });
     }

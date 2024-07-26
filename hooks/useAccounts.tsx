@@ -11,9 +11,9 @@ export default function useAccounts() {
   const { isDemo } = globalState;
 
   const { state: appState, dispatch } = useAppContext();
-  const { user } = useAuthContext();
-
   const { accounts, activeAccountIndex, selectedAccount } = appState;
+
+  const { user } = useAuthContext();
 
   // eslint-disable-next-line no-unused-vars
   const checkUid = (callback: (uid: string) => void) => {

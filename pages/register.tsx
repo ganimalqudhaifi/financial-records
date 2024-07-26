@@ -1,16 +1,11 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { auth } from "../config/firebase";
-import { useAccounts } from "../hooks";
-import { AuthenticationError } from "../types";
-import { alertToast } from "../utils";
+import { alertToast } from "@/utils";
+import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export default function Register() {
-  const { addAccount } = useAccounts();
-
   const [errorMsg, setErorrMsg] = useState("");
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -28,41 +23,31 @@ export default function Register() {
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
+
     const { email, password } = inputs;
+    const newAccount = {
+      name: "Personal",
+      initialBalance: 0,
+    };
+
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password,
-      );
-      const { user } = userCredential;
-      await updateProfile(auth.currentUser!, {
-        displayName: `user${user.uid.substring(0, 11)}`,
-        photoURL: "/avatar/boy_01.svg",
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, newAccount }),
       });
-      const newAccount = {
-        name: "Personal",
-        initialBalance: 0,
-      };
-      addAccount(newAccount);
-      setInputs({ email: "", password: "" });
-      router.replace("/app");
-    } catch (err) {
-      if (err instanceof AuthenticationError) {
-        switch (err.code) {
-          case "auth/email-already-in-use":
-            setErorrMsg("Email telah digunakan");
-            break;
-          case "auth/invalid-email":
-            setErorrMsg("Email tidak sah");
-            break;
-          case "auth/weak-password":
-            setErorrMsg("Password lemah");
-            break;
-          default:
-            setErorrMsg("Terjadi kesalahan");
-        }
+
+      if (res.ok) {
+        setInputs({ email: "", password: "" });
+        router.replace("/app");
+      } else {
+        console.log("Gagal masuk. Silakan coba lagi.");
       }
+    } catch (err) {
+      const message = getErrorMessage(err);
+      setErorrMsg(message);
       alertToast(errorMsg);
     }
     setIsLoading(false);

@@ -20,6 +20,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookies = cookie.parse(req.headers.cookie || "");
   const token = cookies.token;
 
+  if (!token) {
+    return {
+      props: {
+        user: null,
+      },
+    };
+  }
+
   const jwtPayload = verifyToken(token);
   const uid = jwtPayload.uid as string;
 

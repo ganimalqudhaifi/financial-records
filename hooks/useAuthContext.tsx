@@ -6,7 +6,7 @@ export function useAuthContext() {
 
   if (!contextValue) {
     throw new Error(
-      "useAuthContext must be called from within a AppContextProvider",
+      "useAuthContext must be called from within a AuthContextProvider",
     );
   }
 

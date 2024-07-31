@@ -1,8 +1,9 @@
-import { useRecords } from "../../hooks";
+import { useSelector } from "react-redux";
+import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 export default function RecordsPaginantion() {
-  const { records } = useRecords();
+  const { records } = useSelector(selectRecords);
 
   const { state, changePaginationIndexState } = useGlobalContext();
   const { searchKeyword, sliceShow, paginationIndex, filterPeriod } = state;

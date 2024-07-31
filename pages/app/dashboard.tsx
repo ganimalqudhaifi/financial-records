@@ -1,14 +1,16 @@
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { setRecords } from "@/lib/redux/features/records/recordsSlice";
+import { selectUser } from "@/lib/redux/features/user/userSlice";
 import { AppLayout, RecordsChart, RecordsInformation } from "../../components";
-import { useDatabaseObserver, useRecords } from "../../hooks";
-import { useAuthContext } from "../../hooks/useAuthContext";
+import { useDatabaseObserver } from "../../hooks";
 
 export default function App() {
-  const { setRecords } = useRecords();
-  const { user } = useAuthContext();
+  const { user } = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   useDatabaseObserver("records", (data) => {
-    setRecords(data);
+    dispatch(setRecords(data));
   });
 
   if (user) {

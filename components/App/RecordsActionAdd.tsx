@@ -1,5 +1,7 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { useAccounts, useRecords } from "../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { addRecord } from "@/lib/redux/features/records/recordsSlice";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
 
@@ -21,8 +23,9 @@ const initialInputs = {
 };
 
 export default function RecordsActionAdd() {
-  const { selectedAccount } = useAccounts();
-  const { addRecord } = useRecords();
+  const { selectedAccount } = useSelector(selectAccounts);
+  const dispatch = useDispatch();
+
   const uniqueId = "addModal";
 
   const [inputs, setInputs] = useState(initialInputs);
@@ -51,7 +54,7 @@ export default function RecordsActionAdd() {
       updatedAt: new Date().toISOString(),
       accountId: selectedAccount.id!,
     };
-    addRecord(newInputs);
+    dispatch(addRecord(newInputs));
     modal.hide(uniqueId);
     setInputs(initialInputs);
 

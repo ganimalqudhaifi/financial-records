@@ -8,13 +8,11 @@ import {
 import { ActionType, GlobalState, globalReducer } from "./GlobalReducer";
 
 export const globalInitialState = {
-  initialBalance: 0,
-  searchKeyword: "",
-  sliceShow: 10,
-  paginationIndex: 1,
-  filterPeriod: "",
-  isDemo: false,
-  hasLoadData: false,
+  initialBalance: 0, // selectedAccount.initialBalance?
+  searchKeyword: "", // only 1 page
+  sliceShow: 10, // pagination refer
+  paginationIndex: 1, // only 1 page
+  filterPeriod: "", // only 1 page
 };
 
 type GlobalContext = {

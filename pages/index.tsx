@@ -2,6 +2,8 @@ import cookie from "cookie";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
+import { getUser } from "@/lib/firebase/admin";
+import { userSignOut } from "@/utils/authentication";
 import {
   HomeAboutMe,
   HomeBanner,
@@ -11,10 +13,8 @@ import {
   HomeUserDropdown,
   Logo,
 } from "../components";
-import { getUser } from "../lib/firebase/auth";
 import { verifyToken } from "../lib/jwt";
 import { DataUser } from "../types";
-import { userSignOut } from "../utils";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookies = cookie.parse(req.headers.cookie || "");
@@ -32,6 +32,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const uid = jwtPayload.uid as string;
 
   const dataUser = await getUser(uid);
+
+  if (!dataUser) {
+    return {
+      props: {
+        user: null,
+      },
+    };
+  }
 
   const user = {
     uid: dataUser.uid,

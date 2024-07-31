@@ -1,15 +1,14 @@
 import {
   createUserWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
 import { DataUser } from "@/types";
-import admin from "./admin";
 import { app } from "./client";
 
-// client
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export const signUp = async (email: string, password: string) => {
   try {
@@ -20,7 +19,7 @@ export const signUp = async (email: string, password: string) => {
     );
     return userCredential.user;
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 };
 
@@ -33,25 +32,12 @@ export const signIn = async (email: string, password: string) => {
     );
     return userCredential.user;
   } catch (error) {
-    throw error;
+    console.error(error);
   }
 };
 
 export const signOut = async () => {
-  try {
-    await auth.signOut();
-  } catch (error) {
-    throw error;
-  }
-};
-
-export const getUser = async (uid: string): Promise<DataUser> => {
-  try {
-    const userRecord = await admin.auth().getUser(uid);
-    return userRecord.toJSON() as DataUser;
-  } catch (error) {
-    throw error;
-  }
+  await auth.signOut();
 };
 
 export const updateUser = async (uid: string) => {
@@ -62,7 +48,24 @@ export const updateUser = async (uid: string) => {
         photoURL: "/avatar/boy_01.svg",
       });
     }
-  } catch (error) {
-    throw error;
-  }
+  } catch (error) {}
+};
+
+export const observeUser = (): Promise<DataUser | null> => {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user !== null) {
+        const dataUser: DataUser = {
+          displayName: user.displayName || "",
+          email: user.email || "",
+          phoneNumber: user.phoneNumber || "-",
+          photoURL: user.photoURL || "",
+          uid: user.uid,
+        };
+        resolve(dataUser);
+      } else {
+        resolve(null);
+      }
+    });
+  });
 };

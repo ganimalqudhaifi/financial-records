@@ -4,8 +4,6 @@ export interface GlobalState {
   sliceShow: number;
   paginationIndex: number;
   filterPeriod: string;
-  isDemo: boolean;
-  hasLoadData: boolean;
 }
 
 export type ActionType =
@@ -13,8 +11,7 @@ export type ActionType =
   | { type: "HANDLE_SLICE"; payload: number }
   | { type: "HANDLE_FILTER_PERIOD"; payload: string }
   | { type: "HANDLE_PAGINATION_INDEX"; payload: number }
-  | { type: "CHANGE_INITIAL_BALANCE"; payload: number }
-  | { type: "SET_ISDEMO"; payload: boolean };
+  | { type: "CHANGE_INITIAL_BALANCE"; payload: number };
 
 export const globalReducer = (state: GlobalState, action: ActionType) => {
   switch (action.type) {
@@ -42,11 +39,6 @@ export const globalReducer = (state: GlobalState, action: ActionType) => {
       return {
         ...state,
         initialBalance: action.payload,
-      };
-    case "SET_ISDEMO":
-      return {
-        ...state,
-        isDemo: action.payload,
       };
     default:
       return state;

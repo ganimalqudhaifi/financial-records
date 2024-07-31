@@ -1,11 +1,17 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { useAccounts } from "../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAccounts,
+  updateAccount,
+} from "@/lib/redux/features/accounts/accountsSlice";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { modal } from "../../utils";
 import Modal from "../Modal";
 
 export default function RecordsTableHead() {
-  const { editAccount, selectedAccount } = useAccounts();
+  const { selectedAccount } = useSelector(selectAccounts);
+  const dispatch = useDispatch();
+
   const { state, changeInitialBalanceState } = useGlobalContext();
   const { initialBalance } = state;
 
@@ -23,7 +29,7 @@ export default function RecordsTableHead() {
   const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     changeInitialBalanceState(inputs);
-    editAccount({ ...selectedAccount, initialBalance: inputs });
+    dispatch(updateAccount({ ...selectedAccount, initialBalance: inputs }));
     modal.hide(uniqueId);
   };
 

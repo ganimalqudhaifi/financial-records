@@ -1,16 +1,16 @@
 import { onValue, ref } from "firebase/database";
 import { useEffect } from "react";
-import { database } from "../config/firebase";
+import { useSelector } from "react-redux";
+import { database } from "@/lib/firebase/database";
+import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { useAuthContext } from "./useAuthContext";
-import { useGlobalContext } from "./useGlobalContext";
 
 // eslint-disable-next-line no-unused-vars
 export default function useDatabaseObserver(
   path: string,
   callback: (data: any) => void,
 ) {
-  const { state } = useGlobalContext();
-  const { isDemo } = state;
+  const { isDemo } = useSelector(selectDemo);
 
   const { user } = useAuthContext();
 

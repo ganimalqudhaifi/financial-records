@@ -4,10 +4,12 @@ import { useState } from "react";
 import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
-import { useAccounts, useDatabaseObserver } from "../../hooks";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
+import { userSignOut } from "@/utils/authentication";
+import { useDatabaseObserver } from "../../hooks";
 import { DataUser } from "../../types";
-import { userSignOut } from "../../utils";
 import AccountsDropdown from "./AccountsDropdown";
 
 type AppSidebarProps = {
@@ -15,9 +17,8 @@ type AppSidebarProps = {
 };
 
 export default function AppSidebar({ user }: AppSidebarProps) {
-  const { setAccounts } = useAccounts();
-  const { state } = useGlobalContext();
-  const { isDemo } = state;
+  const { isDemo } = useSelector(selectDemo);
+  const dispatch = useDispatch();
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
@@ -27,7 +28,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
   };
 
   useDatabaseObserver("accounts", (data) => {
-    setAccounts(data);
+    dispatch(setAccounts(data));
   });
 
   return (

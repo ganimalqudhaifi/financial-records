@@ -1,27 +1,28 @@
 import { useEffect, useState } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
-import { useAccounts } from "../../hooks";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAccount,
+  selectAccounts,
+} from "@/lib/redux/features/accounts/accountsSlice";
+import { Account } from "@/types";
 
 export default function AccountsDropdown() {
-  const {
-    accounts,
-    activeAccountIndex,
-    setActiveAccountIndex,
-    selectedAccount,
-    setSelectedAccount,
-  } = useAccounts();
+  const { accounts, selectedAccount } = useSelector(selectAccounts);
+  const dispatch = useDispatch();
 
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
-    if (accounts.length) {
-      if (accounts.length > activeAccountIndex) {
-        setSelectedAccount(accounts[activeAccountIndex]);
-      } else {
-        setSelectedAccount(accounts[activeAccountIndex - 1]);
-      }
+    if (accounts.length && selectedAccount === null) {
+      dispatch(selectAccount(accounts[0]));
     }
-  }, [accounts, activeAccountIndex]);
+  }, []);
+
+  const handleSelectAccount = (account: Account) => {
+    setIsActive(!isActive);
+    dispatch(selectAccount(account));
+  };
 
   return (
     <div className="my-1.5">
@@ -35,17 +36,14 @@ export default function AccountsDropdown() {
       </button>
       <div className="overflow-hidden max-h-72 duration-500 peer-[.is-active]:max-h-0 peer-[.is-active]:duration-200">
         <ul>
-          {accounts.map((account, i) => (
+          {accounts.map((account) => (
             <li
               key={account.id}
               className="ml-2 text-sm text-slate-400 font-semibold capitalize hover:text-slate-300 hover:cursor-pointer"
             >
               <button
                 className="w-full p-2 text-left"
-                onClick={() => {
-                  setIsActive(!isActive);
-                  setActiveAccountIndex(i);
-                }}
+                onClick={() => handleSelectAccount(account)}
               >
                 {account.name}
               </button>

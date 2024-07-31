@@ -1,13 +1,5 @@
 import admin from "firebase-admin";
-
-// const serviceAccount = require('/path/to/serviceAccountKey.json');
-
-// if (!admin.apps.length) {
-//   admin.initializeApp({
-//     credential: admin.credential.cert(serviceAccount),
-//     databaseURL: 'https://your-database-name.firebaseio.com'
-//   });
-// }
+import { DataUser } from "@/types";
 
 const config = {
   credential: admin.credential.cert({
@@ -30,5 +22,15 @@ if (!admin.apps.length) {
 } else {
   admin.app();
 }
+
+export const getUser = async (uid: string) => {
+  try {
+    const userRecord = await admin.auth().getUser(uid);
+    return userRecord.toJSON() as DataUser;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
 
 export default admin;

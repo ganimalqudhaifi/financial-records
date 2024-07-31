@@ -1,12 +1,15 @@
-import { useAccounts, useRecords } from "../../hooks";
+import { useSelector } from "react-redux";
+import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
 import { useGlobalContext } from "../../hooks/useGlobalContext";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";
 
 export default function RecordsTable() {
-  const { selectedAccount } = useAccounts();
-  const { records } = useRecords();
+  const { records } = useSelector(selectRecords);
+  const { selectedAccount } = useSelector(selectAccounts);
+
   const { state } = useGlobalContext();
   const {
     searchKeyword,

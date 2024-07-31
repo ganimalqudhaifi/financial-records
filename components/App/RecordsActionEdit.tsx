@@ -1,5 +1,6 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { useRecords } from "../../hooks";
+import { useDispatch } from "react-redux";
+import { updateRecord } from "@/lib/redux/features/records/recordsSlice";
 import { Record } from "../../types";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
@@ -13,7 +14,8 @@ export default function RecordsActionEdit({
   no,
   record,
 }: RecordsActionEditProps) {
-  const { editRecord } = useRecords();
+  const dispatch = useDispatch();
+
   const uniqueId = `editModal${no}`;
 
   const categories = [
@@ -50,7 +52,7 @@ export default function RecordsActionEdit({
       updatedAt: new Date().toISOString(),
       value: inputs.categoryId < 200 ? inputs.amount : inputs.amount * -1,
     };
-    editRecord(newInputs);
+    dispatch(updateRecord(newInputs));
     modal.hide(uniqueId);
     successToast("Data berhasil diubah");
   };

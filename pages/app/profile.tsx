@@ -2,9 +2,13 @@ import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { auth } from "@/lib/firebase/auth";
+import {
+  addAccount,
+  selectAccounts,
+} from "@/lib/redux/features/accounts/accountsSlice";
 import { AppLayout, EditableAccount, Modal } from "../../components";
-import { auth } from "../../config/firebase";
-import { useAccounts } from "../../hooks";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { DataUser } from "../../types";
 import { alertToast, modal } from "../../utils";
@@ -29,8 +33,10 @@ const avatarLists = [
 ];
 
 export default function Profile() {
+  const { accounts } = useSelector(selectAccounts);
+  const dispatch = useDispatch();
+
   const { user, setUser } = useAuthContext();
-  const { accounts, addAccount } = useAccounts();
 
   const [edits, setEdits] = useState({ personalInformation: false });
   const [inputs, setInputs] = useState<TInputs>({
@@ -201,7 +207,12 @@ export default function Profile() {
                   <li>
                     <button
                       onClick={() =>
-                        addAccount({ name: "New Account", initialBalance: 0 })
+                        dispatch(
+                          addAccount({
+                            name: "New Account",
+                            initialBalance: 0,
+                          }),
+                        )
                       }
                       className="w-full p-2 rounded-lg border border-slate-700 border-dashed text-gray-900 "
                     >

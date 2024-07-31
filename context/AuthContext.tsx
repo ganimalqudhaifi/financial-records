@@ -1,59 +1,31 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { PropsWithChildren, createContext, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
-  Dispatch,
-  PropsWithChildren,
-  SetStateAction,
-  createContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import { auth } from "../config/firebase";
+  fetchUser,
+  selectUser,
+  selectUserFetchStatus,
+} from "@/lib/redux/features/user/userSlice";
+import { AppDispatch } from "@/lib/redux/store";
 import { DataUser } from "../types";
 
 type AuthContext = {
   user: DataUser | null;
-  setUser: Dispatch<SetStateAction<DataUser | null>>;
 };
 
 export const AuthContext = createContext<AuthContext | null>(null);
 
-const initialUserState: DataUser = {
-  displayName: "",
-  email: "",
-  phoneNumber: "",
-  photoURL: "",
-  uid: "",
-};
-
 export default function AuthContextProvider(props: PropsWithChildren) {
-  const [user, setUser] = useState<DataUser | null>(null);
+  const userFetchStatus = useSelector(selectUserFetchStatus);
+  const { user } = useSelector(selectUser);
+  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        // Alternate API for retrieving user data
-        // const res = await fetch("/api/user");
-        // const userRecord = await res.json();
+    if (userFetchStatus === "idle") {
+      dispatch(fetchUser());
+    }
+  }, [userFetchStatus, dispatch]);
 
-        const dataUser: DataUser = {
-          displayName: user.displayName || "",
-          email: user.email || "",
-          phoneNumber: user.phoneNumber || "",
-          photoURL: user.photoURL || "",
-          uid: user.uid || "-",
-        };
-
-        setUser(dataUser);
-      } else {
-        setUser(initialUserState);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const value = useMemo(() => ({ user, setUser }), [user]);
+  const value = useMemo(() => ({ user }), [user]);
 
   return <AuthContext.Provider value={value} {...props} />;
 }

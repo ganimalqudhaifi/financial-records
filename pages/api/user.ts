@@ -1,6 +1,6 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getUser } from "../../lib/firebase/auth";
+import { getUser } from "@/lib/firebase/admin";
 import { verifyToken } from "../../lib/jwt";
 
 const getTokenFromCookies = (req: NextApiRequest) => {
@@ -13,13 +13,13 @@ const handleGetRequest = async (req: NextApiRequest, res: NextApiResponse) => {
 
   if (token) {
     const claims = verifyToken(token);
-    const uid = claims.uid;
+    const uid = claims.uid as string;
 
     try {
-      const userRecord = await getUser(uid as string);
+      const userRecord = await getUser(uid);
       res.status(200).json(userRecord);
     } catch (error) {
-      console.log("Error fetching user data:", error);
+      console.error("Error fetching user data:", error);
       res.json(null);
     }
   }

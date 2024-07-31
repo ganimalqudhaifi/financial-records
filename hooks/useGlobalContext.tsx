@@ -12,10 +12,6 @@ export const useGlobalContext = () => {
 
   const { state, dispatch } = contextValue;
 
-  const setIsDemo = (payload: boolean) => {
-    dispatch({ type: "SET_ISDEMO", payload });
-  };
-
   const changePaginationIndexState = (btnpagination: number) => {
     dispatch({ type: "HANDLE_PAGINATION_INDEX", payload: btnpagination });
   };
@@ -35,7 +31,6 @@ export const useGlobalContext = () => {
   return {
     state,
     dispatch,
-    setIsDemo,
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,

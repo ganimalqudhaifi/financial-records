@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAccounts, useRecords } from "../../hooks";
+import { useSelector } from "react-redux";
+import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
 
 export default function RecordsInformation() {
-  const { selectedAccount } = useAccounts();
-  const { records } = useRecords();
+  const { selectedAccount } = useSelector(selectAccounts);
+  const { records } = useSelector(selectRecords);
 
   const [initialBalance, setInitialBalance] = useState(0);
   const [pemasukan, setPenerimaan] = useState(0);

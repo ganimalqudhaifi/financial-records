@@ -9,7 +9,9 @@ import {
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { useAccounts, useRecords } from "../../hooks";
+import { useSelector } from "react-redux";
+import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
 import { modal } from "../../utils";
 import Modal from "../Modal";
 
@@ -23,8 +25,9 @@ ChartJS.register(
 );
 
 export default function RecordsChart() {
-  const { selectedAccount } = useAccounts();
-  const { records } = useRecords();
+  const { selectedAccount } = useSelector(selectAccounts);
+  const { records } = useSelector(selectRecords);
+
   const uniqueId = "chartModal";
 
   const [chartData, setChartData] = useState({ datasets: [] });

@@ -1,8 +1,14 @@
 import Head from "next/head";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import {
+  selectDemo,
+  setHasDemoLoadRecords,
+  setIsDemo,
+} from "@/lib/redux/features/demo/demoSlice";
+import { setRecords } from "@/lib/redux/features/records/recordsSlice";
 import { AppLayout, RecordsOrganism } from "../../components";
-import { useAccounts, useRecords } from "../../hooks";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { getData } from "../../utils/data";
 
 const user = {
@@ -22,22 +28,21 @@ const demoAccount = [
 ];
 
 export default function Demo() {
-  const { setIsDemo } = useGlobalContext();
-  const { setAccounts } = useAccounts();
-  const { setRecords, hasDemoLoadRecords, setHasDemoLoadRecords } =
-    useRecords();
+  const { hasDemoLoadRecords } = useSelector(selectDemo);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsDemo(true);
+    dispatch(setIsDemo(true));
+    const records = getData();
     if (!hasDemoLoadRecords) {
-      setRecords(getData());
-      setHasDemoLoadRecords(true);
+      dispatch(setRecords(records));
+      dispatch(setHasDemoLoadRecords(true));
     }
 
-    setAccounts(demoAccount);
+    dispatch(setAccounts(demoAccount));
 
     return () => {
-      setIsDemo(false);
+      dispatch(setIsDemo(false));
     };
   }, []);
 

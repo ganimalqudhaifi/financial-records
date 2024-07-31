@@ -1,6 +1,10 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { useAccounts } from "../../hooks";
+import { useDispatch } from "react-redux";
+import {
+  deleteAccount,
+  updateAccount,
+} from "@/lib/redux/features/accounts/accountsSlice";
 import { Account } from "../../types";
 import { modal } from "../../utils";
 import Modal from "../Modal";
@@ -10,7 +14,8 @@ type EditableAccountProps = {
 };
 
 export default function EditableAccount({ account }: EditableAccountProps) {
-  const { editAccount, deleteAccount } = useAccounts();
+  const dispatch = useDispatch();
+
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputValue, setInputValue] = useState(account.name);
   // const inputRef = useRef(null);
@@ -22,13 +27,13 @@ export default function EditableAccount({ account }: EditableAccountProps) {
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setIsDisabled(true);
-      editAccount({ ...account, name: inputValue });
+      dispatch(updateAccount({ ...account, name: inputValue }));
     }
   };
 
   const handleBlur = () => {
     setIsDisabled(true);
-    editAccount({ ...account, name: inputValue });
+    dispatch(updateAccount({ ...account, name: inputValue }));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -40,6 +45,8 @@ export default function EditableAccount({ account }: EditableAccountProps) {
   //     inputRef.current.focus();
   //   }
   // }, [isDisabled]);
+
+  const handleDelete = () => dispatch(deleteAccount(account));
 
   if (isDisabled) {
     return (
@@ -66,7 +73,7 @@ export default function EditableAccount({ account }: EditableAccountProps) {
             </h3>
             <div className="flex justify-center">
               <button
-                onClick={() => deleteAccount(account.id)}
+                onClick={handleDelete}
                 className="inline-flex items-center px-5 py-2.5 mr-2 lg:mr-3 text-gray-100 text-center text-sm lg:text-lg font-medium bg-red-600 border border-red-800 rounded-lg hover:grayscale-[20%] focus:ring-4 focus:outline-none focus:ring-red-400/50"
               >
                 Hapus

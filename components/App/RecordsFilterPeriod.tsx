@@ -1,6 +1,5 @@
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-// import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { generatePeriodYM, templateDateMY } from "../../utils";
 
 interface RecordsFilterPeriodProps {
@@ -11,7 +10,6 @@ export default function RecordsFilterPeriod({
   handleTimeRange,
 }: RecordsFilterPeriodProps) {
   const { records } = useSelector(selectRecords);
-  // const { changeFilterPeriodState } = useGlobalContext();
 
   const listPeriod = !records.length
     ? []

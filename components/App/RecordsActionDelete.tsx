@@ -1,12 +1,6 @@
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import {
-  useDispatch, //  useSelector
-} from "react-redux";
-import {
-  deleteRecord,
-  selectRecords,
-} from "@/lib/redux/features/records/recordsSlice";
-// import { useGlobalContext } from "../../hooks/useGlobalContext";
+import { useDispatch } from "react-redux";
+import { deleteRecord } from "@/lib/redux/features/records/recordsSlice";
 import { modal } from "../../utils";
 import Modal from "../Modal";
 
@@ -15,18 +9,12 @@ type RecordsActionDeleteProps = {
 };
 
 export default function RecordsActionDelete({ id }: RecordsActionDeleteProps) {
-  // const { records } = useSelector(selectRecords);
   const dispatch = useDispatch();
 
-  // const { state, changePaginationIndexState } = useGlobalContext();
-  // const { paginationIndex, sliceShow } = state;
   const uniqueId = `deleteModal${id}`;
 
   const handleDelete = () => {
     dispatch(deleteRecord(id));
-    // if (records.length - 1 + 10 <= paginationIndex * sliceShow) {
-    //   paginationIndex > 1 && changePaginationIndexState(paginationIndex - 1);
-    // }
   };
 
   return (

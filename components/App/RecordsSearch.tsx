@@ -1,7 +1,4 @@
-// import { ChangeEvent } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-
-// import { useGlobalContext } from "../../hooks/useGlobalContext";
 
 interface RecordsSearchProps {
   handleSearchKeyword: (query: string) => void;
@@ -10,12 +7,6 @@ interface RecordsSearchProps {
 export default function RecordsSearch({
   handleSearchKeyword,
 }: RecordsSearchProps) {
-  // const { dispatch } = useGlobalContext();
-
-  // const changeSearchState = (e: ChangeEvent<HTMLInputElement>) => {
-  //   dispatch({ type: "HANDLE_SEARCH", payload: e.target.value });
-  // };
-
   return (
     <div className="relative inline-block">
       <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none">

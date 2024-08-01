@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
 
-// import { useGlobalContext } from "../../hooks/useGlobalContext";
-
 interface RecordsPaginantionProps {
   handleCurrentPage: (pageNumber: number) => void;
   searchKeyword: string;
@@ -20,14 +18,6 @@ export default function RecordsPaginantion({
   timeRange,
 }: RecordsPaginantionProps) {
   const { records } = useSelector(selectRecords);
-
-  // const { state, handleCurrentPage } = useGlobalContext();
-  // const {
-  // searchKeyword,
-  // itemsPerPage,
-  // currentPage,
-  // timeRange,
-  // } = state;
 
   const [arrPagination, setArrPagination] = useState<number[]>([]);
 

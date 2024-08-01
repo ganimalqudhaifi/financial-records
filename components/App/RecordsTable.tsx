@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";
@@ -25,19 +24,11 @@ export default function RecordsTable({
 
   const [initialBalance, setInitialBalance] = useState(0);
 
-  const { state } = useGlobalContext();
-  // const {
-  //   // searchKeyword,
-  //   // timeRange,
-  //   // itemsPerPage,
-  //   // currentPage,
-  // } = state;
-
   useEffect(() => {
     setInitialBalance(selectedAccount.initialBalance);
   }, [selectedAccount]);
 
-  const valueDate = (date: string) => {
+  const valueDate = (date: Date | string) => {
     const target = new Date(date);
     return `${target.getFullYear()}-${target.getMonth()}`;
   };
@@ -50,8 +41,14 @@ export default function RecordsTable({
       {records.length ? (
         <tbody>
           {records
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .sort(
+              (a, b) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime(),
+            )
+            .sort(
+              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+            )
             .filter((record) => record.accountId === selectedAccount.id)
             .filter((record) =>
               record.description.toLowerCase().includes(searchKeyword),

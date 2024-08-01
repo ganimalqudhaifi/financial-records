@@ -8,7 +8,7 @@ import {
 import { ActionType, GlobalState, globalReducer } from "./GlobalReducer";
 
 export const globalInitialState = {
-  initialBalance: 0, // selectedAccount.initialBalance?
+  // initialBalance: 0, // selectedAccount.initialBalance?
   searchKeyword: "", // only 1 page
   sliceShow: 10, // pagination refer
   paginationIndex: 1, // only 1 page

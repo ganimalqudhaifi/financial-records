@@ -24,9 +24,9 @@ export const useGlobalContext = () => {
     dispatch({ type: "HANDLE_SLICE", payload: parseInt(e.target.value, 19) });
   };
 
-  const changeInitialBalanceState = (payload: number) => {
-    dispatch({ type: "CHANGE_INITIAL_BALANCE", payload });
-  };
+  // const changeInitialBalanceState = (payload: number) => {
+  //   dispatch({ type: "CHANGE_INITIAL_BALANCE", payload });
+  // };
 
   return {
     state,
@@ -34,6 +34,6 @@ export const useGlobalContext = () => {
     changePaginationIndexState,
     changeFilterPeriodState,
     changeSliceShowState,
-    changeInitialBalanceState,
+    // changeInitialBalanceState,
   };
 };

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
@@ -10,14 +11,14 @@ export default function RecordsTable() {
   const { records } = useSelector(selectRecords);
   const { selectedAccount } = useSelector(selectAccounts);
 
+  const [initialBalance, setInitialBalance] = useState(0);
+
   const { state } = useGlobalContext();
-  const {
-    searchKeyword,
-    filterPeriod,
-    initialBalance,
-    sliceShow,
-    paginationIndex,
-  } = state;
+  const { searchKeyword, filterPeriod, sliceShow, paginationIndex } = state;
+
+  useEffect(() => {
+    setInitialBalance(selectedAccount.initialBalance);
+  }, [selectedAccount]);
 
   const valueDate = (date: string) => {
     const target = new Date(date);

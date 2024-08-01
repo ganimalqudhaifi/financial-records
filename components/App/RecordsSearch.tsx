@@ -1,13 +1,20 @@
-import { ChangeEvent } from "react";
+// import { ChangeEvent } from "react";
 import { IoSearchOutline } from "react-icons/io5";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
 
-export default function RecordsSearch() {
-  const { dispatch } = useGlobalContext();
+// import { useGlobalContext } from "../../hooks/useGlobalContext";
 
-  const changeSearchState = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch({ type: "HANDLE_SEARCH", payload: e.target.value });
-  };
+interface RecordsSearchProps {
+  handleSearchKeyword: (query: string) => void;
+}
+
+export default function RecordsSearch({
+  handleSearchKeyword,
+}: RecordsSearchProps) {
+  // const { dispatch } = useGlobalContext();
+
+  // const changeSearchState = (e: ChangeEvent<HTMLInputElement>) => {
+  //   dispatch({ type: "HANDLE_SEARCH", payload: e.target.value });
+  // };
 
   return (
     <div className="relative inline-block">
@@ -18,7 +25,7 @@ export default function RecordsSearch() {
         className="py-1.5 md:py-2 px-3 pr-10 md:w-80 text-slate-900 border-y border-r border-slate-300 bg-slate-50 rounded-r-lg focus:outline-1 focus:outline-slate-800 focus:border focus:rounded"
         type="text"
         placeholder="Cari..."
-        onChange={changeSearchState}
+        onChange={(e) => handleSearchKeyword(e.target.value)}
       />
     </div>
   );

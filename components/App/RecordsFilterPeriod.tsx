@@ -1,11 +1,17 @@
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
+// import { useGlobalContext } from "../../hooks/useGlobalContext";
 import { generatePeriodYM, templateDateMY } from "../../utils";
 
-export default function RecordsFilterPeriod() {
+interface RecordsFilterPeriodProps {
+  handleTimeRange: (timeRange: string) => void;
+}
+
+export default function RecordsFilterPeriod({
+  handleTimeRange,
+}: RecordsFilterPeriodProps) {
   const { records } = useSelector(selectRecords);
-  const { changeFilterPeriodState } = useGlobalContext();
+  // const { changeFilterPeriodState } = useGlobalContext();
 
   const listPeriod = !records.length
     ? []
@@ -22,7 +28,7 @@ export default function RecordsFilterPeriod() {
   return (
     <select
       className="h-full py-1.5 md:py-2 px-1.5 md:px-3 border border-slate-300 bg-slate-50 focus:outline-1 focus:outline-slate-800 rounded-l-lg"
-      onChange={changeFilterPeriodState}
+      onChange={(e) => handleTimeRange(e.target.value)}
     >
       <option value="">Semua Periode</option>
       {listPeriod.map((period) => (

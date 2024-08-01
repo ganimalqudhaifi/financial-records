@@ -1,71 +1,111 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-import { useGlobalContext } from "../../hooks/useGlobalContext";
 
-export default function RecordsPaginantion() {
+// import { useGlobalContext } from "../../hooks/useGlobalContext";
+
+interface RecordsPaginantionProps {
+  handleCurrentPage: (pageNumber: number) => void;
+  searchKeyword: string;
+  itemsPerPage: number;
+  currentPage: number;
+  timeRange: string;
+}
+
+export default function RecordsPaginantion({
+  handleCurrentPage,
+  searchKeyword,
+  itemsPerPage,
+  currentPage,
+  timeRange,
+}: RecordsPaginantionProps) {
   const { records } = useSelector(selectRecords);
 
-  const { state, changePaginationIndexState } = useGlobalContext();
-  const { searchKeyword, sliceShow, paginationIndex, filterPeriod } = state;
+  // const { state, handleCurrentPage } = useGlobalContext();
+  // const {
+  // searchKeyword,
+  // itemsPerPage,
+  // currentPage,
+  // timeRange,
+  // } = state;
 
-  const arrPagination = [];
+  const [arrPagination, setArrPagination] = useState<number[]>([]);
+
+  const valueDate = (date: Date | string) => {
+    const target = new Date(date);
+    return `${target.getFullYear()}-${target.getMonth()}`;
+  };
+
+  useEffect(() => {
+    const filteredRecords = records.filter(
+      (record) =>
+        record.description.toLowerCase().includes(searchKeyword) &&
+        valueDate(record.date).includes(timeRange),
+    );
+
+    const totalPages = Math.ceil(
+      records.length && filteredRecords.length / itemsPerPage,
+    );
+
+    const newArrPagination = [];
+    for (let i = 1; i < totalPages + 1; i++) {
+      newArrPagination.push(i);
+    }
+    setArrPagination(newArrPagination);
+  }, [records, searchKeyword, itemsPerPage, timeRange]);
+
   const entires =
     records.length &&
     records.filter((record) =>
       record.description.toLowerCase().includes(searchKeyword),
     ).length;
 
-  const valueDate = (date: string) => {
-    const target = new Date(date);
-    return `${target.getFullYear()}-${target.getMonth()}`;
+  const displayRangeStart = arrPagination.length
+    ? itemsPerPage * (currentPage - 1) + 1
+    : 0;
+
+  const displayRangeEnd =
+    itemsPerPage * currentPage > entires ? entires : itemsPerPage * currentPage;
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      handleCurrentPage(currentPage - 1);
+    }
   };
 
-  for (
-    let i = 1;
-    i <
-    Math.ceil(
-      records.length &&
-        records
-          .filter((record) =>
-            record.description.toLowerCase().includes(searchKeyword),
-          )
-          .filter((record) => valueDate(record.date).includes(filterPeriod))
-          .length / sliceShow,
-    ) +
-      1;
-    i += 1
-  ) {
-    arrPagination.push(i);
-  }
+  const handleNextPage = () => {
+    if (currentPage < arrPagination.length) {
+      handleCurrentPage(currentPage + 1);
+    }
+  };
 
-  const indexBefore = paginationIndex - 2;
-  const indexAfter = paginationIndex + 2;
+  const shouldHideButton = (btnpagination: number) => {
+    return (
+      (btnpagination > 5 && currentPage <= 3) ||
+      (currentPage > 3 &&
+        currentPage <= arrPagination.length - 2 &&
+        (btnpagination > currentPage + 2 || btnpagination < currentPage - 2)) ||
+      (btnpagination < arrPagination.length - 4 &&
+        currentPage + 2 >= arrPagination.length)
+    );
+  };
 
   return (
     <div className="flex items-center justify-between">
-      <p className="text-sm">{`Menampilkan ${!arrPagination.length ? 0 : sliceShow * (paginationIndex - 1) + 1} sampai ${sliceShow * paginationIndex > entires ? entires : sliceShow * paginationIndex} dari ${entires} data`}</p>
+      <p className="text-sm">{`Menampilkan ${displayRangeStart} sampai ${displayRangeEnd} dari ${entires} data`}</p>
       <div className="float-right text-slate-700">
         <button
           className="py-2 px-3 text-2xl hover:text-slate-900 hover:scale-125 active:scale-100 transition duration-150"
-          onClick={() =>
-            changePaginationIndexState(
-              paginationIndex === 1 ? paginationIndex : paginationIndex - 1,
-            )
-          }
+          onClick={handlePrevPage}
         >
           &laquo;
         </button>
         {arrPagination.map((btnpagination) =>
-          (btnpagination > 5 && paginationIndex <= 3) ||
-          (paginationIndex > 3 &&
-            paginationIndex <= arrPagination.length - 2 &&
-            (btnpagination > indexAfter || btnpagination < indexBefore)) ||
-          (btnpagination < arrPagination.length - 4 &&
-            indexAfter >= arrPagination.length) ? (
+          shouldHideButton(btnpagination) ? (
             <button
               id={`pgnt${btnpagination}`}
               key={btnpagination}
-              onClick={() => changePaginationIndexState(btnpagination)}
+              onClick={() => handleCurrentPage(btnpagination)}
               className="hidden py-2 px-3"
             >
               {btnpagination}
@@ -74,9 +114,9 @@ export default function RecordsPaginantion() {
             <button
               id={`pgnt${btnpagination}`}
               key={btnpagination}
-              onClick={() => changePaginationIndexState(btnpagination)}
+              onClick={() => handleCurrentPage(btnpagination)}
               className={
-                btnpagination === paginationIndex
+                btnpagination === currentPage
                   ? "text-sm py-1.5 px-3 bg-slate-700 text-slate-100 mx-1 hover:scale-110 active:scale-100 transition duration-300 rounded"
                   : "text-sm py-1.5 px-3 mx-1 hover:scale-110 active:scale-100 transition duration-300 rounded"
               }
@@ -87,13 +127,7 @@ export default function RecordsPaginantion() {
         )}
         <button
           className="py-2 px-3 text-2xl hover:text-slate-900 hover:scale-125 active:scale-100 transition duration-150"
-          onClick={() =>
-            changePaginationIndexState(
-              paginationIndex === arrPagination.length
-                ? paginationIndex
-                : paginationIndex + 1,
-            )
-          }
+          onClick={handleNextPage}
         >
           &raquo;
         </button>

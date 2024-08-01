@@ -7,14 +7,31 @@ import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";
 
-export default function RecordsTable() {
+interface RecordsTableProps {
+  searchKeyword: string;
+  itemsPerPage: number;
+  currentPage: number;
+  timeRange: string;
+}
+
+export default function RecordsTable({
+  searchKeyword,
+  itemsPerPage,
+  currentPage,
+  timeRange,
+}: RecordsTableProps) {
   const { records } = useSelector(selectRecords);
   const { selectedAccount } = useSelector(selectAccounts);
 
   const [initialBalance, setInitialBalance] = useState(0);
 
   const { state } = useGlobalContext();
-  const { searchKeyword, filterPeriod, sliceShow, paginationIndex } = state;
+  // const {
+  //   // searchKeyword,
+  //   // timeRange,
+  //   // itemsPerPage,
+  //   // currentPage,
+  // } = state;
 
   useEffect(() => {
     setInitialBalance(selectedAccount.initialBalance);
@@ -39,15 +56,15 @@ export default function RecordsTable() {
             .filter((record) =>
               record.description.toLowerCase().includes(searchKeyword),
             )
-            .filter((record) => valueDate(record.date).includes(filterPeriod))
+            .filter((record) => valueDate(record.date).includes(timeRange))
             .slice(
-              (paginationIndex - 1) * sliceShow,
-              (paginationIndex - 1) * sliceShow + sliceShow,
+              (currentPage - 1) * itemsPerPage,
+              (currentPage - 1) * itemsPerPage + itemsPerPage,
             )
             .map((record, i) => (
               <RecordsTableBody
                 key={record.id}
-                no={paginationIndex * sliceShow - sliceShow + i + 1}
+                no={currentPage * itemsPerPage - itemsPerPage + i + 1}
                 record={record}
                 saldoAkhir={records
                   .filter((record) => record.accountId === selectedAccount.id)
@@ -55,9 +72,9 @@ export default function RecordsTable() {
                     record.description.toLowerCase().includes(searchKeyword),
                   )
                   .filter((record) =>
-                    valueDate(record.date).includes(filterPeriod),
+                    valueDate(record.date).includes(timeRange),
                   )
-                  .slice(0, paginationIndex * sliceShow - sliceShow + i + 1)
+                  .slice(0, currentPage * itemsPerPage - itemsPerPage + i + 1)
                   .reduce((a, b) => a + b.value, initialBalance)}
               />
             ))}

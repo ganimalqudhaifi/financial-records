@@ -1,4 +1,3 @@
-import { observeUser } from "@/lib/firebase/auth";
 import { DataUser } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../store";
@@ -20,6 +19,15 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   return res.json();
 });
 
+export const fetchUserLogOut = createAsyncThunk(
+  "user/fetchUserLogOut",
+  async () => {
+    await fetch("/api/logout", {
+      method: "GET",
+    });
+  },
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -35,6 +43,9 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.rejected, (state) => {
         state.status = "failed";
+      })
+      .addCase(fetchUserLogOut.fulfilled, (state) => {
+        state.user = null;
       });
   },
 });

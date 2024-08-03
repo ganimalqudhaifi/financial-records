@@ -53,7 +53,7 @@ export const updateUser = async (uid: string) => {
 
 export const observeUser = (): Promise<DataUser | null> => {
   return new Promise((resolve) => {
-    onAuthStateChanged(auth, async (user) => {
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user !== null) {
         const dataUser: DataUser = {
           displayName: user.displayName || "",
@@ -67,5 +67,6 @@ export const observeUser = (): Promise<DataUser | null> => {
         resolve(null);
       }
     });
+    unsubscribe();
   });
 };

@@ -1,8 +1,6 @@
-import cookie from "cookie";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   HomeAboutMe,
   HomeBanner,
@@ -12,53 +10,14 @@ import {
   HomeUserDropdown,
   Logo,
 } from "@/components";
-import { getUser } from "@/lib/firebase/admin";
-import { verifyToken } from "@/lib/jwt";
-import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
+import {
+  fetchUserLogOut,
+  selectUser,
+} from "@/lib/redux/features/user/userSlice";
 import { AppDispatch } from "@/lib/redux/store";
-import { DataUser } from "@/types";
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const cookies = cookie.parse(req.headers.cookie || "");
-  const token = cookies.token;
-
-  if (!token) {
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
-
-  const jwtPayload = verifyToken(token);
-  const uid = jwtPayload.uid as string;
-
-  const dataUser = await getUser(uid);
-
-  if (!dataUser) {
-    return {
-      props: {
-        user: null,
-      },
-    };
-  }
-
-  const user = {
-    uid: dataUser.uid,
-    email: dataUser.email,
-    displayName: dataUser.displayName,
-    photoURL: dataUser.photoURL,
-    phoneNumber: dataUser.phoneNumber || null,
-  };
-
-  return {
-    props: {
-      user,
-    },
-  };
-};
-
-export default function Home({ user }: { user: DataUser }) {
+export default function Home() {
+  const { user } = useSelector(selectUser);
   const dispatch: AppDispatch = useDispatch();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] =

@@ -7,7 +7,8 @@ import { TbChartPieFilled, TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
 import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { userSignOut } from "@/utils/authentication";
+import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
+import { AppDispatch } from "@/lib/redux/store";
 import { useDatabaseObserver } from "../../hooks";
 import { DataUser } from "../../types";
 import AccountsDropdown from "./AccountsDropdown";
@@ -18,13 +19,13 @@ type AppSidebarProps = {
 
 export default function AppSidebar({ user }: AppSidebarProps) {
   const { isDemo } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   const handleSignOut = () => {
-    userSignOut();
+    dispatch(fetchUserLogOut());
   };
 
   useDatabaseObserver("accounts", (data) => {

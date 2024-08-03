@@ -2,8 +2,7 @@ import cookie from "cookie";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useState } from "react";
-import { getUser } from "@/lib/firebase/admin";
-import { userSignOut } from "@/utils/authentication";
+import { useDispatch } from "react-redux";
 import {
   HomeAboutMe,
   HomeBanner,
@@ -12,9 +11,12 @@ import {
   HomePractice,
   HomeUserDropdown,
   Logo,
-} from "../components";
-import { verifyToken } from "../lib/jwt";
-import { DataUser } from "../types";
+} from "@/components";
+import { getUser } from "@/lib/firebase/admin";
+import { verifyToken } from "@/lib/jwt";
+import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
+import { AppDispatch } from "@/lib/redux/store";
+import { DataUser } from "@/types";
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const cookies = cookie.parse(req.headers.cookie || "");
@@ -57,12 +59,14 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
 };
 
 export default function Home({ user }: { user: DataUser }) {
+  const dispatch: AppDispatch = useDispatch();
+
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] =
     useState(false);
   const [isUserDropdownOpen, setisUserDropdownOpen] = useState(false);
 
-  const handleSignOut = () => {
-    userSignOut();
+  const handleSignOut = async () => {
+    dispatch(fetchUserLogOut());
     setisUserDropdownOpen(!isUserDropdownOpen);
   };
 

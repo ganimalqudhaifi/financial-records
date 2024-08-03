@@ -7,11 +7,16 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
     const { email, password } = req.body;
 
-    const user = await signIn(email, password);
-    const uid = user.uid;
-
     try {
-      const jwtToken = await createToken({ uid });
+      const user = await signIn(email, password);
+
+      if (!user) {
+        return res
+          .status(401)
+          .json({ message: "Unauthorized: Invalid credentials" });
+      }
+
+      const jwtToken = await createToken({ uid: user.uid });
 
       const setCookie = cookie.serialize("token", jwtToken, {
         maxAge: 7 * 24 * 60 * 60,

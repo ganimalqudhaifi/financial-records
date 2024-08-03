@@ -14,8 +14,10 @@ const initialState: UserState = {
 };
 
 export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
-  const user = await observeUser();
-  return user;
+  const res = await fetch("/api/user", {
+    method: "GET",
+  });
+  return res.json();
 });
 
 const userSlice = createSlice({

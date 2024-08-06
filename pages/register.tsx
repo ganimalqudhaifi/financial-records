@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
 import { alertToast } from "@/utils";
 
@@ -10,6 +10,19 @@ export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsLoading(false);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("routeChangeError", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("routeChangeError", handleRouteChange);
+    };
+  }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((values) => ({
@@ -50,7 +63,6 @@ export default function Register() {
       alertToast(errorMessage);
       setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

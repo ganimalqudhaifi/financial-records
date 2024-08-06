@@ -10,12 +10,6 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     try {
       const user = await signIn(email, password);
 
-      if (!user) {
-        return res
-          .status(401)
-          .json({ message: "Unauthorized: Invalid credentials" });
-      }
-
       const jwtToken = await createToken({ uid: user.uid });
 
       const setCookie = cookie.serialize("token", jwtToken, {
@@ -28,7 +22,9 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
       res.status(200).json({ message: "Logged in successfully" });
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized: Invalid token" });
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+      return res.status(401).json({ error: errorMessage });
     }
   } else {
     res.status(405).json({ error: "Method not allowed" });

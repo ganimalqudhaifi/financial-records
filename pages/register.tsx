@@ -3,10 +3,8 @@ import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
 import { alertToast } from "@/utils";
-import { getErrorMessage } from "@/utils/getErrorMessage";
 
 export default function Register() {
-  const [errorMsg, setErorrMsg] = useState("");
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -39,16 +37,18 @@ export default function Register() {
         body: JSON.stringify({ email, password, newAccount }),
       });
 
-      if (res.ok) {
-        setInputs({ email: "", password: "" });
-        router.replace("/app");
-      } else {
-        console.log("Gagal masuk. Silakan coba lagi.");
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || "Login Failed");
       }
-    } catch (err) {
-      const message = getErrorMessage(err);
-      setErorrMsg(message);
-      alertToast(errorMsg);
+
+      setInputs({ email: "", password: "" });
+      router.replace("/app");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+      alertToast(errorMessage);
+      setIsLoading(false);
     }
     setIsLoading(false);
   };

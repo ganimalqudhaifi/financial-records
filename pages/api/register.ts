@@ -28,7 +28,9 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
 
       res.status(200).json({ message: "Signed up successfully" });
     } catch (error) {
-      res.status(401).json({ message: "Unauthorized: Invalid token" });
+      const errorMessage =
+        error instanceof Error ? error.message : "An unexpected error occurred";
+      return res.status(401).json({ error: errorMessage });
     }
   } else {
     res.status(405).json({ error: "Method not allowed" });

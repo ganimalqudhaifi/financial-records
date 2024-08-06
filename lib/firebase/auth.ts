@@ -1,3 +1,4 @@
+import { FirebaseError } from "firebase/app";
 import {
   createUserWithEmailAndPassword,
   getAuth,
@@ -6,6 +7,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { DataUser } from "@/types";
+import { handleAuthError } from "@/utils/getErrorMessage";
 import { app } from "./client";
 
 export const auth = getAuth(app);
@@ -19,7 +21,8 @@ export const signUp = async (email: string, password: string) => {
     );
     return userCredential.user;
   } catch (error) {
-    console.error(error);
+    const errorMsg = handleAuthError(error as FirebaseError);
+    throw new Error(errorMsg);
   }
 };
 
@@ -32,7 +35,8 @@ export const signIn = async (email: string, password: string) => {
     );
     return userCredential.user;
   } catch (error) {
-    console.error(error);
+    const errorMsg = handleAuthError(error as FirebaseError);
+    throw new Error(errorMsg);
   }
 };
 

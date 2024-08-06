@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
 import { alertToast } from "@/utils";
 import { getErrorMessage } from "@/utils/getErrorMessage";
@@ -12,6 +12,19 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsLoading(false);
+    };
+    router.events.on("routeChangeComplete", handleRouteChange);
+    router.events.on("routeChangeError", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+      router.events.off("routeChangeError", handleRouteChange);
+    };
+  }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((values) => ({
@@ -38,14 +51,14 @@ export default function Login() {
         setInputs({ email: "", password: "" });
         router.replace("/app");
       } else {
-        console.log("Gagal masuk. Silakan coba lagi.");
+        setIsLoading(false);
       }
     } catch (err) {
       const message = getErrorMessage(err);
       setErorrMsg(message);
       alertToast(errorMsg);
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (

@@ -11,20 +11,23 @@ const getTokenFromCookies = (req: NextApiRequest) => {
 const handleGetRequest = async (req: NextApiRequest, res: NextApiResponse) => {
   const token = getTokenFromCookies(req);
 
-  if (token) {
-    const claims = verifyToken(token);
-    const uid = claims.uid as string;
-
-    try {
-      const userRecord = await getUser(uid);
-      res.status(200).json(userRecord);
-    } catch (error) {
-      console.error("Error fetching user data:", error);
-      res.json(null);
-    }
+  if (!token) {
+    return res
+      .status(401)
+      .json({ success: false, message: "Unauthorized: Token missing" });
   }
 
-  res.json(null);
+  try {
+    const claims = verifyToken(token);
+    const uid = claims.uid as string;
+    const userRecord = await getUser(uid);
+    res.status(200).json(userRecord);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "Internal Server Error" });
+  }
 };
 
 export default async function handler(

@@ -1,25 +1,14 @@
-import { observeRecords } from "@/lib/firebase/database";
 import type { RootState } from "@/lib/redux/store";
 import { Record } from "@/types";
-import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 interface RecordsState {
   records: Record[];
-  status: "idle" | "loading" | "succeeded" | "failed";
 }
 
 const initialState: RecordsState = {
   records: [],
-  status: "idle",
 };
-
-export const fetchRecords = createAsyncThunk(
-  "records/fetchRecords",
-  async () => {
-    const records = await observeRecords();
-    return records;
-  },
-);
 
 export const recordsSlice = createSlice({
   name: "records",
@@ -48,16 +37,6 @@ export const recordsSlice = createSlice({
       );
       state.records = filteredRecords;
     },
-  },
-  extraReducers(builder) {
-    builder
-      .addCase(fetchRecords.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchRecords.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.records = action.payload;
-      });
   },
 });
 

@@ -1,11 +1,4 @@
-import {
-  getDatabase,
-  onValue,
-  push,
-  ref,
-  remove,
-  set,
-} from "firebase/database";
+import { getDatabase, push, ref, remove, set } from "firebase/database";
 import { Account, Record } from "@/types";
 import { selectUser } from "../redux/features/user/userSlice";
 import { store } from "../redux/store";
@@ -46,28 +39,4 @@ export const updateRecord = (uid: string, payload: Record) => {
 export const deleteRecord = (uid: string, payload: Record) => {
   const recordRef = ref(database, `users/${uid}/records/${payload.id}`);
   remove(recordRef);
-};
-
-export const observeRecords = (): Promise<Record[]> => {
-  const uid = getCurrentUserUid();
-  if (!uid) {
-    throw new Error("User is not authenticated");
-  }
-
-  return new Promise((resolve) => {
-    const recordsRef = ref(database, `users/${uid}/$records`);
-    onValue(recordsRef, (snapshot) => {
-      if (snapshot.exists()) {
-        const items: Record[] = [];
-        snapshot.forEach((childSnapshot) => {
-          const item = childSnapshot.val();
-          item.id = childSnapshot.key;
-          items.push(item);
-        });
-        resolve(items);
-      } else {
-        resolve([]);
-      }
-    });
-  });
 };

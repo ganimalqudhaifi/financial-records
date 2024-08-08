@@ -3,22 +3,21 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { database } from "@/lib/firebase/database";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { useAuthContext } from "./useAuthContext";
+import { selectUser } from "@/lib/redux/features/user/userSlice";
 
-// eslint-disable-next-line no-unused-vars
 export default function useDatabaseObserver(
-  path: string,
-  callback: (data: any) => void,
+  path: "accounts" | "records",
+  callback: (data: any[]) => void,
 ) {
+  const { user } = useSelector(selectUser);
   const { isDemo } = useSelector(selectDemo);
 
-  const { user } = useAuthContext();
-
   useEffect(() => {
-    if (user !== null && isDemo === false) {
+    if (user && !isDemo) {
       const { uid } = user;
-      const accountsRef = ref(database, `users/${uid}/${path}`);
-      onValue(accountsRef, (snapshot) => {
+      const dataRef = ref(database, `users/${uid}/${path}`);
+
+      const unsubscribe = onValue(dataRef, (snapshot) => {
         if (snapshot.exists()) {
           const data = Object.keys(snapshot.val()).map((key) => ({
             ...snapshot.val()[key],
@@ -27,6 +26,8 @@ export default function useDatabaseObserver(
           callback(data);
         }
       });
+
+      return () => unsubscribe();
     }
-  }, [user]);
+  }, [user, isDemo, callback, path]);
 }

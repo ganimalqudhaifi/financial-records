@@ -4,11 +4,23 @@ import { updateRecord } from "@/lib/redux/features/records/recordsSlice";
 import { Record } from "../../types";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
+import InputField from "./InputField";
+import SelectField from "./SelectField";
 
-type RecordsActionEditProps = {
+interface RecordsActionEditProps {
   no: number;
   record: Record;
-};
+}
+
+const CATEGORIES = [
+  { id: 101, name: "Pendapatan" },
+  { id: 201, name: "Pengeluaran" },
+  { id: 202, name: "Tagihan Utilitas" },
+  { id: 203, name: "Makanan" },
+  { id: 204, name: "Transportasi" },
+  { id: 205, name: "Tempat Tinggal" },
+  { id: 206, name: "Hiburan" },
+];
 
 export default function RecordsActionEdit({
   no,
@@ -18,31 +30,17 @@ export default function RecordsActionEdit({
 
   const uniqueId = `editModal${no}`;
 
-  const categories = [
-    { id: 101, name: "Pendapatan" },
-    { id: 201, name: "Pengeluaran" },
-    { id: 202, name: "Tagihan Utilitas" },
-    { id: 203, name: "Makanan" },
-    { id: 204, name: "Transportasi" },
-    { id: 205, name: "Tempat Tinggal" },
-    { id: 206, name: "Hiburan" },
-  ];
-
   const [inputs, setInputs] = useState(record);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name } = event.target;
-    let { value } = event.target;
+  const handleChange = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
+    const { name, value, type } = event.target;
 
-    if (name === "amount") {
-      value = parseInt(value, 10);
-    }
-
-    if (name === "categoryId") {
-      value = parseInt(value, 10);
-    }
-
-    setInputs((values) => ({ ...values, [name]: value }));
+    setInputs((prevState) => ({
+      ...prevState,
+      [name]: type === "number" ? parseInt(value, 10) : value,
+    }));
   };
 
   const handleSubmit = (e: SyntheticEvent) => {
@@ -54,6 +52,7 @@ export default function RecordsActionEdit({
     };
     dispatch(updateRecord(newInputs));
     modal.hide(uniqueId);
+
     successToast("Data berhasil diubah");
   };
 
@@ -76,83 +75,43 @@ export default function RecordsActionEdit({
             spellCheck="false"
             className="space-y-6 text-left"
           >
-            <div>
-              <label
-                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor={`amount${uniqueId}`}
-              >
-                Jumlah
-              </label>
-              <input
-                className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
-                type="number"
-                id={`amount${uniqueId}`}
-                name="amount"
-                value={inputs.amount}
-                placeholder="Masukkan Jumlah"
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div>
-              <label
-                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor={`description${uniqueId}`}
-              >
-                Keterangan
-              </label>
-              <input
-                className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500 placeholder:italic"
-                type="text"
-                id={`description${uniqueId}`}
-                name="description"
-                value={inputs.description}
-                placeholder="Masukkan Keterangan"
-                onChange={handleChange}
-                required
-              />
-            </div>
-
-            <div>
-              <label
-                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor={`categoryId${uniqueId}`}
-              >
-                categoryId
-              </label>
-              <select
-                className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
-                id={`categoryId${uniqueId}`}
-                name="categoryId"
-                value={inputs.categoryId}
-                onChange={handleChange}
-              >
-                {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label
-                className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-                htmlFor={`date${uniqueId}`}
-              >
-                Tanggal
-              </label>
-              <input
-                className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
-                type="date"
-                id={`date${uniqueId}`}
-                name="date"
-                value={inputs.date}
-                onChange={handleChange}
-                required
-              />
-            </div>
+            <InputField
+              label="Jumlah"
+              id={`amount${uniqueId}`}
+              name="amount"
+              onChange={handleChange}
+              placeholder="Masukkan Jumlah"
+              value={inputs.amount}
+              type="number"
+              required
+            />
+            <InputField
+              label="Keterangan"
+              id={`description${uniqueId}`}
+              name="description"
+              value={inputs.description}
+              onChange={handleChange}
+              placeholder="Masukkan Keterangan"
+              required
+            />
+            <SelectField
+              label="Kategori"
+              id={`categoryId${uniqueId}`}
+              name="categoryId"
+              value={inputs.categoryId}
+              onChange={handleChange}
+              options={CATEGORIES}
+            />
+            <InputField
+              label="Tanggal"
+              id={`date${uniqueId}`}
+              name="date"
+              value={inputs.date as string}
+              onChange={handleChange}
+              placeholder="Pilih Tanggal"
+              type="date"
+              required
+            />
             <button
               className="py-2.5 w-full font-medium text-lg text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg"
               type="submit"

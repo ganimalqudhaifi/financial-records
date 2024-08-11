@@ -9,7 +9,7 @@ import RecordsTable from "./RecordsTable";
 export default function RecordsOrganism() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
   const [timeRange, setTimeRange] = useState("");
 
   const handleSearchKeyword = (query: string) => {

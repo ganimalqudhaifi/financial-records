@@ -1,32 +1,24 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import categories from "@/data/categories.json";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
-import { addRecord } from "@/lib/redux/features/records/recordsSlice";
+import { addNewRecord } from "@/lib/redux/features/records/recordsSlice";
+import { AppDispatch } from "@/lib/redux/store";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
 import InputField from "./InputField";
 import SelectField from "./SelectField";
 
-const CATEGORIES = [
-  { id: 101, name: "Pendapatan" },
-  { id: 201, name: "Pengeluaran" },
-  { id: 202, name: "Tagihan Utilitas" },
-  { id: 203, name: "Makanan" },
-  { id: 204, name: "Transportasi" },
-  { id: 205, name: "Tempat Tinggal" },
-  { id: 206, name: "Hiburan" },
-];
-
 const INITIAL_INPUTS = {
   date: "",
   description: "",
-  categoryId: CATEGORIES[0].id,
+  categoryId: categories[0].id,
   amount: 0,
 };
 
 export default function RecordsActionAdd() {
   const { selectedAccount } = useSelector(selectAccounts);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const uniqueId = "addModal";
 
@@ -43,7 +35,7 @@ export default function RecordsActionAdd() {
     }));
   };
 
-  const handleSubmit = (event: SyntheticEvent) => {
+  const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault();
     const newInputs = {
       ...inputs,
@@ -52,7 +44,7 @@ export default function RecordsActionAdd() {
       updatedAt: new Date().toISOString(),
       accountId: selectedAccount.id,
     };
-    dispatch(addRecord(newInputs));
+    dispatch(addNewRecord(newInputs));
     modal.hide(uniqueId);
     setInputs(INITIAL_INPUTS);
 
@@ -80,6 +72,7 @@ export default function RecordsActionAdd() {
           >
             <InputField
               label="Jumlah"
+              type="number"
               id="amount"
               name="amount"
               value={inputs.amount}
@@ -100,18 +93,18 @@ export default function RecordsActionAdd() {
               label="Kategori"
               id="categoryId"
               name="categoryId"
-              onChange={handleChange}
-              options={CATEGORIES}
               value={inputs.categoryId}
+              onChange={handleChange}
+              options={categories}
             />
             <InputField
               label="Tanggal"
+              type="date"
               id="date"
               name="date"
-              placeholder="Pilih Tanggal"
               value={inputs.date}
               onChange={handleChange}
-              type="date"
+              placeholder="Pilih Tanggal"
               required
             />
             <button

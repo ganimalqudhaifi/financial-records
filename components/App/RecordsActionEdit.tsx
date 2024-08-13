@@ -1,5 +1,6 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useDispatch } from "react-redux";
+import categories from "@/data/categories.json";
 import { updateRecord } from "@/lib/redux/features/records/recordsSlice";
 import { Record } from "../../types";
 import { modal, successToast } from "../../utils";
@@ -11,16 +12,6 @@ interface RecordsActionEditProps {
   no: number;
   record: Record;
 }
-
-const CATEGORIES = [
-  { id: 101, name: "Pendapatan" },
-  { id: 201, name: "Pengeluaran" },
-  { id: 202, name: "Tagihan Utilitas" },
-  { id: 203, name: "Makanan" },
-  { id: 204, name: "Transportasi" },
-  { id: 205, name: "Tempat Tinggal" },
-  { id: 206, name: "Hiburan" },
-];
 
 export default function RecordsActionEdit({
   no,
@@ -77,12 +68,12 @@ export default function RecordsActionEdit({
           >
             <InputField
               label="Jumlah"
+              type="number"
               id={`amount${uniqueId}`}
               name="amount"
+              value={inputs.amount}
               onChange={handleChange}
               placeholder="Masukkan Jumlah"
-              value={inputs.amount}
-              type="number"
               required
             />
             <InputField
@@ -100,16 +91,16 @@ export default function RecordsActionEdit({
               name="categoryId"
               value={inputs.categoryId}
               onChange={handleChange}
-              options={CATEGORIES}
+              options={categories}
             />
             <InputField
               label="Tanggal"
+              type="date"
               id={`date${uniqueId}`}
               name="date"
               value={inputs.date as string}
               onChange={handleChange}
               placeholder="Pilih Tanggal"
-              type="date"
               required
             />
             <button

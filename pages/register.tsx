@@ -36,10 +36,6 @@ export default function Register() {
     setIsLoading(true);
 
     const { email, password } = inputs;
-    const newAccount = {
-      name: "Personal",
-      initialBalance: 0,
-    };
 
     try {
       const res = await fetch("/api/register", {
@@ -47,7 +43,7 @@ export default function Register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password, newAccount }),
+        body: JSON.stringify({ email, password }),
       });
 
       if (!res.ok) {

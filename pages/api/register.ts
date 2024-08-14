@@ -1,12 +1,17 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { signUp, updateUser } from "@/lib/firebase/auth";
-import { addAccount } from "@/lib/firebase/database";
+import { firebaseAddAccount } from "@/lib/firebase/database";
 import { createToken } from "@/lib/jwt";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {
   if (req.method === "POST") {
-    const { email, password, newAccount } = req.body;
+    const { email, password } = req.body;
+
+    const newAccount = {
+      name: "Personal",
+      initialBalance: 0,
+    };
 
     try {
       const user = await signUp(email, password);
@@ -24,7 +29,7 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
       });
       res.setHeader("Set-Cookie", setCookie);
 
-      addAccount(uid, newAccount);
+      await firebaseAddAccount(newAccount);
 
       res.status(200).json({ message: "Signed up successfully" });
     } catch (error) {

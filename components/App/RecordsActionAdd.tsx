@@ -1,8 +1,10 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import categories from "@/data/categories.json";
+import { firebaseAddRecord } from "@/lib/firebase/database";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
-import { addNewRecord } from "@/lib/redux/features/records/recordsSlice";
+import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
+import { addRecord } from "@/lib/redux/features/records/recordsSlice";
 import { AppDispatch } from "@/lib/redux/store";
 import { modal, successToast } from "../../utils";
 import Modal from "../Modal";
@@ -18,6 +20,7 @@ const INITIAL_INPUTS = {
 
 export default function RecordsActionAdd() {
   const { selectedAccount } = useSelector(selectAccounts);
+  const { isDemo } = useSelector(selectDemo);
   const dispatch: AppDispatch = useDispatch();
 
   const uniqueId = "addModal";
@@ -31,7 +34,10 @@ export default function RecordsActionAdd() {
 
     setInputs((prevState) => ({
       ...prevState,
-      [name]: type === "number" ? parseInt(value, 10) : value,
+      [name]:
+        type === "number" || name === "categoryId"
+          ? parseInt(value, 10)
+          : value,
     }));
   };
 
@@ -44,7 +50,7 @@ export default function RecordsActionAdd() {
       updatedAt: new Date().toISOString(),
       accountId: selectedAccount.id,
     };
-    dispatch(addNewRecord(newInputs));
+    !isDemo ? firebaseAddRecord(newInputs) : dispatch(addRecord(newInputs));
     modal.hide(uniqueId);
     setInputs(INITIAL_INPUTS);
 

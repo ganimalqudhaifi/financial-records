@@ -1,6 +1,7 @@
 import {
   BarElement,
   CategoryScale,
+  ChartData,
   Chart as ChartJS,
   Legend,
   LinearScale,
@@ -27,9 +28,9 @@ export default function RecordsChart() {
   const { selectedAccount } = useSelector(selectAccounts);
   const { records } = useSelector(selectRecords);
 
-  const uniqueId = "chartModal";
-
-  const [chartData, setChartData] = useState({ datasets: [] });
+  const [chartData, setChartData] = useState<ChartData<"bar">>({
+    datasets: [],
+  });
   const [chartOptions, setChartOptions] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 

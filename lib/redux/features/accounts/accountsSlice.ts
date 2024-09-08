@@ -1,6 +1,6 @@
 import type { RootState } from "@/lib/redux/store";
 import { Account } from "@/types";
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface AccountsState {
   accounts: Account[];
@@ -19,8 +19,9 @@ export const accountsSlice = createSlice({
     setAccounts: (state, action: PayloadAction<Account[]>) => {
       state.accounts = action.payload;
     },
-    addAccount: (state, action: PayloadAction<Account>) => {
-      state.accounts.push(action.payload);
+    addAccount: (state, action: PayloadAction<Omit<Account, "id">>) => {
+      const id = nanoid();
+      state.accounts.push({ ...action.payload, id });
     },
     updateAccount: (state, action: PayloadAction<Account>) => {
       const accountsIndex = state.accounts.findIndex(

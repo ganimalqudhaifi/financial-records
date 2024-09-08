@@ -1,10 +1,15 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  firebaseDeleteAccount,
+  firebaseUpdateAccount,
+} from "@/lib/firebase/database";
 import {
   deleteAccount,
   updateAccount,
 } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { Account } from "../../types";
 import Modal from "../Modal";
 
@@ -13,6 +18,7 @@ type EditableAccountProps = {
 };
 
 export default function EditableAccount({ account }: EditableAccountProps) {
+  const { isDemo } = useSelector(selectDemo);
   const dispatch = useDispatch();
 
   const [isDisabled, setIsDisabled] = useState(true);
@@ -25,21 +31,30 @@ export default function EditableAccount({ account }: EditableAccountProps) {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      const updatedAccount = { ...account, name: inputValue };
       setIsDisabled(true);
-      dispatch(updateAccount({ ...account, name: inputValue }));
+      !isDemo
+        ? firebaseUpdateAccount(updatedAccount)
+        : dispatch(updateAccount(updatedAccount));
     }
   };
 
   const handleBlur = () => {
+    const updatedAccount = { ...account, name: inputValue };
     setIsDisabled(true);
-    dispatch(updateAccount({ ...account, name: inputValue }));
+    !isDemo
+      ? firebaseUpdateAccount(updatedAccount)
+      : dispatch(updateAccount(updatedAccount));
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleDelete = () => dispatch(deleteAccount(account));
+  const handleDelete = () =>
+    !isDemo
+      ? firebaseDeleteAccount(account.id)
+      : dispatch(deleteAccount(account));
 
   if (isDisabled) {
     return (

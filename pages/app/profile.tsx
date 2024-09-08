@@ -4,10 +4,12 @@ import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "@/lib/firebase/auth";
+import { firebaseAddAccount } from "@/lib/firebase/database";
 import {
   addAccount,
   selectAccounts,
 } from "@/lib/redux/features/accounts/accountsSlice";
+import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { AppLayout, EditableAccount, Modal } from "../../components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { DataUser } from "../../types";
@@ -34,6 +36,7 @@ const avatarLists = [
 
 export default function Profile() {
   const { accounts } = useSelector(selectAccounts);
+  const { isDemo } = useSelector(selectDemo);
   const dispatch = useDispatch();
 
   const { user, setUser } = useAuthContext();
@@ -167,26 +170,28 @@ export default function Profile() {
                   >
                     Change Avatar
                   </button>
-                  <Modal onClose={() => setIsModalOpen(false)}>
-                    <div className="p-2">
-                      <h3 className="text-center text-2xl font-bold tracking-wide mb-6 mt-2">
-                        Chose Avatar
-                      </h3>
-                      <div className="grid grid-cols-4 lg:grid-cols-5 gap-4">
-                        {avatarLists.map((path) => (
-                          <Image
-                            key={path}
-                            src={path}
-                            alt="avatar"
-                            width={100}
-                            height={100}
-                            className="w-30 transition duration-200 grayscale-[40%] cursor-pointer hover:grayscale-0 hover:scale-105 active:scale-100"
-                            onClick={() => handleProfilePicture(path)}
-                          />
-                        ))}
+                  {isModalOpen && (
+                    <Modal onClose={() => setIsModalOpen(false)}>
+                      <div className="p-2">
+                        <h3 className="text-center text-2xl font-bold tracking-wide mb-6 mt-2">
+                          Chose Avatar
+                        </h3>
+                        <div className="grid grid-cols-4 lg:grid-cols-5 gap-4">
+                          {avatarLists.map((path) => (
+                            <Image
+                              key={path}
+                              src={path}
+                              alt="avatar"
+                              width={100}
+                              height={100}
+                              className="w-30 transition duration-200 grayscale-[40%] cursor-pointer hover:grayscale-0 hover:scale-105 active:scale-100"
+                              onClick={() => handleProfilePicture(path)}
+                            />
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </Modal>
+                    </Modal>
+                  )}
                 </div>
               </form>
             </div>
@@ -207,14 +212,15 @@ export default function Profile() {
                     ))}
                   <li>
                     <button
-                      onClick={() =>
-                        dispatch(
-                          addAccount({
-                            name: "New Account",
-                            initialBalance: 0,
-                          }),
-                        )
-                      }
+                      onClick={() => {
+                        const newAccount = {
+                          name: "New Account",
+                          initialBalance: 0,
+                        };
+                        !isDemo
+                          ? firebaseAddAccount(newAccount)
+                          : dispatch(addAccount(newAccount));
+                      }}
                       className="w-full p-2 rounded-lg border border-slate-700 border-dashed text-gray-900 "
                     >
                       <span>New Account +</span>

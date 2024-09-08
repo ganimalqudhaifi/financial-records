@@ -11,7 +11,7 @@ import {
 import { AppLayout, EditableAccount, Modal } from "../../components";
 import { useAuthContext } from "../../hooks/useAuthContext";
 import { DataUser } from "../../types";
-import { alertToast, modal } from "../../utils";
+import { alertToast } from "../../utils";
 
 type TInputs = Pick<DataUser, "displayName" | "email" | "phoneNumber">;
 
@@ -38,6 +38,7 @@ export default function Profile() {
 
   const { user, setUser } = useAuthContext();
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [edits, setEdits] = useState({ personalInformation: false });
   const [inputs, setInputs] = useState<TInputs>({
     displayName: "",
@@ -70,11 +71,11 @@ export default function Profile() {
     await updateProfile(auth.currentUser!, { photoURL: pathURL })
       .then(() => {
         setUser({ ...user, photoURL: pathURL });
-        modal.hide("changeAvatar");
+        setIsModalOpen(false);
       })
       .catch((error) => {
         alertToast(error.message);
-        modal.hide("changeAvatar");
+        setIsModalOpen(false);
       });
   };
 
@@ -162,11 +163,11 @@ export default function Profile() {
                   </button>
                   <button
                     className="grid grid-flow-col px-16 py-1 mt-4 md:px-2 lg:mt-2 border justify-center items-center bg-slate-700 hover:bg-slate-800/90 border-slate-800 active:border-slate-600 text-slate-200 hover:text-slate-100 active:text-slate-200 rounded"
-                    onClick={() => modal.show("changeAvatar")}
+                    onClick={() => setIsModalOpen(true)}
                   >
                     Change Avatar
                   </button>
-                  <Modal id="changeAvatar">
+                  <Modal onClose={() => setIsModalOpen(false)}>
                     <div className="p-2">
                       <h3 className="text-center text-2xl font-bold tracking-wide mb-6 mt-2">
                         Chose Avatar

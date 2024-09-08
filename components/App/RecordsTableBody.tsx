@@ -1,3 +1,4 @@
+import categories from "@/data/categories.json";
 import { Record } from "../../types";
 import { templateDateDMY } from "../../utils/templateDate";
 import RecordsActionDelete from "./RecordsActionDelete";
@@ -9,6 +10,16 @@ type RecordsTableBodyProps = {
   saldoAkhir: number;
 };
 
+const categoryMap = new Map(
+  categories.map((category) => [category.id, category.name]),
+);
+
+const formatCurrency = (amount: number) =>
+  `Rp ${amount.toLocaleString("id-ID")}`;
+
+const getCategoryName = (categoryId: number) =>
+  categoryMap.get(categoryId) || "Unknown";
+
 export default function RecordsTableBody({
   no,
   record,
@@ -16,30 +27,16 @@ export default function RecordsTableBody({
 }: RecordsTableBodyProps) {
   const { id, date, description, categoryId, amount } = record;
 
-  const categories = [
-    { id: 101, name: "Pendapatan" },
-    { id: 201, name: "Pengeluaran" },
-    { id: 202, name: "Tagihan Utilitas" },
-    { id: 203, name: "Makanan" },
-    { id: 204, name: "Transportasi" },
-    { id: 205, name: "Tempat Tinggal" },
-    { id: 206, name: "Hiburan" },
-  ];
-
-  const categoryName = categories.filter(
-    (category) => category.id === categoryId,
-  )[0].name;
-
   return (
     <tr>
       <td>{no}</td>
       <td>{description}</td>
       <td>{templateDateDMY(date)}</td>
-      <td>{categoryName}</td>
+      <td>{getCategoryName(categoryId)}</td>
       <td className={`${categoryId < 200 ? "text-green-600" : "text-red-600"}`}>
-        {`Rp ${amount.toLocaleString("id-ID")}`}
+        {formatCurrency(amount)}
       </td>
-      <td>{`Rp ${saldoAkhir.toLocaleString("id-ID")}`}</td>
+      <td>{formatCurrency(saldoAkhir)}</td>
       <td>
         <div className="flex items-center justify-center space-x-2 w-full">
           <RecordsActionEdit no={no} record={record} />

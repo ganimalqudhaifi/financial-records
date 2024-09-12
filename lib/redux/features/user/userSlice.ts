@@ -16,7 +16,7 @@ export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
   const res = await fetch("/api/user", {
     method: "GET",
   });
-  return res.json();
+  return res.status === 200 ? res.json() : null;
 });
 
 export const fetchUserLogOut = createAsyncThunk(

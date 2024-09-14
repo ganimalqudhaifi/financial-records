@@ -2,9 +2,14 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
+import { useDispatch } from "react-redux";
+import { fetchUser } from "@/lib/redux/features/user/userSlice";
+import { AppDispatch } from "@/lib/redux/store";
 import { alertToast } from "@/utils";
 
 export default function Login() {
+  const dispatch: AppDispatch = useDispatch();
+
   // const [errorMsg, setErorrMsg] = useState("");
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
@@ -52,6 +57,7 @@ export default function Login() {
       }
 
       setInputs({ email: "", password: "" });
+      dispatch(fetchUser());
       router.replace("/app");
     } catch (error) {
       const errorMessage =

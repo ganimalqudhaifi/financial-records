@@ -6,10 +6,10 @@ import {
   HomeBanner,
   HomeFooter,
   HomeNavigationDropdown,
-  HomePractice,
   HomeUserDropdown,
   Logo,
 } from "@/components";
+import HomeBudgetingGuide from "@/components/Home/HomeBudgetingGuide";
 import {
   fetchUserLogOut,
   selectUser,
@@ -63,7 +63,7 @@ export default function Home() {
         <main className="flex flex-col flex-1 gap-y-12 items-center mb-10 sm:px-[5%] lg:px-[8%] overflow-x-hidden">
           <HomeBanner />
           <HomeAboutMe />
-          <HomePractice />
+          <HomeBudgetingGuide />
         </main>
 
         <HomeFooter />

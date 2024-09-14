@@ -4,7 +4,7 @@ export { default as Logo } from "./Logo";
 export { default as HomeFooter } from "./Home/HomeFooter";
 export { default as HomeBanner } from "./Home/HomeBanner";
 export { default as HomeAboutMe } from "./Home/HomeAboutMe";
-export { default as HomePractice } from "./Home/HomePractice";
+export { default as HomePractice } from "./Home/HomeBudgetingGuide";
 export { default as HomeUserDropdown } from "./Home/HomeUserDropdown";
 export { default as HomeNavigationDropdown } from "./Home/HomeNavigationDropdown";
 

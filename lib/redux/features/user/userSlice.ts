@@ -12,12 +12,22 @@ const initialState: UserState = {
   status: "idle",
 };
 
-export const fetchUser = createAsyncThunk("user/fetchUser", async () => {
-  const res = await fetch("/api/user", {
-    method: "GET",
-  });
-  return res.status === 200 ? res.json() : null;
-});
+export const fetchUser = createAsyncThunk(
+  "user/fetchUser",
+  async (_, { rejectWithValue }) => {
+    const res = await fetch("/api/user", {
+      method: "GET",
+    });
+    if (res.status === 200) {
+      return res.json();
+    } else if (res.status === 401) {
+      // Handle unauthorized response
+      return rejectWithValue("Unauthorized: Token missing");
+    } else {
+      return rejectWithValue("Failed to fetch user data");
+    }
+  },
+);
 
 export const fetchUserLogOut = createAsyncThunk(
   "user/fetchUserLogOut",

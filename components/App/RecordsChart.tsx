@@ -40,12 +40,12 @@ export default function RecordsChart() {
   };
 
   useEffect(() => {
-    if (records.length) {
-      records.sort(
+    if (records.length > 0) {
+      const sortedRecords = [...records].sort(
         (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime(),
       );
 
-      const arrListPeriod = records.reduce<string[]>((acc, record) => {
+      const arrListPeriod = sortedRecords.reduce<string[]>((acc, record) => {
         const d = new Date(record.date);
         const year = d.getFullYear();
         const month = d.getMonth();
@@ -58,14 +58,14 @@ export default function RecordsChart() {
       }, []);
 
       const pemasukan = arrListPeriod.map((filterPeriod) =>
-        records
+        sortedRecords
           .filter((record) => valueDate(record.date) === filterPeriod)
           .filter((record) => record.accountId === selectedAccount.id)
           .reduce((a, b) => a + (b.categoryId < 200 ? b.value : 0), 0),
       );
 
       const pengeluaran = arrListPeriod.map((filterPeriod) =>
-        records
+        sortedRecords
           .filter((record) => valueDate(record.date) === filterPeriod)
           .filter((record) => record.accountId === selectedAccount.id)
           .reduce((a, b) => a + (b.categoryId > 200 ? b.value : 0), 0),

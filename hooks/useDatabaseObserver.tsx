@@ -24,6 +24,8 @@ export default function useDatabaseObserver(
             id: key,
           }));
           callback(data);
+        } else {
+          callback([]);
         }
       });
 

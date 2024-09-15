@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { Offline, Online } from "react-detect-offline";
 import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
@@ -60,8 +61,13 @@ export default function AppSidebar({ user }: AppSidebarProps) {
                 alt="Rounded avatar"
                 className="w-20 h-20 rounded-full grayscale-[30%]"
               />
-              <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
-              <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
+              <Online>
+                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
+                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
+              </Online>
+              <Offline>
+                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-gray-500 border-2 border-bg-color rounded-full z-10" />
+              </Offline>
             </div>
             <p className="text-white text-xl font-semibold capitalize">
               {user.displayName}

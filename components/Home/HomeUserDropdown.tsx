@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { Offline, Online } from "react-detect-offline";
 import { IoPerson } from "react-icons/io5";
 
 interface HomeUserDropdownProps {
@@ -51,7 +52,12 @@ export default function HomeUserDropdown({
           src={user.photoURL}
           alt="user photo"
         />
-        <div className="absolute bottom-0 -right-1.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full" />
+        <Online>
+          <div className="absolute bottom-0 -right-1.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full" />
+        </Online>
+        <Offline>
+          <div className="absolute bottom-0 -right-1.5 w-4 h-4 bg-gray-500 border-2 border-bg-color rounded-full" />
+        </Offline>
       </button>
 
       {/* user-dropdown-menu */}

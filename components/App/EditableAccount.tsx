@@ -7,6 +7,8 @@ import {
 } from "@/lib/firebase/database";
 import {
   deleteAccount,
+  selectAccount,
+  selectAccounts,
   updateAccount,
 } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
@@ -18,6 +20,7 @@ type EditableAccountProps = {
 };
 
 export default function EditableAccount({ account }: EditableAccountProps) {
+  const { accounts } = useSelector(selectAccounts);
   const { isDemo } = useSelector(selectDemo);
   const dispatch = useDispatch();
 
@@ -51,10 +54,12 @@ export default function EditableAccount({ account }: EditableAccountProps) {
     setInputValue(e.target.value);
   };
 
-  const handleDelete = () =>
+  const handleDelete = () => {
     !isDemo
       ? firebaseDeleteAccount(account.id)
       : dispatch(deleteAccount(account));
+    dispatch(selectAccount(accounts[0]));
+  };
 
   if (isDisabled) {
     return (

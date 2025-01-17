@@ -9,7 +9,7 @@ export default function HomeFooter() {
           Powered by
         </div>
         <div className="flex items-center justify-center space-x-1">
-          <Link href="https://nextjs.org" target="_blank">
+          <Link href="https://nextjs.org" target="_blank" legacyBehavior>
             <div className="w-7 h-7 bg-gray-300 flex items-center justify-center rounded-full hover:-translate-y-0.5 hover:duration-500">
               <Image
                 alt="nextjs logo"
@@ -22,7 +22,7 @@ export default function HomeFooter() {
                 }} />
             </div>
           </Link>
-          <Link href="https://tailwindcss.com" target="_blank">
+          <Link href="https://tailwindcss.com" target="_blank" legacyBehavior>
             <div className="w-7 h-7 bg-transparent flex items-center justify-center rounded-full hover:-translate-y-0.5 hover:duration-500">
               <Image
                 alt="tailwind logo"
@@ -35,7 +35,7 @@ export default function HomeFooter() {
                 }} />
             </div>
           </Link>
-          <Link href="https://firebase.google.com" target="_blank">
+          <Link href="https://firebase.google.com" target="_blank" legacyBehavior>
             <div className="w-7 h-7 bg-transparent flex items-center justify-center rounded-full hover:-translate-y-0.5 hover:duration-500">
               <Image
                 alt="firebase logo"

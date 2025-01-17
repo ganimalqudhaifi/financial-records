@@ -18,11 +18,11 @@ export default function HomeUserDropdown({
 }: HomeUserDropdownProps) {
   if (!user) {
     return (
-      <div className="flex justify-self-end lg:order-last">
+      (<div className="flex justify-self-end lg:order-last">
         <Link
           href="/login"
           className="flex gap-2 px-4 py-2 font-medium rounded-lg hover:bg-gray-700 focus:ring-4 focus:ring-gray-800"
-        >
+          legacyBehavior>
           <IoPerson className="w-6 h-6 fill-main-color" />
           Login
         </Link>
@@ -32,7 +32,7 @@ export default function HomeUserDropdown({
         >
           Register
         </Link>
-      </div>
+      </div>)
     );
   }
 

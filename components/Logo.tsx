@@ -3,7 +3,10 @@ import { BiSolidWallet } from "react-icons/bi";
 
 export default function Logo() {
   return (
-    <Link href="/" className="flex flex-auto justify-self-start items-center">
+    (<Link
+      href="/"
+      className="flex flex-auto justify-self-start items-center"
+      legacyBehavior>
       <BiSolidWallet className="fill-main-color w-8 h-8" />
       <div className="ml-2">
         <div className="text-lg font-bold">Financial</div>
@@ -11,6 +14,6 @@ export default function Logo() {
           Records
         </div>
       </div>
-    </Link>
+    </Link>)
   );
 }

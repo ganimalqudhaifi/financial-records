@@ -77,7 +77,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             href="/"
             onClick={handleSignOut}
             className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
-          >
+            legacyBehavior>
             <TbLogout className="mr-1.5 w-5 h-5 text-gray-300 stroke-3 stroke-gray-400" />
             <span className="text-gray-400 text-sm font-medium">Logout</span>
           </Link>
@@ -90,7 +90,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <Link
               href={`${!isDemo ? "/app/dashboard" : "/demo/dashboard"}`}
               className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-            >
+              legacyBehavior>
               <TbChartPieFilled className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
               <span className="ml-3">Dashboard</span>
             </Link>
@@ -100,7 +100,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
               // eslint-disable-next-line quotes
               href={`${!isDemo ? "/app" : "/demo"}`}
               className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-            >
+              legacyBehavior>
               <BiSolidGridAlt className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
               <span className="ml-3">Table</span>
             </Link>
@@ -109,7 +109,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <Link
               href={`${!isDemo ? "/app/profile" : "/demo"}`}
               className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-            >
+              legacyBehavior>
               <BiSolidUser className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
               <span className="ml-3">Profile</span>
             </Link>
@@ -141,7 +141,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
           <Link
             href="/"
             className="text-sm  underline font-medium text-blue-400 hover:text-blue-300"
-          >
+            legacyBehavior>
             Back to Home Page{" "}
           </Link>
         </div>

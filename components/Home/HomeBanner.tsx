@@ -1,10 +1,10 @@
 import { motion } from "framer-motion";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import Link from "next/link";
 
 export default function HomeBanner() {
   return (
-    <div className="grid w-full max-w-5xl px-6 my-8 sm:grid-cols-2 sm:my-20 md:px-12 lg:min-h-[82vh] lg:my-0">
+    (<div className="grid w-full max-w-5xl px-6 my-8 sm:grid-cols-2 sm:my-20 md:px-12 lg:min-h-[82vh] lg:my-0">
       <motion.div
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
@@ -38,8 +38,11 @@ export default function HomeBanner() {
           width={400}
           height={0}
           priority
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
       </motion.div>
-    </div>
+    </div>)
   );
 }

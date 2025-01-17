@@ -1,7 +1,7 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getUser } from "@/lib/firebase/admin";
-import { verifyToken } from "../../lib/jwt";
+import { verifyToken } from "@/lib/jwt";
 
 const getTokenFromCookies = (req: NextApiRequest) => {
   const cookies = cookie.parse(req.headers.cookie || "");

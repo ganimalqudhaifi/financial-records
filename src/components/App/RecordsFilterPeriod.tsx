@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-import { generatePeriodYM, templateDateMY } from "../../utils";
+import { generatePeriodYM, templateDateMY } from "@/utils";
 
 interface RecordsFilterPeriodProps {
   handleTimeRange: (timeRange: string) => void;

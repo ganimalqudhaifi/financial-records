@@ -6,12 +6,12 @@ import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
+import { useDatabaseObserver } from "@/hooks";
 import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
 import { AppDispatch } from "@/lib/redux/store";
-import { useDatabaseObserver } from "../../hooks";
-import { DataUser } from "../../types";
+import { DataUser } from "@/types";
 import AccountsDropdown from "./AccountsDropdown";
 
 type AppSidebarProps = {

@@ -1,6 +1,6 @@
 import categories from "@/data/categories.json";
-import { Record } from "../../types";
-import { templateDateDMY } from "../../utils/templateDate";
+import { Record } from "@/types";
+import { templateDateDMY } from "@/utils/templateDate";
 import RecordsActionDelete from "./RecordsActionDelete";
 import RecordsActionEdit from "./RecordsActionEdit";
 

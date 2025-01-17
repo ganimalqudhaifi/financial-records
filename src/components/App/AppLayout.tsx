@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DataUser } from "../../types";
+import { DataUser } from "@/types";
 import AppSidebar from "./AppSidebar";
 
 type AppLayoutProps = {

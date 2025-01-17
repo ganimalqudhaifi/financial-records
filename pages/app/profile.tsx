@@ -1,6 +1,6 @@
 import { updateProfile } from "firebase/auth";
 import Head from "next/head";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { auth } from "@/lib/firebase/auth";

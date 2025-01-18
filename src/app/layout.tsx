@@ -1,6 +1,6 @@
 import AuthContextProvider from "@/context/AuthContext";
-import "@/styles/globals.css";
 import StoreProvider from "./StoreProvider";
+import "./globals.css";
 
 export default function RootLayout({
   children,

@@ -1,6 +1,6 @@
 import categories from "@/data/categories.json";
 import { Record } from "@/types";
-import { templateDateDMY } from "@/utils/templateDate";
+import { formatDateDMY } from "@/utils/templateDate";
 import RecordsActionDelete from "./RecordsActionDelete";
 import RecordsActionEdit from "./RecordsActionEdit";
 
@@ -31,7 +31,7 @@ export default function RecordsTableBody({
     <tr>
       <td>{no}</td>
       <td>{description}</td>
-      <td>{templateDateDMY(date)}</td>
+      <td>{formatDateDMY(date)}</td>
       <td>{getCategoryName(categoryId)}</td>
       <td className={`${categoryId < 200 ? "text-green-600" : "text-red-600"}`}>
         {formatCurrency(amount)}

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
-import { generatePeriodYM, templateDateMY } from "@/utils";
+import { formatDateMY, generatePeriodYM } from "@/utils";
 
 interface RecordsFilterPeriodProps {
   handleTimeRange: (timeRange: string) => void;
@@ -31,7 +31,7 @@ export default function RecordsFilterPeriod({
       <option value="">Semua Periode</option>
       {listPeriod.map((period) => (
         <option key={period} value={period}>
-          {templateDateMY(period)}
+          {formatDateMY(period)}
         </option>
       ))}
     </select>

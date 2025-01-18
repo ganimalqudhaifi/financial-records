@@ -1,39 +1,29 @@
 const arrMonth = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "Mei",
-  "Jun",
-  "Jul",
-  "Ags",
-  "Sep",
-  "Okt",
-  "Nov",
-  "Des",
+  "Jan", "Feb", "Mar", "Apr", "Mei", "Jun",
+  "Jul", "Ags", "Sep", "Okt", "Nov", "Des"
 ];
 
-export const templateDateDMY = (date: Date | string): string => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = d.getMonth();
-  const day = d.getDate();
+export const formatDateDMY = (date: Date | string): string => {
+  const parsedDate = new Date(date);
+  const day = parsedDate.getDate();
+  const month = parsedDate.getMonth();
+  const year = parsedDate.getFullYear();
 
   return `${day} ${arrMonth[month]} ${year}`;
 };
 
-export const templateDateMY = (date: Date | string): string => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = d.getMonth();
+export const formatDateMY = (date: Date | string): string => {
+  const parsedDate = new Date(date);
+  const month = parsedDate.getMonth();
+  const year = parsedDate.getFullYear();
 
-  return `${arrMonth[month + 1]} ${year}`;
+  return `${arrMonth[month]} ${year}`;
 };
 
 export const generatePeriodYM = (date: Date | string): string => {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = d.getMonth();
+  const parsedDate = new Date(date);
+  const month = String(parsedDate.getMonth() + 1).padStart(2, "0");
+  const year = parsedDate.getFullYear();
 
   return `${year}-${month}`;
 };

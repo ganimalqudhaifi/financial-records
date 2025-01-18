@@ -1,7 +1,9 @@
+"use client";
+
 import Head from "next/head";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { AppLayout, RecordsChart, RecordsInformation } from "@/components";
+import { AppLayout, RecordsOrganism } from "@/components";
 import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import {
   selectDemo,
@@ -9,7 +11,7 @@ import {
   setIsDemo,
 } from "@/lib/redux/features/demo/demoSlice";
 import { setRecords } from "@/lib/redux/features/records/recordsSlice";
-import { getData } from "@/utils";
+import { getData } from "@/utils/data";
 
 const user = {
   uid: "demouser",
@@ -19,7 +21,7 @@ const user = {
   phoneNumber: "",
 };
 
-const demoAccounts = [
+const demoAccount = [
   {
     id: "301",
     name: "Personal",
@@ -27,7 +29,7 @@ const demoAccounts = [
   },
 ];
 
-export default function DemoDashboard() {
+export default function DemoPage() {
   const { hasDemoLoadRecords } = useSelector(selectDemo);
   const dispatch = useDispatch();
 
@@ -39,24 +41,23 @@ export default function DemoDashboard() {
       dispatch(setHasDemoLoadRecords(true));
     }
 
-    dispatch(setAccounts(demoAccounts));
+    dispatch(setAccounts(demoAccount));
 
     return () => {
       dispatch(setIsDemo(false));
     };
-  }, []);
+  }, [dispatch, hasDemoLoadRecords]);
 
   return (
     <>
       <Head>
-        <title>Financial Records - Demo Dashboard</title>
+        <title>Financial Records - Demo</title>
       </Head>
 
       <AppLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
-          <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
-          <RecordsInformation />
-          <RecordsChart />
+          <h2 className="font-medium text-3xl mb-4">Table</h2>
+          <RecordsOrganism />
         </div>
       </AppLayout>
     </>

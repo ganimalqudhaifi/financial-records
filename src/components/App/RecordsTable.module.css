@@ -19,5 +19,5 @@
 }
 
 .main-table tbody tr td {
-  @apply px-3 py-1.5 [&:nth-child(4)]:hidden [&:nth-child(4)]:text-left [&:nth-child(4)]:lg:table-cell [&:nth-child(2)]:whitespace-normal [&:nth-child(2)]:text-left [&:nth-child(3)]:text-right [&:nth-child(5)]:text-right [&:nth-child(6)]:text-right;
+  @apply px-3 py-1.5 [&:nth-child(2)]:whitespace-normal [&:nth-child(2)]:text-left [&:nth-child(3)]:text-right [&:nth-child(4)]:hidden [&:nth-child(4)]:text-left [&:nth-child(4)]:lg:table-cell [&:nth-child(5)]:text-right [&:nth-child(6)]:text-right;
 }

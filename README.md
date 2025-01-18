@@ -190,10 +190,12 @@ financial-records-app/
 The application includes several API routes for authentication and user management:
 
 - **Login**: `POST /api/login`
+
   - Authenticates a user using email and password.
   - Sets a JWT token in HTTP-only cookies upon successful login.
 
 - **Register**: `POST /api/register`
+
   - Registers a new user with email and password.
   - Creates a default "Personal" account for the user.
   - Sets a JWT token in HTTP-only cookies upon successful registration.
@@ -207,11 +209,12 @@ The app utilizes [Redux Toolkit](https://redux-toolkit.js.org/) for state manage
 
 - **User Slice (`userSlice.ts`)**
   - Manages user authentication state and fetch status.
-  
 - **Accounts Slice (`accountsSlice.ts`)**
+
   - Handles financial accounts data.
 
 - **Records Slice (`recordsSlice.ts`)**
+
   - Manages financial transaction records.
 
 - **Demo Slice (`demoSlice.ts`)**

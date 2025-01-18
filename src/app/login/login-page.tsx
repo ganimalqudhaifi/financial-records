@@ -1,34 +1,36 @@
+"use client";
+
 import Link from "next/link";
-import { useRouter } from "next/router";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 import { fetchUser } from "@/lib/redux/features/user/userSlice";
 import { AppDispatch } from "@/lib/redux/store";
 import { alertToast } from "@/utils";
 
-export default function Login() {
+export default function LoginPage() {
   const dispatch: AppDispatch = useDispatch();
 
-  // const [errorMsg, setErorrMsg] = useState("");
   const [inputs, setInputs] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
-  useEffect(() => {
-    const handleRouteChange = () => {
-      setIsLoading(false);
-    };
-    router.events.on("routeChangeComplete", handleRouteChange);
-    router.events.on("routeChangeError", handleRouteChange);
+  // useEffect(() => {
+  // const handleRouteChange = () => {
+  //   setIsLoading(false);
+  // };
 
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-      router.events.off("routeChangeError", handleRouteChange);
-    };
-  }, [router]);
+  //   router.events.on("routeChangeComplete", handleRouteChange);
+  //   router.events.on("routeChangeError", handleRouteChange);
+
+  //   return () => {
+  //     router.events.off("routeChangeComplete", handleRouteChange);
+  //     router.events.off("routeChangeError", handleRouteChange);
+  //   };
+  // }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((values) => ({

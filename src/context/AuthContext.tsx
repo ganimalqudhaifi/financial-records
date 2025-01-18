@@ -1,3 +1,5 @@
+"use client";
+
 import { PropsWithChildren, createContext, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {

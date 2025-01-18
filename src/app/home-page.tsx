@@ -1,3 +1,5 @@
+"use client";
+
 import Head from "next/head";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,7 +18,7 @@ import {
 } from "@/lib/redux/features/user/userSlice";
 import { AppDispatch } from "@/lib/redux/store";
 
-export default function Home() {
+export default function HomePage() {
   const { user } = useSelector(selectUser);
   const dispatch: AppDispatch = useDispatch();
 

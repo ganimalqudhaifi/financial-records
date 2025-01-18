@@ -1,3 +1,5 @@
+"use client";
+
 import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
@@ -34,7 +36,7 @@ const avatarLists = [
   "/avatar/girl_07.svg",
 ];
 
-export default function Profile() {
+export default function AppProfilePage() {
   const { accounts } = useSelector(selectAccounts);
   const { isDemo } = useSelector(selectDemo);
   const dispatch = useDispatch();

@@ -4,7 +4,6 @@ import { updateProfile } from "firebase/auth";
 import Head from "next/head";
 import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { AppLayout, EditableAccount, Modal } from "@/components";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { auth } from "@/lib/firebase/auth";
@@ -14,6 +13,7 @@ import {
   selectAccounts,
 } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { DataUser } from "@/types";
 import { alertToast } from "@/utils";
 
@@ -37,9 +37,9 @@ const avatarLists = [
 ];
 
 export default function AppProfilePage() {
-  const { accounts } = useSelector(selectAccounts);
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const { accounts } = useAppSelector(selectAccounts);
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const { user, setUser } = useAuthContext();
 

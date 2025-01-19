@@ -1,14 +1,14 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   selectAccounts,
   updateAccount,
 } from "@/lib/redux/features/accounts/accountsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import Modal from "../Modal";
 
 export default function RecordsTableHead() {
-  const { selectedAccount } = useSelector(selectAccounts);
-  const dispatch = useDispatch();
+  const { selectedAccount } = useAppSelector(selectAccounts);
+  const dispatch = useAppDispatch();
 
   const [initialBalance, setInitialBalance] = useState(0);
 

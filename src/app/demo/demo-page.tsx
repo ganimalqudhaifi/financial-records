@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { AppLayout, RecordsOrganism } from "@/components";
 import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import {
@@ -11,6 +10,7 @@ import {
   setIsDemo,
 } from "@/lib/redux/features/demo/demoSlice";
 import { setRecords } from "@/lib/redux/features/records/recordsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { getData } from "@/utils/data";
 
 const user = {
@@ -30,8 +30,8 @@ const demoAccount = [
 ];
 
 export default function DemoPage() {
-  const { hasDemoLoadRecords } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const { hasDemoLoadRecords } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(setIsDemo(true));

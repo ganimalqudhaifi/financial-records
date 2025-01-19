@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   HomeAboutMe,
   HomeBanner,
@@ -16,11 +15,11 @@ import {
   fetchUserLogOut,
   selectUser,
 } from "@/lib/redux/features/user/userSlice";
-import { AppDispatch } from "@/lib/redux/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 
 export default function HomePage() {
-  const { user } = useSelector(selectUser);
-  const dispatch: AppDispatch = useDispatch();
+  const { user } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
   const [isNavigationDropdownOpen, setisNavigationDropdownOpen] =
     useState(false);

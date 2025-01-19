@@ -1,9 +1,9 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import categories from "@/data/categories.json";
 import { firebaseUpdateRecord } from "@/lib/firebase/database";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { updateRecord } from "@/lib/redux/features/records/recordsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { Record } from "@/types";
 import { successToast } from "@/utils";
 import Modal from "../Modal";
@@ -19,8 +19,8 @@ export default function RecordsActionEdit({
   no,
   record,
 }: RecordsActionEditProps) {
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const [inputs, setInputs] = useState(record);
   const [isModalOpen, setIsModalOpen] = useState(false);

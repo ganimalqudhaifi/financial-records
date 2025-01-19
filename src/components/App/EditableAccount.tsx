@@ -1,6 +1,5 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
 import {
   firebaseDeleteAccount,
   firebaseUpdateAccount,
@@ -12,6 +11,7 @@ import {
   updateAccount,
 } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { Account } from "../../types";
 import Modal from "../Modal";
 
@@ -20,9 +20,9 @@ type EditableAccountProps = {
 };
 
 export default function EditableAccount({ account }: EditableAccountProps) {
-  const { accounts } = useSelector(selectAccounts);
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const { accounts } = useAppSelector(selectAccounts);
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const [isDisabled, setIsDisabled] = useState(true);
   const [inputValue, setInputValue] = useState(account.name);

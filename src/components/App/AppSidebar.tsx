@@ -5,11 +5,11 @@ import { Offline, Online } from "react-detect-offline";
 import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
-import { useDispatch, useSelector } from "react-redux";
 import { useDatabaseObserver } from "@/hooks";
 import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { AppDispatch } from "@/lib/redux/store";
 import { DataUser } from "@/types";
 import AccountsDropdown from "./AccountsDropdown";
@@ -19,8 +19,8 @@ type AppSidebarProps = {
 };
 
 export default function AppSidebar({ user }: AppSidebarProps) {
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch: AppDispatch = useDispatch();
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const [isActive, setIsActive] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
 import { firebaseDeleteRecord } from "@/lib/firebase/database";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { deleteRecord } from "@/lib/redux/features/records/recordsSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import Modal from "../Modal";
 
 type RecordsActionDeleteProps = {
@@ -11,8 +11,8 @@ type RecordsActionDeleteProps = {
 };
 
 export default function RecordsActionDelete({ id }: RecordsActionDeleteProps) {
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch = useDispatch();
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 

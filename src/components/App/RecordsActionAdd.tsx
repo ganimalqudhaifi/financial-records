@@ -1,11 +1,10 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import categories from "@/data/categories.json";
 import { firebaseAddRecord } from "@/lib/firebase/database";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { addRecord } from "@/lib/redux/features/records/recordsSlice";
-import { AppDispatch } from "@/lib/redux/store";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 import { successToast } from "@/utils";
 import Modal from "../Modal";
 import InputField from "./InputField";
@@ -19,9 +18,9 @@ const INITIAL_INPUTS = {
 };
 
 export default function RecordsActionAdd() {
-  const { selectedAccount } = useSelector(selectAccounts);
-  const { isDemo } = useSelector(selectDemo);
-  const dispatch: AppDispatch = useDispatch();
+  const { selectedAccount } = useAppSelector(selectAccounts);
+  const { isDemo } = useAppSelector(selectDemo);
+  const dispatch = useAppDispatch();
 
   const [inputs, setInputs] = useState(INITIAL_INPUTS);
   const [isModalOpen, setIsModalOpen] = useState(false);

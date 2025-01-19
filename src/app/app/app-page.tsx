@@ -1,15 +1,15 @@
 "use client";
 
 import Head from "next/head";
-import { useDispatch, useSelector } from "react-redux";
 import { AppLayout, RecordsOrganism } from "@/components";
 import { useDatabaseObserver } from "@/hooks";
 import { setRecords } from "@/lib/redux/features/records/recordsSlice";
 import { selectUser } from "@/lib/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 
 export default function AppPage() {
-  const dispatch = useDispatch();
-  const { user } = useSelector(selectUser);
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector(selectUser);
 
   useDatabaseObserver("records", (data) => {
     dispatch(setRecords(data));

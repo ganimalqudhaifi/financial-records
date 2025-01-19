@@ -10,7 +10,6 @@ import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { AppDispatch } from "@/lib/redux/store";
 import { DataUser } from "@/types";
 import AccountsDropdown from "./AccountsDropdown";
 

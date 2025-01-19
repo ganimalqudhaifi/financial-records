@@ -2,20 +2,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { Offline, Online } from "react-detect-offline";
 import { IoPerson } from "react-icons/io5";
+import {
+  fetchUserLogOut,
+  selectUser,
+} from "@/lib/redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
 
 interface HomeUserDropdownProps {
-  user: any;
   isUserDropdownOpen: boolean;
   handleUserDropdown: () => void;
-  handleSignOut: () => void;
 }
 
 export default function HomeUserDropdown({
-  user,
   isUserDropdownOpen,
   handleUserDropdown,
-  handleSignOut,
 }: HomeUserDropdownProps) {
+  const { user } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
+
+  const handleSignOut = () => {
+    handleUserDropdown();
+    dispatch(fetchUserLogOut());
+  };
+
   if (!user) {
     return (
       <div className="flex justify-self-end lg:order-last">

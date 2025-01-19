@@ -7,7 +7,6 @@ import {
   selectUserFetchStatus,
 } from "@/lib/redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { AppDispatch } from "@/lib/redux/store";
 import { DataUser } from "@/types";
 
 type AuthContext = {

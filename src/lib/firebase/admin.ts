@@ -1,5 +1,4 @@
 import admin from "firebase-admin";
-import { DataUser } from "@/types";
 
 const config = {
   credential: admin.credential.cert({
@@ -23,14 +22,14 @@ if (!admin.apps.length) {
   admin.app();
 }
 
-export const getUser = async (uid: string) => {
+export const adminAuth = admin.auth();
+
+export async function getUserByUid(uid: string) {
   try {
-    const userRecord = await admin.auth().getUser(uid);
-    return userRecord.toJSON() as DataUser;
+    const user = await adminAuth.getUser(uid);
+    return user.toJSON();
   } catch (error) {
-    console.error(error);
+    console.error("Firebase Admin getUser error:", error);
     return null;
   }
-};
-
-export default admin;
+}

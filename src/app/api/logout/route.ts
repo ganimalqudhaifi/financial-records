@@ -1,6 +1,6 @@
+import { signOut } from "@/features/auth/services/auth.client";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
-import { signOut } from "@/lib/firebase/auth";
 
 export default async function logout(
   req: NextApiRequest,

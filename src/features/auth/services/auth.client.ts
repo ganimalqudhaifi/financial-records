@@ -8,7 +8,7 @@ import {
 } from "firebase/auth";
 import { DataUser } from "@/types";
 import { handleAuthError } from "@/utils/getErrorMessage";
-import { app } from "./client";
+import { app } from "@/lib/firebase/client";
 
 export const auth = getAuth(app);
 
@@ -52,25 +52,5 @@ export const updateUser = async (uid: string) => {
         photoURL: "/avatar/boy_01.svg",
       });
     }
-  } catch (error) {}
-};
-
-export const observeUser = (): Promise<DataUser | null> => {
-  return new Promise((resolve) => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user !== null) {
-        const dataUser: DataUser = {
-          displayName: user.displayName || "",
-          email: user.email || "",
-          phoneNumber: user.phoneNumber || "-",
-          photoURL: user.photoURL || "",
-          uid: user.uid,
-        };
-        resolve(dataUser);
-      } else {
-        resolve(null);
-      }
-    });
-    unsubscribe();
-  });
+  } catch (error) { console.error("Update user failed:", error); }
 };

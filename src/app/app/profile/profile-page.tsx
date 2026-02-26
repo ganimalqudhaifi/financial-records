@@ -6,7 +6,7 @@ import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { AppLayout, EditableAccount, Modal } from "@/components";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import { auth } from "@/lib/firebase/auth";
+import {auth} from '@/features/auth/services/auth.client';
 import { firebaseAddAccount } from "@/lib/firebase/database";
 import {
   addAccount,

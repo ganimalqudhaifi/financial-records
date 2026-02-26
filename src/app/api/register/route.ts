@@ -1,6 +1,6 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
-import { signUp, updateUser } from "@/lib/firebase/auth";
+import { signUp, updateUser } from "@/features/auth/services/auth.client";
 import { firebaseAddAccount } from "@/lib/firebase/database";
 import { createToken } from "@/lib/jwt";
 

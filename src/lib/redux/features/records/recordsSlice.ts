@@ -1,5 +1,5 @@
+import { Record } from "@/features/record/record.types";
 import type { RootState } from "@/lib/redux/store";
-import { Record } from "@/types";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface RecordsState {

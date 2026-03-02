@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { firebaseDeleteRecord } from "@/lib/firebase/database";
+import { firebaseDeleteRecord } from "@/features/record/record.service";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { deleteRecord } from "@/lib/redux/features/records/recordsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";

@@ -1,5 +1,5 @@
+import { Account } from "@/features/account/account.types";
 import type { RootState } from "@/lib/redux/store";
-import { Account } from "@/types";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface AccountsState {

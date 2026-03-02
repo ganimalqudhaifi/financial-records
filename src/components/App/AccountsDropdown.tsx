@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
+import { Account } from "@/features/account/account.types";
 import {
   selectAccount,
   selectAccounts,
 } from "@/lib/redux/features/accounts/accountsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { Account } from "@/types";
 
 export default function AccountsDropdown() {
   const { accounts, selectedAccount } = useAppSelector(selectAccounts);

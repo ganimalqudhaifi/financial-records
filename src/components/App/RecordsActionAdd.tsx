@@ -1,6 +1,6 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import categories from "@/data/categories.json";
-import { firebaseAddRecord } from "@/lib/firebase/database";
+import { firebaseAddRecord } from "@/features/record/record.service";
 import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { addRecord } from "@/lib/redux/features/records/recordsSlice";

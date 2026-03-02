@@ -1,10 +1,10 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import categories from "@/data/categories.json";
-import { firebaseUpdateRecord } from "@/lib/firebase/database";
+import { firebaseUpdateRecord } from "@/features/record/record.service";
+import { Record } from "@/features/record/record.types";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { updateRecord } from "@/lib/redux/features/records/recordsSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { Record } from "@/types";
 import { successToast } from "@/utils";
 import Modal from "../Modal";
 import InputField from "./InputField";

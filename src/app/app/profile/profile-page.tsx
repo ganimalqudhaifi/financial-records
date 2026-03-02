@@ -5,9 +5,9 @@ import Head from "next/head";
 import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { AppLayout, EditableAccount, Modal } from "@/components";
+import { firebaseAddAccount } from "@/features/account/account.service";
+import { auth } from "@/features/auth/services/auth.client";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import {auth} from '@/features/auth/services/auth.client';
-import { firebaseAddAccount } from "@/lib/firebase/database";
 import {
   addAccount,
   selectAccounts,

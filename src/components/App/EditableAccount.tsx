@@ -3,7 +3,8 @@ import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
 import {
   firebaseDeleteAccount,
   firebaseUpdateAccount,
-} from "@/lib/firebase/database";
+} from "@/features/account/account.service";
+import { Account } from "@/features/account/account.types";
 import {
   deleteAccount,
   selectAccount,
@@ -12,7 +13,6 @@ import {
 } from "@/lib/redux/features/accounts/accountsSlice";
 import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
-import { Account } from "../../types";
 import Modal from "../Modal";
 
 type EditableAccountProps = {

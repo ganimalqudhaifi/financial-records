@@ -1,7 +1,7 @@
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import { signUp, updateUser } from "@/features/auth/services/auth.client";
-import { firebaseAddAccount } from "@/lib/firebase/database";
+import { firebaseAddAccount } from "@/features/account/account.service";
 import { createToken } from "@/lib/jwt";
 
 export default async function login(req: NextApiRequest, res: NextApiResponse) {

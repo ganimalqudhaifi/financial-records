@@ -1,35 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { fetchUser } from "@/features/user/user.slice";
-import { useAppDispatch } from "@/store/hooks";
 import { alertToast } from "@/utils";
+import { useLogin } from "../hooks/useLogin";
 
-export default function LoginPage() {
-  const dispatch = useAppDispatch();
-
+export default function LoginForm() {
   const [inputs, setInputs] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const router = useRouter();
-
-  // useEffect(() => {
-  // const handleRouteChange = () => {
-  //   setIsLoading(false);
-  // };
-
-  //   router.events.on("routeChangeComplete", handleRouteChange);
-  //   router.events.on("routeChangeError", handleRouteChange);
-
-  //   return () => {
-  //     router.events.off("routeChangeComplete", handleRouteChange);
-  //     router.events.off("routeChangeError", handleRouteChange);
-  //   };
-  // }, [router]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs((values) => ({
@@ -38,33 +17,13 @@ export default function LoginPage() {
     }));
   };
 
+  const { login, isLoading, error } = useLogin();
+
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    const { email, password } = inputs;
-
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Login Failed");
-      }
-
-      setInputs({ email: "", password: "" });
-      dispatch(fetchUser());
-      router.replace("/app");
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An unexpected error occurred";
-      alertToast(errorMessage);
-      setIsLoading(false);
+    await login(inputs.email, inputs.password);
+    if (error) {
+      alertToast(error);
     }
   };
 

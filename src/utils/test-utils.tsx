@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
-import { AppStore, RootState, setupStore } from "@/lib/redux/store";
+import { AppStore, RootState, setupStore } from "@/store/store";
 import { render } from "@testing-library/react";
 import type { RenderOptions } from "@testing-library/react";
 

@@ -1,5 +1,5 @@
 import { Record } from "@/features/record/record.types";
-import type { RootState } from "@/lib/redux/store";
+import type { RootState } from "@/store/store";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface RecordsState {
@@ -22,15 +22,12 @@ export const recordsSlice = createSlice({
       state.records.push({ ...action.payload, id });
     },
     updateRecord: (state, action: PayloadAction<Record>) => {
-      const recordsIndex = state.records.findIndex(
-        (record) => (record.id = action.payload.id),
+      const index = state.records.findIndex(
+        (record) => (record.id === action.payload.id),
       );
-      const updatedRecords = state.records.fill(
-        action.payload,
-        recordsIndex,
-        recordsIndex + 1,
-      );
-      state.records = updatedRecords;
+      if (index !== -1) {
+        state.records[index] = action.payload;
+      }
     },
     deleteRecord: (state, action: PayloadAction<Record["id"]>) => {
       const filteredRecords = state.records.filter(

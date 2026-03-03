@@ -4,15 +4,15 @@ import {
   firebaseDeleteAccount,
   firebaseUpdateAccount,
 } from "@/features/account/account.service";
-import { Account } from "@/features/account/account.types";
 import {
   deleteAccount,
   selectAccount,
   selectAccounts,
   updateAccount,
-} from "@/lib/redux/features/accounts/accountsSlice";
-import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+} from "@/features/account/account.slice";
+import { Account } from "@/features/account/account.types";
+import { selectDemo } from "@/features/demo/demo.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../Modal";
 
 type EditableAccountProps = {

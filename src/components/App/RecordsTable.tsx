@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
-import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
+import { selectAccounts } from "@/features/account/account.slice";
+import { selectRecords } from "@/features/record/record.slice";
 import { Record } from "@/types";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";

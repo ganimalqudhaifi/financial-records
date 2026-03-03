@@ -3,14 +3,14 @@
 import Head from "next/head";
 import { useEffect } from "react";
 import { AppLayout, RecordsChart, RecordsInformation } from "@/components";
-import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
+import { setAccounts } from "@/features/account/account.slice";
 import {
   selectDemo,
   setHasDemoLoadRecords,
   setIsDemo,
-} from "@/lib/redux/features/demo/demoSlice";
-import { setRecords } from "@/lib/redux/features/records/recordsSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+} from "@/features/demo/demo.slice";
+import { setRecords } from "@/features/record/record.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getData } from "@/utils";
 
 const user = {

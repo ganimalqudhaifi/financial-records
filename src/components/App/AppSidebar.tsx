@@ -5,11 +5,11 @@ import { Offline, Online } from "react-detect-offline";
 import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
+import { setAccounts } from "@/features/account/account.slice";
+import { selectDemo } from "@/features/demo/demo.slice";
+import { fetchUserLogOut } from "@/features/user/user.slice";
 import { useDatabaseObserver } from "@/hooks";
-import { setAccounts } from "@/lib/redux/features/accounts/accountsSlice";
-import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { fetchUserLogOut } from "@/lib/redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { DataUser } from "@/types";
 import AccountsDropdown from "./AccountsDropdown";
 

@@ -2,10 +2,10 @@
 
 import Head from "next/head";
 import { AppLayout, RecordsOrganism } from "@/components";
+import { setRecords } from "@/features/record/record.slice";
+import { selectUser } from "@/features/user/user.slice";
 import { useDatabaseObserver } from "@/hooks";
-import { setRecords } from "@/lib/redux/features/records/recordsSlice";
-import { selectUser } from "@/lib/redux/features/user/userSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function AppPage() {
   const dispatch = useAppDispatch();

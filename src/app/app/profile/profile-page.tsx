@@ -6,14 +6,11 @@ import Image from "next/image";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { AppLayout, EditableAccount, Modal } from "@/components";
 import { firebaseAddAccount } from "@/features/account/account.service";
+import { addAccount, selectAccounts } from "@/features/account/account.slice";
 import { auth } from "@/features/auth/services/auth.client";
+import { selectDemo } from "@/features/demo/demo.slice";
 import { useAuthContext } from "@/hooks/useAuthContext";
-import {
-  addAccount,
-  selectAccounts,
-} from "@/lib/redux/features/accounts/accountsSlice";
-import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { DataUser } from "@/types";
 import { alertToast } from "@/utils";
 

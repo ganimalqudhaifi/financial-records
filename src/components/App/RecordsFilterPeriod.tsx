@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
+import { selectRecords } from "@/features/record/record.slice";
 import { formatDateMY, generatePeriodYM } from "@/utils";
 
 interface RecordsFilterPeriodProps {

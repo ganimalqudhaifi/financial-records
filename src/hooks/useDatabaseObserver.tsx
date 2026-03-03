@@ -1,9 +1,9 @@
 import { onValue, ref } from "firebase/database";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { selectDemo } from "@/features/demo/demo.slice";
+import { selectUser } from "@/features/user/user.slice";
 import { database } from "@/lib/firebase/database";
-import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { selectUser } from "@/lib/redux/features/user/userSlice";
 
 export default function useDatabaseObserver(
   path: "accounts" | "records",

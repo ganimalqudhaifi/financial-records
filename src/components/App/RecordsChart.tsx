@@ -11,8 +11,8 @@ import {
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
-import { selectAccounts } from "@/lib/redux/features/accounts/accountsSlice";
-import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
+import { selectAccounts } from "@/features/account/account.slice";
+import { selectRecords } from "@/features/record/record.slice";
 import Modal from "../Modal";
 
 ChartJS.register(

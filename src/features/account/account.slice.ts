@@ -1,5 +1,5 @@
 import { Account } from "@/features/account/account.types";
-import type { RootState } from "@/lib/redux/store";
+import type { RootState } from "@/store/store";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface AccountsState {
@@ -24,15 +24,12 @@ export const accountsSlice = createSlice({
       state.accounts.push({ ...action.payload, id });
     },
     updateAccount: (state, action: PayloadAction<Account>) => {
-      const accountsIndex = state.accounts.findIndex(
-        (account) => (account.id = action.payload.id),
+      const index = state.accounts.findIndex(
+        (account) => (account.id === action.payload.id),
       );
-      const updatedAccounts = state.accounts.fill(
-        action.payload,
-        accountsIndex,
-        accountsIndex + 1,
-      );
-      state.accounts = updatedAccounts;
+      if (index !== -1) {
+        state.accounts[index] = action.payload;
+      }
     },
     deleteAccount: (state, action: PayloadAction<Account>) => {
       const filteredAccounts = state.accounts.filter(

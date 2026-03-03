@@ -1,6 +1,6 @@
 import { DataUser } from "@/types";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store";
+import { RootState } from "../../store/store";
 
 interface UserState {
   user: DataUser | null;

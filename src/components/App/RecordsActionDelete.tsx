@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
+import { selectDemo } from "@/features/demo/demo.slice";
 import { firebaseDeleteRecord } from "@/features/record/record.service";
-import { selectDemo } from "@/lib/redux/features/demo/demoSlice";
-import { deleteRecord } from "@/lib/redux/features/records/recordsSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+import { deleteRecord } from "@/features/record/record.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../Modal";
 
 type RecordsActionDeleteProps = {

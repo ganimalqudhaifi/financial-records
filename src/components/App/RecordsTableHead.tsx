@@ -2,8 +2,8 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import {
   selectAccounts,
   updateAccount,
-} from "@/lib/redux/features/accounts/accountsSlice";
-import { useAppDispatch, useAppSelector } from "@/lib/redux/hooks";
+} from "@/features/account/account.slice";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../Modal";
 
 export default function RecordsTableHead() {

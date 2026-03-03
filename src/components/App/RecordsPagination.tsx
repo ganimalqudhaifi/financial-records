@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectRecords } from "@/lib/redux/features/records/recordsSlice";
+import { selectRecords } from "@/features/record/record.slice";
 
 interface RecordsPaginantionProps {
   handleCurrentPage: (pageNumber: number) => void;

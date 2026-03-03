@@ -4,8 +4,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { fetchUser } from "@/lib/redux/features/user/userSlice";
-import { useAppDispatch } from "@/lib/redux/hooks";
+import { fetchUser } from "@/features/user/user.slice";
+import { useAppDispatch } from "@/store/hooks";
 import { alertToast } from "@/utils";
 
 export default function LoginPage() {

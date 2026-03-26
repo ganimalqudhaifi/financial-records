@@ -2,7 +2,7 @@
 
 import { fetchUser } from "@/features/user/user.slice";
 import { useAppDispatch } from "@/store/hooks";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export function useLogin() {

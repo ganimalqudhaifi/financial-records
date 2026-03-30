@@ -1,72 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { fetchUser } from "@/features/user/user.slice";
-import { useAppDispatch } from "@/store/hooks";
-import { alertToast } from "@/utils";
+import { useRegister } from "@/features/auth/hooks/useRegister";
 
-export default function RegisterPage() {
-  const dispatch = useAppDispatch();
-
-  const [inputs, setInputs] = useState({ email: "", password: "" });
-  const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
-
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   const handleRouteChange = () => {
-  //     setIsLoading(false);
-  //   };
-  //   router.events.on("routeChangeComplete", handleRouteChange);
-  //   router.events.on("routeChangeError", handleRouteChange);
-
-  //   return () => {
-  //     router.events.off("routeChangeComplete", handleRouteChange);
-  //     router.events.off("routeChangeError", handleRouteChange);
-  //   };
-  // }, [router]);
-
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setInputs((values) => ({
-      ...values,
-      [e.target.name]: e.target.value,
-    }));
-  };
-
-  const handleSubmit = async (e: SyntheticEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    const { email, password } = inputs;
-
-    try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.error || "Login Failed");
-      }
-
-      setInputs({ email: "", password: "" });
-      dispatch(fetchUser());
-      router.replace("/app");
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "An unexpected error occurred";
-      alertToast(errorMessage);
-      setIsLoading(false);
-    }
-  };
+export default function RegisterForm() {
+  const {
+    isLoading,
+    showPassword,
+    handleChange,
+    handleSubmit,
+    togglePassword,
+  } = useRegister();
 
   return (
     <div className="font-['Poppins','sans-serif'] flex justify-center items-center min-h-screen bg-bg-color">
@@ -125,10 +70,7 @@ export default function RegisterPage() {
                   required
                 />
                 <div className="absolute inset-y-0 right-0 pr-3.5 flex items-center">
-                  <span
-                    className="flex items-center"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
+                  <span className="flex items-center" onClick={togglePassword}>
                     {!showPassword ? (
                       <IoEye className="w-5 h-5 fill-gray-700" />
                     ) : (

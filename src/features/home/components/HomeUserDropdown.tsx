@@ -82,7 +82,7 @@ export default function HomeUserDropdown({
         <ul className="py-2" aria-labelledby="user-menu-button">
           <li>
             <Link
-              href="/app/dashboard"
+              href="/dashboard"
               className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
             >
               Dashboard
@@ -90,7 +90,7 @@ export default function HomeUserDropdown({
           </li>
           <li>
             <Link
-              href="/app"
+              href="/records"
               className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
             >
               Table
@@ -98,7 +98,7 @@ export default function HomeUserDropdown({
           </li>
           <li>
             <Link
-              href="/app/profile"
+              href="/profile"
               className="block px-4 py-2 text-sm hover:bg-gray-600 text-gray-200 hover:text-white"
             >
               Profile

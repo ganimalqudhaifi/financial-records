@@ -43,7 +43,7 @@ export function useRegister() {
 
       setInputs({ email: "", password: "" });
       dispatch(fetchUser());
-      router.replace("/app");
+      router.replace("/records");
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : "An unexpected error occurred";

@@ -42,9 +42,9 @@ describe("HomeUserDropdown", () => {
     const tableLink = screen.getByText(/table/i);
     const profileLink = screen.getByText(/profile/i);
 
-    expect(dashboardLink).toHaveAttribute("href", "/app/dashboard");
-    expect(tableLink).toHaveAttribute("href", "/app");
-    expect(profileLink).toHaveAttribute("href", "/app/profile");
+    expect(dashboardLink).toHaveAttribute("href", "/dashboard");
+    expect(tableLink).toHaveAttribute("href", "/records");
+    expect(profileLink).toHaveAttribute("href", "/profile");
   });
 
   it("calls handleSignOut when sign out button is clicked", () => {

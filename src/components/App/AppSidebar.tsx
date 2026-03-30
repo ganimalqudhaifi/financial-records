@@ -89,7 +89,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
           <ul className="pt-5 space-y-2">
             <li>
               <Link
-                href={`${!isDemo ? "/app/dashboard" : "/demo/dashboard"}`}
+                href={`${!isDemo ? "/dashboard" : "/demo/dashboard"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <TbChartPieFilled className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
@@ -99,7 +99,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             <li>
               <Link
                 // eslint-disable-next-line quotes
-                href={`${!isDemo ? "/app" : "/demo"}`}
+                href={`${!isDemo ? "/records" : "/demo"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <BiSolidGridAlt className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
@@ -108,7 +108,7 @@ export default function AppSidebar({ user }: AppSidebarProps) {
             </li>
             <li>
               <Link
-                href={`${!isDemo ? "/app/profile" : "/demo"}`}
+                href={`${!isDemo ? "/profile" : "/demo"}`}
                 className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
               >
                 <BiSolidUser className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />

@@ -1,13 +1,12 @@
 "use client";
 
-import Head from "next/head";
 import { AppLayout, RecordsChart, RecordsInformation } from "@/components";
 import { setRecords } from "@/features/record/record.slice";
 import { selectUser } from "@/features/user/user.slice";
 import { useDatabaseObserver } from "@/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
-export default function AppDashboardPage() {
+export default function DashboardPage() {
   const { user } = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
 
@@ -17,19 +16,13 @@ export default function AppDashboardPage() {
 
   if (user) {
     return (
-      <>
-        <Head>
-          <title>Financial Records - App Dashboard</title>
-        </Head>
-
-        <AppLayout user={user}>
-          <div className="w-full p-4 lg:ml-64">
-            <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
-            <RecordsInformation />
-            <RecordsChart />
-          </div>
-        </AppLayout>
-      </>
+      <AppLayout user={user}>
+        <div className="w-full p-4 lg:ml-64">
+          <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
+          <RecordsInformation />
+          <RecordsChart />
+        </div>
+      </AppLayout>
     );
   }
 }

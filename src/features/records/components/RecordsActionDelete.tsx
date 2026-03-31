@@ -4,7 +4,7 @@ import { selectDemo } from "@/features/demo/demo.slice";
 import { firebaseDeleteRecord } from "@/features/record/record.service";
 import { deleteRecord } from "@/features/record/record.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Modal from "../Modal";
+import Modal from "../../../components/Modal";
 
 type RecordsActionDeleteProps = {
   id: string;

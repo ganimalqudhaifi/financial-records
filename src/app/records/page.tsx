@@ -1,5 +1,10 @@
-import AppPage from "./app-page";
+import { Metadata } from "next";
+import RecordsPage from "@/features/records/components/RecordsPage";
+
+export const metadata: Metadata = {
+  title: "Financial Records - App",
+};
 
 export default function Page() {
-  return <AppPage />;
+  return <RecordsPage />;
 }

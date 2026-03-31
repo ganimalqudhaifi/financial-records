@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { useEffect } from "react";
-import { AppLayout, RecordsOrganism } from "@/components";
 import { setAccounts } from "@/features/account/account.slice";
 import {
   selectDemo,
@@ -10,6 +9,8 @@ import {
   setIsDemo,
 } from "@/features/demo/demo.slice";
 import { setRecords } from "@/features/record/record.slice";
+import AppLayout from "@/features/records/components/AppLayout";
+import RecordsView from "@/features/records/components/RecordsView";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getData } from "@/utils/data";
 
@@ -57,7 +58,7 @@ export default function DemoPage() {
       <AppLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
           <h2 className="font-medium text-3xl mb-4">Table</h2>
-          <RecordsOrganism />
+          <RecordsView />
         </div>
       </AppLayout>
     </>

@@ -13,7 +13,7 @@ import {
 import { Account } from "@/features/account/account.types";
 import { selectDemo } from "@/features/demo/demo.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Modal from "../Modal";
+import Modal from "../../../components/Modal";
 
 type EditableAccountProps = {
   account: Account;

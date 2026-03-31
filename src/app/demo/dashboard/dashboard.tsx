@@ -2,7 +2,6 @@
 
 import Head from "next/head";
 import { useEffect } from "react";
-import { AppLayout, RecordsChart, RecordsInformation } from "@/components";
 import { setAccounts } from "@/features/account/account.slice";
 import {
   selectDemo,
@@ -10,6 +9,9 @@ import {
   setIsDemo,
 } from "@/features/demo/demo.slice";
 import { setRecords } from "@/features/record/record.slice";
+import AppLayout from "@/features/records/components/AppLayout";
+import RecordsChart from "@/features/records/components/RecordsChart";
+import RecordsInformation from "@/features/records/components/RecordsInformation";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getData } from "@/utils";
 

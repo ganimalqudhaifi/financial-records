@@ -6,7 +6,7 @@ import RecordsSearch from "./RecordsSearch";
 import RecordsSlice from "./RecordsSlice";
 import RecordsTable from "./RecordsTable";
 
-export default function RecordsOrganism() {
+export default function RecordsView() {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);

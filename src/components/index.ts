@@ -8,10 +8,10 @@ export { default as Modal } from "./Modal";
 // export { default as HomeUserDropdown } from "../features/home/HomeUserDropdown";
 // export { default as HomeNavigationDropdown } from "../features/home/HomeNavigationDropdown";
 
-export { default as AppLayout } from "./App/AppLayout";
-export { default as AppSidebar } from "./App/AppSidebar";
-export { default as RecordsChart } from "./App/RecordsChart";
-export { default as RecordsOrganism } from "./App/RecordsOrganism";
-export { default as EditableAccount } from "./App/EditableAccount";
-export { default as AccountsDropdown } from "./App/AccountsDropdown";
-export { default as RecordsInformation } from "./App/RecordsInformation";
+// export { default as AppLayout } from "../features/records/components/AppLayout";
+// export { default as AppSidebar } from "../features/records/components/AppSidebar";
+// export { default as RecordsChart } from "../features/records/components/RecordsChart";
+// export { default as RecordsOrganism } from "../features/records/components/RecordsView";
+// export { default as EditableAccount } from "../features/records/components/EditableAccount";
+// export { default as AccountsDropdown } from "../features/records/components/AccountsDropdown";
+// export { default as RecordsInformation } from "../features/records/components/RecordsInformation";

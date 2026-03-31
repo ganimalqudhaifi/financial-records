@@ -1,6 +1,6 @@
 "use client";
 
-import { AppLayout } from "@/components";
+import AppLayout from "@/features/records/components/AppLayout";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import AccountList from "./AccountList";
 import PersonalInformationForm from "./PersonalInformationForm";

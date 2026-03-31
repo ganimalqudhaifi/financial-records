@@ -1,5 +1,5 @@
 import categories from "@/data/categories.json";
-import { Record } from "@/types";
+import { Record } from "@/features/record/record.types";
 import { formatDateDMY } from "@/utils/templateDate";
 import RecordsActionDelete from "./RecordsActionDelete";
 import RecordsActionEdit from "./RecordsActionEdit";

@@ -13,7 +13,7 @@ import { Bar } from "react-chartjs-2";
 import { useSelector } from "react-redux";
 import { selectAccounts } from "@/features/account/account.slice";
 import { selectRecords } from "@/features/record/record.slice";
-import Modal from "../Modal";
+import Modal from "../../../components/Modal";
 
 ChartJS.register(
   CategoryScale,

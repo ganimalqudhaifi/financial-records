@@ -1,7 +1,9 @@
 "use client";
 
-import { AppLayout, RecordsChart, RecordsInformation } from "@/components";
 import { setRecords } from "@/features/record/record.slice";
+import AppLayout from "@/features/records/components/AppLayout";
+import RecordsChart from "@/features/records/components/RecordsChart";
+import RecordsInformation from "@/features/records/components/RecordsInformation";
 import { selectUser } from "@/features/user/user.slice";
 import { useDatabaseObserver } from "@/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

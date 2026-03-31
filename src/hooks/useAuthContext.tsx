@@ -10,7 +10,7 @@ export function useAuthContext() {
     );
   }
 
-  const { user, setUser } = contextValue;
+  const { user } = contextValue;
 
-  return { user, setUser };
+  return { user };
 }

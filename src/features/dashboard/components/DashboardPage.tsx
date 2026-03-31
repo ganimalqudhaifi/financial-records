@@ -1,11 +1,11 @@
 "use client";
 
 import { setRecords } from "@/features/record/record.slice";
-import AppLayout from "@/features/records/components/AppLayout";
 import RecordsChart from "@/features/records/components/RecordsChart";
 import RecordsInformation from "@/features/records/components/RecordsInformation";
+import RecordsLayout from "@/features/records/components/RecordsLayout";
 import { selectUser } from "@/features/user/user.slice";
-import { useDatabaseObserver } from "@/hooks";
+import { useDatabaseObserver } from "@/shared/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 export default function DashboardPage() {
@@ -18,13 +18,13 @@ export default function DashboardPage() {
 
   if (user) {
     return (
-      <AppLayout user={user}>
+      <RecordsLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
           <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
           <RecordsInformation />
           <RecordsChart />
         </div>
-      </AppLayout>
+      </RecordsLayout>
     );
   }
 }

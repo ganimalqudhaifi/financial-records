@@ -8,16 +8,16 @@ import { TbChartPieFilled, TbLogout } from "react-icons/tb";
 import { setAccounts } from "@/features/account/account.slice";
 import { selectDemo } from "@/features/demo/demo.slice";
 import { fetchUserLogOut } from "@/features/user/user.slice";
-import { useDatabaseObserver } from "@/hooks";
+import { useDatabaseObserver } from "@/shared/hooks";
+import { DataUser } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { DataUser } from "@/types";
 import AccountsDropdown from "./AccountsDropdown";
 
-type AppSidebarProps = {
+type RecordsSidebarProps = {
   user: DataUser;
 };
 
-export default function AppSidebar({ user }: AppSidebarProps) {
+export default function RecordsSidebar({ user }: RecordsSidebarProps) {
   const { isDemo } = useAppSelector(selectDemo);
   const dispatch = useAppDispatch();
 

@@ -1,10 +1,10 @@
 import { updateProfile } from "firebase/auth";
 import Image from "next/image";
 import React from "react";
-import { Modal } from "@/components";
 import { auth } from "@/features/auth/services/auth.client";
-import { DataUser } from "@/types";
-import { alertToast } from "@/utils";
+import Modal from "@/shared/components/Modal";
+import { DataUser } from "@/shared/types";
+import { alertToast } from "@/shared/utils";
 
 interface AvatarModalProps {
   onClose: () => void;

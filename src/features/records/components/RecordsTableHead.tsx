@@ -4,7 +4,7 @@ import {
   updateAccount,
 } from "@/features/account/account.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Modal from "../../../components/Modal";
+import Modal from "../../../shared/components/Modal";
 
 export default function RecordsTableHead() {
   const { selectedAccount } = useAppSelector(selectAccounts);

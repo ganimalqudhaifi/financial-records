@@ -9,11 +9,11 @@ import {
   setIsDemo,
 } from "@/features/demo/demo.slice";
 import { setRecords } from "@/features/record/record.slice";
-import AppLayout from "@/features/records/components/AppLayout";
 import RecordsChart from "@/features/records/components/RecordsChart";
 import RecordsInformation from "@/features/records/components/RecordsInformation";
+import RecordsLayout from "@/features/records/components/RecordsLayout";
+import { getData } from "@/shared/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { getData } from "@/utils";
 
 const user = {
   uid: "demouser",
@@ -56,13 +56,13 @@ export default function DemoDashboard() {
         <title>Financial Records - Demo Dashboard</title>
       </Head>
 
-      <AppLayout user={user}>
+      <RecordsLayout user={user}>
         <div className="w-full p-4 lg:ml-64">
           <h2 className="font-medium text-3xl mb-4">Dashboard</h2>
           <RecordsInformation />
           <RecordsChart />
         </div>
-      </AppLayout>
+      </RecordsLayout>
     </>
   );
 }

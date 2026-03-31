@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { IoEye, IoEyeOff, IoLockClosed, IoPerson } from "react-icons/io5";
-import { alertToast } from "@/utils";
+import { alertToast } from "@/shared/utils";
 import { useLogin } from "../hooks/useLogin";
 
 export default function LoginForm() {

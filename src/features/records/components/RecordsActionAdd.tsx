@@ -1,12 +1,12 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import categories from "@/data/categories.json";
 import { selectAccounts } from "@/features/account/account.slice";
 import { selectDemo } from "@/features/demo/demo.slice";
 import { firebaseAddRecord } from "@/features/record/record.service";
 import { addRecord } from "@/features/record/record.slice";
+import categories from "@/shared/data/categories.json";
+import { successToast } from "@/shared/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { successToast } from "@/utils";
-import Modal from "../../../components/Modal";
+import Modal from "../../../shared/components/Modal";
 import InputField from "./InputField";
 import SelectField from "./SelectField";
 

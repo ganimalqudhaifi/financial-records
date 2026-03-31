@@ -6,8 +6,8 @@ import {
   selectUser,
   selectUserFetchStatus,
 } from "@/features/user/user.slice";
+import { DataUser } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { DataUser } from "@/types";
 
 type AuthContext = {
   user: DataUser | null;

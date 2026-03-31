@@ -2,7 +2,7 @@
 
 import { fetchUser } from "@/features/user/user.slice";
 import { useAppDispatch } from "@/store/hooks";
-import { alertToast } from "@/utils";
+import { alertToast } from "@/shared/utils";
 import { useRouter } from "next/navigation";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 

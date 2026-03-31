@@ -6,8 +6,8 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { DataUser } from "@/types";
-import { handleAuthError } from "@/utils/getErrorMessage";
+import { DataUser } from "@/shared/types";
+import { handleAuthError } from "@/shared/utils/getErrorMessage";
 import { app } from "@/lib/firebase/client";
 
 export const auth = getAuth(app);

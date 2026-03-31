@@ -125,7 +125,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 financial-records-app/
 ├── components/
 │   ├── App/
-│   │   ├── AppLayout.tsx
+│   │   ├── RecordsLayout.tsx
 │   │   ├── AppSidebar.tsx
 │   │   ├── RecordsChart.tsx
 │   │   ├── RecordsOrganism.tsx

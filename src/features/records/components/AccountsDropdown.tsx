@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
-import {
-  selectAccount,
-  selectAccounts,
-} from "@/features/account/account.slice";
+import { selectAccounts } from "@/features/account/account.selector";
+import { selectAccount } from "@/features/account/account.slice";
 import { Account } from "@/features/account/account.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 

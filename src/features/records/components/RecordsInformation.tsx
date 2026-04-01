@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAccounts } from "@/features/account/account.slice";
-import { selectRecords } from "@/features/record/record.slice";
+import { selectAccounts } from "@/features/account/account.selector";
+import { selectRecords } from "@/features/records/records.selector";
 
 export default function RecordsInformation() {
   const { selectedAccount } = useSelector(selectAccounts);

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
-import { selectDemo } from "@/features/demo/demo.slice";
-import { firebaseDeleteRecord } from "@/features/record/record.service";
-import { deleteRecord } from "@/features/record/record.slice";
+import { selectDemo } from "@/features/demo/demo.selector";
+import { firebaseDeleteRecord } from "@/features/records/record.service";
+import { deleteRecord } from "@/features/records/records.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../../../shared/components/Modal";
 

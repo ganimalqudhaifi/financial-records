@@ -1,5 +1,4 @@
-import { Record } from "@/features/record/record.types";
-import type { RootState } from "@/store/store";
+import { Record } from "@/features/records/records.types";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface RecordsState {
@@ -40,7 +39,5 @@ export const recordsSlice = createSlice({
 
 export const { setRecords, addRecord, updateRecord, deleteRecord } =
   recordsSlice.actions;
-
-export const selectRecords = (state: RootState) => state.records;
 
 export default recordsSlice.reducer;

@@ -1,10 +1,10 @@
 "use client";
 
-import { setRecords } from "@/features/record/record.slice";
 import RecordsChart from "@/features/records/components/RecordsChart";
 import RecordsInformation from "@/features/records/components/RecordsInformation";
 import RecordsLayout from "@/features/records/components/RecordsLayout";
-import { selectUser } from "@/features/user/user.slice";
+import { setRecords } from "@/features/records/records.slice";
+import { selectUser } from "@/features/user/user.selector";
 import { useDatabaseObserver } from "@/shared/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 

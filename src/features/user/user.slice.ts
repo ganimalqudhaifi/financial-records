@@ -1,6 +1,6 @@
-import { DataUser } from "@/shared/types";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
+import { createSlice } from "@reduxjs/toolkit";
+import { fetchUser, fetchUserLogOut } from "./user.thunk";
+import { DataUser } from "./user.types";
 
 interface UserState {
   user: DataUser | null;
@@ -11,32 +11,6 @@ const initialState: UserState = {
   user: null,
   status: "idle",
 };
-
-export const fetchUser = createAsyncThunk(
-  "user/fetchUser",
-  async (_, { rejectWithValue }) => {
-    const res = await fetch("/api/user", {
-      method: "GET",
-    });
-    if (res.status === 200) {
-      return res.json();
-    } else if (res.status === 401) {
-      // Handle unauthorized response
-      return rejectWithValue("Unauthorized: Token missing");
-    } else {
-      return rejectWithValue("Failed to fetch user data");
-    }
-  },
-);
-
-export const fetchUserLogOut = createAsyncThunk(
-  "user/fetchUserLogOut",
-  async () => {
-    await fetch("/api/logout", {
-      method: "GET",
-    });
-  },
-);
 
 const userSlice = createSlice({
   name: "user",
@@ -59,9 +33,5 @@ const userSlice = createSlice({
       });
   },
 });
-
-export const selectUser = (state: RootState) => state.user;
-
-export const selectUserFetchStatus = (state: RootState) => state.user.status;
 
 export default userSlice.reducer;

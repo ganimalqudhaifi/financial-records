@@ -1,4 +1,4 @@
-import { Record } from "@/features/record/record.types";
+import { Record } from "@/features/records/records.types";
 import categories from "@/shared/data/categories.json";
 import { formatDateDMY } from "@/shared/utils/templateDate";
 import RecordsActionDelete from "./RecordsActionDelete";

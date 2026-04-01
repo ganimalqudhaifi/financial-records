@@ -1,8 +1,6 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import {
-  selectAccounts,
-  updateAccount,
-} from "@/features/account/account.slice";
+import { selectAccounts } from "@/features/account/account.selector";
+import { updateAccount } from "@/features/account/account.slice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../../../shared/components/Modal";
 

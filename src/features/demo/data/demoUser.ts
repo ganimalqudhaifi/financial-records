@@ -1,4 +1,4 @@
-import { DataUser } from "@/shared/types";
+import { DataUser } from "@/features/user/user.types";
 
 export const demoUser: DataUser = {
   uid: "demouser",

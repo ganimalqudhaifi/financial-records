@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { DataUser } from "@/shared/types";
+import { DataUser } from "@/features/user/user.types";
 import RecordsSidebar from "./RecordsSidebar";
 
 type RecordsLayoutProps = {

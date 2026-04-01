@@ -1,7 +1,7 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import accountsReducer from "../features/account/account.slice";
 import demoReducer from "../features/demo/demo.slice";
-import recordsReducer from "../features/record/record.slice";
+import recordsReducer from "../features/records/records.slice";
 import userReducer from "../features/user/user.slice";
 
 export const store = configureStore({

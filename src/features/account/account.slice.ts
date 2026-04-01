@@ -1,5 +1,4 @@
 import { Account } from "@/features/account/account.types";
-import type { RootState } from "@/store/store";
 import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 
 interface AccountsState {
@@ -51,6 +50,5 @@ export const {
   selectAccount,
 } = accountsSlice.actions;
 
-export const selectAccounts = (state: RootState) => state.accounts;
 
 export default accountsSlice.reducer;

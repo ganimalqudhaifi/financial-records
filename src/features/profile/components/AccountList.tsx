@@ -1,6 +1,7 @@
+import { selectAccounts } from "@/features/account/account.selector";
 import { firebaseAddAccount } from "@/features/account/account.service";
-import { addAccount, selectAccounts } from "@/features/account/account.slice";
-import { selectDemo } from "@/features/demo/demo.slice";
+import { addAccount } from "@/features/account/account.slice";
+import { selectDemo } from "@/features/demo/demo.selector";
 import EditableAccount from "@/features/profile/components/EditableAccount";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 

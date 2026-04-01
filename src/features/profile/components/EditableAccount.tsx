@@ -1,5 +1,6 @@
 import { ChangeEvent, KeyboardEvent, useState } from "react";
 import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
+import { selectAccounts } from "@/features/account/account.selector";
 import {
   firebaseDeleteAccount,
   firebaseUpdateAccount,
@@ -7,11 +8,10 @@ import {
 import {
   deleteAccount,
   selectAccount,
-  selectAccounts,
   updateAccount,
 } from "@/features/account/account.slice";
 import { Account } from "@/features/account/account.types";
-import { selectDemo } from "@/features/demo/demo.slice";
+import { selectDemo } from "@/features/demo/demo.selector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import Modal from "../../../shared/components/Modal";
 

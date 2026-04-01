@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectAccounts } from "@/features/account/account.slice";
-import { selectRecords } from "@/features/record/record.slice";
-import { Record } from "@/features/record/record.types";
+import { selectAccounts } from "@/features/account/account.selector";
+import { selectRecords } from "@/features/records/records.selector";
+import { Record } from "@/features/records/records.types";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";

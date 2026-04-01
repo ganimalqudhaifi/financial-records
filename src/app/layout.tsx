@@ -1,4 +1,4 @@
-import AuthContextProvider from "@/context/AuthContext";
+import AuthContextProvider from "@/app/AuthContextProvider";
 import StoreProvider from "./StoreProvider";
 import "./globals.css";
 

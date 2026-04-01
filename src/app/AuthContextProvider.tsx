@@ -2,11 +2,11 @@
 
 import { PropsWithChildren, createContext, useEffect, useMemo } from "react";
 import {
-  fetchUser,
   selectUser,
   selectUserFetchStatus,
-} from "@/features/user/user.slice";
-import { DataUser } from "@/shared/types";
+} from "@/features/user/user.selector";
+import { fetchUser } from "@/features/user/user.thunk";
+import { DataUser } from "@/features/user/user.types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 type AuthContext = {

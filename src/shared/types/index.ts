@@ -1,10 +1,4 @@
-export interface DataUser {
-  displayName: string;
-  email: string;
-  phoneNumber: string;
-  photoURL: string;
-  uid: string;
-}
+
 
 export class AuthenticationError extends Error {
   code: string;

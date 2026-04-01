@@ -1,7 +1,7 @@
 import { updateProfile } from "firebase/auth";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import { auth } from "@/features/auth/services/auth.client";
-import { DataUser } from "@/shared/types";
+import { DataUser } from "@/features/user/user.types";
 import { alertToast } from "@/shared/utils";
 import AvatarModal from "./AvatarModal";
 

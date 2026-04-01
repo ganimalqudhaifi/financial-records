@@ -1,6 +1,6 @@
 'use client'
 
-import { fetchUser } from "@/features/user/user.slice";
+import { fetchUser } from "@/features/user/user.thunk";
 import { useAppDispatch } from "@/store/hooks";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

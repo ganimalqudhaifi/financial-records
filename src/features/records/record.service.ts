@@ -1,7 +1,7 @@
 import { database } from "@/lib/firebase/database";
 import { getCurrentUserUid } from "@/shared/auth/getCurrentUserUid";
 import { push, ref, remove, set } from "firebase/database";
-import { Record } from "./record.types";
+import { Record } from "./records.types";
 
 export const firebaseAddRecord = async (payload: Omit<Record, "id">) => {
   const uid = await getCurrentUserUid();

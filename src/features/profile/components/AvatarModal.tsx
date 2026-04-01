@@ -2,8 +2,8 @@ import { updateProfile } from "firebase/auth";
 import Image from "next/image";
 import React from "react";
 import { auth } from "@/features/auth/services/auth.client";
+import { DataUser } from "@/features/user/user.types";
 import Modal from "@/shared/components/Modal";
-import { DataUser } from "@/shared/types";
 import { alertToast } from "@/shared/utils";
 
 interface AvatarModalProps {

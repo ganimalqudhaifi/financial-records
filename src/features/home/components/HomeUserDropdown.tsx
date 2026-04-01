@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Offline, Online } from "react-detect-offline";
 import { IoPerson } from "react-icons/io5";
-import { fetchUserLogOut, selectUser } from "@/features/user/user.slice";
+import { selectUser } from "@/features/user/user.selector";
+import { fetchUserLogOut } from "@/features/user/user.thunk";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
 interface HomeUserDropdownProps {

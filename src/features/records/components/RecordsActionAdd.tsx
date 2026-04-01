@@ -1,8 +1,8 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { selectAccounts } from "@/features/account/account.slice";
-import { selectDemo } from "@/features/demo/demo.slice";
-import { firebaseAddRecord } from "@/features/record/record.service";
-import { addRecord } from "@/features/record/record.slice";
+import { selectAccounts } from "@/features/account/account.selector";
+import { selectDemo } from "@/features/demo/demo.selector";
+import { firebaseAddRecord } from "@/features/records/record.service";
+import { addRecord } from "@/features/records/records.slice";
 import categories from "@/shared/data/categories.json";
 import { successToast } from "@/shared/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

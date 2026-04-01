@@ -6,10 +6,10 @@ import { BiSolidGridAlt, BiSolidUser, BiX } from "react-icons/bi";
 import { HiMiniBars3BottomLeft } from "react-icons/hi2";
 import { TbChartPieFilled, TbLogout } from "react-icons/tb";
 import { setAccounts } from "@/features/account/account.slice";
-import { selectDemo } from "@/features/demo/demo.slice";
-import { fetchUserLogOut } from "@/features/user/user.slice";
+import { selectDemo } from "@/features/demo/demo.selector";
+import { fetchUserLogOut } from "@/features/user/user.thunk";
+import { DataUser } from "@/features/user/user.types";
 import { useDatabaseObserver } from "@/shared/hooks";
-import { DataUser } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import AccountsDropdown from "./AccountsDropdown";
 

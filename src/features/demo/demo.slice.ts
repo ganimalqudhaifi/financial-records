@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../store/store";
 
 interface DemoState {
   isDemo: boolean;
@@ -25,7 +24,5 @@ export const demoSlice = createSlice({
 });
 
 export const { setHasDemoLoadRecords, setIsDemo } = demoSlice.actions;
-
-export const selectDemo = (state: RootState) => state.demo;
 
 export default demoSlice.reducer;

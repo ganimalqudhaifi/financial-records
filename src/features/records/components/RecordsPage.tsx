@@ -1,7 +1,7 @@
 "use client";
 
-import { setRecords } from "@/features/record/record.slice";
-import { selectUser } from "@/features/user/user.slice";
+import { setRecords } from "@/features/records/records.slice";
+import { selectUser } from "@/features/user/user.selector";
 import { useDatabaseObserver } from "@/shared/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import RecordsLayout from "./RecordsLayout";

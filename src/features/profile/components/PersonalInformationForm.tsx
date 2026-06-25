@@ -1,7 +1,10 @@
+"use client";
+
 import { updateProfile } from "firebase/auth";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { FiSave, FiEdit2, FiUser, FiMail, FiPhone } from "react-icons/fi";
 import { auth } from "@/features/auth/services/auth.client";
-import { DataUser } from "@/features/user/user.types";
+import type { DataUser } from "@/features/user/user.types";
 import { alertToast } from "@/shared/utils";
 import AvatarModal from "./AvatarModal";
 
@@ -15,7 +18,8 @@ export default function PersonalInformationForm({
   user,
 }: PersonalInformationFormProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [edits, setEdits] = useState({ personalInformation: false });
+  const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [inputs, setInputs] = useState<TInputs>({
     displayName: "",
     email: "",
@@ -38,95 +42,190 @@ export default function PersonalInformationForm({
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await updateProfile(auth.currentUser!, { displayName: inputs.displayName })
-      .then(() => {})
-      .catch((error) => {
-        alertToast(error.message);
+    setIsSaving(true);
+    try {
+      await updateProfile(auth.currentUser!, {
+        displayName: inputs.displayName,
       });
+      setIsEditing(false);
+    } catch (error: unknown) {
+      const message =
+        error instanceof Error ? error.message : "Gagal menyimpan data";
+      alertToast(message);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
+  const toggleEdit = () => {
+    if (isEditing && user) {
+      // Reset inputs if cancelling
+      setInputs({
+        displayName: user.displayName ?? "",
+        email: user.email ?? "",
+        phoneNumber: user.phoneNumber ?? "",
+      });
+    }
+    setIsEditing(!isEditing);
+  };
+
+  const fields = [
+    {
+      id: "displayName",
+      label: "Display Name",
+      type: "text",
+      value: inputs.displayName || "",
+      icon: FiUser,
+      editable: true,
+      placeholder: "Nama tampilan",
+    },
+    {
+      id: "email",
+      label: "Email Address",
+      type: "text",
+      value: inputs.email || "",
+      icon: FiMail,
+      editable: false,
+      placeholder: "email@example.com",
+    },
+    {
+      id: "phoneNumber",
+      label: "Phone",
+      type: "tel",
+      value: inputs.phoneNumber || "-",
+      icon: FiPhone,
+      editable: false,
+      placeholder: "-",
+    },
+  ];
+
   return (
-    <div className="p-5 w-full bg-white rounded">
-      <h3 className="font-medium text-xl">Personal Information</h3>
-      <form
-        onSubmit={handleSubmit}
-        className={`group ${edits.personalInformation && "can-edit"} mt-5 grid grid-cols-3 md:grid-cols-6 text-gray-600`}
-      >
-        <div className="grid grid-cols-2 col-span-3 md:col-span-5 gap-x-5 gap-y-3">
-          <div className="flex flex-col">
-            <label htmlFor="displayName" className="mb-1 text-sm">
-              Display Name
-            </label>
-            <input
-              id="displayName"
-              name="displayName"
-              type="text"
-              placeholder="displayName"
-              onChange={handleInputs}
-              value={inputs.displayName!}
-              className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400 "
-              disabled={!edits.personalInformation}
-            />
-          </div>
-          <div className="flex flex-col ">
-            <label htmlFor="email" className="mb-1 text-sm">
-              Email Address
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="text"
-              placeholder="emailAddress"
-              onChange={handleInputs}
-              value={inputs.email!}
-              className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400"
-              disabled
-            />
-          </div>
-          <div className="flex flex-col ">
-            <label htmlFor="phoneNumber" className="mb-1 text-sm">
-              Phone
-            </label>
-            <input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="tel"
-              placeholder="-"
-              onChange={handleInputs}
-              value={inputs.phoneNumber || "-"}
-              className="border border-gray-300 p-1 disabled:bg-gray-200 rounded focus:border-gray-800 focus:outline-none group-[.can-edit]:border-gray-400"
-              disabled
-            />
-          </div>
+    <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+      <div className="flex items-center justify-between">
+        <div>
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50">
+            Informasi Pribadi
+          </h3>
+          <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
+            Kelola data profil Anda
+          </p>
         </div>
-        <div className="md:px-5 pb-3 pt-6 grid col-span-3 md:col-span-1 justify-stretch items-start">
-          <button
-            onClick={(e) => {
-              edits.personalInformation && handleSubmit(e);
-              setEdits((value) => ({
-                personalInformation: !value.personalInformation,
-              }));
-            }}
-            className="grid grid-flow-col px-16 md:px-2 py-1 border justify-center items-center border-slate-300 hover:border-slate-500 active:border-slate-400 text-slate-600 hover:text-slate-700 active:text-slate-600 rounded"
-          >
-            <p className="text-md">
-              {edits.personalInformation ? "Save" : "Edit"}
-            </p>
-            {edits.personalInformation ? (
-              <i className="ml-1 bx bx-save text-base " />
-            ) : (
-              <i className="ml-1 bx bx-edit-alt text-base " />
-            )}
-          </button>
-          <button
-            className="grid grid-flow-col px-16 py-1 mt-4 md:px-2 lg:mt-2 border justify-center items-center bg-slate-700 hover:bg-slate-800/90 border-slate-800 active:border-slate-600 text-slate-200 hover:text-slate-100 active:text-slate-200 rounded"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Change Avatar
-          </button>
-          {isModalOpen && <AvatarModal onClose={() => setIsModalOpen(false)} />}
+        <button
+          type="button"
+          onClick={toggleEdit}
+          className="inline-flex items-center gap-2 rounded-lg border border-slate-300 dark:border-slate-700 px-4 py-2 text-sm font-semibold text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+          aria-label={isEditing ? "Batalkan edit" : "Edit informasi pribadi"}
+        >
+          {isEditing ? (
+            <>
+              <FiSave className="w-4 h-4" />
+              Batal
+            </>
+          ) : (
+            <>
+              <FiEdit2 className="w-4 h-4" />
+              Edit
+            </>
+          )}
+        </button>
+      </div>
+
+      <form onSubmit={handleSubmit} className="mt-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {fields.map((field) => {
+            const Icon = field.icon;
+            const isFieldDisabled = !isEditing || !field.editable;
+            return (
+              <div key={field.id}>
+                <label
+                  htmlFor={field.id}
+                  className="flex items-center gap-1.5 text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
+                >
+                  <Icon className="w-3.5 h-3.5 text-slate-400" />
+                  {field.label}
+                </label>
+                <input
+                  id={field.id}
+                  name={field.id}
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  onChange={handleInputs}
+                  value={field.value}
+                  disabled={isFieldDisabled}
+                  className={`w-full rounded-lg border bg-white dark:bg-slate-900 px-4 py-3 text-base text-slate-900 dark:text-slate-100 placeholder:text-slate-400 transition-all duration-200 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 disabled:cursor-not-allowed disabled:opacity-60 ${
+                    isEditing && field.editable
+                      ? "border-blue-400 dark:border-blue-500 ring-1 ring-blue-500/20"
+                      : "border-slate-300 dark:border-slate-700"
+                  }`}
+                  aria-describedby={`${field.id}-desc`}
+                />
+                {!field.editable && (
+                  <p
+                    id={`${field.id}-desc`}
+                    className="mt-1 text-xs text-slate-400 dark:text-slate-500 italic"
+                  >
+                    Tidak dapat diubah
+                  </p>
+                )}
+              </div>
+            );
+          })}
         </div>
+
+        {isEditing && (
+          <div className="mt-6 flex items-center gap-3 pt-5 border-t border-slate-200 dark:border-slate-700">
+            <button
+              type="submit"
+              disabled={isSaving}
+              className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+            >
+              {isSaving ? (
+                <>
+                  <svg
+                    className="animate-spin w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                    />
+                  </svg>
+                  Menyimpan...
+                </>
+              ) : (
+                <>
+                  <FiSave className="w-4 h-4" />
+                  Simpan
+                </>
+              )}
+            </button>
+            <button
+              type="button"
+              onClick={toggleEdit}
+              className="rounded-lg border border-slate-300 dark:border-slate-700 px-6 py-3 font-semibold text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+            >
+              Batal
+            </button>
+          </div>
+        )}
       </form>
+
+      {isModalOpen && (
+        <AvatarModal
+          onClose={() => setIsModalOpen(false)}
+          currentPhotoURL={user?.photoURL || ""}
+        />
+      )}
     </div>
   );
 }

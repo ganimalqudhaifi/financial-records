@@ -1,5 +1,8 @@
+"use client";
+
 import { ChangeEvent, KeyboardEvent, useState } from "react";
-import { IoAlertCircleOutline, IoTrashOutline } from "react-icons/io5";
+import { IoTrashOutline, IoAlertCircleOutline } from "react-icons/io5";
+import { FiEdit2 } from "react-icons/fi";
 import { selectAccounts } from "@/features/account/account.selector";
 import {
   firebaseDeleteAccount,
@@ -10,14 +13,23 @@ import {
   selectAccount,
   updateAccount,
 } from "@/features/account/account.slice";
-import { Account } from "@/features/account/account.types";
+import type { Account } from "@/features/account/account.types";
 import { selectDemo } from "@/features/demo/demo.selector";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import Modal from "../../../shared/components/Modal";
+import Modal from "@/shared/components/Modal";
 
 type EditableAccountProps = {
   account: Account;
 };
+
+function formatCurrency(value: number): string {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(value);
+}
 
 export default function EditableAccount({ account }: EditableAccountProps) {
   const { accounts } = useAppSelector(selectAccounts);
@@ -34,15 +46,19 @@ export default function EditableAccount({ account }: EditableAccountProps) {
 
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      const updatedAccount = { ...account, name: inputValue };
-      setIsDisabled(true);
-      !isDemo
-        ? firebaseUpdateAccount(updatedAccount)
-        : dispatch(updateAccount(updatedAccount));
+      saveName();
     }
   };
 
   const handleBlur = () => {
+    saveName();
+  };
+
+  const saveName = () => {
+    if (inputValue === account.name) {
+      setIsDisabled(true);
+      return;
+    }
     const updatedAccount = { ...account, name: inputValue };
     setIsDisabled(true);
     !isDemo
@@ -64,58 +80,110 @@ export default function EditableAccount({ account }: EditableAccountProps) {
   if (isDisabled) {
     return (
       <div
-        className="relative w-full px-2 py-2 rounded-lg border border-gray-400 bg-gray-200 text-gray-700 hover:text-gray-800"
+        className="relative p-4 cursor-pointer group"
         onDoubleClick={handleDoubleClick}
       >
-        <button
-          className="absolute inset-y-auto right-0 px-1 text-gray-700 hover:text-red-700 hover:animate-wiggle"
-          onClick={() => setIsModalOpen(true)}
-        >
-          <IoTrashOutline className="w-6 h-6" />
-        </button>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-semibold text-slate-900 dark:text-slate-100 truncate">
+              {account.name}
+            </p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+              Saldo awal
+            </p>
+            <p className="mt-0.5 text-base font-semibold text-slate-900 dark:text-slate-50 tabular-nums">
+              {formatCurrency(account.initialBalance)}
+            </p>
+          </div>
 
+          <div className="flex items-center gap-1 shrink-0">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsDisabled(false);
+              }}
+              aria-label="Edit nama akun"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+            >
+              <FiEdit2 className="w-4 h-4" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsModalOpen(true);
+              }}
+              aria-label="Hapus akun"
+              className="inline-flex items-center justify-center w-8 h-8 rounded-lg text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors duration-200 opacity-0 group-hover:opacity-100 focus:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
+            >
+              <IoTrashOutline className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+
+        {/* Delete Confirmation Modal */}
         {isModalOpen && (
           <Modal onClose={() => setIsModalOpen(false)}>
-            <div className="w-screen max-w-sm">
-              <IoAlertCircleOutline className="mx-auto mb-4 text-gray-400 w-14 h-14" />
-              <h3 className="px-3 my-7 text-lg lg:text-xl text-gray-500 text-center whitespace-normal">
-                Apakah anda yakin ingin menghapus
-                <br />
-                {account.name}
+            <div className="text-center">
+              <IoAlertCircleOutline className="mx-auto mb-4 text-amber-500 w-14 h-14" />
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-50 mb-3">
+                Hapus Akun
               </h3>
-              <div className="flex justify-center">
+              <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                Apakah Anda yakin ingin menghapus akun{" "}
+                <span className="font-semibold text-slate-900 dark:text-slate-100">
+                  {account.name}
+                </span>
+                ?
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">
+                Semua data terkait akun ini akan dihapus secara permanen.
+              </p>
+              <div className="flex justify-center gap-3 mt-8">
                 <button
-                  onClick={handleDelete}
-                  className="inline-flex items-center px-5 py-2.5 mr-2 lg:mr-3 text-gray-100 text-center text-sm lg:text-lg font-medium bg-red-600 border border-red-800 rounded-lg hover:grayscale-[20%] focus:ring-4 focus:outline-none focus:ring-red-400/50"
-                >
-                  Hapus
-                </button>
-                <button
-                  className="px-5 py-2.5 text-gray-600 text-sm lg:text-lg font-medium hover:text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200/50"
+                  type="button"
                   onClick={() => setIsModalOpen(false)}
+                  className="rounded-lg border border-slate-300 dark:border-slate-700 px-6 py-3 font-semibold text-slate-700 dark:text-slate-300 transition-colors duration-200 hover:bg-slate-100 dark:hover:bg-slate-800 focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
                 >
                   Batal
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDelete}
+                  className="rounded-lg bg-red-600 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-red-700 focus-visible:ring-2 focus-visible:ring-red-500 cursor-pointer"
+                >
+                  Hapus
                 </button>
               </div>
             </div>
           </Modal>
         )}
-        {account.name}
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="p-4">
+      <div className="flex items-center gap-2 mb-1">
+        <FiEdit2 className="w-3.5 h-3.5 text-blue-500 animate-pulse" />
+        <span className="text-xs font-medium text-blue-600 dark:text-blue-400">
+          Mengedit nama akun
+        </span>
+      </div>
       <input
         type="text"
-        // ref={inputRef}
         value={inputValue}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}
         onChange={handleChange}
-        className="w-full px-2 py-2 pr-7 rounded-lg border border-slate-500 bg-gray-100"
+        autoFocus
+        className="w-full rounded-lg border border-blue-400 dark:border-blue-500 bg-white dark:bg-slate-900 px-4 py-3 text-base text-slate-900 dark:text-slate-100 transition-colors duration-200 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
+        aria-label="Nama akun"
       />
+      <p className="mt-1 text-xs text-slate-400 dark:text-slate-500">
+        Tekan Enter untuk menyimpan
+      </p>
     </div>
   );
 }

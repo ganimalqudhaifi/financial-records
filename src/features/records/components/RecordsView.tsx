@@ -1,7 +1,7 @@
 import { useState } from "react";
 import RecordsActionAdd from "./RecordsActionAdd";
 import RecordsFilterPeriod from "./RecordsFilterPeriod";
-import RecordsPaginantion from "./RecordsPagination";
+import RecordsPagination from "./RecordsPagination";
 import RecordsSearch from "./RecordsSearch";
 import RecordsSlice from "./RecordsSlice";
 import RecordsTable from "./RecordsTable";
@@ -48,7 +48,7 @@ export default function RecordsView() {
         itemsPerPage={itemsPerPage}
         searchKeyword={searchKeyword}
       />
-      <RecordsPaginantion
+      <RecordsPagination
         timeRange={timeRange}
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}

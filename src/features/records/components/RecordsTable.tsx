@@ -26,16 +26,19 @@ export default function RecordsTable({
   const [initialBalance, setInitialBalance] = useState(0);
 
   useEffect(() => {
-    setInitialBalance(selectedAccount.initialBalance);
+    if (selectedAccount.id) {
+      setInitialBalance(selectedAccount.initialBalance);
+    }
   }, [selectedAccount]);
 
   const valueDate = (date: Date | string) => {
     const target = new Date(date);
-    return `${target.getFullYear()}-${target.getMonth()}`;
+    const month = String(target.getMonth() + 1).padStart(2, "0");
+    return `${target.getFullYear()}-${month}`;
   };
 
   const filteredAndSortedRecords = useMemo(() => {
-    if (records.length === 0) return [];
+    if (records.length === 0 || !selectedAccount.id) return [];
 
     const filterRecords = (record: Record) => {
       const accountMatches = record.accountId === selectedAccount.id;

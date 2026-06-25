@@ -5,6 +5,7 @@ import { selectUser } from "@/features/user/user.selector";
 import { useDatabaseObserver } from "@/shared/hooks";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import RecordsLayout from "./RecordsLayout";
+import RecordsView from "./RecordsView";
 
 export default function RecordsPage() {
   const dispatch = useAppDispatch();
@@ -14,14 +15,14 @@ export default function RecordsPage() {
     dispatch(setRecords(data));
   });
 
-  if (user) {
-    return (
-      <RecordsLayout user={user}>
-        <div className="w-full p-4 lg:ml-64">
-          <h2 className="font-medium text-3xl mb-4">Table</h2>
-          <RecordsPage />
-        </div>
-      </RecordsLayout>
-    );
-  }
+  if (!user) return null;
+
+  return (
+    <RecordsLayout user={user}>
+      <div className="w-full p-4 lg:ml-64">
+        <h2 className="font-medium text-3xl mb-4">Table</h2>
+        <RecordsView />
+      </div>
+    </RecordsLayout>
+  );
 }

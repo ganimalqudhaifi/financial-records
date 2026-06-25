@@ -13,7 +13,7 @@ export default function RecordsLayout({
   ...rest
 }: RecordsLayoutProps) {
   return (
-    <div className="flex flex-col w-full h-full overflow-auto bg-gray-300/60">
+    <div className="flex flex-col w-full min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-200">
       <div className="lg:flex flex-1 w-full">
         <RecordsSidebar user={user} {...rest} />
         {children}

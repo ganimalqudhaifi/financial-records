@@ -19,8 +19,10 @@ export default function RecordsPage() {
 
   return (
     <RecordsLayout user={user}>
-      <div className="w-full p-4 lg:ml-64">
-        <h2 className="font-medium text-3xl mb-4">Table</h2>
+      <div className="w-full min-h-screen lg:ml-64 p-4 md:p-6 lg:p-8">
+        <h1 className="font-semibold text-2xl md:text-3xl text-slate-900 dark:text-slate-50 mb-6">
+          Table
+        </h1>
         <RecordsView />
       </div>
     </RecordsLayout>

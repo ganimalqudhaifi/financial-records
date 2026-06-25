@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { IoChevronDownOutline } from "react-icons/io5";
 import { selectAccounts } from "@/features/account/account.selector";
 import { selectAccount } from "@/features/account/account.slice";
@@ -9,7 +9,7 @@ export default function AccountsDropdown() {
   const { accounts, selectedAccount } = useAppSelector(selectAccounts);
   const dispatch = useAppDispatch();
 
-  const [isActive, setIsActive] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     if (accounts.length && Object.keys(selectedAccount).length === 0) {
@@ -17,31 +17,48 @@ export default function AccountsDropdown() {
     }
   }, [accounts, dispatch, selectedAccount]);
 
-  const handleSelectAccount = (account: Account) => {
-    setIsActive(!isActive);
-    dispatch(selectAccount(account));
-  };
+  const handleSelectAccount = useCallback(
+    (account: Account) => {
+      setIsOpen(false);
+      dispatch(selectAccount(account));
+    },
+    [dispatch],
+  );
 
   return (
     <div className="my-1.5">
       <button
         type="button"
-        className={`group peer ${isActive && "is-active"} inline-flex justify-between items-center w-full p-2 rounded-lg text-white font-medium hover:bg-slate-800`}
-        onClick={() => setIsActive(!isActive)}
+        onClick={() => setIsOpen(!isOpen)}
+        className="inline-flex justify-between items-center w-full px-3 py-2.5 rounded-lg text-slate-200 font-medium hover:bg-slate-800 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
       >
-        {selectedAccount?.name ? <p>{selectedAccount.name}</p> : <p>...</p>}
-        <IoChevronDownOutline className="ml-2.5 group-[.is-active]:-rotate-90 duration-300" />
+        {selectedAccount?.name ? (
+          <span className="truncate">{selectedAccount.name}</span>
+        ) : (
+          <span className="text-slate-500">Pilih Akun...</span>
+        )}
+        <IoChevronDownOutline
+          className={`ml-2 w-4 h-4 shrink-0 transition-transform duration-200 ${
+            isOpen ? "rotate-0" : "-rotate-90"
+          }`}
+        />
       </button>
-      <div className="overflow-hidden max-h-72 duration-500 peer-[.is-active]:max-h-0 peer-[.is-active]:duration-200">
-        <ul>
+      <div
+        className={`overflow-hidden transition-all duration-300 ${
+          isOpen ? "max-h-72" : "max-h-0"
+        }`}
+      >
+        <ul className="mt-1 space-y-0.5">
           {accounts.map((account) => (
-            <li
-              key={account.id}
-              className="ml-2 text-sm text-slate-400 font-semibold capitalize hover:text-slate-300 hover:cursor-pointer"
-            >
+            <li key={account.id}>
               <button
-                className="w-full p-2 text-left"
+                type="button"
                 onClick={() => handleSelectAccount(account)}
+                className={`w-full px-3 py-2 text-left text-sm rounded-lg transition-colors duration-200 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 ${
+                  selectedAccount.id === account.id
+                    ? "text-white bg-blue-600/20 font-medium"
+                    : "text-slate-400 hover:text-slate-300 hover:bg-slate-800"
+                }`}
               >
                 {account.name}
               </button>

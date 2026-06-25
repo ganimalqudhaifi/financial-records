@@ -1,4 +1,5 @@
 import { ChangeEvent, SyntheticEvent, useState } from "react";
+import { BiEdit } from "react-icons/bi";
 import { selectDemo } from "@/features/demo/demo.selector";
 import { firebaseUpdateRecord } from "@/features/records/record.service";
 import { updateRecord } from "@/features/records/records.slice";
@@ -54,68 +55,67 @@ export default function RecordsActionEdit({
   return (
     <>
       <button
-        className="py-1.5 px-3 text-slate-900 font-bold hover:underline underline-offset-2 decoration-2 rounded"
+        className="inline-flex items-center justify-center p-2 text-xs font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
         onClick={() => setIsModalOpen(true)}
+        aria-label={`Edit catatan ${no}`}
       >
-        Edit
+        <BiEdit className="w-4 h-4" />
       </button>
 
       {isModalOpen && (
         <Modal onClose={() => setIsModalOpen(false)}>
-          <div className="w-screen max-w-md">
-            <h3 className="mb-4 text-xl text-left font-medium text-gray-900 dark:text-white">
-              Mengubah Catatan
-            </h3>
-            <form
-              onSubmit={handleSubmit}
-              spellCheck="false"
-              className="space-y-6 text-left"
+          <h3 className="mb-6 text-xl font-semibold text-slate-900 dark:text-slate-100">
+            Mengubah Catatan
+          </h3>
+          <form
+            onSubmit={handleSubmit}
+            spellCheck="false"
+            className="space-y-5"
+          >
+            <InputField
+              label="Jumlah"
+              type="number"
+              id={`amount`}
+              name="amount"
+              value={inputs.amount}
+              onChange={handleChange}
+              placeholder="Masukkan Jumlah"
+              required
+            />
+            <InputField
+              label="Keterangan"
+              id={`description`}
+              name="description"
+              value={inputs.description}
+              onChange={handleChange}
+              placeholder="Masukkan Keterangan"
+              required
+            />
+            <SelectField
+              label="Kategori"
+              id={`categoryId`}
+              name="categoryId"
+              value={inputs.categoryId}
+              onChange={handleChange}
+              options={categories}
+            />
+            <InputField
+              label="Tanggal"
+              type="date"
+              id={`date`}
+              name="date"
+              value={inputs.date as string}
+              onChange={handleChange}
+              placeholder="Pilih Tanggal"
+              required
+            />
+            <button
+              className="w-full inline-flex items-center justify-center rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors duration-200 hover:bg-blue-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed cursor-pointer"
+              type="submit"
             >
-              <InputField
-                label="Jumlah"
-                type="number"
-                id={`amount`}
-                name="amount"
-                value={inputs.amount}
-                onChange={handleChange}
-                placeholder="Masukkan Jumlah"
-                required
-              />
-              <InputField
-                label="Keterangan"
-                id={`description`}
-                name="description"
-                value={inputs.description}
-                onChange={handleChange}
-                placeholder="Masukkan Keterangan"
-                required
-              />
-              <SelectField
-                label="Kategori"
-                id={`categoryId`}
-                name="categoryId"
-                value={inputs.categoryId}
-                onChange={handleChange}
-                options={categories}
-              />
-              <InputField
-                label="Tanggal"
-                type="date"
-                id={`date`}
-                name="date"
-                value={inputs.date as string}
-                onChange={handleChange}
-                placeholder="Pilih Tanggal"
-                required
-              />
-              <button
-                className="py-2.5 w-full font-medium text-lg text-white bg-slate-700 hover:bg-slate-800 focus:ring-4 focus:outline-none focus:ring-slate-300 rounded-lg"
-                type="submit"
-              >
-                Terapkan
-              </button>
-            </form>
-          </div>
+              Terapkan
+            </button>
+          </form>
         </Modal>
       )}
     </>

@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -21,7 +23,7 @@ export default function RecordsSidebar({ user }: RecordsSidebarProps) {
   const { isDemo } = useAppSelector(selectDemo);
   const dispatch = useAppDispatch();
 
-  const [isActive, setIsActive] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [ctaButton, setCtaButton] = useState(false);
 
   const handleSignOut = () => {
@@ -32,119 +34,139 @@ export default function RecordsSidebar({ user }: RecordsSidebarProps) {
     dispatch(setAccounts(data));
   });
 
+  const navItems = [
+    {
+      href: !isDemo ? "/dashboard" : "/demo/dashboard",
+      label: "Dashboard",
+      icon: TbChartPieFilled,
+    },
+    {
+      href: !isDemo ? "/records" : "/demo",
+      label: "Table",
+      icon: BiSolidGridAlt,
+    },
+    {
+      href: !isDemo ? "/profile" : "/demo",
+      label: "Profile",
+      icon: BiSolidUser,
+    },
+  ];
+
   return (
     <>
+      {/* Mobile hamburger */}
       <button
         type="button"
-        onClick={() => setIsActive(true)}
-        className="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        onClick={() => setIsMobileOpen(true)}
+        className="inline-flex items-center justify-center p-2 mt-2 ml-3 text-sm text-slate-500 rounded-lg lg:hidden hover:bg-slate-100 dark:hover:bg-slate-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+        aria-label="Open sidebar"
       >
         <HiMiniBars3BottomLeft className="w-6 h-6" />
       </button>
-      <div
-        onClick={() => setIsActive(false)}
-        className={`fixed top-0 left-0 z-30 w-full h-screen bg-gray-900/50 ${!isActive && "hidden"} lg:hidden`}
-      />
-      <aside
-        className={`fixed shrink-0 top-0 left-0 z-40 w-64 h-screen transition-transform ${!isActive && "-translate-x-full"} lg:translate-x-0`}
-      >
-        <div className="no-scrollbar h-full px-3 py-4 overflow-y-auto bg-slate-900 divide-y-[1px] divide-gray-700">
-          <div className=" w-full flex flex-col items-center">
-            <div className="relative mb-4">
-              <Image
-                width="200"
-                height="200"
-                src={user.photoURL || "/avatar/boy_01.svg"}
-                alt="Rounded avatar"
-                className="w-20 h-20 rounded-full grayscale-[30%]"
-                style={{
-                  maxWidth: "100%",
-                  height: "auto",
-                }}
-              />
-              <Online>
-                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full z-10" />
-                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-bg-color rounded-full animate-[ping_3s_cubic-bezier(0,0,0.2,1)_infinite]" />
-              </Online>
-              <Offline>
-                <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-gray-500 border-2 border-bg-color rounded-full z-10" />
-              </Offline>
-            </div>
-            <p className="text-white text-xl font-semibold capitalize">
-              {user.displayName}
-            </p>
-            <p className="text-gray-400 text-md font-light">{user.email}</p>
-            <Link
-              href="/"
-              onClick={handleSignOut}
-              className="flex justify-center items-center my-5 px-5 py-2.5 w-full text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800 border-[1px] border-gray-700"
-            >
-              <TbLogout className="mr-1.5 w-5 h-5 text-gray-300 stroke-3 stroke-gray-400" />
-              <span className="text-gray-400 text-sm font-medium">Logout</span>
-            </Link>
-          </div>
-          <div>
-            <AccountsDropdown />
-          </div>
-          <ul className="pt-5 space-y-2">
-            <li>
-              <Link
-                href={`${!isDemo ? "/dashboard" : "/demo/dashboard"}`}
-                className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-              >
-                <TbChartPieFilled className="w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
-                <span className="ml-3">Dashboard</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                // eslint-disable-next-line quotes
-                href={`${!isDemo ? "/records" : "/demo"}`}
-                className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-              >
-                <BiSolidGridAlt className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
-                <span className="ml-3">Table</span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                href={`${!isDemo ? "/profile" : "/demo"}`}
-                className="flex items-center p-2 text-base font-normal text-slate-300 rounded-lg hover:bg-slate-800"
-              >
-                <BiSolidUser className="flex-shrink-0 w-6 h-6 text-slate-400 transition duration-75 dark:text-gray-400 group-hover:text-slate-300 dark:group-hover:text-white" />
-                <span className="ml-3">Profile</span>
-              </Link>
-            </li>
-          </ul>
 
-          <div
-            className={`${isDemo ? "block" : "hidden"} ${ctaButton && "invisible"} p-4 mt-6 rounded-lg bg-blue-900`}
-          >
-            <div className="flex items-center mb-3">
-              <span className=" text-sm font-semibold mr-2 px-2.5 py-0.5 rounded bg-orange-200 text-orange-900">
-                Beta
-              </span>
-              <button
-                type="button"
-                data-dismiss-target="#dropdown-cta"
-                aria-label="Close"
-                onClick={() => setCtaButton(!ctaButton)}
-                className="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 focus:ring-blue-400 p-1 inline-flex h-7 w-7 bg-blue-900 text-blue-400 hover:bg-blue-800"
+      {/* Mobile backdrop */}
+      {isMobileOpen && (
+        <div
+          onClick={() => setIsMobileOpen(false)}
+          className="fixed inset-0 z-30 bg-black/50 backdrop-blur-sm lg:hidden cursor-pointer"
+        />
+      )}
+
+      {/* Sidebar */}
+      <aside
+        className={`fixed top-0 left-0 z-40 w-64 h-screen transition-transform duration-300 ${
+          isMobileOpen ? "translate-x-0" : "-translate-x-full"
+        } lg:translate-x-0`}
+      >
+        <div className="flex flex-col h-full bg-slate-900 dark:bg-slate-950">
+          {/* Scrollable content */}
+          <div className="flex-1 overflow-y-auto no-scrollbar px-3 py-4 divide-y divide-slate-700/50">
+            {/* User section */}
+            <div className="flex flex-col items-center pb-4">
+              <div className="relative mb-3">
+                <Image
+                  width={80}
+                  height={80}
+                  src={user.photoURL || "/avatar/boy_01.svg"}
+                  alt={`Avatar ${user.displayName}`}
+                  className="w-20 h-20 rounded-full grayscale-[30%] object-cover"
+                />
+                <Online>
+                  <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-slate-900 rounded-full z-10" />
+                  <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-green-500 border-2 border-slate-900 rounded-full animate-ping" />
+                </Online>
+                <Offline>
+                  <div className="absolute bottom-0.5 right-0.5 w-4 h-4 bg-gray-500 border-2 border-slate-900 rounded-full z-10" />
+                </Offline>
+              </div>
+              <p className="text-white text-lg font-semibold capitalize truncate max-w-[200px]">
+                {user.displayName}
+              </p>
+              <p className="text-slate-400 text-sm font-light truncate max-w-[200px]">
+                {user.email}
+              </p>
+              <Link
+                href="/"
+                onClick={handleSignOut}
+                className="flex justify-center items-center mt-4 px-5 py-2.5 w-full text-sm font-medium text-slate-300 rounded-lg border border-slate-700 hover:bg-slate-800 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                aria-label="Logout"
               >
-                <span className="sr-only">Close</span>
-                <BiX className="w-5 h-5" />
-              </button>
+                <TbLogout className="mr-2 w-4 h-4 text-slate-400" />
+                <span>Logout</span>
+              </Link>
             </div>
-            <p className="mb-3 text-sm  text-blue-400">
-              Please login to use the profile features! For some reason profile
-              page is not available in demo.
-            </p>
-            <Link
-              href="/"
-              className="text-sm  underline font-medium text-blue-400 hover:text-blue-300"
+
+            {/* Accounts */}
+            <div className="pt-3">
+              <AccountsDropdown />
+            </div>
+
+            {/* Navigation */}
+            <ul className="pt-4 space-y-1">
+              {navItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className="flex items-center px-3 py-2.5 text-sm font-normal text-slate-300 rounded-lg hover:bg-slate-800 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  >
+                    <item.icon className="w-5 h-5 text-slate-400 shrink-0" />
+                    <span className="ml-3">{item.label}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
+            {/* Demo CTA */}
+            <div
+              className={`${
+                isDemo ? "block" : "hidden"
+              } ${ctaButton && "invisible"} mt-6 p-4 rounded-lg bg-blue-900/50 border border-blue-800`}
             >
-              Back to Home Page{" "}
-            </Link>
+              <div className="flex items-center mb-2">
+                <span className="text-xs font-semibold px-2 py-0.5 rounded bg-orange-200 text-orange-900">
+                  Beta
+                </span>
+                <button
+                  type="button"
+                  aria-label="Close demo notice"
+                  onClick={() => setCtaButton(true)}
+                  className="ml-auto -mr-1 inline-flex items-center justify-center w-6 h-6 rounded-lg text-blue-400 hover:bg-blue-800 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
+                >
+                  <BiX className="w-4 h-4" />
+                </button>
+              </div>
+              <p className="text-xs text-blue-300 leading-relaxed">
+                Please login to use the profile features! Profile page is not
+                available in demo.
+              </p>
+              <Link
+                href="/"
+                className="inline-block mt-2 text-xs font-medium text-blue-400 hover:text-blue-300 underline"
+              >
+                Back to Home Page
+              </Link>
+            </div>
           </div>
         </div>
       </aside>

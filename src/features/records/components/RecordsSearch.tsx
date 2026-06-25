@@ -8,16 +8,17 @@ export default function RecordsSearch({
   handleSearchKeyword,
 }: RecordsSearchProps) {
   return (
-    <div className="relative inline-block">
-      <div className="flex absolute inset-y-0 right-0 items-center pr-3 pointer-events-none">
-        <IoSearchOutline className="w-5 h-5 text-gray-500" />
-      </div>
+    <div className="relative">
       <input
-        className="py-1.5 md:py-2 px-3 pr-10 md:w-80 text-slate-900 border-y border-r border-slate-300 bg-slate-50 rounded-r-lg focus:outline-1 focus:outline-slate-800 focus:border focus:rounded"
+        className="rounded-r-lg border-y border-r border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-2.5 pr-10 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 transition-colors duration-200 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30 w-full md:w-60 lg:w-80"
         type="text"
-        placeholder="Cari..."
+        placeholder="Cari keterangan..."
         onChange={(e) => handleSearchKeyword(e.target.value)}
+        aria-label="Cari catatan"
       />
+      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+        <IoSearchOutline className="w-4 h-4 text-slate-400" />
+      </div>
     </div>
   );
 }

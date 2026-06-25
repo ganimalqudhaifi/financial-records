@@ -18,13 +18,13 @@ export default function SelectField({
   return (
     <div>
       <label
-        className="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+        className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5"
         htmlFor={id}
       >
         {label}
       </label>
       <select
-        className="block p-2.5 w-full text-sm text-slate-900 bg-slate-50 border border-slate-400 rounded-lg focus:outline-slate-500"
+        className="w-full rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-4 py-3 text-base text-slate-900 dark:text-slate-100 transition-colors duration-200 focus:border-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500/30"
         id={id}
         name={name}
         value={value}

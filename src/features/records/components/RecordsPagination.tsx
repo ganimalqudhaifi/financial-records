@@ -79,23 +79,48 @@ export default function RecordsPagination({
     );
   };
 
+  if (arrPagination.length <= 1) return null;
+
   return (
-    <div className="flex items-center justify-between">
-      <p className="text-sm">{`Menampilkan ${displayRangeStart} sampai ${displayRangeEnd} dari ${entries} data`}</p>
-      <div className="float-right text-slate-700">
+    <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+      <p className="text-slate-500 dark:text-slate-400">
+        Menampilkan {displayRangeStart} sampai {displayRangeEnd} dari{" "}
+        {entries} data
+      </p>
+      <div className="flex items-center gap-1">
+        {/* Previous */}
         <button
-          className="py-2 px-3 text-2xl hover:text-slate-900 hover:scale-125 active:scale-100 transition duration-150"
+          className={`inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer ${
+            currentPage === 1
+              ? "text-slate-300 dark:text-slate-600 cursor-not-allowed"
+              : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+          }`}
           onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          aria-label="Halaman sebelumnya"
         >
-          &laquo;
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="15 18 9 12 15 6" />
+          </svg>
         </button>
+
+        {/* Page numbers */}
         {arrPagination.map((btnpagination) =>
           shouldHideButton(btnpagination) ? (
             <button
               id={`pgnt${btnpagination}`}
               key={btnpagination}
               onClick={() => handleCurrentPage(btnpagination)}
-              className="hidden py-2 px-3"
+              className="hidden px-3 py-1.5 text-sm rounded-lg"
             >
               {btnpagination}
             </button>
@@ -104,21 +129,42 @@ export default function RecordsPagination({
               id={`pgnt${btnpagination}`}
               key={btnpagination}
               onClick={() => handleCurrentPage(btnpagination)}
-              className={
+              className={`inline-flex items-center justify-center min-w-[36px] h-9 px-2 text-sm font-medium rounded-lg transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer ${
                 btnpagination === currentPage
-                  ? "text-sm py-1.5 px-3 bg-slate-700 text-slate-100 mx-1 hover:scale-110 active:scale-100 transition duration-300 rounded"
-                  : "text-sm py-1.5 px-3 mx-1 hover:scale-110 active:scale-100 transition duration-300 rounded"
-              }
+                  ? "bg-blue-600 text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              }`}
+              aria-current={btnpagination === currentPage ? "page" : undefined}
+              aria-label={`Halaman ${btnpagination}`}
             >
               {btnpagination}
             </button>
           ),
         )}
+
+        {/* Next */}
         <button
-          className="py-2 px-3 text-2xl hover:text-slate-900 hover:scale-125 active:scale-100 transition duration-150"
+          className={`inline-flex items-center justify-center w-9 h-9 rounded-lg text-sm font-medium transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer ${
+            currentPage === arrPagination.length
+              ? "text-slate-300 dark:text-slate-600 cursor-not-allowed"
+              : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+          }`}
           onClick={handleNextPage}
+          disabled={currentPage === arrPagination.length}
+          aria-label="Halaman selanjutnya"
         >
-          &raquo;
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <polyline points="9 18 15 12 9 6" />
+          </svg>
         </button>
       </div>
     </div>

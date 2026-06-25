@@ -26,19 +26,37 @@ export default function RecordsTableBody({
   saldoAkhir,
 }: RecordsTableBodyProps) {
   const { id, date, description, categoryId, amount } = record;
+  const isIncome = categoryId < 200;
 
   return (
-    <tr>
-      <td>{no}</td>
-      <td>{description}</td>
-      <td>{formatDateDMY(date)}</td>
-      <td>{getCategoryName(categoryId)}</td>
-      <td className={`${categoryId < 200 ? "text-green-600" : "text-red-600"}`}>
+    <tr className="text-center odd:bg-slate-50 dark:odd:bg-slate-800/30 hover:bg-blue-50 dark:hover:bg-slate-800/60 transition-colors duration-150">
+      <td className="px-3 py-2.5 text-slate-500 dark:text-slate-400 text-xs">
+        {no}
+      </td>
+      <td className="px-3 py-2.5 text-slate-900 dark:text-slate-100 whitespace-normal text-left max-w-[200px] line-clamp-2">
+        {description}
+      </td>
+      <td className="px-3 py-2.5 text-slate-600 dark:text-slate-400 text-right text-xs tabular-nums">
+        {formatDateDMY(date)}
+      </td>
+      <td className="px-3 py-2.5 text-slate-600 dark:text-slate-400 text-left text-xs hidden lg:table-cell">
+        {getCategoryName(categoryId)}
+      </td>
+      <td
+        className={`px-3 py-2.5 text-right font-semibold tabular-nums ${
+          isIncome
+            ? "text-green-600 dark:text-green-500"
+            : "text-red-600 dark:text-red-500"
+        }`}
+      >
+        {isIncome ? "+ " : "− "}
         {formatCurrency(amount)}
       </td>
-      <td>{formatCurrency(saldoAkhir)}</td>
-      <td>
-        <div className="flex items-center justify-center space-x-2 w-full">
+      <td className="px-3 py-2.5 text-right font-medium tabular-nums text-slate-900 dark:text-slate-100">
+        {formatCurrency(saldoAkhir)}
+      </td>
+      <td className="px-3 py-2.5">
+        <div className="flex items-center justify-center gap-2">
           <RecordsActionEdit no={no} record={record} />
           <RecordsActionDelete id={id} />
         </div>

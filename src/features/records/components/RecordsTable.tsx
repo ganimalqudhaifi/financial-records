@@ -4,7 +4,6 @@ import { selectAccounts } from "@/features/account/account.selector";
 import { selectRecords } from "@/features/records/records.selector";
 import { Record } from "@/features/records/records.types";
 import { generatePeriodYM } from "@/shared/utils/templateDate";
-import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";
 
@@ -54,7 +53,7 @@ export default function RecordsTable({
   );
 
   return (
-    <table className={styles["main-table"]}>
+    <table className="w-full table-auto border-collapse whitespace-nowrap text-sm">
       <thead>
         <RecordsTableHead />
       </thead>
@@ -72,7 +71,12 @@ export default function RecordsTable({
           ))
         ) : (
           <tr>
-            <td colSpan={10}>No records found</td>
+            <td
+              colSpan={7}
+              className="px-4 py-8 text-center text-slate-400 dark:text-slate-500"
+            >
+              No records found
+            </td>
           </tr>
         )}
       </tbody>

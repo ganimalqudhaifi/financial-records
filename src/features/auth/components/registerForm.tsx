@@ -77,6 +77,8 @@ export default function RegisterForm() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
     const emailError = validateEmail(inputs.email);
     const passwordError = validatePassword(inputs.password);
     const confirmError = validateConfirm(inputs.confirmPassword);
@@ -99,7 +101,7 @@ export default function RegisterForm() {
       }
 
       setInputs({ email: "", password: "", confirmPassword: "" });
-      dispatch(fetchUser());
+      await dispatch(fetchUser());
       router.replace("/records");
     } catch (error) {
       const msg = error instanceof Error ? error.message : "Terjadi kesalahan";

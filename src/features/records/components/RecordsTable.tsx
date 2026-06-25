@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { selectAccounts } from "@/features/account/account.selector";
 import { selectRecords } from "@/features/records/records.selector";
 import { Record } from "@/features/records/records.types";
+import { generatePeriodYM } from "@/shared/utils/templateDate";
 import styles from "./RecordsTable.module.css";
 import RecordsTableBody from "./RecordsTableBody";
 import RecordsTableHead from "./RecordsTableHead";
@@ -23,19 +24,7 @@ export default function RecordsTable({
   const { records } = useSelector(selectRecords);
   const { selectedAccount } = useSelector(selectAccounts);
 
-  const [initialBalance, setInitialBalance] = useState(0);
-
-  useEffect(() => {
-    if (selectedAccount.id) {
-      setInitialBalance(selectedAccount.initialBalance);
-    }
-  }, [selectedAccount]);
-
-  const valueDate = (date: Date | string) => {
-    const target = new Date(date);
-    const month = String(target.getMonth() + 1).padStart(2, "0");
-    return `${target.getFullYear()}-${month}`;
-  };
+  const initialBalance = selectedAccount.id ? selectedAccount.initialBalance : 0;
 
   const filteredAndSortedRecords = useMemo(() => {
     if (records.length === 0 || !selectedAccount.id) return [];
@@ -45,7 +34,7 @@ export default function RecordsTable({
       const descriptionMatches = record.description
         .toLowerCase()
         .includes(searchKeyword.toLowerCase());
-      const dateMatches = valueDate(record.date).includes(timeRange);
+      const dateMatches = generatePeriodYM(record.date).includes(timeRange);
 
       return accountMatches && descriptionMatches && dateMatches;
     };

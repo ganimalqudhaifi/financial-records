@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAccounts } from "@/features/account/account.selector";
 import { selectRecords } from "@/features/records/records.selector";
+import { generatePeriodYM } from "@/shared/utils/templateDate";
 
 interface RecordsPaginationProps {
   handleCurrentPage: (pageNumber: number) => void;
@@ -23,18 +24,12 @@ export default function RecordsPagination({
 
   const [arrPagination, setArrPagination] = useState<number[]>([]);
 
-  const valueDate = (date: Date | string) => {
-    const target = new Date(date);
-    const month = String(target.getMonth() + 1).padStart(2, "0");
-    return `${target.getFullYear()}-${month}`;
-  };
-
   useEffect(() => {
     const filteredRecords = records.filter(
       (record) =>
         record.accountId === selectedAccount.id &&
         record.description.toLowerCase().includes(searchKeyword) &&
-        valueDate(record.date).includes(timeRange),
+        generatePeriodYM(record.date).includes(timeRange),
     );
 
     const totalPages = Math.ceil(filteredRecords.length / itemsPerPage);
@@ -47,12 +42,12 @@ export default function RecordsPagination({
   }, [records, searchKeyword, itemsPerPage, timeRange, selectedAccount.id]);
 
   const entries =
-    records.length &&
+    (records.length &&
     records.filter(
       (record) =>
         record.accountId === selectedAccount.id &&
         record.description.toLowerCase().includes(searchKeyword),
-    ).length;
+    ).length) || 0;
 
   const displayRangeStart = arrPagination.length
     ? itemsPerPage * (currentPage - 1) + 1

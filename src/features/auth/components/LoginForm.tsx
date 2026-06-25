@@ -40,6 +40,8 @@ export default function LoginForm() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    if (isLoading) return;
+
     const emailError = validateEmail(inputs.email);
     const passwordError = validatePassword(inputs.password);
     setErrors({ email: emailError, password: passwordError });

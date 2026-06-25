@@ -10,7 +10,7 @@ const initialState: DemoState = {
   hasDemoLoadRecords: false,
 };
 
-export const demoSlice = createSlice({
+const demoSlice = createSlice({
   name: "demo",
   initialState,
   reducers: {

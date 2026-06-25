@@ -9,7 +9,7 @@ const initialState: RecordsState = {
   records: [],
 };
 
-export const recordsSlice = createSlice({
+const recordsSlice = createSlice({
   name: "records",
   initialState,
   reducers: {

@@ -14,7 +14,7 @@ if (!admin.apps.length) {
   admin.app();
 }
 
-export const adminAuth = admin.auth();
+const adminAuth = admin.auth();
 
 export async function getUserByUid(uid: string) {
   try {

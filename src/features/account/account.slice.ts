@@ -11,7 +11,7 @@ const initialState: AccountsState = {
   selectedAccount: {} as Account,
 };
 
-export const accountsSlice = createSlice({
+const accountsSlice = createSlice({
   name: "accounts",
   initialState,
   reducers: {

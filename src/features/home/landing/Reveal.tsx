@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { ReactNode } from "react";
 
 type RevealProps = {
@@ -12,16 +12,18 @@ type RevealProps = {
 
 /**
  * Lightweight scroll-reveal wrapper used across the landing page.
- * Respects reduced-motion via the global CSS guard (design system §9).
+ * Respects reduced-motion preferences.
  */
-export default function Reveal({ children, delay = 0, y = 24, className }: RevealProps) {
+export default function Reveal({ delay = 0, y = 24, className, children }: RevealProps) {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y }}
+      initial={shouldReduceMotion ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
+      transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay, ease: "easeOut" }}
     >
       {children}
     </motion.div>

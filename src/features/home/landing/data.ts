@@ -1,7 +1,3 @@
-/**
- * Landing page content — sourced from PRD.md.
- * Kept in one place so copy can be edited without touching markup.
- */
 import { IconType } from "react-icons";
 import {
   BiCategory,
@@ -20,47 +16,46 @@ export type Feature = {
   desc: string;
 };
 
-// PRD §4.1–§4.4 + §11 Must/Should-have
 export const FEATURES: Feature[] = [
   {
     icon: BiSolidBank,
-    title: "Multi-Account",
-    desc: "Pisahkan Dompet, Tabungan, hingga Kartu Kredit ke dalam buku catatan terpisah — kelola hingga 10 akun dalam satu tempat.",
+    title: "Pisahkan setiap akun",
+    desc: "Atur dompet, tabungan, atau kartu kredit ke dalam akun terpisah agar saldo dan catatannya tidak tercampur.",
   },
   {
     icon: BiWallet,
-    title: "Catatan Cepat",
-    desc: "Tambah pemasukan atau pengeluaran lewat form ringkas dalam waktu kurang dari 30 detik. Edit dan hapus kapan saja.",
+    title: "Tambah transaksi lebih cepat",
+    desc: "Form yang ringkas membantu Anda mencatat pemasukan atau pengeluaran tanpa harus berhenti lama dari aktivitas harian.",
   },
   {
     icon: BiSolidPieChartAlt2,
-    title: "Dashboard Analitik",
-    desc: "Pantau total pemasukan, pengeluaran, dan saldo bersih bulan ini lewat ringkasan visual yang mudah dipahami.",
+    title: "Lihat ringkasan yang jelas",
+    desc: "Pantau pemasukan, pengeluaran, dan saldo bersih bulan ini dalam kartu ringkas yang mudah dibaca.",
   },
   {
     icon: BiLineChart,
-    title: "Arus Kas Bulanan",
-    desc: "Bandingkan pemasukan vs pengeluaran selama 12 bulan terakhir dan kenali pola keuangan Anda dari waktu ke waktu.",
+    title: "Baca tren bulanan",
+    desc: "Bandingkan arus kas 12 bulan terakhir untuk melihat apakah kebiasaan belanja Anda sedang membaik atau memburuk.",
   },
   {
     icon: BiCategory,
-    title: "Kategori Kustom",
-    desc: "Gunakan kategori bawaan atau buat sendiri sesuai gaya hidup Anda, lengkap dengan warna dan ikon penanda.",
+    title: "Kategori yang fleksibel",
+    desc: "Gunakan kategori bawaan atau buat kategori kustom agar pengeluaran Anda selalu relevan dengan kebutuhan pribadi.",
   },
   {
     icon: BiSearchAlt,
-    title: "Filter & Pencarian",
-    desc: "Saring catatan berdasarkan tanggal, kategori, dan tipe, atau cari cepat lewat kata kunci pada keterangan.",
+    title: "Cari dan filter cepat",
+    desc: "Saring catatan berdasarkan tanggal, tipe, dan kategori, lalu cari keterangan yang Anda butuhkan dalam hitungan detik.",
   },
   {
     icon: BiLockAlt,
-    title: "Privat & Aman",
-    desc: "Password di-hash dan setiap data hanya bisa diakses pemiliknya. Data sensitif tidak pernah dikirim lewat URL.",
+    title: "Privasi tetap terjaga",
+    desc: "Data hanya dapat diakses oleh pemilik akun, dengan autentikasi yang melindungi seluruh catatan keuangan Anda.",
   },
   {
     icon: BiMobileAlt,
-    title: "Mobile-First",
-    desc: "Form dan tabel dirancang nyaman digunakan di layar kecil — catat keuangan dari mana saja, kapan saja.",
+    title: "Nyaman di layar kecil",
+    desc: "Layout mobile-first menjaga form, kartu ringkasan, dan daftar catatan tetap mudah dipakai di ponsel.",
   },
 ];
 
@@ -69,29 +64,33 @@ export type Step = { num: string; title: string; desc: string };
 export const STEPS: Step[] = [
   {
     num: "01",
-    title: "Buat Akun Keuangan",
-    desc: "Daftar dengan email, lalu buat akun keuangan pertama Anda — beri nama, warna, dan ikon agar mudah dikenali.",
+    title: "Buat akun keuangan",
+    desc: "Mulai dari satu atau beberapa akun terpisah agar setiap sumber dana punya ruang pencatatan sendiri.",
   },
   {
     num: "02",
-    title: "Catat Transaksi",
-    desc: "Tambahkan setiap pemasukan dan pengeluaran lengkap dengan kategori, tanggal, dan keterangan singkat.",
+    title: "Catat transaksi harian",
+    desc: "Tambahkan jumlah, tipe, kategori, tanggal, dan keterangan singkat untuk setiap pemasukan atau pengeluaran.",
   },
   {
     num: "03",
-    title: "Pantau & Analisa",
-    desc: "Buka dashboard untuk melihat ringkasan dan grafik, lalu ambil keputusan keuangan yang lebih cerdas.",
+    title: "Tinjau dashboard",
+    desc: "Buka ringkasan dan grafik untuk melihat saldo, pola pengeluaran, dan performa setiap akun.",
+  },
+  {
+    num: "04",
+    title: "Sesuaikan kebiasaan",
+    desc: "Gunakan data yang sudah terkumpul untuk memangkas pengeluaran yang tidak perlu dan menjaga target keuangan.",
   },
 ];
 
 export type Stat = { value: string; label: string };
 
-// Illustrative product capabilities drawn from PRD non-functional targets.
 export const STATS: Stat[] = [
-  { value: "< 30 dtk", label: "Menambah satu catatan" },
-  { value: "< 2 dtk", label: "Dashboard merender grafik" },
-  { value: "10.000+", label: "Catatan per pengguna" },
+  { value: "< 30 dtk", label: "Menambahkan satu catatan" },
+  { value: "< 2 dtk", label: "Dashboard memuat grafik" },
   { value: "10", label: "Akun keuangan terpisah" },
+  { value: "10.000+", label: "Catatan yang tetap responsif" },
 ];
 
 export type Testimonial = { quote: string; name: string; role: string; avatar: string };
@@ -99,23 +98,23 @@ export type Testimonial = { quote: string; name: string; role: string; avatar: s
 export const TESTIMONIALS: Testimonial[] = [
   {
     quote:
-      "Akhirnya bisa lihat ke mana uang saya pergi tiap bulan. Grafik kategori-nya bikin saya sadar pengeluaran kopi ternyata besar juga.",
+      "Saya jadi tahu pola pengeluaran bulanan dengan cepat. Ringkasan kategori-nya sangat membantu buat menahan belanja impulsif.",
     name: "Rizky Pratama",
     role: "Mahasiswa",
     avatar: "/avatar/boy_03.svg",
   },
   {
     quote:
-      "Saya pakai akun terpisah untuk dompet dan tabungan. Rapi, cepat, dan ringan dibuka dari HP. Persis yang saya butuhkan.",
+      "Saya pisahkan akun dompet dan tabungan, jadi lebih mudah melihat saldo mana yang bisa dipakai dan mana yang harus aman.",
     name: "Anita Salsabila",
     role: "Freelancer",
     avatar: "/avatar/girl_02.svg",
   },
   {
     quote:
-      "Form tambah catatannya benar-benar cepat. Tidak ada fitur ribet — fokus mencatat dan memahami keuangan pribadi.",
+      "Tambah transaksi di HP terasa cepat. Saya bisa mencatat pengeluaran saat itu juga tanpa form yang bertele-tele.",
     name: "Dimas Wicaksono",
-    role: "Pekerja Kantoran",
+    role: "Karyawan",
     avatar: "/avatar/boy_06.svg",
   },
 ];
@@ -125,19 +124,19 @@ export type Faq = { q: string; a: string };
 export const FAQS: Faq[] = [
   {
     q: "Apakah Financial Records gratis?",
-    a: "Ya. Financial Records adalah proyek personal yang dapat Anda gunakan untuk mencatat keuangan pribadi tanpa biaya.",
+    a: "Ya. Aplikasi ini bisa dipakai untuk pencatatan keuangan pribadi tanpa biaya.",
   },
   {
-    q: "Apakah saya bisa punya lebih dari satu akun keuangan?",
-    a: "Tentu. Anda dapat membuat hingga 10 akun keuangan terpisah, misalnya Dompet, BCA, atau Dana — masing-masing dengan catatannya sendiri.",
+    q: "Bisakah saya punya lebih dari satu akun?",
+    a: "Bisa. Anda dapat memisahkan dompet, tabungan, kartu kredit, atau akun lain sesuai kebutuhan.",
   },
   {
-    q: "Seberapa aman data keuangan saya?",
-    a: "Password Anda di-hash dan setiap data hanya dapat diakses oleh pemiliknya. Seluruh endpoint dilindungi autentikasi.",
+    q: "Seberapa aman data saya?",
+    a: "Password di-hash dan data hanya bisa diakses oleh pemilik akun yang sah.",
   },
   {
-    q: "Apakah bisa digunakan di ponsel?",
-    a: "Bisa. Antarmuka dirancang mobile-first sehingga form dan tabel tetap nyaman digunakan pada layar mulai 375px.",
+    q: "Apakah nyaman dipakai di ponsel?",
+    a: "Ya. Seluruh layout dibuat mobile-first agar form, tabel, dan ringkasan tetap nyaman di layar kecil.",
   },
 ];
 

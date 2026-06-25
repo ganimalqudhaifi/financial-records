@@ -22,9 +22,15 @@ export default function PersonalInformationForm({
     phoneNumber: "",
   });
 
-  if (user) {
-    setInputs(user);
-  }
+  useEffect(() => {
+    if (user) {
+      setInputs({
+        displayName: user.displayName ?? "",
+        email: user.email ?? "",
+        phoneNumber: user.phoneNumber ?? "",
+      });
+    }
+  }, [user]);
 
   const handleInputs = (e: ChangeEvent<HTMLInputElement>) => {
     setInputs({ ...inputs, [e.target.name]: e.target.value });
